@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Facilitator Timeline</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f1f1f1;
+    }
+    
+    .sidebar {
+      width: 200px;
+      float: left;
+      border-right: 2px solid #999;
+      background-color: #333;
+      color: #fff;
+    }
+    
+    .content {
+      margin-left: 20px;
+    }
+    
+    h2, h3 {
+      margin-top: 20px;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    .group-title {
+      cursor: pointer;
+      padding: 10px;
+      background-color: #444;
+      border-bottom: 1px solid #555;
+      transition: background-color 0.3s;
+    }
+    
+    .group-title:hover {
+      background-color: #555;
+    }
+    
+    .highlighted {
+      background-color: #666;
+      font-weight: bold;
+    }
+    
+    .boundaries-list {
+      list-style-type: disc;
+    }
+    
+    .boundaries-list li {
+      margin-top: 10px;
+    }
+    
+    .boundaries-list li ul {
+      list-style-type: circle;
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+  </style>
+
+</head>
+<body>
+  <!-- <div class="top-bar">
+    <h3 id="boundaries-title" class="group-title" onclick="toggleGroup('boundaries')">Boundaries</h3>    
+    <h3 id="summary-title" class="group-title" onclick="toggleGroup('summary')">Summary</h3>
+    <h3 id="testing-title" class="group-title" onclick="toggleGroup('timeline')">Timeline</h3>
+
+
+  </div> -->
+  
+  <div class="content">
+    <div id="timeline" style="display: block;">
+      <h2>Timeline</h2>
+      <img src="FacilitatorTimeline.png" alt="My facilitator timeline">
+    </div>
+    
+  </div>
+
+  <!-- <script>
+    function toggleGroup(group) {
+      var content = document.getElementById(group);
+      var groupTitle = document.getElementById(group + '-title');
+      
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        groupTitle.classList.remove('highlighted');
+      } else {
+        content.style.display = 'block';
+        groupTitle.classList.add('highlighted');
+      }
+    }
+  </script> -->
+  
+</body>
+</html>
