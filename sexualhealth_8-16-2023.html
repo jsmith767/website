@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sexual Health Updates</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f1f1f1;
+    }
+    
+    .sidebar {
+      width: 200px;
+      float: left;
+      border-right: 2px solid #999;
+      background-color: #333;
+      color: #fff;
+    }
+    
+    .content {
+      margin-left: 220px;
+    }
+    
+    h2, h3 {
+      margin-top: 20px;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    .group-title {
+      cursor: pointer;
+      padding: 10px;
+      background-color: #444;
+      border-bottom: 1px solid #555;
+      transition: background-color 0.3s;
+    }
+    
+    .group-title:hover {
+      background-color: #555;
+    }
+    
+    .highlighted {
+      background-color: #666;
+      font-weight: bold;
+    }
+    
+    .boundaries-list {
+      list-style-type: disc;
+    }
+    
+    .boundaries-list li {
+      margin-top: 10px;
+    }
+    
+    .boundaries-list li ul {
+      list-style-type: circle;
+      margin-top: 5px;
+      margin-bottom: 0;
+    }
+  </style>
+  <script>
+    function toggleGroup(group) {
+      var content = document.getElementById(group);
+      var groupTitle = document.getElementById(group + '-title');
+      
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        groupTitle.classList.remove('highlighted');
+      } else {
+        content.style.display = 'block';
+        groupTitle.classList.add('highlighted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="sidebar">
+    <h3 id="testing-title" class="group-title" onclick="toggleGroup('testing')">Testing</h3>
+    <h3 id="partners-title" class="group-title" onclick="toggleGroup('partners')">Sexual Partners</h3>
+    <h3 id="boundaries-title" class="group-title" onclick="toggleGroup('boundaries')">Boundaries</h3>
+  </div>
+  
+  <div class="content">
+    <div id="testing" style="display: none;">
+      <h2>Testing</h2>
+      <ul>
+        <li>August, 2022: STI test showed negative results for gonorrhea, chlamydia, HIV, and hep C. Hep B was consistent with vaccine.</li>
+        <li>July, 2022: Finished HPV vaccine series (Gardasil 9).</li>
+        <li>I did not do HSV 1/2 testing.</li>
+        <li>Feb 1st, 2022: STI test showed negative results for gonorrhea, chlamydia, HIV, and hep C. Hep B was consistent with vaccine.</li>
+        <li>Throat swabs were not available at my testing site.</li>
+        <li>I did not do HSV 1/2 testing, although a previous antibody test from many years ago showed a positive result for HSV-1 and negative for HSV-2.</li>
+        <li>I did go through a scare when I was in high school, though, which led to the HSV test. It is abundantly clear to me after talking to several physicians that the likelihood that I had genital HSV is wildly small.</li>
+      </ul>
+    </div>
+    
+    <div id="partners" style="display: none;">
+      <h2>Sexual Partners</h2>
+      <h3>Current Partners:</h3>
+      <ul>
+        <li>Partner: No protection used starting in August. Partner has a high-risk type of HPV (pap revealed in August). Must have got the first version of Gardasil which only protects against types 16, 18, and two wart types. I have Gardasil 9 which protects against nine HPV types (6, 11, 16, 18, 31, 33, 45, 52, and 58). There's a not unreasonable chance she has something now I'm vaccinated against. She has Oral HSV-1 and uses suppressants reactively if developing a cold sore. We're pretty cautious to protect against transfer even though I likely have oral HSV-1 and am asymptomatic.</li>
+      </ul>
+      
+      <h3>Past Partners:</h3>
+      <ul>
+        <li>Partner: Hand-to-genital touching. No fluid-to-fluid or genital-to-genital contact. Careful with hands that touch genitals. Unknown STI status. Spring 2023.</li>
+        <li>Other interactions (e.g., May play party): Condomed sex with an individual with the same STI status as me.</li>
+        <li>Partner: Condoms as protection. Has HSV-1 that expresses around the anus. She is on daily viral suppressants and has not had sores since on the suppressants (December 2020). Stopped seeing in early May. We used condoms for vaginal penetration and are unprotected for oral sex. We didn't do any butt play of any kind.</li>
+        <li>Partner: Has no known STIs. We have not had intercourse since my most recent test, just play with hands.</li>
+        <li>Other interactions (e.g., March play party): Making out and play with hands.</li>
+      </ul>
+    </div>
+    
+    <div id="boundaries" style="display: none;">
+      <h2>Boundaries</h2>
+      <ul class="boundaries-list">
+        <li>My sexual partners communicate in a way to protect my sexual health.
+          <ul>
+            <li>They disclose their relevant STI status.</li>
+            <li>They disclose any activity that has the potential to change their STI status (e.g., sex with a new partner).</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    function toggleGroup(group) {
+      var content = document.getElementById(group);
+      var groupTitle = document.getElementById(group + '-title');
+      
+      if (content.style.display === 'block') {
+        content.style.display = 'none';
+        groupTitle.classList.remove('highlighted');
+      } else {
+        content.style.display = 'block';
+        groupTitle.classList.add('highlighted');
+      }
+    }
+  </script>
+</body>
+</html>
