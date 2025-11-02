@@ -1,0 +1,15 @@
+# macOS system files
+.DS_Store
+**/.DS_Store
+
+# GroupIncome - exclude non-HTML files
+GroupIncome/**/*.txt
+GroupIncome/**/*.docx
+GroupIncome/**/*.pptx
+GroupIncome/**/*.py
+GroupIncome/*.txt
+GroupIncome/*.docx
+GroupIncome/*.pptx
+GroupIncome/*.py
+GroupIncome/tools/
+
