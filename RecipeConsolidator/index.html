@@ -7,22 +7,6 @@
     <title>Recipe Consolidator - Meal Planning Tool</title>
     <link rel="stylesheet" href="../style.css">
     <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
-    <script src="https://apis.google.com/js/api.js"></script>
-    <script src="https://accounts.google.com/gsi/client"></script>
-    <script>
-        // Check if Tesseract loaded, log error if not
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                if (typeof Tesseract === 'undefined') {
-                    console.error('Tesseract.js failed to load from CDN. OCR functionality will not work.');
-                    console.error('Please check your internet connection or try refreshing the page.');
-                } else {
-                    console.log('Tesseract.js loaded successfully. Version:', Tesseract.version || 'unknown');
-                }
-            }, 1000);
-        });
-    </script>
     <style>
         .rc-body { 
             background: #f8f6f2; 
@@ -215,88 +199,6 @@
             margin-bottom: 15px; 
             color: #ccc; 
         }
-        .image-upload-area { 
-            border: 2px dashed #d48247; 
-            border-radius: 6px; 
-            padding: 30px; 
-            text-align: center; 
-            background: #fff; 
-            cursor: pointer; 
-            transition: all 0.3s; 
-            margin-bottom: 15px; 
-        }
-        .image-upload-area:hover { 
-            background: #f8f6f2; 
-            border-color: #c9672e; 
-        }
-        .image-upload-area.dragover { 
-            background: #e8f5e9; 
-            border-color: #2e7d32; 
-        }
-        .image-upload-area input[type="file"] { 
-            display: none; 
-        }
-        .image-preview { 
-            max-width: 100%; 
-            max-height: 300px; 
-            margin: 15px 0; 
-            border-radius: 6px; 
-            display: none; 
-        }
-        .image-preview.show { 
-            display: block; 
-        }
-        .ocr-progress { 
-            margin-top: 15px; 
-            padding: 15px; 
-            background: #f8f6f2; 
-            border-radius: 6px; 
-            display: none; 
-        }
-        .ocr-progress.show { 
-            display: block; 
-        }
-        .progress-bar { 
-            width: 100%; 
-            height: 20px; 
-            background: #e8e8e8; 
-            border-radius: 10px; 
-            overflow: hidden; 
-            margin-top: 10px; 
-        }
-        .progress-fill { 
-            height: 100%; 
-            background: #d48247; 
-            transition: width 0.3s; 
-            width: 0%; 
-        }
-        .input-tabs { 
-            display: flex; 
-            gap: 10px; 
-            margin-bottom: 15px; 
-        }
-        .tab-button { 
-            flex: 1; 
-            padding: 12px; 
-            background: #f8f6f2; 
-            border: 2px solid #e8e8e8; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            text-align: center; 
-            font-weight: 500; 
-            transition: all 0.3s; 
-        }
-        .tab-button.active { 
-            background: #d48247; 
-            color: white; 
-            border-color: #d48247; 
-        }
-        .tab-content { 
-            display: none; 
-        }
-        .tab-content.active { 
-            display: block; 
-        }
         @media only screen and (max-width: 600px) {
             .rc-hero h1 { font-size: 32px; }
             .rc-hero p { font-size: 16px; }
@@ -324,7 +226,7 @@
         <div class="rc-card" id="addRecipeCard">
             <h2 id="addRecipeTitle">Add Recipe</h2>
             <p style="margin-bottom: 15px; color: #6a6a6a;" id="addRecipeDescription">
-                Add recipes by pasting text or uploading a photo. The tool will automatically extract ingredients with quantities and units.
+                Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.
             </p>
             <input 
                 type="text" 
@@ -334,52 +236,13 @@
                 onkeypress="if(event.key === 'Enter') addRecipe()">
             <input type="hidden" id="editingRecipeId" value="">
             
-            <div class="input-tabs">
-                <div class="tab-button active" onclick="switchTab('text', this)">
-                    <i class="fas fa-keyboard"></i> Text
-                </div>
-                <div class="tab-button" onclick="switchTab('image', this)">
-                    <i class="fas fa-image"></i> Image
-                </div>
-            </div>
-
-            <div id="textTab" class="tab-content active">
-                <textarea 
-                    id="recipeInput" 
-                    class="recipe-input-area" 
-                    placeholder="Paste recipe here, for example:&#10;&#10;2 cups all-purpose flour&#10;1 tablespoon baking powder&#10;1/2 teaspoon salt&#10;3/4 cup sugar&#10;2 eggs&#10;1 cup milk&#10;1/3 cup butter, melted"></textarea>
-                <button class="btn" onclick="addRecipe()">Add Recipe</button>
-            </div>
-
-            <div id="imageTab" class="tab-content">
-                <div class="image-upload-area" id="imageUploadArea" onclick="document.getElementById('imageFileInput').click()">
-                    <input type="file" id="imageFileInput" accept="image/*" onchange="handleImageUpload(event)">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #d48247; margin-bottom: 15px;"></i>
-                    <p style="font-size: 16px; color: #2c2c2c; margin-bottom: 10px;">
-                        <strong>Click to upload</strong> or drag and drop an image
-                    </p>
-                    <p style="font-size: 14px; color: #6a6a6a;">
-                        You can also paste an image from clipboard (Ctrl+V / Cmd+V)
-                    </p>
-                    <img id="imagePreview" class="image-preview" alt="Preview">
-                </div>
-                <div class="ocr-progress" id="ocrProgress">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                        <p style="margin: 0; font-weight: 500;">Extracting text from image...</p>
-                        <button class="btn btn-secondary" id="cancelOcrBtn" onclick="cancelOCR()" style="display: none; padding: 6px 15px; font-size: 14px;">Cancel</button>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress-fill" id="progressFill"></div>
-                    </div>
-                    <p id="progressStatus" style="margin-top: 10px; font-size: 14px; color: #6a6a6a;">Initializing...</p>
-                    <p id="errorDetails" style="margin-top: 10px; font-size: 12px; color: #c62828; display: none; font-weight: 500;"></p>
-                    <p style="margin-top: 10px; font-size: 12px; color: #999; font-style: italic;">
-                        Note: First-time use downloads OCR models (~5MB) - this only happens once.
-                    </p>
-                </div>
-                <button class="btn" id="processImageBtn" onclick="processImage()" style="display: none;">Extract Recipe</button>
-                <button class="btn btn-secondary" onclick="testTesseract()" style="margin-top: 10px; display: block; width: 100%;">Test OCR Engine</button>
-            </div>
+            <textarea 
+                id="recipeInput" 
+                class="recipe-input-area" 
+                placeholder="Paste recipe here, for example:&#10;&#10;2 cups all-purpose flour&#10;1 tablespoon baking powder&#10;1/2 teaspoon salt&#10;3/4 cup sugar&#10;2 eggs&#10;1 cup milk&#10;1/3 cup butter, melted"
+                style="width: 100%; min-height: 200px; padding: 15px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
+            <button class="btn" onclick="addRecipe()">Add Recipe</button>
+            
             <div id="editRecipeActions" style="display: none; margin-top: 15px;">
                 <button class="btn" onclick="saveRecipeEdit()">Save Changes</button>
                 <button class="btn btn-secondary" onclick="cancelRecipeEdit()" style="margin-left: 10px;">Cancel</button>
@@ -392,6 +255,7 @@
                 <button class="btn btn-secondary" onclick="exportRecipes()">Export Recipes</button>
                 <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">Import Recipes</button>
                 <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importRecipes(event)">
+                <button class="btn btn-secondary" onclick="loadPreloadedRecipes()">Load Preloaded Recipes</button>
                 <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
                 <div style="margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                     <label style="font-size: 14px; color: #6a6a6a;">Sort:</label>
@@ -435,24 +299,6 @@
             <div id="shoppingList" class="shopping-list"></div>
         </div>
         
-        <div class="rc-card" id="driveSyncCard">
-            <h2>Google Drive Sync</h2>
-            <p style="margin-bottom: 15px; color: #6a6a6a;">
-                Sync recipes with a Google Drive folder. Recipes added to the consolidator will be saved as documents in your Drive folder, 
-                and documents added to the folder will appear as recipes here.
-            </p>
-            <div id="driveStatus" style="margin-bottom: 15px;">
-                <p id="driveStatusText" style="color: #6a6a6a;">Not connected to Google Drive</p>
-            </div>
-            <button class="btn" id="driveConnectBtn" onclick="initDriveSync()">Connect Google Drive</button>
-            <button class="btn btn-secondary" id="driveDisconnectBtn" onclick="disconnectDrive()" style="display: none; margin-left: 10px;">Disconnect</button>
-            <div id="driveFolderInfo" style="margin-top: 15px; padding: 15px; background: #f8f6f2; border-radius: 6px; display: none;">
-                <p style="margin-bottom: 10px;"><strong>Sync Folder:</strong> <span id="driveFolderName"></span></p>
-                <button class="btn btn-secondary" onclick="selectDriveFolder()" style="font-size: 14px; padding: 8px 15px; margin-right: 10px;">Change Folder</button>
-                <button class="btn btn-secondary" onclick="syncToDrive()" style="font-size: 14px; padding: 8px 15px; margin-right: 10px;">Sync to Drive</button>
-                <button class="btn btn-secondary" onclick="syncFromDrive()" style="font-size: 14px; padding: 8px 15px;">Sync from Drive</button>
-            </div>
-        </div>
     </section>
 
     <script src="recipe-consolidator.js"></script>

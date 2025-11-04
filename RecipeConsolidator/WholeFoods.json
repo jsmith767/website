@@ -1,0 +1,1733 @@
+[
+  {
+    "id": 1762240706954.6343,
+    "name": "Blueberry, Banana & Chia Muffins",
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "gluten-free oat flour",
+        "originalLine": "2 cups gluten-free oat flour"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "blanched almond flour",
+        "originalLine": "½ cup blanched almond flour"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "gluten-free old-fashioned rolled oats",
+        "originalLine": "½ cup gluten-free old-fashioned rolled oats"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "chia seeds",
+        "originalLine": "¼ cup chia seeds"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "baking powder",
+        "originalLine": "2 teaspoons baking powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking soda",
+        "originalLine": "½ teaspoon baking soda"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 teaspoon cinnamon"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground nutmeg",
+        "originalLine": "¼ teaspoon ground nutmeg"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¾ teaspoon sea salt"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "medium, very ripe bananas (1 cup mashed)",
+        "originalLine": "2 medium, very ripe bananas (1 cup mashed)"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "creamy almond butter or preferred nut/seed butter",
+        "originalLine": "⅓ cup creamy almond butter or preferred nut/seed butter"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "⅓ cup maple syrup"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk or organic soy milk",
+        "originalLine": "½ cup unsweetened almond milk or organic soy milk"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract",
+        "originalLine": "1 teaspoon pure vanilla extract"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fresh or frozen blueberries",
+        "originalLine": "1 cup fresh or frozen blueberries"
+      }
+    ],
+    "originalText": "2 cups gluten-free oat flour\n½ cup blanched almond flour\n½ cup gluten-free old-fashioned rolled oats\n¼ cup chia seeds\n2 teaspoons baking powder\n½ teaspoon baking soda\n1 teaspoon cinnamon\n¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\n2 medium, very ripe bananas (1 cup mashed)\n⅓ cup creamy almond butter or preferred nut/seed butter\n⅓ cup maple syrup\n½ cup unsweetened almond milk or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup fresh or frozen blueberries"
+  },
+  {
+    "id": 1762240706954.137,
+    "name": "Cinnamon-Spiced House Granola",
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "gluten-free old-fashioned rolled oats",
+        "originalLine": "3 cups gluten-free old-fashioned rolled oats"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sliced almonds",
+        "originalLine": "1 cup sliced almonds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 tablespoon cinnamon"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground allspice",
+        "originalLine": "½ teaspoon ground allspice"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¼ teaspoon sea salt"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "½ cup maple syrup"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened applesauce",
+        "originalLine": "¼ cup unsweetened applesauce"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract",
+        "originalLine": "1 tablespoon pure vanilla extract"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "¼ cup water"
+      }
+    ],
+    "originalText": "3 cups gluten-free old-fashioned rolled oats\n1 cup sliced almonds\n1 tablespoon cinnamon\n½ teaspoon ground allspice\n¼ teaspoon sea salt\n½ cup maple syrup\n¼ cup unsweetened applesauce\n1 tablespoon pure vanilla extract\n¼ cup water"
+  },
+  {
+    "id": 1762240706954.6377,
+    "name": "Vegetable Jambalaya",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large yellow onion, diced",
+        "originalLine": "1 large yellow onion, diced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large celery stalks, thinly sliced",
+        "originalLine": "2 large celery stalks, thinly sliced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "medium carrots, diced",
+        "originalLine": "2 medium carrots, diced"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves, minced",
+        "originalLine": "4 garlic cloves, minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red bell pepper, deseeded and diced",
+        "originalLine": "1 red bell pepper, deseeded and diced"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "dried oregano",
+        "originalLine": "1½ teaspoon dried oregano"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "smoked paprika",
+        "originalLine": "1½ teaspoon smoked paprika"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "dried thyme",
+        "originalLine": "1 teaspoon dried thyme"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "onion powder",
+        "originalLine": "1 teaspoon onion powder"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder",
+        "originalLine": "1 teaspoon garlic powder"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "red pepper flakes or to your preference",
+        "originalLine": "¼ teaspoon red pepper flakes or to your preference"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bay leaves",
+        "originalLine": "2 bay leaves"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "(14.5-ounce) can diced tomatoes (regular or fire-roasted)",
+        "originalLine": "1 (14.5-ounce) can diced tomatoes (regular or fire-roasted)"
+      },
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "low-sodium vegetable broth (more if needed)",
+        "originalLine": "3 cups low-sodium vegetable broth (more if needed)"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "long-grain brown rice",
+        "originalLine": "1¼ cups long-grain brown rice"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "frozen peas",
+        "originalLine": "1 cup frozen peas"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "tamari",
+        "originalLine": "1 tablespoon tamari"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "baby spinach or chopped kale",
+        "originalLine": "1 cup baby spinach or chopped kale"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Sea salt and black pepper",
+        "originalLine": "Sea salt and black pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Parsley",
+        "originalLine": "Parsley"
+      }
+    ],
+    "originalText": "1 large yellow onion, diced\n2 large celery stalks, thinly sliced\n2 medium carrots, diced\n4 garlic cloves, minced\n1 red bell pepper, deseeded and diced\n1½ teaspoon dried oregano\n1½ teaspoon smoked paprika\n1 teaspoon dried thyme\n1 teaspoon onion powder\n1 teaspoon garlic powder\n¼ teaspoon red pepper flakes or to your preference\n2 bay leaves\n1 (14.5-ounce) can diced tomatoes (regular or fire-roasted)\n3 cups low-sodium vegetable broth (more if needed)\n1¼ cups long-grain brown rice\n1 cup frozen peas\n1 tablespoon tamari\n1 cup baby spinach or chopped kale\nSea salt and black pepper\nParsley"
+  },
+  {
+    "id": 1762240706954.9612,
+    "name": "Apricot, Cardamom & Blueberry Bars",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "whole psyllium husk",
+        "originalLine": "1 tablespoon whole psyllium husk"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "gluten-fre old-fashioned rolled oats",
+        "originalLine": "1 cup gluten-fre old-fashioned rolled oats"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "½ cup water"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "quinoa flakes",
+        "originalLine": "1 cup quinoa flakes"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "gluten-free oat flour",
+        "originalLine": "¾ cup gluten-free oat flour"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "coconut sugar",
+        "originalLine": "½ cup coconut sugar"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "walnuts, chopped",
+        "originalLine": "½ cup walnuts, chopped"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dried apricots, finely chopped 3 tablespoons hemp seeds or sesame seeds",
+        "originalLine": "¾ cup dried apricots, finely chopped 3 tablespoons hemp seeds or sesame seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 teaspoon cinnamon"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "ground cardamom",
+        "originalLine": "1¼ teaspoons ground cardamom"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¼ teaspoon sea salt"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk",
+        "originalLine": "⅔ cup unsweetened almond milk"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract",
+        "originalLine": "1 tablespoon pure vanilla extract"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Zest from 1 large orange (1 heaping tablespoon)",
+        "originalLine": "Zest from 1 large orange (1 heaping tablespoon)"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed orange juice",
+        "originalLine": "2 tablespoons freshly squeezed orange juice"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fresh or frozen blueberries",
+        "originalLine": "1 cup fresh or frozen blueberries"
+      }
+    ],
+    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-fre old-fashioned rolled oats\n½ cup water\n1 cup quinoa flakes\n¾ cup gluten-free oat flour\n½ cup coconut sugar\n½ cup walnuts, chopped\n¾ cup dried apricots, finely chopped 3 tablespoons hemp seeds or sesame seeds\n1 teaspoon cinnamon\n1¼ teaspoons ground cardamom\n¼ teaspoon sea salt\n⅔ cup unsweetened almond milk\n1 tablespoon pure vanilla extract\nZest from 1 large orange (1 heaping tablespoon)\n2 tablespoons freshly squeezed orange juice\n1 cup fresh or frozen blueberries"
+  },
+  {
+    "id": 1762240706954.7227,
+    "name": "Cranberry-Orange Muffins with Rosemary",
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "whole psyllium husk",
+        "originalLine": "2 teaspoons whole psyllium husk"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "⅓ cup water"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "blanched almond flour",
+        "originalLine": "¾ cup blanched almond flour"
+      },
+      {
+        "quantity": 1.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "gluten-free oat flour",
+        "originalLine": "1¾ cup gluten-free oat flour"
+      },
+      {
+        "quantity": 1.75,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "gluten-free old-fashioned rolled oats",
+        "originalLine": "1¾ cups gluten-free old-fashioned rolled oats"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "baking powder",
+        "originalLine": "1 tablespoon baking powder"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "¾ teaspoon cinnamon"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Heaping ¼ teaspoon ground nutmeg",
+        "originalLine": "Heaping ¼ teaspoon ground nutmeg"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¾ teaspoon sea salt"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Scant ½ cup unsweetened almond milk",
+        "originalLine": "Scant ½ cup unsweetened almond milk"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened applesauce",
+        "originalLine": "⅓ cup unsweetened applesauce"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Zest of 1 large orange (1 heaping tablespoon)",
+        "originalLine": "Zest of 1 large orange (1 heaping tablespoon)"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed orange juice",
+        "originalLine": "⅓ cup freshly squeezed orange juice"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "well-stirred tahini",
+        "originalLine": "3 tablespoons well-stirred tahini"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "⅓ cup maple syrup"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract",
+        "originalLine": "1½ teaspoons pure vanilla extract"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "frozen or fresh cranberries",
+        "originalLine": "1½ cups frozen or fresh cranberries"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "finely chopped fresh rosemary leaves",
+        "originalLine": "3 tablespoons finely chopped fresh rosemary leaves"
+      }
+    ],
+    "originalText": "2 teaspoons whole psyllium husk\n⅓ cup water\n¾ cup blanched almond flour\n1¾ cup gluten-free oat flour\n1¾ cups gluten-free old-fashioned rolled oats\n1 tablespoon baking powder\n¾ teaspoon cinnamon\nHeaping ¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\nScant ½ cup unsweetened almond milk\n⅓ cup unsweetened applesauce\nZest of 1 large orange (1 heaping tablespoon)\n⅓ cup freshly squeezed orange juice\n3 tablespoons well-stirred tahini\n⅓ cup maple syrup\n1½ teaspoons pure vanilla extract\n1½ cups frozen or fresh cranberries\n3 tablespoons finely chopped fresh rosemary leaves"
+  },
+  {
+    "id": 1762240706954.0989,
+    "name": "Tuesday Tempeh Tacos",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "(8 ounce) package tempeh",
+        "originalLine": "1(8 ounce) package tempeh"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped",
+        "originalLine": "½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red bell pepper, deseeded and diced",
+        "originalLine": "1 red bell pepper, deseeded and diced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "small jalapeño, deseeded and diced (omit for less spicy option)",
+        "originalLine": "1 small jalapeño, deseeded and diced (omit for less spicy option)"
+      },
+      {
+        "quantity": 2.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "chili powder",
+        "originalLine": "2½ teaspoons chili powder"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "ground cumin",
+        "originalLine": "2 teaspoons ground cumin"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder",
+        "originalLine": "1 teaspoon garlic powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "dried oregano",
+        "originalLine": "½ teaspoon dried oregano"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "smoked paprika",
+        "originalLine": "½ teaspoon smoked paprika"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "tamari",
+        "originalLine": "1 tablespoon tamari"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "chunky salsa (your favorite!)",
+        "originalLine": "½ cup chunky salsa (your favorite!)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lime, cut into wedges",
+        "originalLine": "1 lime, cut into wedges"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "-10 corn tortillas (warmed)",
+        "originalLine": "8-10 corn tortillas (warmed)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "head Boston lettuce (if using tortillas)",
+        "originalLine": "1 head Boston lettuce (if using tortillas)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)",
+        "originalLine": "1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Chopped cilantro or parsley (optional)",
+        "originalLine": "Chopped cilantro or parsley (optional)"
+      }
+    ],
+    "originalText": "1(8 ounce) package tempeh\n½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped\n1 red bell pepper, deseeded and diced\n1 small jalapeño, deseeded and diced (omit for less spicy option)\n2½ teaspoons chili powder\n2 teaspoons ground cumin\n1 teaspoon garlic powder\n½ teaspoon dried oregano\n½ teaspoon smoked paprika\n1 tablespoon tamari\n½ cup chunky salsa (your favorite!)\n1 lime, cut into wedges\n8-10 corn tortillas (warmed)\n1 head Boston lettuce (if using tortillas)\n1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)\nChopped cilantro or parsley (optional)"
+  },
+  {
+    "id": 1762240706954.4104,
+    "name": "Sour Cream",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cashews, soaked in water for 2-3 hours",
+        "originalLine": "1 cup cashews, soaked in water for 2-3 hours"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "apple cider vinegar",
+        "originalLine": "1 tablespoon apple cider vinegar"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "Dijon mustard",
+        "originalLine": "¾ teaspoon Dijon mustard"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¼ teaspoon sea salt"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "½ cup water"
+      }
+    ],
+    "originalText": "1 cup cashews, soaked in water for 2-3 hours\n1 tablespoon apple cider vinegar\n¾ teaspoon Dijon mustard\n¼ teaspoon sea salt\n½ cup water"
+  },
+  {
+    "id": 1762240706954.564,
+    "name": "Easy Apple-Berry Crumble",
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "gluten free old-fashioned rolled oats",
+        "originalLine": "1½ cup gluten free old-fashioned rolled oats"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "coconut sugar",
+        "originalLine": "1 tablespoon coconut sugar"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1¼ teaspoons cinnamon"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground allspice",
+        "originalLine": "¼ teaspoon ground allspice"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt",
+        "originalLine": "¼ teaspoon sea salt"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "3 tablespoons maple syrup"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "well-stirred almond or sunflower seed butter",
+        "originalLine": "1 tablespoon well-stirred almond or sunflower seed butter"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract",
+        "originalLine": "½ teaspoon pure vanilla extract"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "apples, peel left on, chopped in ½-inch cubes (2 heaping cups)",
+        "originalLine": "2 apples, peel left on, chopped in ½-inch cubes (2 heaping cups)"
+      },
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "mixed frozen berries (blueberries, raspberries, and blackberries work well)",
+        "originalLine": "3 cups mixed frozen berries (blueberries, raspberries, and blackberries work well)"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "arrowroot starch",
+        "originalLine": "1 teaspoon arrowroot starch"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Almond Butter Caramel (page 45)",
+        "originalLine": "Almond Butter Caramel (page 45)"
+      }
+    ],
+    "originalText": "1½ cup gluten free old-fashioned rolled oats\n1 tablespoon coconut sugar\n1¼ teaspoons cinnamon\n¼ teaspoon ground allspice\n¼ teaspoon sea salt\n3 tablespoons maple syrup\n1 tablespoon well-stirred almond or sunflower seed butter\n½ teaspoon pure vanilla extract\n2 apples, peel left on, chopped in ½-inch cubes (2 heaping cups)\n3 cups mixed frozen berries (blueberries, raspberries, and blackberries work well)\n1 teaspoon arrowroot starch\nAlmond Butter Caramel (page 45)"
+  },
+  {
+    "id": 1762240706954.9326,
+    "name": "Nice-Cream",
+    "ingredients": [
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "frozen overripe bananas, broken into chunks before freezing",
+        "originalLine": "4 frozen overripe bananas, broken into chunks before freezing"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "almond butter",
+        "originalLine": "2 tablespoons almond butter"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sliced strawberries",
+        "originalLine": "1 cup sliced strawberries"
+      },
+      {
+        "quantity": 11,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)",
+        "originalLine": "11- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)"
+      }
+    ],
+    "originalText": "4 frozen overripe bananas, broken into chunks before freezing\n2 tablespoons almond butter\n1 cup sliced strawberries\n11- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)"
+  },
+  {
+    "id": 1762240706954.3232,
+    "name": "Golden bowls",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dry white quinoa or brown rice",
+        "originalLine": "1 cup dry white quinoa or brown rice"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "each ground turmeric, coriander,",
+        "originalLine": "¾ teaspoon each ground turmeric, coriander,"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "garlic powder",
+        "originalLine": "garlic powder"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "grinds black pepper",
+        "originalLine": "4 grinds black pepper"
+      },
+      {
+        "quantity": 6,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "bite-sized cauliflower florets (1 medium-large head cauliflower)",
+        "originalLine": "6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Plant-based protein of choice (in this picture, 3 B's Burger, cut in half)",
+        "originalLine": "Plant-based protein of choice (in this picture, 3 B's Burger, cut in half)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bunch curly kale, stems removed, chopped (5 packed cups)",
+        "originalLine": "1 bunch curly kale, stems removed, chopped (5 packed cups)"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lemon",
+        "originalLine": "½ lemon"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cherry tomatoes, halved",
+        "originalLine": "1½ cups cherry tomatoes, halved"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "raw or toasted pumpkin seeds",
+        "originalLine": "¼ cup raw or toasted pumpkin seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Golden Tahini Sauce",
+        "originalLine": "Golden Tahini Sauce"
+      }
+    ],
+    "originalText": "1 cup dry white quinoa or brown rice\n¾ teaspoon each ground turmeric, coriander,\ngarlic powder\n4 grinds black pepper\n6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)\nPlant-based protein of choice (in this picture, 3 B's Burger, cut in half)\n1 bunch curly kale, stems removed, chopped (5 packed cups)\n½ lemon\n1½ cups cherry tomatoes, halved\n¼ cup raw or toasted pumpkin seeds\nGolden Tahini Sauce"
+  },
+  {
+    "id": 1762240706954.9844,
+    "name": "Golden Tahini Sauce",
+    "ingredients": [
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "well-stirred tahini",
+        "originalLine": "¼ cup well-stirred tahini"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed lemon juice",
+        "originalLine": "2 tablespoons freshly squeezed lemon juice"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic clove, minced",
+        "originalLine": "1 garlic clove, minced"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "maple syrup, optional",
+        "originalLine": "2 teaspoon maple syrup, optional"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast",
+        "originalLine": "1 teaspoon nutritional yeast"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground turmeric",
+        "originalLine": "¼ teaspoon ground turmeric"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cayenne pepper",
+        "originalLine": "⅛ teaspoon cayenne pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Pinch black pepper 2 tablespoons water",
+        "originalLine": "Pinch black pepper 2 tablespoons water"
+      }
+    ],
+    "originalText": "¼ cup well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n1 garlic clove, minced\n2 teaspoon maple syrup, optional\n1 teaspoon nutritional yeast\n¼ teaspoon ground turmeric\n⅛ teaspoon cayenne pepper\nPinch black pepper 2 tablespoons water"
+  },
+  {
+    "id": 1762240706954.488,
+    "name": "Bitchn' sauce",
+    "ingredients": [
+      {
+        "quantity": 420,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "1 1/2 c. + 4 tbsp. water",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 1.5,
+            "unit": "c."
+          },
+          {
+            "quantity": 4,
+            "unit": "tbsp."
+          }
+        ]
+      },
+      {
+        "quantity": 270,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "grapeseed oil (or similar neutral oil)",
+        "originalLine": "1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 1,
+            "unit": "c."
+          },
+          {
+            "quantity": 2,
+            "unit": "tbsp."
+          }
+        ]
+      },
+      {
+        "quantity": 1,
+        "unit": "c.",
+        "unitType": "volume",
+        "ingredient": "raw almonds",
+        "originalLine": "1 c. raw almonds"
+      },
+      {
+        "quantity": 180,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "lemon juice, fresh",
+        "originalLine": "1/2 c. + 4 tbsp. lemon juice, fresh",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 0.5,
+            "unit": "c."
+          },
+          {
+            "quantity": 4,
+            "unit": "tbsp."
+          }
+        ]
+      },
+      {
+        "quantity": 6,
+        "unit": "tbsp.",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast",
+        "originalLine": "6 tbsp. nutritional yeast"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic",
+        "originalLine": "4 cloves garlic"
+      },
+      {
+        "quantity": 4,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "Tamari",
+        "originalLine": "4 tsp. Tamari"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "kosher salt",
+        "originalLine": "1 tsp. kosher salt"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "cumin",
+        "originalLine": "1 tsp. cumin"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "chili powder",
+        "originalLine": "1 tsp. chili powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "coriander",
+        "originalLine": "1/2 tsp. coriander"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "paprika",
+        "originalLine": "1/2 tsp. paprika"
+      }
+    ],
+    "originalText": "1 1/2 c. + 4 tbsp. water\n1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)\n1 c. raw almonds\n1/2 c. + 4 tbsp. lemon juice, fresh\n6 tbsp. nutritional yeast\n4 cloves garlic\n4 tsp. Tamari\n1 tsp. kosher salt\n1 tsp. cumin\n1 tsp. chili powder\n1/2 tsp. coriander\n1/2 tsp. paprika"
+  },
+  {
+    "id": 1762240706954.9717,
+    "name": "House hummus",
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cooked or canned chickpeas, drained and rinsed",
+        "originalLine": "3 cups cooked or canned chickpeas, drained and rinsed"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "originalLine": "3 garlic cloves"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "well-stirred tahini",
+        "originalLine": "¼ cup well-stirred tahini"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Scant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained",
+        "originalLine": "Scant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt or to taste",
+        "originalLine": "¼ teaspoon sea salt or to taste"
+      },
+      {
+        "quantity": 0.25,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "½ cup water or aquafaba",
+        "originalLine": "¼-½ cup water or aquafaba"
+      }
+    ],
+    "originalText": "3 cups cooked or canned chickpeas, drained and rinsed\n3 garlic cloves\n¼ cup well-stirred tahini\nScant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained\n¼ teaspoon sea salt or to taste\n¼-½ cup water or aquafaba"
+  },
+  {
+    "id": 1762240706954.8054,
+    "name": "Spiced creamy carrot hummus",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "medium carrot, roughly chopped (1 heaping cup)",
+        "originalLine": "1 medium carrot, roughly chopped (1 heaping cup)"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini",
+        "originalLine": "1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed lemon juice",
+        "originalLine": "2 tablespoons freshly squeezed lemon juice"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "white miso",
+        "originalLine": "2 teaspoons white miso"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "originalLine": "2 garlic cloves"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground coriander",
+        "originalLine": "½ teaspoon ground coriander"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "red pepper flakes or to your preference",
+        "originalLine": "½ teaspoon red pepper flakes or to your preference"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground cumin",
+        "originalLine": "¼ teaspoon ground cumin"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt or to taste 2-6 tablespoons water or aquafaba",
+        "originalLine": "¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba"
+      }
+    ],
+    "originalText": "1 medium carrot, roughly chopped (1 heaping cup)\n1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n2 teaspoons white miso\n2 garlic cloves\n½ teaspoon ground coriander\n½ teaspoon red pepper flakes or to your preference\n¼ teaspoon ground cumin\n¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba"
+  },
+  {
+    "id": 1762240706954.6926,
+    "name": "Bacon-ish Bits",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "smoked paprika",
+        "originalLine": "1 teaspoon smoked paprika"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "onion powder",
+        "originalLine": "½ teaspoon onion powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder",
+        "originalLine": "½ teaspoon garlic powder"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast",
+        "originalLine": "1 teaspoon nutritional yeast"
+      },
+      {
+        "quantity": 20,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "tamari",
+        "originalLine": "1 tablespoon + 1 teaspoon tamari",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 1,
+            "unit": "tablespoon"
+          },
+          {
+            "quantity": 1,
+            "unit": "teaspoon"
+          }
+        ]
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "maple syrup, optional",
+        "originalLine": "1 teaspoon maple syrup, optional"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sliced almonds",
+        "originalLine": "½ cup sliced almonds"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sunflower seeds",
+        "originalLine": "½ cup sunflower seeds"
+      }
+    ],
+    "originalText": "1 teaspoon smoked paprika\n½ teaspoon onion powder\n½ teaspoon garlic powder\n1 teaspoon nutritional yeast\n1 tablespoon + 1 teaspoon tamari\n1 teaspoon maple syrup, optional\n½ cup sliced almonds\n½ cup sunflower seeds"
+  },
+  {
+    "id": 1762240706954.723,
+    "name": "Hemp-Balsamic Dressing",
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pitted Medjool dates, soaked in hot water for 15-30 minutes",
+        "originalLine": "2 pitted Medjool dates, soaked in hot water for 15-30 minutes"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp seeds",
+        "originalLine": "3 tablespoons hemp seeds"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "balsamic vinegar",
+        "originalLine": "3 tablespoons balsamic vinegar"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed orange juice",
+        "originalLine": "3 tablespoons freshly squeezed orange juice"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "smooth Dijon mustard (not grainy)",
+        "originalLine": "2 tablespoons smooth Dijon mustard (not grainy)"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "tamari",
+        "originalLine": "2 teaspoons tamari"
+      }
+    ],
+    "originalText": "2 pitted Medjool dates, soaked in hot water for 15-30 minutes\n3 tablespoons hemp seeds\n3 tablespoons balsamic vinegar\n3 tablespoons freshly squeezed orange juice\n2 tablespoons smooth Dijon mustard (not grainy)\n2 teaspoons tamari"
+  },
+  {
+    "id": 1762240706954.635,
+    "name": "Loaded Lunch Salad with Hemp Balsamic Dressing",
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "leafy greens (baby lettuce, arugula, or spinach)",
+        "originalLine": "3 cups leafy greens (baby lettuce, arugula, or spinach)"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "shredded red cabbage",
+        "originalLine": "⅔ cup shredded red cabbage"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "small carrot, peeled into strips",
+        "originalLine": "1 small carrot, peeled into strips"
+      },
+      {
+        "quantity": 0.25,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eup thinly sliced cucumber",
+        "originalLine": "¼ eup thinly sliced cucumber"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "quartered cherry tomatoes",
+        "originalLine": "¼ cup quartered cherry tomatoes"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "finely chopped broccoli or cauliflower",
+        "originalLine": "½ cup finely chopped broccoli or cauliflower"
+      },
+      {
+        "quantity": 0.25,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "½ cup cooked quinoa",
+        "originalLine": "¼-½ cup cooked quinoa"
+      },
+      {
+        "quantity": 0.25,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus",
+        "originalLine": "¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Pinch dulse flakes, optional",
+        "originalLine": "Pinch dulse flakes, optional"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional",
+        "originalLine": "1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Hemp-Balsamic Dressing",
+        "originalLine": "Hemp-Balsamic Dressing"
+      }
+    ],
+    "originalText": "3 cups leafy greens (baby lettuce, arugula, or spinach)\n⅔ cup shredded red cabbage\n1 small carrot, peeled into strips\n¼ eup thinly sliced cucumber\n¼ cup quartered cherry tomatoes\n½ cup finely chopped broccoli or cauliflower\n¼-½ cup cooked quinoa\n¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus\nPinch dulse flakes, optional\n1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional\nHemp-Balsamic Dressing"
+  },
+  {
+    "id": 1762240706954.1296,
+    "name": "Tahini Caesar Dressing",
+    "ingredients": [
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "well-stirred tahini",
+        "originalLine": "⅓ cup well-stirred tahini"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed lemon juice",
+        "originalLine": "3 tablespoons freshly squeezed lemon juice"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "apple cider vinegar",
+        "originalLine": "1 teaspoon apple cider vinegar"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "small garlic cloves",
+        "originalLine": "2 small garlic cloves"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "capers, drained",
+        "originalLine": "2 tablespoons capers, drained"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "Dijon mustard",
+        "originalLine": "1½ teaspoons Dijon mustard"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast",
+        "originalLine": "1 teaspoon nutritional yeast"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "maple syrup, optional",
+        "originalLine": "1 teaspoon maple syrup, optional"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Pinch sea salt",
+        "originalLine": "Pinch sea salt"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Pinch black pepper",
+        "originalLine": "Pinch black pepper"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "¼ cup water"
+      }
+    ],
+    "originalText": "⅓ cup well-stirred tahini\n3 tablespoons freshly squeezed lemon juice\n1 teaspoon apple cider vinegar\n2 small garlic cloves\n2 tablespoons capers, drained\n1½ teaspoons Dijon mustard\n1 teaspoon nutritional yeast\n1 teaspoon maple syrup, optional\nPinch sea salt\nPinch black pepper\n¼ cup water"
+  },
+  {
+    "id": 1762240706954.603,
+    "name": "Quick Smoked Chickpeas",
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cooked or canned chickpeas, drained and rinsed",
+        "originalLine": "1½ cups cooked or canned chickpeas, drained and rinsed"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "dehydrated minced onion",
+        "originalLine": "2 teaspoons dehydrated minced onion"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "smoked paprika",
+        "originalLine": "¾ teaspoon smoked paprika"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Pinch red pepper flakes or to your preference",
+        "originalLine": "Pinch red pepper flakes or to your preference"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "coconut sugar, optional",
+        "originalLine": "½ teaspoon coconut sugar, optional"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "tamari",
+        "originalLine": "2 teaspoons tamari"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "balsamic vinegar",
+        "originalLine": "1 teaspoon balsamic vinegar"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "water",
+        "originalLine": "2 tablespoons water"
+      }
+    ],
+    "originalText": "1½ cups cooked or canned chickpeas, drained and rinsed\n2 teaspoons dehydrated minced onion\n¾ teaspoon smoked paprika\nPinch red pepper flakes or to your preference\n½ teaspoon coconut sugar, optional\n2 teaspoons tamari\n1 teaspoon balsamic vinegar\n2 tablespoons water"
+  },
+  {
+    "id": 1762240706954.9773,
+    "name": "Tahni Caesar Salad",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large bunch curly kale, stems removed, chopped (6 packed cups)",
+        "originalLine": "1 large bunch curly kale, stems removed, chopped (6 packed cups)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Lemon",
+        "originalLine": "1 Lemon"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large head romaine lettuce (hearts and leaves), chopped (5 packed cups)",
+        "originalLine": "1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "Bacon-ish Bits (page 116)",
+        "originalLine": "½ cup Bacon-ish Bits (page 116)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Cashew Turmeric Parmesan (page 149)",
+        "originalLine": "Cashew Turmeric Parmesan (page 149)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Quick Smoked Chickpeas",
+        "originalLine": "Quick Smoked Chickpeas"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "ingredient": "Tahini Caesar Dressing",
+        "originalLine": "Tahini Caesar Dressing"
+      }
+    ],
+    "originalText": "1 large bunch curly kale, stems removed, chopped (6 packed cups)\n1 Lemon\n1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)\n½ cup Bacon-ish Bits (page 116)\nCashew Turmeric Parmesan (page 149)\nQuick Smoked Chickpeas\nTahini Caesar Dressing"
+  },
+  {
+    "id": 1762240706954.874,
+    "name": "After Ceremony Soup",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "lb",
+        "unitType": "weight",
+        "ingredient": "potatos cubed",
+        "originalLine": "1 lb potatos cubed"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bell peppers",
+        "originalLine": "4 bell peppers"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bundle celery",
+        "originalLine": "1 bundle celery"
+      },
+      {
+        "quantity": 11,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "carrots",
+        "originalLine": "11 carrots"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "zuccini",
+        "originalLine": "6-8 zuccini"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "leek",
+        "originalLine": "2 leek"
+      },
+      {
+        "quantity": 4,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "of veggie stock",
+        "originalLine": "4 cups of veggie stock"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "jar curry paste",
+        "originalLine": "1/2 jar curry paste"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cans coconut milk",
+        "originalLine": "2 cans coconut milk"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bok choi",
+        "originalLine": "4 bok choi"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bunch cilantro",
+        "originalLine": "1 bunch cilantro"
+      }
+    ],
+    "originalText": "1 lb potatos cubed\n4 bell peppers\n1 bundle celery\n11 carrots\n6-8 zuccini\n2 leek\n4 cups of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro"
+  }
+]

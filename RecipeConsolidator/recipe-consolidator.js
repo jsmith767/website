@@ -10,22 +10,11 @@ let shoppingListSortOrder = 'alphabetical'; // Default shopping list sort order
 
 // LocalStorage keys
 const STORAGE_KEY = 'recipeConsolidator_recipes';
-const DRIVE_FOLDER_KEY = 'recipeConsolidator_driveFolder';
-const DRIVE_TOKEN_KEY = 'recipeConsolidator_driveToken';
 const UNIT_SYSTEM_KEY = 'recipeConsolidator_unitSystem';
 const SHOPPING_LIST_SORT_KEY = 'recipeConsolidator_shoppingListSort';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
-
-// Google Drive API configuration
-let gapiLoaded = false;
-let gisLoaded = false;
-let driveFolderId = null;
-let accessToken = null;
-
-// Google API scopes needed
-const SCOPES = 'https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/drive.readonly';
 
 /**
  * Save recipes to localStorage
@@ -1039,12 +1028,6 @@ function editRecipe(recipeId) {
     addRecipeTitle.textContent = 'Edit Recipe';
     addRecipeDescription.textContent = 'Make changes to the recipe below. The tool will re-parse ingredients when you save.';
     
-    // Switch to text tab if not already there
-    const textTabBtn = document.querySelectorAll('.tab-button')[0];
-    if (textTabBtn && !textTabBtn.classList.contains('active')) {
-        switchTab('text', textTabBtn);
-    }
-    
     // Scroll to the form
     document.getElementById('addRecipeCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1497,18 +1480,22 @@ function getIngredientCategory(ingredientName) {
     
     const nameLower = ingredientName.toLowerCase();
     
-    // Check each category
+    // Find the best match (longest keyword that matches) across all categories
+    let bestMatch = null;
+    let bestMatchLength = 0;
+    
     for (const [category, keywords] of Object.entries(INGREDIENT_CATEGORIES)) {
         if (category === 'Other') continue;
         
         for (const keyword of keywords) {
-            if (nameLower.includes(keyword)) {
-                return category;
+            if (nameLower.includes(keyword) && keyword.length > bestMatchLength) {
+                bestMatch = category;
+                bestMatchLength = keyword.length;
             }
         }
     }
     
-    return 'Other';
+    return bestMatch || 'Other';
 }
 
 /**
@@ -1757,6 +1744,78 @@ function exportRecipes() {
     } catch (error) {
         console.error('Error exporting recipes:', error);
         showMessage('Error exporting recipes', 'error');
+    }
+}
+
+/**
+ * Load preloaded recipes from WholeFoods.json
+ */
+async function loadPreloadedRecipes() {
+    try {
+        const response = await fetch('WholeFoods.json');
+        if (!response.ok) {
+            showMessage('Could not load preloaded recipes', 'error');
+            return;
+        }
+        
+        const imported = await response.json();
+        if (!Array.isArray(imported)) {
+            showMessage('Invalid preloaded recipe file format', 'error');
+            return;
+        }
+        
+        // Validate recipe structure
+        const validRecipes = imported.filter(recipe => {
+            return recipe && recipe.name && Array.isArray(recipe.ingredients);
+        });
+        
+        if (validRecipes.length === 0) {
+            showMessage('No valid recipes found in preloaded file', 'error');
+            return;
+        }
+        
+        // Check if recipes are already loaded (by name)
+        const existingNames = new Set(recipes.map(r => r.name.toLowerCase()));
+        const newRecipes = validRecipes.filter(recipe => 
+            !existingNames.has(recipe.name.toLowerCase())
+        );
+        
+        if (newRecipes.length === 0) {
+            showMessage('All preloaded recipes are already loaded', 'success');
+            return;
+        }
+        
+        // Add imported recipes (assign new IDs to avoid conflicts)
+        const newRecipeIds = [];
+        newRecipes.forEach(recipe => {
+            recipe.id = Date.now() + Math.random(); // New unique ID
+            recipes.push(recipe);
+            newRecipeIds.push(recipe.id);
+        });
+        
+        // Don't automatically activate imported recipes - let user choose
+        // activeRecipeIds is not updated, so they'll be inactive by default
+        
+        // Save to localStorage
+        saveRecipes();
+        saveActiveRecipes();
+        
+        // Consolidate and update UI
+        consolidateIngredients();
+        updateRecipeList();
+        updateShoppingList();
+        
+        const addedCount = newRecipes.length;
+        const skippedCount = validRecipes.length - newRecipes.length;
+        let message = `Loaded ${addedCount} preloaded recipe${addedCount !== 1 ? 's' : ''}`;
+        if (skippedCount > 0) {
+            message += ` (${skippedCount} already loaded)`;
+        }
+        message += '. Check the boxes to include them in your shopping list.';
+        showMessage(message, 'success');
+    } catch (error) {
+        console.error('Error loading preloaded recipes:', error);
+        showMessage('Error loading preloaded recipes. Please check if WholeFoods.json exists.', 'error');
     }
 }
 
@@ -2044,396 +2103,6 @@ function showMessage(message, type) {
     }
 }
 
-// Image/OCR handling
-let uploadedImage = null;
-let ocrWorker = null;
-let isProcessing = false;
-
-/**
- * Switch between text and image input tabs
- */
-function switchTab(tab, element) {
-    // Update tab buttons
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    if (element) {
-        element.classList.add('active');
-    }
-    
-    // Update tab content
-    document.getElementById('textTab').classList.toggle('active', tab === 'text');
-    document.getElementById('imageTab').classList.toggle('active', tab === 'image');
-}
-
-/**
- * Handle image file upload
- */
-function handleImageUpload(event) {
-    const file = event.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-        displayImage(file);
-    } else {
-        showMessage('Please select a valid image file', 'error');
-    }
-}
-
-/**
- * Display uploaded image preview
- */
-function displayImage(file) {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const preview = document.getElementById('imagePreview');
-        preview.src = e.target.result;
-        preview.classList.add('show');
-        uploadedImage = e.target.result;
-        document.getElementById('processImageBtn').style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-}
-
-/**
- * Resize image if too large to speed up OCR
- */
-function resizeImageIfNeeded(imageSrc, maxWidth = 1200) {
-    return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = function() {
-            if (img.width <= maxWidth) {
-                resolve(imageSrc);
-                return;
-            }
-            
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const ratio = maxWidth / img.width;
-            canvas.width = maxWidth;
-            canvas.height = img.height * ratio;
-            
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            const resized = canvas.toDataURL('image/jpeg', 0.9);
-            resolve(resized);
-        };
-        img.src = imageSrc;
-    });
-}
-
-/**
- * Test Tesseract.js functionality
- */
-async function testTesseract() {
-    const testBtn = event.target;
-    const originalText = testBtn.textContent;
-    testBtn.disabled = true;
-    testBtn.textContent = 'Testing...';
-    
-    try {
-        // Check if Tesseract is available
-        if (!checkTesseractAvailable()) {
-            showMessage('Tesseract.js is not loaded. Please refresh the page.', 'error');
-            testBtn.disabled = false;
-            testBtn.textContent = originalText;
-            return;
-        }
-        
-        showMessage('Testing OCR engine...', 'success');
-        console.log('Testing Tesseract.js...');
-        
-        // Try to create a worker
-        const testWorker = await Tesseract.createWorker('eng');
-        console.log('Worker created successfully');
-        
-        // Try to recognize a simple test (this won't actually process an image, just test the API)
-        await testWorker.terminate();
-        console.log('Worker terminated successfully');
-        
-        showMessage('OCR engine test passed! Tesseract.js is working correctly.', 'success');
-        
-    } catch (error) {
-        console.error('Tesseract test failed:', error);
-        const errorMsg = error?.message || error?.toString() || 'Unknown error';
-        showMessage(`OCR test failed: ${errorMsg}. Check the console for details.`, 'error');
-    } finally {
-        testBtn.disabled = false;
-        testBtn.textContent = originalText;
-    }
-}
-
-/**
- * Cancel OCR processing
- */
-function cancelOCR() {
-    if (ocrWorker && isProcessing) {
-        ocrWorker.terminate();
-        ocrWorker = null;
-        isProcessing = false;
-        
-        const progressDiv = document.getElementById('ocrProgress');
-        const processBtn = document.getElementById('processImageBtn');
-        const cancelBtn = document.getElementById('cancelOcrBtn');
-        
-        progressDiv.classList.remove('show');
-        processBtn.disabled = false;
-        processBtn.textContent = 'Extract Recipe';
-        cancelBtn.style.display = 'none';
-        
-        showMessage('OCR processing cancelled', 'success');
-    }
-}
-
-/**
- * Check if Tesseract.js is available
- */
-function checkTesseractAvailable() {
-    if (typeof Tesseract === 'undefined') {
-        return false;
-    }
-    if (typeof Tesseract.createWorker !== 'function') {
-        return false;
-    }
-    return true;
-}
-
-/**
- * Process image with OCR
- */
-async function processImage() {
-    if (!uploadedImage) {
-        showMessage('Please upload an image first', 'error');
-        return;
-    }
-    
-    if (isProcessing) {
-        showMessage('Already processing an image. Please wait or cancel the current operation.', 'error');
-        return;
-    }
-    
-    // Check if Tesseract is loaded
-    if (!checkTesseractAvailable()) {
-        showMessage('OCR library failed to load. Please refresh the page and try again. If the problem persists, use the text input instead.', 'error');
-        return;
-    }
-    
-    const progressDiv = document.getElementById('ocrProgress');
-    const progressFill = document.getElementById('progressFill');
-    const progressStatus = document.getElementById('progressStatus');
-    const errorDetails = document.getElementById('errorDetails');
-    const processBtn = document.getElementById('processImageBtn');
-    const cancelBtn = document.getElementById('cancelOcrBtn');
-    
-    // Hide any previous errors
-    errorDetails.style.display = 'none';
-    errorDetails.textContent = '';
-    
-    // Show progress
-    progressDiv.classList.add('show');
-    processBtn.disabled = true;
-    processBtn.textContent = 'Processing...';
-    cancelBtn.style.display = 'block';
-    progressStatus.textContent = 'Initializing OCR engine...';
-    progressFill.style.width = '5%';
-    isProcessing = true;
-    
-    try {
-        // Resize image if too large (speeds up processing)
-        progressStatus.textContent = 'Optimizing image...';
-        progressFill.style.width = '10%';
-        const optimizedImage = await resizeImageIfNeeded(uploadedImage);
-        
-        // Validate image
-        if (!optimizedImage || optimizedImage.length < 100) {
-            throw new Error('Invalid image data');
-        }
-        
-        // Initialize Tesseract worker with progress updates
-        progressStatus.textContent = 'Loading OCR engine (first time may take longer)...';
-        progressFill.style.width = '15%';
-        
-        try {
-            // Set a timeout for worker creation (30 seconds)
-            const workerPromise = Tesseract.createWorker('eng', 1, {
-                logger: m => {
-                    // Update progress based on status
-                    let statusText = '';
-                    let progress = 15;
-                    
-                    if (m.status === 'loading tesseract core') {
-                        statusText = 'Loading core engine...';
-                        progress = 20;
-                    } else if (m.status === 'initializing tesseract') {
-                        statusText = 'Initializing OCR engine...';
-                        progress = 30;
-                    } else if (m.status === 'loading language traineddata') {
-                        statusText = 'Loading language model (this only happens once)...';
-                        progress = 40;
-                    } else if (m.status === 'initializing api') {
-                        statusText = 'Setting up recognition engine...';
-                        progress = 50;
-                    } else if (m.status === 'recognizing text') {
-                        statusText = 'Extracting text from image...';
-                        progress = 50 + Math.round(m.progress * 50); // 50-100%
-                    }
-                    
-                    if (statusText) {
-                        progressStatus.textContent = statusText;
-                        progressFill.style.width = progress + '%';
-                    }
-                }
-            });
-            
-            // Add timeout to worker creation
-            const timeoutPromise = new Promise((_, reject) => 
-                setTimeout(() => reject(new Error('OCR initialization timed out after 30 seconds')), 30000)
-            );
-            
-            ocrWorker = await Promise.race([workerPromise, timeoutPromise]);
-        } catch (workerError) {
-            // Re-throw with more context
-            throw new Error(`Failed to create OCR worker: ${workerError?.message || workerError?.toString() || 'Unknown error'}`);
-        }
-        
-        // Set OCR parameters for better speed/accuracy balance
-        try {
-            await ocrWorker.setParameters({
-                tessedit_pageseg_mode: '6', // Assume uniform block of text
-                tessedit_char_whitelist: '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz /-.,()[]{}:;!?\'"'
-            });
-        } catch (paramError) {
-            console.warn('Could not set OCR parameters, using defaults:', paramError);
-        }
-        
-        // Perform OCR with progress updates
-        progressStatus.textContent = 'Analyzing image and extracting text...';
-        let text = '';
-        
-        try {
-            const result = await ocrWorker.recognize(optimizedImage, {
-                logger: m => {
-                    if (m.status === 'recognizing text') {
-                        const progress = 50 + Math.round(m.progress * 50);
-                        progressFill.style.width = progress + '%';
-                        progressStatus.textContent = `Extracting text... ${Math.round(m.progress * 100)}%`;
-                    }
-                }
-            });
-            
-            // Handle different response formats
-            if (result && result.data && result.data.text) {
-                text = result.data.text;
-            } else if (result && result.text) {
-                text = result.text;
-            } else if (typeof result === 'string') {
-                text = result;
-            } else {
-                throw new Error('Unexpected OCR response format');
-            }
-        } catch (recognizeError) {
-            throw new Error(`OCR recognition failed: ${recognizeError?.message || recognizeError?.toString() || 'Unknown error'}`);
-        }
-        
-        // Clean up worker
-        await ocrWorker.terminate();
-        ocrWorker = null;
-        isProcessing = false;
-        
-        progressFill.style.width = '100%';
-        progressStatus.textContent = 'Complete!';
-        cancelBtn.style.display = 'none';
-        
-        // Small delay to show completion
-        await new Promise(resolve => setTimeout(resolve, 300));
-        
-        // Hide progress
-        progressDiv.classList.remove('show');
-        processBtn.disabled = false;
-        processBtn.textContent = 'Extract Recipe';
-        
-        if (!text || !text.trim()) {
-            showMessage('No text could be extracted from the image. Please try a clearer image or use text input.', 'error');
-            return;
-        }
-        
-        // Populate the text area with extracted text and switch to text tab
-        document.getElementById('recipeInput').value = text;
-        
-        // Activate text tab
-        const textTabBtn = document.querySelectorAll('.tab-button')[0];
-        switchTab('text', textTabBtn);
-        
-        showMessage('Text extracted successfully! Review and click "Add Recipe" to continue.', 'success');
-        
-    } catch (error) {
-        // Don't show error if it was cancelled
-        if (error && error.message && (error.message.includes('terminated') || error.message.includes('cancel'))) {
-            return;
-        }
-        
-        // Extract error information
-        const errorMessage = error?.message || error?.toString() || 'Unknown error';
-        const errorName = error?.name || 'Error';
-        const errorStack = error?.stack || '';
-        
-        // Log full error details
-        console.error('OCR Error Details:', {
-            name: errorName,
-            message: errorMessage,
-            stack: errorStack,
-            fullError: error
-        });
-        
-        // Provide more specific error messages
-        let userMessage = 'Error processing image. ';
-        let detailedError = errorMessage;
-        
-        // Check for specific error types
-        const lowerMessage = errorMessage.toLowerCase();
-        
-        if (lowerMessage.includes('network') || lowerMessage.includes('fetch') || lowerMessage.includes('failed to fetch')) {
-            userMessage += 'Network error - please check your internet connection. ';
-        } else if (lowerMessage.includes('worker') || lowerMessage.includes('web worker')) {
-            userMessage += 'OCR engine failed to load. Your browser may not support Web Workers. ';
-        } else if (lowerMessage.includes('invalid image') || lowerMessage.includes('image format')) {
-            userMessage += 'Invalid image format. Please try a different image. ';
-        } else if (lowerMessage.includes('timeout') || lowerMessage.includes('timed out')) {
-            userMessage += 'Processing timed out. Please try again with a smaller image. ';
-        } else if (lowerMessage.includes('tesseract') || lowerMessage.includes('ocr')) {
-            userMessage += 'OCR engine error. ';
-        } else if (errorMessage && errorMessage !== 'Unknown error') {
-            userMessage += `Error: ${errorMessage}. `;
-        } else {
-            userMessage += 'An unexpected error occurred. ';
-        }
-        
-        userMessage += 'Please try again or use text input.';
-        
-        // Show detailed error in UI
-        const errorDetailsEl = document.getElementById('errorDetails');
-        if (errorDetailsEl) {
-            errorDetailsEl.textContent = `Error: ${detailedError}`;
-            errorDetailsEl.style.display = 'block';
-        }
-        
-        // Show user-friendly message
-        showMessage(userMessage, 'error');
-        progressDiv.classList.remove('show');
-        processBtn.disabled = false;
-        processBtn.textContent = 'Extract Recipe';
-        cancelBtn.style.display = 'none';
-        isProcessing = false;
-        
-        // Clean up worker if it exists
-        if (ocrWorker) {
-            try {
-                await ocrWorker.terminate();
-            } catch (e) {
-                console.error('Error terminating worker:', e);
-            }
-            ocrWorker = null;
-        }
-    }
-}
-
 /**
  * Set unit system and save preference
  */
@@ -2492,227 +2161,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load saved recipes from localStorage
     loadRecipes();
-    
-    // Load Drive folder info if saved
-    const savedFolderId = localStorage.getItem(DRIVE_FOLDER_KEY);
-    if (savedFolderId) {
-        driveFolderId = savedFolderId;
-        updateDriveUI();
-    }
-    
-    // Initialize Google APIs
-    loadGoogleAPIs();
-    
-    const uploadArea = document.getElementById('imageUploadArea');
-    const fileInput = document.getElementById('imageFileInput');
-    
-    // Drag and drop handlers
-    uploadArea.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        uploadArea.classList.add('dragover');
-    });
-    
-    uploadArea.addEventListener('dragleave', () => {
-        uploadArea.classList.remove('dragover');
-    });
-    
-    uploadArea.addEventListener('drop', (e) => {
-        e.preventDefault();
-        uploadArea.classList.remove('dragover');
-        
-        const files = e.dataTransfer.files;
-        if (files.length > 0 && files[0].type.startsWith('image/')) {
-            displayImage(files[0]);
-            // Update file input
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(files[0]);
-            fileInput.files = dataTransfer.files;
-        }
-    });
-    
-    // Paste from clipboard
-    document.addEventListener('paste', (e) => {
-        // Only handle paste if image tab is active
-        if (!document.getElementById('imageTab').classList.contains('active')) {
-            return;
-        }
-        
-        const items = e.clipboardData.items;
-        for (let i = 0; i < items.length; i++) {
-            if (items[i].type.indexOf('image') !== -1) {
-                const blob = items[i].getAsFile();
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('imagePreview');
-                    preview.src = e.target.result;
-                    preview.classList.add('show');
-                    uploadedImage = e.target.result;
-                    document.getElementById('processImageBtn').style.display = 'block';
-                    
-                    // Create a file object for the file input
-                    const file = new File([blob], 'pasted-image.png', { type: 'image/png' });
-                    const dataTransfer = new DataTransfer();
-                    dataTransfer.items.add(file);
-                    fileInput.files = dataTransfer.files;
-                    
-                    showMessage('Image pasted! Click "Extract Recipe" to process.', 'success');
-                };
-                reader.readAsDataURL(blob);
-                break;
-            }
-        }
-    });
 });
 
-/**
- * Load Google APIs
- */
-function loadGoogleAPIs() {
-    // Load Google API Client Library
-    gapi.load('client:picker', () => {
-        gapiLoaded = true;
-        console.log('Google API loaded');
-    });
-    
-    // Note: For production, you'll need to set up OAuth credentials
-    // This is a placeholder implementation
-    updateDriveStatus('Google Drive API ready. Note: OAuth setup required for full functionality.');
-}
-
-/**
- * Initialize Google Drive sync
- */
-async function initDriveSync() {
-    // For production, you'll need to:
-    // 1. Set up Google Cloud project
-    // 2. Enable Drive API
-    // 3. Create OAuth 2.0 credentials
-    // 4. Configure redirect URIs
-    
-    showMessage('Google Drive integration requires OAuth setup. See console for details.', 'error');
-    console.log('To enable Google Drive sync:');
-    console.log('1. Create a Google Cloud project');
-    console.log('2. Enable Google Drive API');
-    console.log('3. Create OAuth 2.0 credentials');
-    console.log('4. Add your domain to authorized origins');
-    
-    // Placeholder: This would normally authenticate and get token
-    // For now, we'll implement the structure
-    
-    // If you want to proceed with manual folder selection:
-    selectDriveFolder();
-}
-
-/**
- * Select Drive folder for sync
- */
-function selectDriveFolder() {
-    // This would open Google Picker to select a folder
-    // For now, we'll use a prompt for the folder ID
-    const folderId = prompt('Enter Google Drive folder ID (or leave empty to cancel):');
-    if (folderId && folderId.trim()) {
-        driveFolderId = folderId.trim();
-        localStorage.setItem(DRIVE_FOLDER_KEY, driveFolderId);
-        updateDriveUI();
-        showMessage('Drive folder selected. Full sync requires OAuth setup.', 'success');
-    }
-}
-
-/**
- * Update Drive UI based on connection status
- */
-function updateDriveUI() {
-    const statusText = document.getElementById('driveStatusText');
-    const connectBtn = document.getElementById('driveConnectBtn');
-    const disconnectBtn = document.getElementById('driveDisconnectBtn');
-    const folderInfo = document.getElementById('driveFolderInfo');
-    const folderName = document.getElementById('driveFolderName');
-    
-    if (driveFolderId) {
-        statusText.textContent = 'Drive folder configured';
-        statusText.style.color = '#2e7d32';
-        connectBtn.style.display = 'none';
-        disconnectBtn.style.display = 'inline-block';
-        folderInfo.style.display = 'block';
-        folderName.textContent = driveFolderId.substring(0, 20) + '...';
-    } else {
-        statusText.textContent = 'Not connected to Google Drive';
-        statusText.style.color = '#6a6a6a';
-        connectBtn.style.display = 'inline-block';
-        disconnectBtn.style.display = 'none';
-        folderInfo.style.display = 'none';
-    }
-}
-
-/**
- * Update Drive status message
- */
-function updateDriveStatus(message) {
-    const statusText = document.getElementById('driveStatusText');
-    statusText.textContent = message;
-}
-
-/**
- * Disconnect from Drive
- */
-function disconnectDrive() {
-    if (confirm('Disconnect from Google Drive? This will not delete your recipes.')) {
-        driveFolderId = null;
-        accessToken = null;
-        localStorage.removeItem(DRIVE_FOLDER_KEY);
-        localStorage.removeItem(DRIVE_TOKEN_KEY);
-        updateDriveUI();
-        showMessage('Disconnected from Google Drive', 'success');
-    }
-}
-
-/**
- * Sync recipes to Google Drive
- */
-async function syncToDrive() {
-    if (!driveFolderId) {
-        showMessage('Please select a Drive folder first', 'error');
-        return;
-    }
-    
-    showMessage('Syncing to Drive... (OAuth setup required for full functionality)', 'success');
-    
-    // This would:
-    // 1. Get access token via OAuth
-    // 2. For each recipe, create/update a .docx file in the Drive folder
-    // 3. Use Drive API to upload files
-    
-    console.log('Would sync', recipes.length, 'recipes to Drive folder:', driveFolderId);
-    
-    // Placeholder implementation
-    for (const recipe of recipes) {
-        // Convert recipe to .docx format
-        // Upload to Drive folder
-        console.log('Would sync recipe:', recipe.name);
-    }
-}
-
-/**
- * Sync recipes from Google Drive
- */
-async function syncFromDrive() {
-    if (!driveFolderId) {
-        showMessage('Please select a Drive folder first', 'error');
-        return;
-    }
-    
-    showMessage('Syncing from Drive... (OAuth setup required for full functionality)', 'success');
-    
-    // This would:
-    // 1. Get access token via OAuth
-    // 2. List files in the Drive folder
-    // 3. Download .docx files
-    // 4. Parse them into recipes
-    // 5. Add new recipes to the consolidator
-    
-    console.log('Would sync from Drive folder:', driveFolderId);
-    
-    // Placeholder implementation
-    showMessage('Full Drive sync requires OAuth setup. Export/Import is available as alternative.', 'error');
-}
 
