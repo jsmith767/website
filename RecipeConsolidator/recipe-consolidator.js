@@ -3843,38 +3843,44 @@ function importMealPlan(event) {
     
     const reader = new FileReader();
     reader.onload = function(e) {
-        // Defer heavy processing to avoid blocking the main thread
-        setTimeout(function() {
+        // Parse JSON immediately (this is fast)
+        let importData;
+        try {
+            importData = JSON.parse(e.target.result);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            showMessage(`Error parsing meal plan file: ${error.message}`, 'error');
+            return;
+        }
+        
+        // Debug: log what we're importing (lightweight operation)
+        console.log('=== MEAL PLAN IMPORT ===');
+        console.log('Has mealPlan:', !!importData.mealPlan);
+        console.log('Has mealPlanNotes:', !!importData.mealPlanNotes);
+        console.log('Has selectedDays:', !!importData.selectedDays);
+        console.log('Has activeRecipeIds:', !!importData.activeRecipeIds);
+        console.log('Has recipeMultipliers:', !!importData.recipeMultipliers);
+        
+        // Validate import data
+        if (!importData.mealPlan) {
+            console.error('❌ Invalid meal plan file format - missing mealPlan property');
+            console.error('Available properties:', Object.keys(importData));
+            showMessage('Invalid meal plan file format - missing meal plan data', 'error');
+            return;
+        }
+        
+        // Ask user if they want to replace or merge (this blocks, but that's expected)
+        const replace = confirm('Replace existing meal plan with imported one?\n\nClick OK to replace, Cancel to merge.');
+        
+        // Process in chunks to avoid blocking
+        function processImport() {
             try {
-                const importData = JSON.parse(e.target.result);
-                
-                // Debug: log what we're importing
-                console.log('=== MEAL PLAN IMPORT ===');
-                console.log('Importing meal plan data:', importData);
-                console.log('Has mealPlan:', !!importData.mealPlan);
-                console.log('Has mealPlanNotes:', !!importData.mealPlanNotes);
-                console.log('Has selectedDays:', !!importData.selectedDays);
-                console.log('Has activeRecipeIds:', !!importData.activeRecipeIds);
-                console.log('Has recipeMultipliers:', !!importData.recipeMultipliers);
-                
-                // Validate import data
-                if (!importData.mealPlan) {
-                    console.error('❌ Invalid meal plan file format - missing mealPlan property');
-                    console.error('Available properties:', Object.keys(importData));
-                    showMessage('Invalid meal plan file format - missing meal plan data', 'error');
-                    return;
-                }
-                
-                // Ask user if they want to replace or merge
-                const replace = confirm('Replace existing meal plan with imported one?\n\nClick OK to replace, Cancel to merge.');
-                
                 if (replace) {
-                    // Use structuredClone if available, otherwise shallow copy is fine (we'll deep copy selected parts)
+                    // Use structuredClone if available, otherwise shallow copy
                     if (typeof structuredClone !== 'undefined') {
                         mealPlan = structuredClone(importData.mealPlan);
                         mealPlanNotes = importData.mealPlanNotes ? structuredClone(importData.mealPlanNotes) : {};
                     } else {
-                        // Fallback: shallow copy (sufficient for our use case)
                         mealPlan = Object.assign({}, importData.mealPlan);
                         mealPlanNotes = importData.mealPlanNotes ? Object.assign({}, importData.mealPlanNotes) : {};
                     }
@@ -3897,93 +3903,145 @@ function importMealPlan(event) {
                         }
                     }
                 } else {
-                    // Merge: combine meal plans
-                    for (const date in importData.mealPlan) {
-                        if (!mealPlan[date]) {
-                            mealPlan[date] = {};
-                        }
-                        for (const meal in importData.mealPlan[date]) {
-                            if (!mealPlan[date][meal]) {
-                                mealPlan[date][meal] = [];
+                    // Merge: combine meal plans - process in chunks
+                    const dates = Object.keys(importData.mealPlan);
+                    let dateIndex = 0;
+                    
+                    function processDateChunk() {
+                        const startTime = performance.now();
+                        const chunkSize = 5; // Process 5 dates at a time
+                        
+                        while (dateIndex < dates.length && (performance.now() - startTime) < 10) {
+                            const date = dates[dateIndex];
+                            if (!mealPlan[date]) {
+                                mealPlan[date] = {};
                             }
-                            // Add recipes that don't already exist
-                            const existingIds = new Set(mealPlan[date][meal]);
-                            importData.mealPlan[date][meal].forEach(recipeId => {
-                                if (!existingIds.has(recipeId)) {
-                                    mealPlan[date][meal].push(recipeId);
+                            for (const meal in importData.mealPlan[date]) {
+                                if (!mealPlan[date][meal]) {
+                                    mealPlan[date][meal] = [];
+                                }
+                                const existingIds = new Set(mealPlan[date][meal]);
+                                importData.mealPlan[date][meal].forEach(recipeId => {
+                                    if (!existingIds.has(recipeId)) {
+                                        mealPlan[date][meal].push(recipeId);
+                                    }
+                                });
+                            }
+                            dateIndex++;
+                        }
+                        
+                        if (dateIndex < dates.length) {
+                            // More dates to process, continue in next chunk
+                            setTimeout(processDateChunk, 0);
+                        } else {
+                            // Finished processing dates, continue with notes
+                            processNotes();
+                        }
+                    }
+                    
+                    function processNotes() {
+                        // Merge notes
+                        const noteDates = Object.keys(importData.mealPlanNotes || {});
+                        for (const date of noteDates) {
+                            if (!mealPlanNotes[date]) {
+                                mealPlanNotes[date] = {};
+                            }
+                            for (const meal in importData.mealPlanNotes[date]) {
+                                if (!mealPlanNotes[date][meal]) {
+                                    mealPlanNotes[date][meal] = {};
+                                }
+                                Object.assign(mealPlanNotes[date][meal], importData.mealPlanNotes[date][meal]);
+                            }
+                        }
+                        
+                        // Merge selected days
+                        importData.selectedDays?.forEach(day => selectedDays.add(day));
+                        
+                        // Merge active recipes
+                        if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                            importData.activeRecipeIds.forEach(id => {
+                                const numId = parseFloat(id);
+                                if (!isNaN(numId)) {
+                                    activeRecipeIds.add(numId);
                                 }
                             });
                         }
-                    }
-                    
-                    // Merge notes
-                    for (const date in importData.mealPlanNotes || {}) {
-                        if (!mealPlanNotes[date]) {
-                            mealPlanNotes[date] = {};
-                        }
-                        for (const meal in importData.mealPlanNotes[date]) {
-                            if (!mealPlanNotes[date][meal]) {
-                                mealPlanNotes[date][meal] = {};
-                            }
-                            Object.assign(mealPlanNotes[date][meal], importData.mealPlanNotes[date][meal]);
-                        }
-                    }
-                    
-                    // Merge selected days
-                    importData.selectedDays?.forEach(day => selectedDays.add(day));
-                    
-                    // Merge active recipes (add imported ones)
-                    if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                        importData.activeRecipeIds.forEach(id => {
-                            const numId = parseFloat(id);
-                            if (!isNaN(numId)) {
-                                activeRecipeIds.add(numId);
-                            }
-                        });
-                    }
-                    
-                    // Merge multipliers (prefer imported values if they exist)
-                    if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
-                        for (const id in importData.recipeMultipliers) {
-                            const numId = parseFloat(id);
-                            if (!isNaN(numId)) {
-                                recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                        
+                        // Merge multipliers
+                        if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
+                            for (const id in importData.recipeMultipliers) {
+                                const numId = parseFloat(id);
+                                if (!isNaN(numId)) {
+                                    recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                                }
                             }
                         }
+                        
+                        // Convert IDs and finish
+                        convertIds();
                     }
+                    
+                    processDateChunk();
+                    return; // Exit early, convertIds will be called from processNotes
                 }
                 
-                // Convert recipe IDs back to numbers (optimize with batch processing)
-                for (const date in mealPlan) {
-                    for (const meal in mealPlan[date]) {
-                        mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
-                    }
-                }
-                
-                // Save all imported data (defer localStorage writes)
-                setTimeout(function() {
-                    saveMealPlan();
-                    saveActiveRecipes();
-                    saveRecipeMultipliers();
-                    
-                    // Update UI (defer UI updates)
-                    requestAnimationFrame(function() {
-                        updateRecipeList();
-                        updateShoppingList();
-                        updateDayPlanner();
-                        showMessage('Meal plan imported successfully', 'success');
-                    });
-                }, 0);
+                // Convert recipe IDs back to numbers
+                convertIds();
             } catch (error) {
                 console.error('Error importing meal plan:', error);
                 console.error('Error details:', {
                     message: error.message,
-                    stack: error.stack,
-                    importData: e?.target?.result?.substring(0, 500) // First 500 chars for debugging
+                    stack: error.stack
                 });
                 showMessage(`Error importing meal plan: ${error.message}. Check console for details.`, 'error');
             }
-        }, 0);
+        }
+        
+        function convertIds() {
+            // Convert IDs in chunks
+            const dates = Object.keys(mealPlan);
+            let dateIndex = 0;
+            
+            function convertChunk() {
+                const startTime = performance.now();
+                const chunkSize = 10; // Process 10 dates at a time
+                
+                while (dateIndex < dates.length && (performance.now() - startTime) < 10) {
+                    const date = dates[dateIndex];
+                    for (const meal in mealPlan[date]) {
+                        mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
+                    }
+                    dateIndex++;
+                }
+                
+                if (dateIndex < dates.length) {
+                    setTimeout(convertChunk, 0);
+                } else {
+                    // All done, save and update UI
+                    finishImport();
+                }
+            }
+            
+            convertChunk();
+        }
+        
+        function finishImport() {
+            // Save all imported data
+            saveMealPlan();
+            saveActiveRecipes();
+            saveRecipeMultipliers();
+            
+            // Update UI
+            requestAnimationFrame(function() {
+                updateRecipeList();
+                updateShoppingList();
+                updateDayPlanner();
+                showMessage('Meal plan imported successfully', 'success');
+            });
+        }
+        
+        // Start processing asynchronously
+        setTimeout(processImport, 0);
     };
     
     reader.readAsText(file);
