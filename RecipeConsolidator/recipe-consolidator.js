@@ -3472,12 +3472,19 @@ function exportMealPlan() {
     }
     
     try {
+        // Include recipe names for matching across environments
+        const recipeNamesById = {};
+        recipes.forEach(recipe => {
+            recipeNamesById[recipe.id] = recipe.name;
+        });
+        
         const exportData = {
             mealPlan: mealPlan,
             mealPlanNotes: mealPlanNotes,
             selectedDays: Array.from(selectedDays),
             activeRecipeIds: Array.from(activeRecipeIds),
             recipeMultipliers: recipeMultipliers,
+            recipeNamesById: recipeNamesById, // Include recipe names for matching
             exportDate: new Date().toISOString()
         };
         
@@ -3902,39 +3909,49 @@ function importMealPlan(event) {
                 }
                 
                 // Try to match each imported recipe ID
-                const unmatchedIds = [];
-                const matchedRecipes = new Set();
-                
-                // If we have recipe names in the export, use those (future enhancement)
-                // For now, we'll need to match by trying to find recipes with the same structure
-                // Since we don't store recipe names in meal plans, we'll need to match by ID or prompt user
-                
-                // For now, let's try to match by seeing if the ID exists, and if not, 
-                // we'll need to find recipes by some other means
-                // Actually, the best approach is to match by name if we can get recipe names from somewhere
-                // But since meal plans don't store recipe names, we need a different approach
-                
-                // Better approach: Match by ID if exists, otherwise keep the ID and let the user know
-                // which recipes are missing. Or, we could export recipe names with the meal plan.
-                
-                // For now, let's just validate and warn about missing recipes
                 const missingRecipeIds = [];
+                const matchedByName = [];
+                
+                // If export includes recipe names, use them for matching
+                const hasRecipeNames = importData.recipeNamesById && typeof importData.recipeNamesById === 'object';
+                
                 importedRecipeIds.forEach(oldId => {
                     const numId = parseFloat(oldId);
-                    if (!isNaN(numId)) {
-                        const recipe = recipes.find(r => r.id === numId);
-                        if (recipe) {
-                            recipeIdMap.set(oldId, numId); // ID matches
-                            matchedRecipes.add(recipe.name);
+                    if (isNaN(numId)) return;
+                    
+                    // First try: match by ID
+                    const recipe = recipes.find(r => r.id === numId);
+                    if (recipe) {
+                        recipeIdMap.set(oldId, numId); // ID matches
+                    } else if (hasRecipeNames) {
+                        // Second try: match by name from export
+                        const exportedName = importData.recipeNamesById[oldId];
+                        if (exportedName) {
+                            const matchedRecipe = recipes.find(r => 
+                                r.name.toLowerCase() === exportedName.toLowerCase()
+                            );
+                            if (matchedRecipe) {
+                                recipeIdMap.set(oldId, matchedRecipe.id); // Map old ID to new ID
+                                matchedByName.push({ oldName: exportedName, newId: matchedRecipe.id });
+                            } else {
+                                missingRecipeIds.push({ id: oldId, name: exportedName });
+                            }
                         } else {
-                            missingRecipeIds.push(oldId);
+                            missingRecipeIds.push({ id: oldId, name: 'Unknown' });
                         }
+                    } else {
+                        // No recipe names in export, can't match by name
+                        missingRecipeIds.push({ id: oldId, name: 'Unknown' });
                     }
                 });
                 
+                if (matchedByName.length > 0) {
+                    console.log(`Matched ${matchedByName.length} recipes by name:`, matchedByName);
+                }
+                
                 if (missingRecipeIds.length > 0) {
-                    console.warn('Some recipe IDs in meal plan do not match current recipes:', missingRecipeIds);
-                    // We'll proceed anyway, but these recipes won't appear in the meal plan
+                    const missingNames = missingRecipeIds.map(m => m.name).filter(n => n !== 'Unknown');
+                    console.warn('Some recipes from meal plan are not available:', missingNames);
                 }
                 
                 if (replace) {
@@ -4062,62 +4079,115 @@ function importMealPlan(event) {
         
         // Helper function to remap recipe IDs
         function remapRecipeIds(recipeIdMap, missingRecipeIds) {
-            // Remove recipes with missing IDs from meal plan
+            // Remap recipe IDs in meal plan using the mapping
             for (const date in mealPlan) {
                 for (const meal in mealPlan[date]) {
                     if (Array.isArray(mealPlan[date][meal])) {
-                        mealPlan[date][meal] = mealPlan[date][meal].filter(id => {
-                            const numId = parseFloat(id);
-                            if (isNaN(numId)) return false;
-                            // Keep if ID exists in current recipes
-                            return recipes.some(r => r.id === numId);
-                        });
+                        mealPlan[date][meal] = mealPlan[date][meal].map(oldId => {
+                            // Try to find mapped ID
+                            if (recipeIdMap.has(oldId)) {
+                                return recipeIdMap.get(oldId);
+                            }
+                            // Otherwise, try to find by current ID
+                            const numId = parseFloat(oldId);
+                            if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
+                                return numId;
+                            }
+                            // Not found, return null to filter out
+                            return null;
+                        }).filter(id => id !== null);
                     }
                 }
             }
             
-            // Also clean up activeRecipeIds
+            // Also remap notes - need to update note keys with new recipe IDs
+            const remappedNotes = {};
+            for (const date in mealPlanNotes) {
+                remappedNotes[date] = {};
+                for (const meal in mealPlanNotes[date]) {
+                    remappedNotes[date][meal] = {};
+                    for (const noteKey in mealPlanNotes[date][meal]) {
+                        // Note keys are in format: date_meal_recipeId_index
+                        const parts = noteKey.split('_');
+                        if (parts.length >= 4) {
+                            const oldRecipeId = parts.slice(2, -1).join('_'); // Get recipe ID part (might have underscores)
+                            const index = parts[parts.length - 1];
+                            
+                            // Try to find mapped ID
+                            let newRecipeId = oldRecipeId;
+                            if (recipeIdMap.has(oldRecipeId)) {
+                                newRecipeId = recipeIdMap.get(oldRecipeId);
+                            } else {
+                                const numId = parseFloat(oldRecipeId);
+                                if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
+                                    newRecipeId = numId;
+                                } else {
+                                    // Skip this note - recipe not found
+                                    continue;
+                                }
+                            }
+                            
+                            const newNoteKey = `${date}_${meal}_${newRecipeId}_${index}`;
+                            remappedNotes[date][meal][newNoteKey] = mealPlanNotes[date][meal][noteKey];
+                        }
+                    }
+                }
+            }
+            mealPlanNotes = remappedNotes;
+            
+            // Also remap activeRecipeIds using the mapping
             if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                const validActiveIds = importData.activeRecipeIds.filter(id => {
-                    const numId = parseFloat(id);
-                    if (isNaN(numId)) return false;
-                    return recipes.some(r => r.id === numId);
-                }).map(id => parseFloat(id));
+                const remappedActiveIds = importData.activeRecipeIds.map(oldId => {
+                    if (recipeIdMap.has(oldId)) {
+                        return recipeIdMap.get(oldId);
+                    }
+                    const numId = parseFloat(oldId);
+                    if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
+                        return numId;
+                    }
+                    return null;
+                }).filter(id => id !== null);
                 
                 if (replace) {
-                    activeRecipeIds = new Set(validActiveIds);
+                    activeRecipeIds = new Set(remappedActiveIds);
                 } else {
-                    // Merge: add valid IDs
-                    validActiveIds.forEach(id => activeRecipeIds.add(id));
+                    // Merge: add remapped IDs
+                    remappedActiveIds.forEach(id => activeRecipeIds.add(id));
                 }
             }
             
-            // Clean up multipliers for missing recipes
+            // Remap multipliers using the mapping
             if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
                 if (replace) {
                     recipeMultipliers = {};
-                    for (const id in importData.recipeMultipliers) {
-                        const numId = parseFloat(id);
-                        if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
-                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                }
+                for (const oldId in importData.recipeMultipliers) {
+                    let newId = oldId;
+                    if (recipeIdMap.has(oldId)) {
+                        newId = recipeIdMap.get(oldId);
+                    } else {
+                        const numId = parseFloat(oldId);
+                        if (isNaN(numId) || !recipes.some(r => r.id === numId)) {
+                            continue; // Skip this multiplier - recipe not found
                         }
+                        newId = numId;
                     }
-                } else {
-                    // Merge: only add valid multipliers
-                    for (const id in importData.recipeMultipliers) {
-                        const numId = parseFloat(id);
-                        if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
-                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
-                        }
-                    }
+                    recipeMultipliers[newId] = importData.recipeMultipliers[oldId];
                 }
             }
             
             // Warn user about missing recipes
             if (missingRecipeIds.length > 0) {
+                const missingNames = missingRecipeIds
+                    .map(m => m.name)
+                    .filter(n => n !== 'Unknown')
+                    .slice(0, 5); // Show first 5 names
                 const missingCount = missingRecipeIds.length;
+                const namesText = missingNames.length > 0 
+                    ? ` (${missingNames.join(', ')}${missingCount > 5 ? '...' : ''})`
+                    : '';
                 showMessage(
-                    `Meal plan imported, but ${missingCount} recipe${missingCount !== 1 ? 's' : ''} from the meal plan are not available in your current recipe list. Make sure you have the same recipes loaded.`,
+                    `Meal plan imported, but ${missingCount} recipe${missingCount !== 1 ? 's' : ''} from the meal plan are not available in your current recipe list${namesText}. Make sure you have the same recipes loaded.`,
                     'warning'
                 );
             }
