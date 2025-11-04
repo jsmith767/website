@@ -3875,6 +3875,68 @@ function importMealPlan(event) {
         // Process in chunks to avoid blocking
         function processImport() {
             try {
+                // First, create a mapping of recipe IDs from import to current recipes
+                // Try to match by ID first, then by name
+                const recipeIdMap = new Map(); // oldId -> newId
+                const recipeNameMap = new Map(); // name -> recipe (for lookup)
+                
+                // Build name map for current recipes
+                recipes.forEach(recipe => {
+                    recipeNameMap.set(recipe.name.toLowerCase(), recipe);
+                });
+                
+                // Try to match imported recipe IDs to current recipes
+                // Collect all recipe IDs from the imported meal plan
+                const importedRecipeIds = new Set();
+                for (const date in importData.mealPlan) {
+                    for (const meal in importData.mealPlan[date]) {
+                        if (Array.isArray(importData.mealPlan[date][meal])) {
+                            importData.mealPlan[date][meal].forEach(id => importedRecipeIds.add(id));
+                        }
+                    }
+                }
+                
+                // Also check activeRecipeIds if present
+                if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                    importData.activeRecipeIds.forEach(id => importedRecipeIds.add(id));
+                }
+                
+                // Try to match each imported recipe ID
+                const unmatchedIds = [];
+                const matchedRecipes = new Set();
+                
+                // If we have recipe names in the export, use those (future enhancement)
+                // For now, we'll need to match by trying to find recipes with the same structure
+                // Since we don't store recipe names in meal plans, we'll need to match by ID or prompt user
+                
+                // For now, let's try to match by seeing if the ID exists, and if not, 
+                // we'll need to find recipes by some other means
+                // Actually, the best approach is to match by name if we can get recipe names from somewhere
+                // But since meal plans don't store recipe names, we need a different approach
+                
+                // Better approach: Match by ID if exists, otherwise keep the ID and let the user know
+                // which recipes are missing. Or, we could export recipe names with the meal plan.
+                
+                // For now, let's just validate and warn about missing recipes
+                const missingRecipeIds = [];
+                importedRecipeIds.forEach(oldId => {
+                    const numId = parseFloat(oldId);
+                    if (!isNaN(numId)) {
+                        const recipe = recipes.find(r => r.id === numId);
+                        if (recipe) {
+                            recipeIdMap.set(oldId, numId); // ID matches
+                            matchedRecipes.add(recipe.name);
+                        } else {
+                            missingRecipeIds.push(oldId);
+                        }
+                    }
+                });
+                
+                if (missingRecipeIds.length > 0) {
+                    console.warn('Some recipe IDs in meal plan do not match current recipes:', missingRecipeIds);
+                    // We'll proceed anyway, but these recipes won't appear in the meal plan
+                }
+                
                 if (replace) {
                     // Use structuredClone if available, otherwise shallow copy
                     if (typeof structuredClone !== 'undefined') {
@@ -3886,22 +3948,10 @@ function importMealPlan(event) {
                     }
                     selectedDays = new Set(importData.selectedDays || []);
                     
-                    // Restore active recipes and multipliers
-                    if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                        activeRecipeIds = new Set(importData.activeRecipeIds.map(id => {
-                            const numId = parseFloat(id);
-                            return isNaN(numId) ? null : numId;
-                        }).filter(id => id !== null));
-                    }
-                    if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
-                        recipeMultipliers = {};
-                        for (const id in importData.recipeMultipliers) {
-                            const numId = parseFloat(id);
-                            if (!isNaN(numId)) {
-                                recipeMultipliers[numId] = importData.recipeMultipliers[id];
-                            }
-                        }
-                    }
+                    // Remap recipe IDs in meal plan to match current recipes
+                    remapRecipeIds(recipeIdMap, missingRecipeIds);
+                    
+                    // Active recipes and multipliers will be handled by remapRecipeIds
                 } else {
                     // Merge: combine meal plans - process in chunks
                     const dates = Object.keys(importData.mealPlan);
@@ -3957,33 +4007,18 @@ function importMealPlan(event) {
                         // Merge selected days
                         importData.selectedDays?.forEach(day => selectedDays.add(day));
                         
-                        // Merge active recipes
-                        if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                            importData.activeRecipeIds.forEach(id => {
-                                const numId = parseFloat(id);
-                                if (!isNaN(numId)) {
-                                    activeRecipeIds.add(numId);
-                                }
-                            });
-                        }
-                        
-                        // Merge multipliers
-                        if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
-                            for (const id in importData.recipeMultipliers) {
-                                const numId = parseFloat(id);
-                                if (!isNaN(numId)) {
-                                    recipeMultipliers[numId] = importData.recipeMultipliers[id];
-                                }
-                            }
-                        }
-                        
+                        // Active recipes and multipliers will be handled by remapRecipeIds
                         // Convert IDs and finish
+                        remapRecipeIds(recipeIdMap, missingRecipeIds);
                         convertIds();
                     }
                     
                     processDateChunk();
                     return; // Exit early, convertIds will be called from processNotes
                 }
+                
+                // Remap recipe IDs to match current recipes
+                remapRecipeIds(recipeIdMap, missingRecipeIds);
                 
                 // Convert recipe IDs back to numbers
                 convertIds();
@@ -4023,6 +4058,69 @@ function importMealPlan(event) {
             }
             
             convertChunk();
+        }
+        
+        // Helper function to remap recipe IDs
+        function remapRecipeIds(recipeIdMap, missingRecipeIds) {
+            // Remove recipes with missing IDs from meal plan
+            for (const date in mealPlan) {
+                for (const meal in mealPlan[date]) {
+                    if (Array.isArray(mealPlan[date][meal])) {
+                        mealPlan[date][meal] = mealPlan[date][meal].filter(id => {
+                            const numId = parseFloat(id);
+                            if (isNaN(numId)) return false;
+                            // Keep if ID exists in current recipes
+                            return recipes.some(r => r.id === numId);
+                        });
+                    }
+                }
+            }
+            
+            // Also clean up activeRecipeIds
+            if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                const validActiveIds = importData.activeRecipeIds.filter(id => {
+                    const numId = parseFloat(id);
+                    if (isNaN(numId)) return false;
+                    return recipes.some(r => r.id === numId);
+                }).map(id => parseFloat(id));
+                
+                if (replace) {
+                    activeRecipeIds = new Set(validActiveIds);
+                } else {
+                    // Merge: add valid IDs
+                    validActiveIds.forEach(id => activeRecipeIds.add(id));
+                }
+            }
+            
+            // Clean up multipliers for missing recipes
+            if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
+                if (replace) {
+                    recipeMultipliers = {};
+                    for (const id in importData.recipeMultipliers) {
+                        const numId = parseFloat(id);
+                        if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
+                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                        }
+                    }
+                } else {
+                    // Merge: only add valid multipliers
+                    for (const id in importData.recipeMultipliers) {
+                        const numId = parseFloat(id);
+                        if (!isNaN(numId) && recipes.some(r => r.id === numId)) {
+                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                        }
+                    }
+                }
+            }
+            
+            // Warn user about missing recipes
+            if (missingRecipeIds.length > 0) {
+                const missingCount = missingRecipeIds.length;
+                showMessage(
+                    `Meal plan imported, but ${missingCount} recipe${missingCount !== 1 ? 's' : ''} from the meal plan are not available in your current recipe list. Make sure you have the same recipes loaded.`,
+                    'warning'
+                );
+            }
         }
         
         function finishImport() {
@@ -4628,23 +4726,30 @@ function clearAll() {
  */
 function showMessage(message, type) {
     // Remove any existing messages
-    const existing = document.querySelector('.error-message, .success-message');
+    const existing = document.querySelector('.error-message, .success-message, .warning-message');
     if (existing) {
         existing.remove();
     }
     
     const messageDiv = document.createElement('div');
-    messageDiv.className = type === 'error' ? 'error-message' : 'success-message';
+    if (type === 'error') {
+        messageDiv.className = 'error-message';
+    } else if (type === 'warning') {
+        messageDiv.className = 'warning-message';
+    } else {
+        messageDiv.className = 'success-message';
+    }
     messageDiv.textContent = message;
     
     const firstCard = document.querySelector('.rc-card');
     if (firstCard) {
         firstCard.insertBefore(messageDiv, firstCard.firstChild);
         
-        // Auto-remove after 5 seconds
+        // Auto-remove after 5 seconds (10 seconds for warnings)
+        const timeout = type === 'warning' ? 10000 : 5000;
         setTimeout(() => {
             messageDiv.remove();
-        }, 5000);
+        }, timeout);
     }
 }
 
