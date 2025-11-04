@@ -336,6 +336,231 @@
             line-height: 1.8;
             white-space: pre-wrap;
         }
+        #dayPlannerContainer {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+        }
+        #dayPlannerContainer::-webkit-scrollbar {
+            height: 8px;
+        }
+        #dayPlannerContainer::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        #dayPlannerContainer::-webkit-scrollbar-thumb {
+            background: #d48247;
+            border-radius: 4px;
+        }
+        #dayPlannerContainer::-webkit-scrollbar-thumb:hover {
+            background: #b8703d;
+        }
+        .day-planner-day {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 300px;
+            max-width: 300px;
+            flex-shrink: 0;
+        }
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .day-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+        .meal-slot {
+            min-height: 80px;
+            padding: 15px;
+            background: #f8f6f2;
+            border-radius: 6px;
+            border: 2px dashed #d48247;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+        }
+        .meal-slot.drag-over {
+            background: #fff3e0;
+            border-color: #d48247;
+            border-style: solid;
+        }
+        .meal-slot-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d48247;
+            margin-bottom: 10px;
+        }
+        .meal-slot-content {
+            min-height: 40px;
+        }
+        .planned-recipe {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 2px solid #d48247;
+            margin-bottom: 8px;
+            cursor: move;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: box-shadow 0.2s;
+            gap: 10px;
+        }
+        .planned-recipe:hover {
+            box-shadow: 0 2px 8px rgba(212, 130, 71, 0.3);
+        }
+        .planned-recipe.dragging {
+            opacity: 0.5;
+        }
+        .unplanned-recipe {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 2px solid #6a6a6a;
+            margin-bottom: 8px;
+            cursor: move;
+            display: inline-block;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.2s;
+        }
+        .unplanned-recipe:hover {
+            box-shadow: 0 2px 8px rgba(106, 106, 106, 0.3);
+        }
+        .unplanned-recipe.dragging {
+            opacity: 0.5;
+        }
+        .unplanned-recipes-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .remove-meal {
+            background: #ffebee;
+            color: #c62828;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .remove-meal:hover {
+            background: #ffcdd2;
+        }
+        .remove-day {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #c62828;
+            border-radius: 4px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .remove-day:hover {
+            background: #ffcdd2;
+        }
+        .meal-type-box {
+            background: #d48247;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: move;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            user-select: none;
+        }
+        .meal-type-box:hover {
+            background: #b8703d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(212, 130, 71, 0.3);
+        }
+        .meal-type-box.dragging {
+            opacity: 0.5;
+        }
+        .day-drop-zone {
+            min-height: 100px;
+            padding: 15px;
+            background: #f8f6f2;
+            border-radius: 6px;
+            border: 2px dashed #d48247;
+            margin-bottom: 15px;
+            transition: background 0.2s;
+            position: relative;
+        }
+        .day-drop-zone.drag-over {
+            background: #fff3e0;
+            border-color: #d48247;
+            border-style: solid;
+        }
+        .day-drop-zone.empty {
+            border: 2px dashed #ccc;
+            background: #fafafa;
+        }
+        .day-drop-zone.meal-slot {
+            cursor: move;
+            border: 2px solid #d48247;
+        }
+        .day-drop-zone.meal-slot:hover {
+            box-shadow: 0 2px 8px rgba(212, 130, 71, 0.3);
+        }
+        .day-drop-zone.meal-slot.dragging {
+            opacity: 0.5;
+        }
+        .day-drop-zone.meal-slot.drag-over {
+            background: #fff3e0 !important;
+            border-color: #d48247 !important;
+            border-style: solid !important;
+        }
+        .meal-slot-drop-indicator {
+            height: 8px;
+            background: #d48247;
+            margin: 8px 0;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.2s, height 0.2s;
+            cursor: pointer;
+        }
+        .meal-slot-drop-indicator.drag-over {
+            opacity: 1;
+            height: 12px;
+            background: #b8703d;
+        }
+        .meal-slot-insert-before {
+            border-top: 3px solid #d48247 !important;
+            box-shadow: 0 -2px 8px rgba(212, 130, 71, 0.4);
+        }
+        .meal-slot-insert-after {
+            border-bottom: 3px solid #d48247 !important;
+            box-shadow: 0 2px 8px rgba(212, 130, 71, 0.4);
+        }
+        .remove-meal-slot {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ffebee;
+            color: #c62828;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .remove-meal-slot:hover {
+            background: #ffcdd2;
+        }
         .ingredient-dropdown {
             position: absolute;
             top: 100%;
@@ -518,6 +743,51 @@
             <div id="noRecipesMessage" style="text-align: center; padding: 40px; color: #6a6a6a;">
                 <i class="fas fa-book" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
                 <p>No recipes loaded yet. Add a recipe above or import from a file.</p>
+            </div>
+        </div>
+
+        <div class="rc-card" id="dayPlannerCard" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
+                <h2 style="margin: 0;">Day Planner</h2>
+                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="addDayToPlanner()" style="padding: 8px 15px; font-size: 14px;">Add Day</button>
+                    <button class="btn btn-secondary" onclick="clearMealPlan()" style="padding: 8px 15px; font-size: 14px; background: #ffebee; color: #c62828; border-color: #c62828;">Clear Plan</button>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #e8e8e8;">
+                <h3 style="font-size: 18px; color: #2c2c2c; margin-bottom: 15px;">Meal Types</h3>
+                <p style="font-size: 14px; color: #6a6a6a; margin-bottom: 15px;">
+                    <strong>Tip:</strong> Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) while dropping a recipe to add it to multiple meal slots without removing it from the original location. Useful for prep work!
+                </p>
+                <div id="mealTypesContainer" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="breakfast">
+                        Breakfast
+                    </div>
+                    <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="lunch">
+                        Lunch
+                    </div>
+                    <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="dinner">
+                        Dinner
+                    </div>
+                    <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="prep">
+                        Prep
+                    </div>
+                    <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="late-night">
+                        Late Night
+                    </div>
+                </div>
+            </div>
+            
+            <div id="dayPlannerContainer">
+                <!-- Days will be added here -->
+            </div>
+            
+            <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #e8e8e8;">
+                <h3 style="font-size: 18px; color: #2c2c2c; margin-bottom: 15px;">Unplanned Recipes</h3>
+                <div id="unplannedRecipes" class="unplanned-recipes-container" style="min-height: 100px; padding: 15px; background: #f8f6f2; border-radius: 6px; border: 2px dashed #d48247;">
+                    <!-- Unplanned recipes will be shown here -->
+                </div>
             </div>
         </div>
 

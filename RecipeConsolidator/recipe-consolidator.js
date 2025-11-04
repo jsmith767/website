@@ -22,6 +22,9 @@ let selectedTagFilters = new Set(); // Selected tags for filtering recipes
 let tagFilterLogic = 'or'; // 'and' or 'or' - whether recipes must have ALL selected tags (and) or ANY selected tag (or)
 let selectedIngredients = new Set(); // Selected ingredients for filtering
 let selectedTagsForForm = new Set(); // Tags selected when adding/editing a recipe
+let mealPlan = {}; // Object to store meal plan: { date: { breakfast: [recipeIds], lunch: [recipeIds], dinner: [recipeIds] } }
+let mealPlanNotes = {}; // Object to store notes for recipe instances: { date: { meal: { recipeId: "note" } } }
+let selectedDays = new Set(); // Selected days for the planner
 
 // LocalStorage keys
 const STORAGE_KEY = 'recipeConsolidator_recipes';
@@ -30,6 +33,9 @@ const SHOPPING_LIST_SORT_KEY = 'recipeConsolidator_shoppingListSort';
 const TAG_FILTER_KEY = 'recipeConsolidator_tagFilter';
 const SELECTED_TAG_FILTERS_KEY = 'recipeConsolidator_selectedTagFilters';
 const TAG_FILTER_LOGIC_KEY = 'recipeConsolidator_tagFilterLogic';
+const MEAL_PLAN_KEY = 'recipeConsolidator_mealPlan';
+const MEAL_PLAN_NOTES_KEY = 'recipeConsolidator_mealPlanNotes';
+const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
@@ -1226,6 +1232,7 @@ function saveRecipeEdit() {
     // Update UI
     updateRecipeList();
     updateShoppingList();
+    updateDayPlanner();
     updateTagFilters();
     showMessage(`Recipe updated with ${ingredients.length} ingredients`, 'success');
 }
@@ -1342,6 +1349,7 @@ function addRecipe() {
     // Update UI
     updateRecipeList();
     updateShoppingList();
+    updateDayPlanner();
     updateTagFilters();
     showMessage(`Added recipe with ${ingredients.length} ingredients`, 'success');
 }
@@ -1503,6 +1511,7 @@ function setRecipeMultiplier(recipeId, multiplier) {
     updateRecipeList();
     consolidateIngredients();
     updateShoppingList();
+    updateDayPlanner();
 }
 
 /**
@@ -1528,6 +1537,7 @@ function toggleRecipeActive(recipeId) {
     updateRecipeList();
     consolidateIngredients();
     updateShoppingList();
+    updateDayPlanner();
 }
 
 /**
@@ -2198,6 +2208,1250 @@ function loadShoppingListSort() {
 }
 
 /**
+ * Save meal plan to localStorage
+ */
+function saveMealPlan() {
+    try {
+        localStorage.setItem(MEAL_PLAN_KEY, JSON.stringify(mealPlan));
+        localStorage.setItem(MEAL_PLAN_NOTES_KEY, JSON.stringify(mealPlanNotes));
+        localStorage.setItem(SELECTED_DAYS_KEY, JSON.stringify(Array.from(selectedDays)));
+    } catch (error) {
+        console.error('Error saving meal plan:', error);
+    }
+}
+
+/**
+ * Load meal plan from localStorage
+ */
+function loadMealPlan() {
+    try {
+        const saved = localStorage.getItem(MEAL_PLAN_KEY);
+        if (saved) {
+            mealPlan = JSON.parse(saved);
+            // Convert recipe IDs back to numbers
+            for (const date in mealPlan) {
+                for (const meal in mealPlan[date]) {
+                    mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
+                }
+            }
+        }
+        
+        const savedNotes = localStorage.getItem(MEAL_PLAN_NOTES_KEY);
+        if (savedNotes) {
+            mealPlanNotes = JSON.parse(savedNotes);
+        }
+        
+        const savedDays = localStorage.getItem(SELECTED_DAYS_KEY);
+        if (savedDays) {
+            selectedDays = new Set(JSON.parse(savedDays));
+        }
+    } catch (error) {
+        console.error('Error loading meal plan:', error);
+    }
+}
+
+/**
+ * Add a day to the planner
+ */
+function addDayToPlanner() {
+    const dateStr = prompt('Enter date (YYYY-MM-DD) or leave blank for today:', new Date().toISOString().split('T')[0]);
+    
+    if (dateStr === null) return; // User cancelled
+    
+    let date;
+    if (!dateStr.trim()) {
+        date = new Date().toISOString().split('T')[0];
+    } else {
+        // Validate date format
+        const dateMatch = dateStr.trim().match(/^\d{4}-\d{2}-\d{2}$/);
+        if (!dateMatch) {
+            showMessage('Invalid date format. Please use YYYY-MM-DD', 'error');
+            return;
+        }
+        date = dateStr.trim();
+    }
+    
+    if (!mealPlan[date]) {
+        mealPlan[date] = {
+            breakfast: [],
+            lunch: [],
+            dinner: []
+        };
+    }
+    
+    selectedDays.add(date);
+    saveMealPlan();
+    updateDayPlanner();
+    showMessage(`Added ${formatDate(date)} to planner`, 'success');
+}
+
+/**
+ * Format date for display
+ */
+function formatDate(dateStr) {
+    const date = new Date(dateStr + 'T00:00:00');
+    return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+/**
+ * Remove a day from planner
+ */
+function removeDayFromPlanner(date) {
+    if (confirm(`Remove ${formatDate(date)} from planner?`)) {
+        delete mealPlan[date];
+        selectedDays.delete(date);
+        saveMealPlan();
+        updateDayPlanner();
+    }
+}
+
+/**
+ * Update day planner display
+ */
+function updateDayPlanner() {
+    const container = document.getElementById('dayPlannerContainer');
+    const card = document.getElementById('dayPlannerCard');
+    
+    if (!container || !card) return;
+    
+    // Show planner if there are active recipes or days
+    if (activeRecipeIds.size > 0 || selectedDays.size > 0) {
+        card.style.display = 'block';
+    } else {
+        card.style.display = 'none';
+        return;
+    }
+    
+    container.innerHTML = '';
+    
+    // Sort days chronologically
+    const sortedDays = Array.from(selectedDays).sort();
+    
+    // Define all possible meal types
+    const allMealTypes = ['breakfast', 'lunch', 'dinner', 'prep', 'late-night'];
+    
+    for (const date of sortedDays) {
+        if (!mealPlan[date]) {
+            mealPlan[date] = {};
+        }
+        
+        const dayDiv = document.createElement('div');
+        dayDiv.className = 'day-planner-day';
+        
+        // Get meal types that exist for this day
+        const existingMeals = Object.keys(mealPlan[date]).filter(meal => 
+            mealPlan[date][meal] && Array.isArray(mealPlan[date][meal])
+        );
+        
+        let dayContent = `
+            <div class="day-header">
+                <div class="day-title">${formatDate(date)}</div>
+                <button class="remove-day" onclick="removeDayFromPlanner('${date}')">Remove Day</button>
+            </div>
+        `;
+        
+        // Show empty drop zone only if no meal slots exist
+        if (existingMeals.length === 0) {
+            dayContent += `
+                <div class="day-drop-zone empty" 
+                     data-date="${date}"
+                     ondrop="handleDayDrop(event)"
+                     ondragover="handleDragOver(event)"
+                     ondragleave="handleDragLeave(event)"
+                     id="day-drop-${date}">
+                    <div style="text-align: center; color: #999; font-style: italic; padding: 20px;">
+                        Drop meal types here
+                    </div>
+                </div>
+            `;
+        } else {
+            // Add existing meal slots for this day
+            existingMeals.forEach((mealType, index) => {
+                dayContent += `
+                    <div class="meal-slot-drop-indicator" 
+                         data-date="${date}"
+                         data-insert-position="${index}"
+                         data-insert-before="${mealType}"
+                         ondrop="handleMealSlotReorder(event)"
+                         ondragover="handleMealSlotDragOver(event)"
+                         ondragleave="handleMealSlotDragLeave(event)"></div>
+                    <div class="day-drop-zone meal-slot" 
+                         data-date="${date}" 
+                         data-meal="${mealType}"
+                         data-meal-index="${index}"
+                         ondrop="handleMealSlotContainerDrop(event)"
+                         ondragover="handleMealSlotContainerDragOver(event)"
+                         ondragleave="handleMealSlotContainerDragLeave(event)"
+                         data-accepts-meal-types="true">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <div class="meal-slot-header" 
+                                 draggable="true"
+                                 ondragstart="handleMealSlotDragStart(event)"
+                                 ondragend="handleMealSlotDragEnd(event)"
+                                 style="flex: 1; cursor: move;">
+                                <div class="meal-slot-label">${capitalizeMealType(mealType)}</div>
+                            </div>
+                            <button class="remove-meal-slot" onclick="removeMealSlotFromDay('${date}', '${mealType}')" title="Remove ${capitalizeMealType(mealType)}" onmousedown="event.stopPropagation()">×</button>
+                        </div>
+                        <div class="meal-slot-content" id="meal_${date}_${mealType}">
+                            ${renderMealRecipes(date, mealType)}
+                        </div>
+                    </div>
+                `;
+            });
+            // Add drop indicator at the end
+            dayContent += `
+                <div class="meal-slot-drop-indicator" 
+                     data-date="${date}"
+                     data-insert-position="${existingMeals.length}"
+                     ondrop="handleMealSlotReorder(event)"
+                     ondragover="handleMealSlotDragOver(event)"
+                     ondragleave="handleMealSlotDragLeave(event)"></div>
+            `;
+            
+            // Add empty drop zone at the end for adding more meal types
+            dayContent += `
+                <div class="day-drop-zone empty" 
+                     data-date="${date}"
+                     ondrop="handleDayDrop(event)"
+                     ondragover="handleDragOver(event)"
+                     ondragleave="handleDragLeave(event)"
+                     id="day-drop-${date}"
+                     style="min-height: 60px; margin-top: 10px;">
+                    <div style="text-align: center; color: #999; font-style: italic; padding: 10px; font-size: 12px;">
+                        Drop to add more meal types
+                    </div>
+                </div>
+            `;
+        }
+        
+        dayDiv.innerHTML = dayContent;
+        container.appendChild(dayDiv);
+    }
+    
+    updateUnplannedRecipes();
+}
+
+/**
+ * Capitalize meal type for display
+ */
+function capitalizeMealType(mealType) {
+    if (mealType === 'late-night') {
+        return 'Late Night';
+    }
+    return mealType.charAt(0).toUpperCase() + mealType.slice(1);
+}
+
+/**
+ * Render recipes for a meal slot
+ */
+function renderMealRecipes(date, meal) {
+    const recipeIds = mealPlan[date][meal] || [];
+    if (recipeIds.length === 0) {
+        return '<div style="color: #999; font-style: italic; font-size: 14px;">Drop recipes here</div>';
+    }
+    
+    return recipeIds.map((recipeId, index) => {
+        const recipe = recipes.find(r => r.id === recipeId);
+        if (!recipe) return '';
+        
+        // Check if this recipe appears in other meal slots for this day (for prep connections)
+        const otherMealSlots = getRecipeMealSlotsForDay(date, recipeId, meal);
+        const prepInfo = getPrepInfoForRecipe(date, recipeId, meal);
+        
+        // Get note for this recipe instance
+        const note = getRecipeNote(date, meal, recipeId, index);
+        const noteKey = `${date}_${meal}_${recipeId}_${index}`;
+        
+        return `
+            <div class="planned-recipe" 
+                 draggable="true" 
+                 ondragstart="handleRecipeDragStart(event)" 
+                 data-recipe-id="${recipeId}"
+                 data-date="${date}"
+                 data-meal="${meal}"
+                 data-note-key="${noteKey}"
+                 ondragend="handleRecipeDragEnd(event)">
+                <div style="flex: 1;">
+                    <div>${escapeHtml(recipe.name)}${prepInfo ? prepInfo : ''}${otherMealSlots ? otherMealSlots : ''}</div>
+                    ${note ? `<div style="font-size: 12px; color: #6a6a6a; font-style: italic; margin-top: 4px;">${escapeHtml(note)}</div>` : ''}
+                </div>
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <button class="btn btn-secondary" onclick="editRecipeNote('${date}', '${meal}', ${recipeId}, ${index})" style="padding: 4px 8px; font-size: 12px;" title="Add/Edit Note">📝</button>
+                    <button class="remove-meal" onclick="removeRecipeFromMeal('${date}', '${meal}', ${recipeId})" onmousedown="event.stopPropagation()">×</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Get note for a recipe instance
+ */
+function getRecipeNote(date, meal, recipeId, index) {
+    if (!mealPlanNotes[date] || !mealPlanNotes[date][meal]) {
+        return '';
+    }
+    const noteKey = `${date}_${meal}_${recipeId}_${index}`;
+    return mealPlanNotes[date][meal][noteKey] || '';
+}
+
+/**
+ * Edit note for a recipe instance
+ */
+function editRecipeNote(date, meal, recipeId, index) {
+    const noteKey = `${date}_${meal}_${recipeId}_${index}`;
+    const currentNote = getRecipeNote(date, meal, recipeId, index);
+    
+    const newNote = prompt('Add a note for this recipe instance:', currentNote || '');
+    
+    if (newNote === null) {
+        return; // User cancelled
+    }
+    
+    // Initialize structure if needed
+    if (!mealPlanNotes[date]) {
+        mealPlanNotes[date] = {};
+    }
+    if (!mealPlanNotes[date][meal]) {
+        mealPlanNotes[date][meal] = {};
+    }
+    
+    if (newNote.trim()) {
+        mealPlanNotes[date][meal][noteKey] = newNote.trim();
+    } else {
+        // Remove note if empty
+        delete mealPlanNotes[date][meal][noteKey];
+    }
+    
+    saveMealPlan();
+    updateDayPlanner();
+}
+
+/**
+ * Get other meal slots this recipe appears in for the same day
+ */
+function getRecipeMealSlotsForDay(date, recipeId, currentMeal) {
+    if (!mealPlan[date]) return '';
+    
+    const otherSlots = [];
+    for (const meal in mealPlan[date]) {
+        if (meal !== currentMeal && Array.isArray(mealPlan[date][meal]) && mealPlan[date][meal].includes(recipeId)) {
+            otherSlots.push(meal);
+        }
+    }
+    
+    if (otherSlots.length === 0) return '';
+    
+    return ` <span style="color: #999; font-size: 12px; font-style: italic;">(also in ${otherSlots.map(m => capitalizeMealType(m)).join(', ')})</span>`;
+}
+
+/**
+ * Get prep information for a recipe (if prep was done on a different day)
+ */
+function getPrepInfoForRecipe(date, recipeId, meal) {
+    // Only show prep info for non-prep meals
+    if (meal === 'prep') return '';
+    
+    // Check if this recipe exists in prep slots on earlier days or same day before this meal
+    const currentDate = new Date(date + 'T00:00:00');
+    const mealOrder = ['prep', 'breakfast', 'lunch', 'dinner', 'late-night'];
+    const currentMealIndex = mealOrder.indexOf(meal);
+    
+    for (const d in mealPlan) {
+        const checkDate = new Date(d + 'T00:00:00');
+        const checkMealIndex = mealOrder.indexOf('prep');
+        
+        if (mealPlan[d] && mealPlan[d]['prep'] && Array.isArray(mealPlan[d]['prep']) && mealPlan[d]['prep'].includes(recipeId)) {
+            // Recipe exists in prep
+            if (d === date) {
+                return ` <span style="color: #2e7d32; font-size: 12px;">✓ prepped</span>`;
+            } else if (checkDate < currentDate) {
+                return ` <span style="color: #2e7d32; font-size: 12px;">✓ prepped ${formatDate(d)}</span>`;
+            }
+        }
+    }
+    
+    return '';
+}
+
+/**
+ * Update unplanned recipes display
+ */
+function updateUnplannedRecipes() {
+    const container = document.getElementById('unplannedRecipes');
+    if (!container) return;
+    
+    // Get all active recipe IDs
+    const activeIds = Array.from(activeRecipeIds);
+    
+    // Get all planned recipe IDs
+    const plannedIds = new Set();
+    for (const date in mealPlan) {
+        for (const meal in mealPlan[date]) {
+            if (Array.isArray(mealPlan[date][meal])) {
+                mealPlan[date][meal].forEach(id => plannedIds.add(id));
+            }
+        }
+    }
+    
+    // Get unplanned recipes (active but not in any meal)
+    const unplannedRecipes = activeIds
+        .filter(id => !plannedIds.has(id))
+        .map(id => recipes.find(r => r.id === id))
+        .filter(r => r !== undefined);
+    
+    if (unplannedRecipes.length === 0) {
+        container.innerHTML = '<div style="color: #999; font-style: italic; text-align: center; padding: 20px;">All active recipes are planned</div>';
+        return;
+    }
+    
+    container.innerHTML = unplannedRecipes.map(recipe => {
+        return `
+            <div class="unplanned-recipe" 
+                 draggable="true" 
+                 ondragstart="handleRecipeDragStart(event)" 
+                 ondragend="handleRecipeDragEnd(event)"
+                 data-recipe-id="${recipe.id}">
+                ${escapeHtml(recipe.name)}
+            </div>
+        `;
+    }).join('');
+}
+
+/**
+ * Handle meal type drag start
+ */
+function handleMealTypeDragStart(event) {
+    event.dataTransfer.setData('application/x-meal-type', event.target.dataset.mealType);
+    event.target.classList.add('dragging');
+}
+
+/**
+ * Handle meal slot drag start (for reordering)
+ */
+function handleMealSlotDragStart(event) {
+    // Don't start drag if clicking on a button or recipe
+    if (event.target.tagName === 'BUTTON' || 
+        event.target.closest('.planned-recipe') || 
+        event.target.closest('.unplanned-recipe') ||
+        event.target.closest('.meal-slot-content')) {
+        event.preventDefault();
+        return false;
+    }
+    
+    // Get meal slot info from parent container
+    const mealSlotContainer = event.currentTarget.closest('.meal-slot');
+    if (!mealSlotContainer) {
+        event.preventDefault();
+        return false;
+    }
+    
+    const mealType = mealSlotContainer.dataset.meal;
+    const date = mealSlotContainer.dataset.date;
+    
+    if (!mealType || !date) {
+        event.preventDefault();
+        return false;
+    }
+    
+    event.dataTransfer.setData('application/x-meal-slot', JSON.stringify({ date, mealType }));
+    event.dataTransfer.effectAllowed = 'move';
+    mealSlotContainer.classList.add('dragging');
+}
+
+/**
+ * Handle meal slot drag end
+ */
+function handleMealSlotDragEnd(event) {
+    const mealSlotContainer = event.currentTarget.closest('.meal-slot');
+    if (mealSlotContainer) {
+        mealSlotContainer.classList.remove('dragging');
+    }
+    // Remove all drag-over classes
+    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+}
+
+/**
+ * Handle drop on meal slot container (for reordering meal slots, adding new meal types, and recipes)
+ */
+function handleMealSlotContainerDrop(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    event.currentTarget.classList.remove('meal-slot-insert-before', 'meal-slot-insert-after', 'drag-over');
+    
+    const types = event.dataTransfer.types;
+    
+    // Handle recipe drops
+    if (types.includes('text/plain') && !types.includes('application/x-meal-slot') && !types.includes('application/x-meal-type')) {
+        const recipeIdStr = event.dataTransfer.getData('text/plain');
+        if (recipeIdStr) {
+            const recipeId = parseFloat(recipeIdStr);
+            const date = event.currentTarget.dataset.date;
+            const meal = event.currentTarget.dataset.meal;
+            
+            if (date && meal && recipeId) {
+                // Check if duplicate was allowed when drag started (stored in dataTransfer)
+                const allowDuplicateStr = event.dataTransfer.getData('application/x-allow-duplicate');
+                const allowDuplicate = allowDuplicateStr === 'true' || event.ctrlKey || event.metaKey;
+                
+                if (!allowDuplicate) {
+                    // Remove from previous location if it exists (normal behavior)
+                    for (const d in mealPlan) {
+                        for (const m in mealPlan[d]) {
+                            if (Array.isArray(mealPlan[d][m])) {
+                                const index = mealPlan[d][m].indexOf(recipeId);
+                                if (index > -1) {
+                                    mealPlan[d][m].splice(index, 1);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    // For prep: check if recipe already exists in this exact slot
+                    if (mealPlan[date] && mealPlan[date][meal] && mealPlan[date][meal].includes(recipeId)) {
+                        // Already exists, don't duplicate
+                        return;
+                    }
+                }
+                
+                // Add to new location
+                if (!mealPlan[date][meal]) {
+                    mealPlan[date][meal] = [];
+                }
+                const newIndex = mealPlan[date][meal].length;
+                mealPlan[date][meal].push(recipeId);
+                
+                // If moving (not duplicating), preserve note if it exists
+                if (!allowDuplicate) {
+                    // Find and move note from old location
+                    for (const d in mealPlan) {
+                        for (const m in mealPlan[d]) {
+                            if (Array.isArray(mealPlan[d][m])) {
+                                const oldIndex = mealPlan[d][m].indexOf(recipeId);
+                                if (oldIndex > -1 && (d !== date || m !== meal)) {
+                                    const oldNoteKey = `${d}_${m}_${recipeId}_${oldIndex}`;
+                                    if (mealPlanNotes[d] && mealPlanNotes[d][m] && mealPlanNotes[d][m][oldNoteKey]) {
+                                        // Initialize new location
+                                        if (!mealPlanNotes[date]) mealPlanNotes[date] = {};
+                                        if (!mealPlanNotes[date][meal]) mealPlanNotes[date][meal] = {};
+                                        
+                                        const newNoteKey = `${date}_${meal}_${recipeId}_${newIndex}`;
+                                        mealPlanNotes[date][meal][newNoteKey] = mealPlanNotes[d][m][oldNoteKey];
+                                        delete mealPlanNotes[d][m][oldNoteKey];
+                                        
+                                        // Reindex notes in old location
+                                        reindexRecipeNotes(d, m, recipeId);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                saveMealPlan();
+                updateDayPlanner();
+                
+                // Remove dragging class from all elements
+                document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+            }
+        }
+        return;
+    }
+    
+    // Check if this is a new meal type being added
+    const mealType = event.dataTransfer.getData('application/x-meal-type');
+    if (mealType) {
+        handleMealSlotDropForNewMealType(event);
+        return;
+    }
+    
+    // Otherwise handle meal slot reordering
+    if (!event.dataTransfer.types.includes('application/x-meal-slot')) {
+        return;
+    }
+    
+    const dragData = event.dataTransfer.getData('application/x-meal-slot');
+    if (!dragData) return;
+    
+    const { date: sourceDate, mealType: sourceMealType } = JSON.parse(dragData);
+    const targetDate = event.currentTarget.dataset.date;
+    const targetMealIndex = parseInt(event.currentTarget.dataset.mealIndex);
+    
+    if (sourceDate !== targetDate) return; // Can only reorder within same day
+    
+    // Determine insert position based on where we dropped (top half = before, bottom half = after)
+    const rect = event.currentTarget.getBoundingClientRect();
+    const mouseY = event.clientY;
+    const middleY = rect.top + rect.height / 2;
+    
+    let insertPosition = targetMealIndex;
+    if (mouseY < middleY) {
+        // Insert before this meal
+        insertPosition = targetMealIndex;
+    } else {
+        // Insert after this meal
+        insertPosition = targetMealIndex + 1;
+    }
+    
+    // Get current meal order
+    const currentMeals = Object.keys(mealPlan[targetDate]).filter(meal => 
+        mealPlan[targetDate][meal] && Array.isArray(mealPlan[targetDate][meal])
+    );
+    
+    // Remove source meal from its current position
+    const sourceIndex = currentMeals.indexOf(sourceMealType);
+    if (sourceIndex === -1) return;
+    
+    currentMeals.splice(sourceIndex, 1);
+    
+    // Calculate new position (adjust if source was before target)
+    let newPosition = insertPosition;
+    if (sourceIndex < insertPosition) {
+        newPosition = insertPosition - 1;
+    }
+    
+    // Insert at new position
+    currentMeals.splice(newPosition, 0, sourceMealType);
+    
+    // Rebuild mealPlan object in new order
+    const reorderedMeals = {};
+    const mealData = {};
+    
+    // Store all meal data
+    for (const meal of Object.keys(mealPlan[targetDate])) {
+        if (Array.isArray(mealPlan[targetDate][meal])) {
+            mealData[meal] = mealPlan[targetDate][meal];
+        }
+    }
+    
+    // Rebuild in new order
+    for (const meal of currentMeals) {
+        reorderedMeals[meal] = mealData[meal];
+    }
+    
+    mealPlan[targetDate] = reorderedMeals;
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drag over for meal slot container (for reordering meal slots, adding new meal types, and recipes)
+ */
+function handleMealSlotContainerDragOver(event) {
+    const dragData = event.dataTransfer.types;
+    
+    // Handle recipe drops - make entire meal slot a drop zone
+    // Priority: recipes take precedence over meal slot reordering
+    if (dragData.includes('text/plain') && !dragData.includes('application/x-meal-slot') && !dragData.includes('application/x-meal-type')) {
+        event.preventDefault();
+        event.stopPropagation();
+        event.currentTarget.classList.add('drag-over');
+        
+        // Show hint for duplicate (check both stored value and current modifier keys)
+        const allowDuplicateStr = event.dataTransfer.getData('application/x-allow-duplicate');
+        const isDuplicating = allowDuplicateStr === 'true' || event.ctrlKey || event.metaKey;
+        if (isDuplicating) {
+            event.currentTarget.setAttribute('title', 'Drop to add (duplicate for prep)');
+        } else {
+            event.currentTarget.removeAttribute('title');
+        }
+        return;
+    }
+    
+    // Handle meal slot reordering
+    if (dragData.includes('application/x-meal-slot')) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Determine if we're in the top half (insert before) or bottom half (insert after)
+        const rect = event.currentTarget.getBoundingClientRect();
+        const mouseY = event.clientY;
+        const middleY = rect.top + rect.height / 2;
+        
+        event.currentTarget.classList.remove('meal-slot-insert-before', 'meal-slot-insert-after');
+        
+        if (mouseY < middleY) {
+            event.currentTarget.classList.add('meal-slot-insert-before');
+        } else {
+            event.currentTarget.classList.add('meal-slot-insert-after');
+        }
+        return;
+    }
+    
+    // Handle new meal type drops
+    if (dragData.includes('application/x-meal-type')) {
+        event.preventDefault();
+        event.stopPropagation();
+        
+        // Determine if we're in the top half (insert before) or bottom half (insert after)
+        const rect = event.currentTarget.getBoundingClientRect();
+        const mouseY = event.clientY;
+        const middleY = rect.top + rect.height / 2;
+        
+        event.currentTarget.classList.remove('meal-slot-insert-before', 'meal-slot-insert-after');
+        
+        if (mouseY < middleY) {
+            event.currentTarget.classList.add('meal-slot-insert-before');
+        } else {
+            event.currentTarget.classList.add('meal-slot-insert-after');
+        }
+        return;
+    }
+}
+
+/**
+ * Handle drag leave for meal slot container
+ */
+function handleMealSlotContainerDragLeave(event) {
+    event.currentTarget.classList.remove('meal-slot-insert-before', 'meal-slot-insert-after', 'drag-over');
+}
+
+/**
+ * Handle mouse down on meal slot header to prevent dragging meal slot when clicking header
+ */
+function handleMealSlotHeaderMouseDown(event) {
+    // Only prevent drag if clicking on the header itself, not on buttons or recipes
+    if (event.target.tagName === 'BUTTON' || event.target.closest('.planned-recipe')) {
+        return;
+    }
+    // Allow meal slot dragging from header
+}
+
+/**
+ * Handle drag over for meal slot drop indicators
+ */
+function handleMealSlotDragOver(event) {
+    const dragData = event.dataTransfer.types;
+    
+    // Allow both meal slot reordering and new meal type drops
+    if (dragData.includes('application/x-meal-slot') || dragData.includes('application/x-meal-type')) {
+        event.preventDefault();
+        event.currentTarget.classList.add('drag-over');
+    }
+}
+
+/**
+ * Handle drag leave for meal slot drop indicators
+ */
+function handleMealSlotDragLeave(event) {
+    event.currentTarget.classList.remove('drag-over');
+}
+
+/**
+ * Handle meal slot reorder drop (or new meal type drop on indicator)
+ */
+function handleMealSlotReorder(event) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    
+    // Check if this is a new meal type being added
+    const mealType = event.dataTransfer.getData('application/x-meal-type');
+    if (mealType) {
+        handleDropIndicatorDropForNewMealType(event);
+        return;
+    }
+    
+    // Otherwise handle meal slot reordering
+    const dragData = event.dataTransfer.getData('application/x-meal-slot');
+    if (!dragData) return;
+    
+    const { date: sourceDate, mealType: sourceMealType } = JSON.parse(dragData);
+    const targetDate = event.currentTarget.dataset.date;
+    const insertPosition = parseInt(event.currentTarget.dataset.insertPosition);
+    
+    if (sourceDate !== targetDate) return; // Can only reorder within same day
+    
+    // Get current meal order
+    const currentMeals = Object.keys(mealPlan[targetDate]).filter(meal => 
+        mealPlan[targetDate][meal] && Array.isArray(mealPlan[targetDate][meal])
+    );
+    
+    // Remove source meal from its current position
+    const sourceIndex = currentMeals.indexOf(sourceMealType);
+    if (sourceIndex === -1) return;
+    
+    currentMeals.splice(sourceIndex, 1);
+    
+    // Calculate new position (adjust if source was before target)
+    let newPosition = insertPosition;
+    if (sourceIndex < insertPosition) {
+        newPosition = insertPosition - 1;
+    }
+    
+    // Insert at new position
+    currentMeals.splice(newPosition, 0, sourceMealType);
+    
+    // Rebuild mealPlan object in new order
+    const reorderedMeals = {};
+    const mealData = {};
+    
+    // Store all meal data
+    for (const meal of Object.keys(mealPlan[targetDate])) {
+        if (Array.isArray(mealPlan[targetDate][meal])) {
+            mealData[meal] = mealPlan[targetDate][meal];
+        }
+    }
+    
+    // Rebuild in new order
+    for (const meal of currentMeals) {
+        reorderedMeals[meal] = mealData[meal];
+    }
+    
+    mealPlan[targetDate] = reorderedMeals;
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drag start for recipes
+ */
+function handleRecipeDragStart(event) {
+    // Make sure we're dragging a recipe, not clicking on a button
+    if (event.target.tagName === 'BUTTON' || event.target.closest('.remove-meal')) {
+        event.preventDefault();
+        return false;
+    }
+    
+    // Get recipe ID from the element being dragged
+    let recipeId = event.currentTarget.dataset.recipeId;
+    if (!recipeId) {
+        // Try to get from closest recipe element
+        const recipeElement = event.target.closest('.planned-recipe, .unplanned-recipe');
+        if (recipeElement) {
+            recipeId = recipeElement.dataset.recipeId;
+        }
+    }
+    
+    if (recipeId) {
+        // Store modifier key state for duplicate detection
+        const allowDuplicate = event.ctrlKey || event.metaKey;
+        event.dataTransfer.setData('text/plain', recipeId);
+        event.dataTransfer.setData('application/x-allow-duplicate', allowDuplicate ? 'true' : 'false');
+        event.dataTransfer.effectAllowed = 'move';
+        const recipeElement = event.currentTarget.classList.contains('planned-recipe') || event.currentTarget.classList.contains('unplanned-recipe') 
+            ? event.currentTarget 
+            : event.target.closest('.planned-recipe, .unplanned-recipe');
+        if (recipeElement) {
+            recipeElement.classList.add('dragging');
+        }
+    }
+}
+
+/**
+ * Handle drag end for recipes
+ */
+function handleRecipeDragEnd(event) {
+    // Remove dragging class from all recipe elements
+    document.querySelectorAll('.planned-recipe.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drag over for recipes on meal slot content area
+ */
+function handleRecipeDragOverMealSlot(event) {
+    // Only handle recipe drops, not meal slot or meal type drops
+    const types = event.dataTransfer.types;
+    if (types.includes('application/x-meal-slot') || types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    // Only handle recipe drops
+    if (!types.includes('text/plain')) {
+        return;
+    }
+    
+    event.preventDefault();
+    event.stopPropagation(); // Stop event from bubbling to parent meal slot container
+    event.currentTarget.classList.add('drag-over');
+}
+
+/**
+ * Handle drag leave for recipes on meal slot content area
+ */
+function handleRecipeDragLeaveMealSlot(event) {
+    event.currentTarget.classList.remove('drag-over');
+}
+
+/**
+ * Handle drop for recipes on meal slot content area
+ */
+function handleRecipeDropOnMealSlot(event) {
+    event.preventDefault();
+    event.stopPropagation(); // Stop event from bubbling to parent meal slot container
+    event.currentTarget.classList.remove('drag-over');
+    
+    // Check if this is a recipe drop
+    const recipeIdStr = event.dataTransfer.getData('text/plain');
+    if (!recipeIdStr) return;
+    
+    // Check if this is a meal slot reorder or meal type drop (shouldn't happen here, but just in case)
+    if (event.dataTransfer.types.includes('application/x-meal-slot') || event.dataTransfer.types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    const recipeId = parseFloat(recipeIdStr);
+    const date = event.currentTarget.dataset.date;
+    const meal = event.currentTarget.dataset.meal;
+    
+    if (!date || !meal || !recipeId) return;
+    
+    // Remove from previous location if it exists
+    for (const d in mealPlan) {
+        for (const m in mealPlan[d]) {
+            if (Array.isArray(mealPlan[d][m])) {
+                const index = mealPlan[d][m].indexOf(recipeId);
+                if (index > -1) {
+                    mealPlan[d][m].splice(index, 1);
+                }
+            }
+        }
+    }
+    
+    // Add to new location
+    if (!mealPlan[date][meal]) {
+        mealPlan[date][meal] = [];
+    }
+    mealPlan[date][meal].push(recipeId);
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drag over (for recipes) - legacy function for other areas
+ */
+function handleDragOver(event) {
+    // Only handle recipe drops, not meal slot or meal type drops
+    if (event.dataTransfer.types.includes('application/x-meal-slot') || event.dataTransfer.types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    event.preventDefault();
+    event.stopPropagation(); // Stop event from bubbling to parent meal slot container
+    event.currentTarget.classList.add('drag-over');
+}
+
+/**
+ * Handle drag leave
+ */
+function handleDragLeave(event) {
+    event.currentTarget.classList.remove('drag-over');
+}
+
+/**
+ * Handle drop on day (for meal types)
+ */
+function handleDayDrop(event) {
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    
+    const mealType = event.dataTransfer.getData('application/x-meal-type');
+    const date = event.currentTarget.dataset.date;
+    
+    if (!date || !mealType) return;
+    
+    // Initialize day if needed
+    if (!mealPlan[date]) {
+        mealPlan[date] = {};
+    }
+    
+    // Add meal type if it doesn't exist (appends to end)
+    if (!mealPlan[date][mealType]) {
+        mealPlan[date][mealType] = [];
+        saveMealPlan();
+        updateDayPlanner();
+    }
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drop on meal slot for adding new meal types
+ */
+function handleMealSlotDropForNewMealType(event) {
+    // Only handle meal type drops (new meal types being added)
+    if (!event.dataTransfer.types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    event.preventDefault();
+    event.currentTarget.classList.remove('meal-slot-insert-before', 'meal-slot-insert-after');
+    
+    const mealType = event.dataTransfer.getData('application/x-meal-type');
+    const date = event.currentTarget.dataset.date;
+    const targetMealIndex = parseInt(event.currentTarget.dataset.mealIndex || '0');
+    
+    if (!date || !mealType) return;
+    
+    // Initialize day if needed
+    if (!mealPlan[date]) {
+        mealPlan[date] = {};
+    }
+    
+    // Don't add if meal type already exists
+    if (mealPlan[date][mealType]) {
+        return;
+    }
+    
+    // Determine insert position based on where we dropped (top half = before, bottom half = after)
+    const rect = event.currentTarget.getBoundingClientRect();
+    const mouseY = event.clientY;
+    const middleY = rect.top + rect.height / 2;
+    
+    let insertPosition = targetMealIndex;
+    if (mouseY < middleY) {
+        // Insert before this meal
+        insertPosition = targetMealIndex;
+    } else {
+        // Insert after this meal
+        insertPosition = targetMealIndex + 1;
+    }
+    
+    // Get current meal order
+    const currentMeals = Object.keys(mealPlan[date]).filter(meal => 
+        mealPlan[date][meal] && Array.isArray(mealPlan[date][meal])
+    );
+    
+    // Insert at new position
+    currentMeals.splice(insertPosition, 0, mealType);
+    
+    // Rebuild mealPlan object in new order
+    const reorderedMeals = {};
+    const mealData = {};
+    
+    // Store all existing meal data
+    for (const meal of Object.keys(mealPlan[date])) {
+        if (Array.isArray(mealPlan[date][meal])) {
+            mealData[meal] = mealPlan[date][meal];
+        }
+    }
+    
+    // Add new meal type
+    mealData[mealType] = [];
+    
+    // Rebuild in new order
+    for (const meal of currentMeals) {
+        reorderedMeals[meal] = mealData[meal];
+    }
+    
+    mealPlan[date] = reorderedMeals;
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drop on drop indicator for adding new meal types
+ */
+function handleDropIndicatorDropForNewMealType(event) {
+    // Only handle meal type drops (new meal types being added)
+    if (!event.dataTransfer.types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    event.preventDefault();
+    event.currentTarget.classList.remove('drag-over');
+    
+    const mealType = event.dataTransfer.getData('application/x-meal-type');
+    const date = event.currentTarget.dataset.date;
+    const insertPosition = parseInt(event.currentTarget.dataset.insertPosition || '0');
+    
+    if (!date || !mealType) return;
+    
+    // Initialize day if needed
+    if (!mealPlan[date]) {
+        mealPlan[date] = {};
+    }
+    
+    // Don't add if meal type already exists
+    if (mealPlan[date][mealType]) {
+        return;
+    }
+    
+    // Get current meal order
+    const currentMeals = Object.keys(mealPlan[date]).filter(meal => 
+        mealPlan[date][meal] && Array.isArray(mealPlan[date][meal])
+    );
+    
+    // Insert at specified position
+    currentMeals.splice(insertPosition, 0, mealType);
+    
+    // Rebuild mealPlan object in new order
+    const reorderedMeals = {};
+    const mealData = {};
+    
+    // Store all existing meal data
+    for (const meal of Object.keys(mealPlan[date])) {
+        if (Array.isArray(mealPlan[date][meal])) {
+            mealData[meal] = mealPlan[date][meal];
+        }
+    }
+    
+    // Add new meal type
+    mealData[mealType] = [];
+    
+    // Rebuild in new order
+    for (const meal of currentMeals) {
+        reorderedMeals[meal] = mealData[meal];
+    }
+    
+    mealPlan[date] = reorderedMeals;
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Handle drop (for recipes)
+ */
+function handleDrop(event) {
+    event.preventDefault();
+    event.stopPropagation(); // Stop event from bubbling to parent meal slot container
+    event.currentTarget.classList.remove('drag-over');
+    
+    // Check if this is a recipe drop
+    const recipeIdStr = event.dataTransfer.getData('text/plain');
+    if (!recipeIdStr) return;
+    
+    // Check if this is a meal slot reorder or meal type drop (shouldn't happen here, but just in case)
+    if (event.dataTransfer.types.includes('application/x-meal-slot') || event.dataTransfer.types.includes('application/x-meal-type')) {
+        return;
+    }
+    
+    const recipeId = parseFloat(recipeIdStr);
+    const date = event.currentTarget.dataset.date;
+    const meal = event.currentTarget.dataset.meal;
+    
+    if (!date || !meal || !recipeId) return;
+    
+    // Remove from previous location if it exists
+    for (const d in mealPlan) {
+        for (const m in mealPlan[d]) {
+            if (Array.isArray(mealPlan[d][m])) {
+                const index = mealPlan[d][m].indexOf(recipeId);
+                if (index > -1) {
+                    mealPlan[d][m].splice(index, 1);
+                }
+            }
+        }
+    }
+    
+    // Add to new location
+    if (!mealPlan[date][meal]) {
+        mealPlan[date][meal] = [];
+    }
+    mealPlan[date][meal].push(recipeId);
+    
+    saveMealPlan();
+    updateDayPlanner();
+    
+    // Remove dragging class from all elements
+    document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+/**
+ * Remove recipe from meal
+ */
+function removeRecipeFromMeal(date, meal, recipeId) {
+    if (!mealPlan[date] || !mealPlan[date][meal]) return;
+    
+    const index = mealPlan[date][meal].indexOf(recipeId);
+    if (index > -1) {
+        mealPlan[date][meal].splice(index, 1);
+        
+        // Remove note for this instance
+        const noteKey = `${date}_${meal}_${recipeId}_${index}`;
+        if (mealPlanNotes[date] && mealPlanNotes[date][meal] && mealPlanNotes[date][meal][noteKey]) {
+            delete mealPlanNotes[date][meal][noteKey];
+        }
+        
+        // Reindex notes for remaining instances of this recipe in this meal
+        reindexRecipeNotes(date, meal, recipeId);
+        
+        saveMealPlan();
+        updateDayPlanner();
+    }
+}
+
+/**
+ * Reindex notes after removing a recipe instance
+ */
+function reindexRecipeNotes(date, meal, recipeId) {
+    if (!mealPlanNotes[date] || !mealPlanNotes[date][meal]) return;
+    
+    const recipeIndices = [];
+    mealPlan[date][meal].forEach((id, idx) => {
+        if (id === recipeId) {
+            recipeIndices.push(idx);
+        }
+    });
+    
+    // Collect all notes for this recipe in this meal
+    const notes = {};
+    for (const key in mealPlanNotes[date][meal]) {
+        if (key.startsWith(`${date}_${meal}_${recipeId}_`)) {
+            const oldIndex = parseInt(key.split('_').pop());
+            notes[oldIndex] = mealPlanNotes[date][meal][key];
+            delete mealPlanNotes[date][meal][key];
+        }
+    }
+    
+    // Reassign notes to new indices
+    recipeIndices.forEach((newIndex, arrayPos) => {
+        const oldIndex = Object.keys(notes).map(Number).sort((a, b) => a - b)[arrayPos];
+        if (oldIndex !== undefined && notes[oldIndex] !== undefined) {
+            const newKey = `${date}_${meal}_${recipeId}_${newIndex}`;
+            mealPlanNotes[date][meal][newKey] = notes[oldIndex];
+        }
+    });
+}
+
+/**
+ * Remove meal slot from day
+ */
+function removeMealSlotFromDay(date, mealType) {
+    if (!mealPlan[date] || !mealPlan[date][mealType]) return;
+    
+    delete mealPlan[date][mealType];
+    saveMealPlan();
+    updateDayPlanner();
+}
+
+/**
+ * Clear meal plan
+ */
+function clearMealPlan() {
+    if (confirm('Clear entire meal plan? This cannot be undone.')) {
+        mealPlan = {};
+        mealPlanNotes = {};
+        selectedDays.clear();
+        saveMealPlan();
+        updateDayPlanner();
+        showMessage('Meal plan cleared', 'success');
+    }
+}
+
+/**
  * Update the shopping list display
  */
 function updateShoppingList() {
@@ -2379,6 +3633,7 @@ function removeRecipe(recipeId) {
     consolidateIngredients();
     updateRecipeList();
     updateShoppingList();
+    updateDayPlanner();
     showMessage('Recipe removed', 'success');
 }
 
@@ -3134,6 +4389,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load saved recipes from localStorage
     loadRecipes();
     
+    // Load meal plan
+    loadMealPlan();
+    
     // Load tag filter preferences
     try {
         // Load selected tag filters
@@ -3170,6 +4428,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize tag filters and recipe list
     updateTagFilters();
     updateSelectedIngredientsDisplay();
+    updateDayPlanner();
 });
+
 
 
