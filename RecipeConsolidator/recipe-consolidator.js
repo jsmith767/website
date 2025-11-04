@@ -3476,6 +3476,8 @@ function exportMealPlan() {
             mealPlan: mealPlan,
             mealPlanNotes: mealPlanNotes,
             selectedDays: Array.from(selectedDays),
+            activeRecipeIds: Array.from(activeRecipeIds),
+            recipeMultipliers: recipeMultipliers,
             exportDate: new Date().toISOString()
         };
         
@@ -3857,6 +3859,17 @@ function importMealPlan(event) {
                 mealPlan = importData.mealPlan;
                 mealPlanNotes = importData.mealPlanNotes || {};
                 selectedDays = new Set(importData.selectedDays || []);
+                
+                // Restore active recipes and multipliers
+                if (importData.activeRecipeIds) {
+                    activeRecipeIds = new Set(importData.activeRecipeIds.map(id => parseFloat(id)));
+                }
+                if (importData.recipeMultipliers) {
+                    recipeMultipliers = {};
+                    for (const id in importData.recipeMultipliers) {
+                        recipeMultipliers[parseFloat(id)] = importData.recipeMultipliers[id];
+                    }
+                }
             } else {
                 // Merge: combine meal plans
                 for (const date in importData.mealPlan) {
@@ -3891,6 +3904,20 @@ function importMealPlan(event) {
                 
                 // Merge selected days
                 importData.selectedDays?.forEach(day => selectedDays.add(day));
+                
+                // Merge active recipes (add imported ones)
+                if (importData.activeRecipeIds) {
+                    importData.activeRecipeIds.forEach(id => {
+                        activeRecipeIds.add(parseFloat(id));
+                    });
+                }
+                
+                // Merge multipliers (prefer imported values if they exist)
+                if (importData.recipeMultipliers) {
+                    for (const id in importData.recipeMultipliers) {
+                        recipeMultipliers[parseFloat(id)] = importData.recipeMultipliers[id];
+                    }
+                }
             }
             
             // Convert recipe IDs back to numbers
@@ -3900,7 +3927,14 @@ function importMealPlan(event) {
                 }
             }
             
+            // Save all imported data
             saveMealPlan();
+            saveActiveRecipes();
+            saveRecipeMultipliers();
+            
+            // Update UI
+            updateRecipeList();
+            updateShoppingList();
             updateDayPlanner();
             showMessage('Meal plan imported successfully', 'success');
         } catch (error) {
