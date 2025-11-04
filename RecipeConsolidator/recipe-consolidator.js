@@ -1,5 +1,15 @@
 // Recipe Consolidator - Main JavaScript Logic
 
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
 // Store for recipes and consolidated ingredients
 let recipes = [];
 let consolidatedIngredients = {};
@@ -7,11 +17,19 @@ let activeRecipeIds = new Set(); // Track which recipes are active for shopping 
 let recipeMultipliers = {}; // Track multiplier for each recipe (e.g., making recipe 3x)
 let recipeSortOrder = 'name-asc'; // Default sort order
 let shoppingListSortOrder = 'alphabetical'; // Default shopping list sort order
+let activeTagFilter = 'all'; // Active tag filter (default: 'all' shows all recipes) - DEPRECATED, use selectedTagFilters
+let selectedTagFilters = new Set(); // Selected tags for filtering recipes
+let tagFilterLogic = 'or'; // 'and' or 'or' - whether recipes must have ALL selected tags (and) or ANY selected tag (or)
+let selectedIngredients = new Set(); // Selected ingredients for filtering
+let selectedTagsForForm = new Set(); // Tags selected when adding/editing a recipe
 
 // LocalStorage keys
 const STORAGE_KEY = 'recipeConsolidator_recipes';
 const UNIT_SYSTEM_KEY = 'recipeConsolidator_unitSystem';
 const SHOPPING_LIST_SORT_KEY = 'recipeConsolidator_shoppingListSort';
+const TAG_FILTER_KEY = 'recipeConsolidator_tagFilter';
+const SELECTED_TAG_FILTERS_KEY = 'recipeConsolidator_selectedTagFilters';
+const TAG_FILTER_LOGIC_KEY = 'recipeConsolidator_tagFilterLogic';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
@@ -105,10 +123,34 @@ function loadRecipes() {
                 recipeSortOrder = savedSort;
             }
             
+            // Migrate old recipes to include tags (no auto-tagging)
+            let needsSave = false;
+            recipes.forEach(recipe => {
+                // Initialize tags if missing (for old recipes)
+                if (!recipe.tags) {
+                    // If old recipe has manualTags, use them, otherwise empty array
+                    const oldManualTags = recipe.manualTags || [];
+                    recipe.tags = oldManualTags;
+                    delete recipe.manualTags; // Remove old property
+                    needsSave = true;
+                } else if (recipe.manualTags) {
+                    // If recipe has both tags and manualTags, merge them
+                    recipe.tags = [...new Set([...recipe.tags, ...recipe.manualTags])];
+                    delete recipe.manualTags; // Remove old property
+                    needsSave = true;
+                }
+            });
+            
+            // Save migrated recipes
+            if (needsSave) {
+                saveRecipes();
+            }
+            
             // Consolidate ingredients and update UI
             consolidateIngredients();
             updateRecipeList();
             updateShoppingList();
+            updateTagFilters();
             if (recipes.length > 0) {
                 showMessage(`Loaded ${recipes.length} saved recipe${recipes.length !== 1 ? 's' : ''}`, 'success');
             }
@@ -210,6 +252,30 @@ const INGREDIENT_ALIASES = {
     'oil': ['vegetable oil', 'cooking oil', 'canola oil'],
     'pepper': ['black pepper', 'ground pepper'],
     'milk': ['whole milk', '2% milk', 'skim milk']
+};
+
+// Auto-tagging rules based on ingredients and recipe names
+const AUTO_TAG_RULES = {
+    'breakfast': {
+        ingredients: ['egg', 'eggs', 'bacon', 'sausage', 'pancake', 'waffle', 'toast', 'bagel', 'muffin', 'cereal', 'oatmeal', 'oats', 'yogurt', 'granola'],
+        nameKeywords: ['breakfast', 'pancake', 'waffle', 'muffin', 'omelet', 'omelette', 'frittata', 'scramble']
+    },
+    'salad': {
+        ingredients: ['lettuce', 'spinach', 'kale', 'arugula', 'romaine', 'mixed greens', 'cucumber', 'tomato', 'dressing', 'vinaigrette'],
+        nameKeywords: ['salad', 'coleslaw', 'slaw']
+    },
+    'dessert': {
+        ingredients: ['sugar', 'flour', 'chocolate', 'vanilla', 'butter', 'cream', 'icing', 'frosting'],
+        nameKeywords: ['cake', 'cookie', 'pie', 'brownie', 'dessert', 'muffin', 'cupcake', 'pudding', 'custard']
+    },
+    'soup': {
+        ingredients: ['broth', 'stock', 'bouillon'],
+        nameKeywords: ['soup', 'stew', 'chili', 'chowder', 'bisque']
+    },
+    'pasta': {
+        ingredients: ['pasta', 'noodle', 'spaghetti', 'penne', 'fettuccine', 'linguine', 'macaroni'],
+        nameKeywords: ['pasta', 'spaghetti', 'lasagna', 'ravioli', 'gnocchi']
+    }
 };
 
 // Ingredient categories for shopping list organization
@@ -763,20 +829,20 @@ function convertToPreferredUnitSystem(baseValue, unitType) {
     if (unitSystem === 'metric') {
         // Metric: use ml or g
         if (unitType === 'volume') {
-            const ml = Math.round(baseValue * 100) / 100;
+            const displayQty = formatQuantity(baseValue);
             return {
-                value: ml,
+                value: baseValue,
                 unit: 'ml',
-                displayQuantity: ml === Math.floor(ml) ? Math.floor(ml) : ml,
+                displayQuantity: displayQty,
                 displayUnit: 'ml',
                 flOz: null
             };
         } else {
-            const g = Math.round(baseValue * 100) / 100;
+            const displayQty = formatQuantity(baseValue);
             return {
-                value: g,
+                value: baseValue,
                 unit: 'g',
-                displayQuantity: g === Math.floor(g) ? Math.floor(g) : g,
+                displayQuantity: displayQty,
                 displayUnit: 'g',
                 flOz: null
             };
@@ -792,48 +858,36 @@ function convertToPreferredUnitSystem(baseValue, unitType) {
             // Find the best unit (cup > tablespoon > teaspoon)
             const cup = baseValue / conversions['cup'];
             if (cup >= 0.125) { // >= 1/8 cup
-                const rounded = Math.round(cup * 100) / 100;
-                let displayQty = rounded === Math.floor(rounded) ? Math.floor(rounded) : rounded;
-                if (displayQty < 1 && displayQty > 0) {
-                    displayQty = toFraction(displayQty);
-                }
+                const displayQty = formatQuantity(cup);
                 return {
-                    value: rounded,
+                    value: cup,
                     unit: 'cup',
                     displayQuantity: displayQty,
-                    displayUnit: rounded === 1 ? 'cup' : 'cups',
+                    displayUnit: cup === 1 ? 'cup' : 'cups',
                     flOz: roundedFlOz
                 };
             }
             
             const tbsp = baseValue / conversions['tablespoon'];
             if (tbsp >= 0.5) {
-                const rounded = Math.round(tbsp * 100) / 100;
-                let displayQty = rounded === Math.floor(rounded) ? Math.floor(rounded) : rounded;
-                if (displayQty < 1 && displayQty > 0) {
-                    displayQty = toFraction(displayQty);
-                }
+                const displayQty = formatQuantity(tbsp);
                 return {
-                    value: rounded,
+                    value: tbsp,
                     unit: 'tablespoon',
                     displayQuantity: displayQty,
-                    displayUnit: rounded === 1 ? 'tablespoon' : 'tablespoons',
+                    displayUnit: tbsp === 1 ? 'tablespoon' : 'tablespoons',
                     flOz: roundedFlOz
                 };
             }
             
             // Use teaspoons
             const tsp = baseValue / conversions['teaspoon'];
-            const rounded = Math.round(tsp * 100) / 100;
-            let displayQty = rounded === Math.floor(rounded) ? Math.floor(rounded) : rounded;
-            if (displayQty < 1 && displayQty > 0) {
-                displayQty = toFraction(displayQty);
-            }
+            const displayQty = formatQuantity(tsp);
             return {
-                value: rounded,
+                value: tsp,
                 unit: 'teaspoon',
                 displayQuantity: displayQty,
-                displayUnit: rounded === 1 ? 'teaspoon' : 'teaspoons',
+                displayUnit: tsp === 1 ? 'teaspoon' : 'teaspoons',
                 flOz: roundedFlOz
             };
         } else {
@@ -841,21 +895,21 @@ function convertToPreferredUnitSystem(baseValue, unitType) {
             const oz = baseValue / conversions['ounce'];
             if (oz >= 16) {
                 const lbs = oz / 16;
-                const roundedLbs = Math.round(lbs * 100) / 100;
+                const displayQty = formatQuantity(lbs);
                 return {
-                    value: roundedLbs,
+                    value: lbs,
                     unit: 'pound',
-                    displayQuantity: roundedLbs === Math.floor(roundedLbs) ? Math.floor(roundedLbs) : roundedLbs,
-                    displayUnit: roundedLbs === 1 ? 'pound' : 'pounds',
+                    displayQuantity: displayQty,
+                    displayUnit: lbs === 1 ? 'pound' : 'pounds',
                     flOz: null
                 };
             } else {
-                const roundedOz = Math.round(oz * 100) / 100;
+                const displayQty = formatQuantity(oz);
                 return {
-                    value: roundedOz,
+                    value: oz,
                     unit: 'ounce',
-                    displayQuantity: roundedOz === Math.floor(roundedOz) ? Math.floor(roundedOz) : roundedOz,
-                    displayUnit: roundedOz === 1 ? 'ounce' : 'ounces',
+                    displayQuantity: displayQty,
+                    displayUnit: oz === 1 ? 'ounce' : 'ounces',
                     flOz: null
                 };
             }
@@ -959,25 +1013,75 @@ function pluralizeUnit(unit, quantity) {
 
 /**
  * Convert decimal to fraction string
+ * Checks for common fractions and converts decimals close to them
  */
 function toFraction(decimal) {
-    const tolerance = 0.01;
+    if (decimal === null || decimal === undefined || isNaN(decimal)) return decimal;
+    
+    // Tolerance for matching fractions
+    const tolerance = 0.015;
+    
+    // Common fractions to check
     const fractions = [
         { val: 0.125, str: '1/8' },
+        { val: 0.167, str: '1/6' },
+        { val: 0.2, str: '1/5' },
         { val: 0.25, str: '1/4' },
-        { val: 0.33, str: '1/3' },
+        { val: 0.333, str: '1/3' },
+        { val: 0.375, str: '3/8' },
+        { val: 0.4, str: '2/5' },
         { val: 0.5, str: '1/2' },
-        { val: 0.67, str: '2/3' },
-        { val: 0.75, str: '3/4' }
+        { val: 0.6, str: '3/5' },
+        { val: 0.625, str: '5/8' },
+        { val: 0.667, str: '2/3' },
+        { val: 0.75, str: '3/4' },
+        { val: 0.8, str: '4/5' },
+        { val: 0.833, str: '5/6' },
+        { val: 0.875, str: '7/8' }
     ];
     
+    // Check if decimal matches any fraction
     for (const frac of fractions) {
         if (Math.abs(decimal - frac.val) < tolerance) {
             return frac.str;
         }
     }
     
+    // If no match, return rounded decimal
     return Math.round(decimal * 100) / 100;
+}
+
+/**
+ * Format a quantity value, converting decimals close to fractions
+ * Handles both pure decimals and mixed numbers (whole + fraction)
+ */
+function formatQuantity(qty) {
+    if (qty === null || qty === undefined || isNaN(qty)) return qty;
+    
+    const wholePart = Math.floor(qty);
+    const decimalPart = qty - wholePart;
+    
+    // If there's a meaningful decimal part, try to convert it to a fraction
+    if (decimalPart > 0.01) {
+        const frac = toFraction(decimalPart);
+        // If toFraction returned a fraction string (contains '/'), use it
+        if (typeof frac === 'string' && frac.includes('/')) {
+            if (wholePart > 0) {
+                return `${wholePart} ${frac}`;
+            } else {
+                return frac;
+            }
+        } else {
+            // Didn't match a nice fraction, return the rounded decimal
+            // Round to 2 decimal places for display
+            const rounded = Math.round(qty * 100) / 100;
+            // Remove unnecessary trailing zeros
+            return rounded === Math.floor(rounded) ? Math.floor(rounded) : rounded;
+        }
+    } else {
+        // Whole number or very small decimal (round to nearest whole)
+        return wholePart || Math.round(qty);
+    }
 }
 
 /**
@@ -1018,10 +1122,21 @@ function editRecipe(recipeId) {
     const editActions = document.getElementById('editRecipeActions');
     const addRecipeTitle = document.getElementById('addRecipeTitle');
     const addRecipeDescription = document.getElementById('addRecipeDescription');
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
     
     nameInput.value = recipe.name;
     textInput.value = recipe.originalText;
     editingIdInput.value = recipeId;
+    if (aboutInput) aboutInput.value = recipe.about || '';
+    if (instructionsInput) instructionsInput.value = recipe.instructions || '';
+    
+    // Load recipe tags into form
+    selectedTagsForForm.clear();
+    if (recipe.tags && Array.isArray(recipe.tags)) {
+        recipe.tags.forEach(tag => selectedTagsForForm.add(tag));
+    }
+    updateSelectedTagsDisplay();
     
     // Show edit mode
     editActions.style.display = 'block';
@@ -1069,15 +1184,30 @@ function saveRecipeEdit() {
     const nameInput = document.getElementById('recipeName');
     const recipeName = nameInput.value.trim() || `Recipe ${recipes.length + 1}`;
     
+    // Get selected tags from form
+    const tags = Array.from(selectedTagsForForm);
+    
+    // Get about and instructions
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
+    const about = aboutInput ? aboutInput.value.trim() : '';
+    const instructions = instructionsInput ? instructionsInput.value.trim() : '';
+    
     // Update recipe
     recipe.name = recipeName;
     recipe.ingredients = ingredients;
     recipe.originalText = recipeText;
+    recipe.tags = tags;
+    recipe.about = about || undefined;
+    recipe.instructions = instructions || undefined;
     
     // Clear form
     nameInput.value = '';
     input.value = '';
     editingIdInput.value = '';
+    if (aboutInput) aboutInput.value = '';
+    if (instructionsInput) instructionsInput.value = '';
+    clearTagSelectionForm();
     
     // Hide edit mode
     const editActions = document.getElementById('editRecipeActions');
@@ -1085,7 +1215,7 @@ function saveRecipeEdit() {
     const addRecipeDescription = document.getElementById('addRecipeDescription');
     editActions.style.display = 'none';
     addRecipeTitle.textContent = 'Add Recipe';
-    addRecipeDescription.textContent = 'Add recipes by pasting text or uploading a photo. The tool will automatically extract ingredients with quantities and units.';
+    addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
     
     // Save to localStorage
     saveRecipes();
@@ -1096,6 +1226,7 @@ function saveRecipeEdit() {
     // Update UI
     updateRecipeList();
     updateShoppingList();
+    updateTagFilters();
     showMessage(`Recipe updated with ${ingredients.length} ingredients`, 'success');
 }
 
@@ -1114,11 +1245,25 @@ function cancelRecipeEdit() {
     nameInput.value = '';
     textInput.value = '';
     editingIdInput.value = '';
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
+    if (aboutInput) aboutInput.value = '';
+    if (instructionsInput) instructionsInput.value = '';
+    clearTagSelectionForm();
     
     // Hide edit mode
     editActions.style.display = 'none';
     addRecipeTitle.textContent = 'Add Recipe';
-    addRecipeDescription.textContent = 'Add recipes by pasting text or uploading a photo. The tool will automatically extract ingredients with quantities and units.';
+    addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
+}
+
+/**
+ * Generate automatic tags based on recipe name and ingredients
+ * Currently disabled - recipes start with no tags
+ */
+function generateAutoTags(recipeName, ingredients) {
+    // Auto-tagging disabled - return empty array
+    return [];
 }
 
 /**
@@ -1153,19 +1298,34 @@ function addRecipe() {
     const nameInput = document.getElementById('recipeName');
     const recipeName = nameInput.value.trim() || `Recipe ${recipes.length + 1}`;
     
+    // Get selected tags
+    const tags = Array.from(selectedTagsForForm);
+    
+    // Get about and instructions
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
+    const about = aboutInput ? aboutInput.value.trim() : '';
+    const instructions = instructionsInput ? instructionsInput.value.trim() : '';
+    
     // Create recipe object
     const recipe = {
         id: Date.now(),
         name: recipeName,
         ingredients: ingredients,
-        originalText: recipeText
+        originalText: recipeText,
+        tags: tags,
+        about: about || undefined,
+        instructions: instructions || undefined
     };
     
-    // Clear name input
+    // Clear form
     nameInput.value = '';
+    input.value = '';
+    if (aboutInput) aboutInput.value = '';
+    if (instructionsInput) instructionsInput.value = '';
+    clearTagSelectionForm();
     
     recipes.push(recipe);
-    input.value = '';
     
     // Automatically activate new recipes with multiplier 1
     activeRecipeIds.add(recipe.id);
@@ -1182,6 +1342,7 @@ function addRecipe() {
     // Update UI
     updateRecipeList();
     updateShoppingList();
+    updateTagFilters();
     showMessage(`Added recipe with ${ingredients.length} ingredients`, 'success');
 }
 
@@ -1426,7 +1587,48 @@ function updateRecipeList() {
     list.innerHTML = '';
     
     // Get sorted recipes
-    const sortedRecipes = getSortedRecipes();
+    let sortedRecipes = getSortedRecipes();
+    
+    // Filter by selected tags
+    if (selectedTagFilters.size > 0) {
+        sortedRecipes = sortedRecipes.filter(recipe => {
+            const recipeTags = recipe.tags || [];
+            
+            if (tagFilterLogic === 'and') {
+                // Recipe must have ALL selected tags
+                for (const selectedTag of selectedTagFilters) {
+                    if (!recipeTags.includes(selectedTag)) {
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                // Recipe must have ANY selected tag (OR logic)
+                for (const selectedTag of selectedTagFilters) {
+                    if (recipeTags.includes(selectedTag)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+    
+    // Filter by selected ingredients
+    if (selectedIngredients.size > 0) {
+        sortedRecipes = sortedRecipes.filter(recipe => {
+            const recipeIngredients = recipe.ingredients.map(ing => 
+                normalizeIngredientName(ing.ingredient).toLowerCase()
+            );
+            // Recipe must contain ALL selected ingredients
+            for (const selectedIng of selectedIngredients) {
+                if (!recipeIngredients.some(ing => ing.includes(selectedIng.toLowerCase()))) {
+                    return false;
+                }
+            }
+            return true;
+        });
+    }
     
     for (const recipe of sortedRecipes) {
         const isActive = activeRecipeIds.has(recipe.id);
@@ -1447,6 +1649,9 @@ function updateRecipeList() {
                         ${recipe.ingredients.length} ingredient${recipe.ingredients.length !== 1 ? 's' : ''}
                         ${isActive ? '<span style="color: #2e7d32; margin-left: 10px;">✓ Active</span>' : '<span style="color: #999; margin-left: 10px;">Inactive</span>'}
                     </div>
+                    <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
+                        ${getRecipeTagsDisplay(recipe)}
+                    </div>
                 </div>
                 ${isActive ? `
                     <div style="display: flex; align-items: center; gap: 5px;">
@@ -1463,13 +1668,466 @@ function updateRecipeList() {
                     </div>
                 ` : ''}
             </div>
-            <div class="recipe-item-actions">
-                <button class="btn btn-secondary" onclick="editRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;">Edit</button>
-                <button class="btn btn-secondary" onclick="removeRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px;">Remove</button>
-            </div>
+                <div class="recipe-item-actions">
+                    <button class="btn btn-secondary" onclick="showIngredientsModal(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show Ingredients">Show Ingredients</button>
+                    ${recipe.about ? `<button class="btn btn-secondary" onclick="showAboutModal(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show About">About</button>` : ''}
+                    ${recipe.instructions ? `<button class="btn btn-secondary" onclick="toggleRecipePreparation(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show Preparation">Preparation</button>` : ''}
+                    <button class="btn btn-secondary" onclick="editRecipeTags(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Edit Tags">Tags</button>
+                    <button class="btn btn-secondary" onclick="editRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;">Edit</button>
+                    <button class="btn btn-secondary" onclick="removeRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px;">Remove</button>
+                </div>
         `;
         list.appendChild(item);
     }
+}
+
+/**
+ * Get recipe tags display HTML
+ */
+function getRecipeTagsDisplay(recipe) {
+    const tags = recipe.tags || [];
+    if (tags.length === 0) return '';
+    
+    return tags.map(tag => {
+        const isSelected = selectedTagFilters.has(tag);
+        return `<span class="recipe-tag" 
+                     onclick="toggleTagFilter('${tag}')" 
+                     style="cursor: pointer; ${isSelected ? 'background: #d48247; color: white;' : ''}"
+                     title="Click to filter by this tag">${tag}${isSelected ? ' ✓' : ''}</span>`;
+    }).join('');
+}
+
+/**
+ * Toggle tag filter selection
+ */
+function toggleTagFilter(tag) {
+    if (selectedTagFilters.has(tag)) {
+        selectedTagFilters.delete(tag);
+    } else {
+        selectedTagFilters.add(tag);
+    }
+    
+    // Save to localStorage
+    try {
+        localStorage.setItem(SELECTED_TAG_FILTERS_KEY, JSON.stringify(Array.from(selectedTagFilters)));
+    } catch (error) {
+        console.error('Error saving tag filters:', error);
+    }
+    
+    updateTagFilters();
+    updateRecipeList();
+}
+
+/**
+ * Set tag filter logic (AND/OR)
+ */
+function setTagFilterLogic(logic) {
+    tagFilterLogic = logic;
+    try {
+        localStorage.setItem(TAG_FILTER_LOGIC_KEY, logic);
+    } catch (error) {
+        console.error('Error saving tag filter logic:', error);
+    }
+    updateTagFilters();
+    updateRecipeList();
+}
+
+/**
+ * Clear all tag filters
+ */
+function clearTagFilters() {
+    selectedTagFilters.clear();
+    try {
+        localStorage.setItem(SELECTED_TAG_FILTERS_KEY, JSON.stringify([]));
+    } catch (error) {
+        console.error('Error saving tag filters:', error);
+    }
+    updateTagFilters();
+    updateRecipeList();
+}
+
+/**
+ * Show ingredients in a modal popup
+ */
+function showIngredientsModal(recipeId) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe) return;
+    
+    const modal = document.getElementById('ingredientsModal');
+    const modalTitle = document.getElementById('ingredientsModalTitle');
+    const modalBody = document.getElementById('ingredientsModalBody');
+    
+    if (!modal || !modalTitle || !modalBody) return;
+    
+    modalTitle.textContent = `Ingredients: ${recipe.name}`;
+    
+    // Build ingredients list HTML
+    const ingredientsHtml = `
+        <ul style="margin: 0; padding-left: 25px; color: #6a6a6a; font-size: 16px; line-height: 2;">
+            ${recipe.ingredients.map(ing => {
+                const qty = ing.quantity !== null && ing.quantity !== undefined ? formatQuantity(ing.quantity) : '';
+                const unit = ing.unit ? `${ing.unit} ` : '';
+                return `<li style="margin-bottom: 8px;">${qty} ${unit}${escapeHtml(ing.ingredient)}</li>`;
+            }).join('')}
+        </ul>
+    `;
+    
+    modalBody.innerHTML = ingredientsHtml;
+    modal.classList.add('active');
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close ingredients modal
+ */
+function closeIngredientsModal(event) {
+    // If event is provided and clicked outside modal, close it
+    if (event && event.target.id === 'ingredientsModal') {
+        const modal = document.getElementById('ingredientsModal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        return;
+    }
+    
+    // Close button clicked
+    const modal = document.getElementById('ingredientsModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+/**
+ * Show about section in a modal popup
+ */
+function showAboutModal(recipeId) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe || !recipe.about) return;
+    
+    const modal = document.getElementById('aboutModal');
+    const modalTitle = document.getElementById('aboutModalTitle');
+    const modalBody = document.getElementById('aboutModalBody');
+    
+    if (!modal || !modalTitle || !modalBody) return;
+    
+    modalTitle.textContent = `About: ${recipe.name}`;
+    modalBody.textContent = recipe.about;
+    modal.classList.add('active');
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close about modal
+ */
+function closeAboutModal(event) {
+    // If event is provided and clicked outside modal, close it
+    if (event && event.target.id === 'aboutModal') {
+        const modal = document.getElementById('aboutModal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        return;
+    }
+    
+    // Close button clicked
+    const modal = document.getElementById('aboutModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+/**
+ * Show preparation instructions in a modal popup
+ */
+function toggleRecipePreparation(recipeId) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe || !recipe.instructions) return;
+    
+    const modal = document.getElementById('preparationModal');
+    const modalTitle = document.getElementById('preparationModalTitle');
+    const modalBody = document.getElementById('preparationModalBody');
+    
+    if (!modal || !modalTitle || !modalBody) return;
+    
+    modalTitle.textContent = `Preparation: ${recipe.name}`;
+    modalBody.textContent = recipe.instructions;
+    modal.classList.add('active');
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close preparation modal
+ */
+function closePreparationModal(event) {
+    // If event is provided and clicked outside modal, close it
+    if (event && event.target.id === 'preparationModal') {
+        const modal = document.getElementById('preparationModal');
+        if (modal) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        return;
+    }
+    
+    // Close button clicked
+    const modal = document.getElementById('preparationModal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Close modals on Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        const preparationModal = document.getElementById('preparationModal');
+        const aboutModal = document.getElementById('aboutModal');
+        const ingredientsModal = document.getElementById('ingredientsModal');
+        
+        if (preparationModal && preparationModal.classList.contains('active')) {
+            closePreparationModal();
+        } else if (aboutModal && aboutModal.classList.contains('active')) {
+            closeAboutModal();
+        } else if (ingredientsModal && ingredientsModal.classList.contains('active')) {
+            closeIngredientsModal();
+        }
+    }
+});
+
+/**
+ * Edit recipe tags
+ */
+function editRecipeTags(recipeId) {
+    const recipe = recipes.find(r => r.id === recipeId);
+    if (!recipe) return;
+    
+    const currentTags = (recipe.tags || []).join(', ');
+    const newTags = prompt(`Edit tags for "${recipe.name}" (comma-separated):`, currentTags);
+    
+    if (newTags === null) return; // User cancelled
+    
+    // Parse tags (trim, lowercase, remove empty)
+    const tags = newTags.split(',')
+        .map(t => t.trim().toLowerCase())
+        .filter(t => t.length > 0);
+    
+    recipe.tags = tags;
+    saveRecipes();
+    updateRecipeList();
+    updateTagFilters();
+    showMessage('Tags updated', 'success');
+}
+
+/**
+ * Update tag filter buttons
+ */
+function updateTagFilters() {
+    const container = document.getElementById('tagFiltersContainer');
+    if (!container) return;
+    
+    // Collect all tags from all recipes
+    const allTags = new Set();
+    for (const recipe of recipes) {
+        (recipe.tags || []).forEach(tag => allTags.add(tag));
+    }
+    
+    // Create HTML for filter controls (first line)
+    let html = '<div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap;">';
+    
+    // AND/OR toggle
+    html += `
+        <div style="display: flex; align-items: center; gap: 8px;">
+            <label style="font-size: 14px; color: #2c2c2c; font-weight: 500;">Filter logic:</label>
+            <button class="tag-filter-btn ${tagFilterLogic === 'or' ? 'active' : ''}" 
+                    onclick="setTagFilterLogic('or')" 
+                    style="padding: 6px 12px; font-size: 13px;">
+                OR
+            </button>
+            <button class="tag-filter-btn ${tagFilterLogic === 'and' ? 'active' : ''}" 
+                    onclick="setTagFilterLogic('and')" 
+                    style="padding: 6px 12px; font-size: 13px;">
+                AND
+            </button>
+        </div>
+    `;
+    
+    // Clear filters button (only show if filters are active)
+    if (selectedTagFilters.size > 0) {
+        html += `
+            <button class="tag-filter-btn" 
+                    onclick="clearTagFilters()" 
+                    style="padding: 6px 12px; font-size: 13px; background: #ffebee; color: #c62828; border-color: #c62828;">
+                Clear Filters (${selectedTagFilters.size})
+            </button>
+        `;
+    }
+    
+    html += '</div>';
+    
+    // Second line: Tag buttons
+    html += '<div style="display: flex; flex-wrap: wrap; gap: 8px;">';
+    
+    // Create "All Recipes" button (show as active when no filters)
+    html += `<button class="tag-filter-btn ${selectedTagFilters.size === 0 ? 'active' : ''}" 
+                        onclick="clearTagFilters()" 
+                        style="margin-bottom: 0;">
+                    All Recipes
+                </button>`;
+    
+    // Create buttons for each tag (sorted alphabetically)
+    const sortedTags = Array.from(allTags).sort();
+    for (const tag of sortedTags) {
+        const isSelected = selectedTagFilters.has(tag);
+        html += `<button class="tag-filter-btn ${isSelected ? 'active' : ''}" 
+                          onclick="toggleTagFilter('${tag}')">
+                     ${tag}${isSelected ? ' ✓' : ''}
+                 </button>`;
+    }
+    
+    html += '</div>';
+    
+    container.innerHTML = html;
+}
+
+/**
+ * Get all unique ingredients from all recipes
+ */
+function getAllIngredients() {
+    const ingredients = new Set();
+    for (const recipe of recipes) {
+        for (const ing of recipe.ingredients) {
+            const normalized = normalizeIngredientName(ing.ingredient);
+            if (normalized) {
+                ingredients.add(normalized);
+            }
+        }
+    }
+    return Array.from(ingredients).sort();
+}
+
+/**
+ * Filter ingredient dropdown options based on search
+ */
+function filterIngredientOptions(searchText) {
+    const dropdown = document.getElementById('ingredientDropdown');
+    if (!dropdown) return;
+    
+    const allIngredients = getAllIngredients();
+    const searchLower = (searchText || '').toLowerCase().trim();
+    
+    let filtered;
+    if (searchLower === '') {
+        // If no search text, show all ingredients (sorted alphabetically)
+        filtered = allIngredients;
+    } else {
+        // Filter ingredients that match search
+        filtered = allIngredients.filter(ing => 
+            ing.toLowerCase().includes(searchLower)
+        );
+    }
+    
+    if (filtered.length === 0 && searchText.trim()) {
+        dropdown.innerHTML = '<div class="ingredient-option" style="color: #999; cursor: default;">No ingredients found</div>';
+        dropdown.style.display = 'block';
+        return;
+    }
+    
+    if (filtered.length === 0) {
+        dropdown.style.display = 'none';
+        return;
+    }
+    
+    dropdown.innerHTML = filtered.map(ing => {
+        const isSelected = selectedIngredients.has(ing);
+        return `<div class="ingredient-option" 
+                     onclick="selectIngredient('${ing.replace(/'/g, "\\'")}')"
+                     style="${isSelected ? 'background: #e8f5e9;' : ''}">
+                     ${ing}${isSelected ? ' ✓' : ''}
+                 </div>`;
+    }).join('');
+    
+    dropdown.style.display = 'block';
+}
+
+/**
+ * Show ingredient dropdown
+ */
+function showIngredientDropdown() {
+    const dropdown = document.getElementById('ingredientDropdown');
+    const input = document.getElementById('ingredientSearchInput');
+    if (dropdown && input) {
+        filterIngredientOptions(input.value);
+    }
+}
+
+/**
+ * Hide ingredient dropdown
+ */
+function hideIngredientDropdown() {
+    // Delay to allow clicks on dropdown items
+    setTimeout(() => {
+        const dropdown = document.getElementById('ingredientDropdown');
+        if (dropdown) {
+            dropdown.style.display = 'none';
+        }
+    }, 200);
+}
+
+/**
+ * Select an ingredient for filtering
+ */
+function selectIngredient(ingredient) {
+    selectedIngredients.add(ingredient);
+    updateSelectedIngredientsDisplay();
+    updateRecipeList();
+    
+    // Clear search input
+    const input = document.getElementById('ingredientSearchInput');
+    if (input) {
+        input.value = '';
+    }
+    
+    // Refresh dropdown
+    filterIngredientOptions('');
+}
+
+/**
+ * Remove an ingredient from filter
+ */
+function removeIngredient(ingredient) {
+    selectedIngredients.delete(ingredient);
+    updateSelectedIngredientsDisplay();
+    updateRecipeList();
+}
+
+/**
+ * Update display of selected ingredients
+ */
+function updateSelectedIngredientsDisplay() {
+    const container = document.getElementById('selectedIngredientsContainer');
+    if (!container) return;
+    
+    if (selectedIngredients.size === 0) {
+        container.innerHTML = '';
+        return;
+    }
+    
+    container.innerHTML = Array.from(selectedIngredients).sort().map(ing => 
+        `<div class="selected-ingredient">
+            ${ing}
+            <span class="remove" onclick="removeIngredient('${ing.replace(/'/g, "\\'")}')" title="Remove">×</span>
+        </div>`
+    ).join('');
 }
 
 /**
@@ -1638,20 +2296,12 @@ function renderShoppingListItem(list, item) {
     
     // If we have a single display quantity and unit, use it
     if (item.displayQuantity !== undefined && item.displayUnit !== undefined) {
-        // Format the quantity nicely
-        let displayQty = item.displayQuantity;
-        if (displayQty >= 1) {
-            displayQty = Math.round(displayQty * 100) / 100;
-            // Remove trailing zeros
-            displayQty = displayQty === Math.floor(displayQty) ? Math.floor(displayQty) : displayQty;
-        } else if (displayQty > 0 && item.displayUnitType !== 'count') {
-            displayQty = toFraction(displayQty);
-        }
+        // Format the quantity nicely (converts decimals to fractions when appropriate)
+        let displayQty = formatQuantity(item.displayQuantity);
         
         // For imperial volume, add fl oz in parentheses
         if (unitSystem === 'imperial' && item.displayUnitType === 'volume' && item.flOz !== null && item.flOz !== undefined) {
-            const flOzRounded = Math.round(item.flOz * 100) / 100;
-            const flOzDisplay = flOzRounded === Math.floor(flOzRounded) ? Math.floor(flOzRounded) : flOzRounded;
+            const flOzDisplay = formatQuantity(item.flOz);
             quantityDisplay = `${displayQty} ${item.displayUnit || ''} (${flOzDisplay} fl oz)`.trim();
         } else {
             quantityDisplay = `${displayQty} ${item.displayUnit || ''}`.trim();
@@ -1660,14 +2310,16 @@ function renderShoppingListItem(list, item) {
     // If we have grouped quantities (different units), show them all
     else if (item.groupedQuantities && item.groupedQuantities.length > 0) {
         const parts = item.groupedQuantities.map(gq => {
-            let qty = gq.displayQuantity;
-            if (qty >= 1) {
-                qty = Math.round(qty * 100) / 100;
-                qty = qty === Math.floor(qty) ? Math.floor(qty) : qty;
-            } else if (qty > 0 && gq.unitType !== 'count') {
-                qty = toFraction(qty);
+            let qty = formatQuantity(gq.displayQuantity);
+            let part = `${qty} ${gq.displayUnit || ''}`.trim();
+            
+            // For imperial volume, add fl oz in parentheses if available
+            if (unitSystem === 'imperial' && gq.unitType === 'volume' && gq.flOz !== null && gq.flOz !== undefined) {
+                const flOzDisplay = formatQuantity(gq.flOz);
+                part = `${part} (${flOzDisplay} fl oz)`;
             }
-            return `${qty} ${gq.displayUnit || ''}`.trim();
+            
+            return part;
         });
         quantityDisplay = parts.join(' + ');
     }
@@ -1684,9 +2336,19 @@ function renderShoppingListItem(list, item) {
         }
         if (unitType && totalBase > 0) {
             const converted = convertToPreferredUnitSystem(totalBase, unitType);
-            quantityDisplay = `${converted.displayQuantity} ${converted.displayUnit}`;
+            let displayQty = converted.displayQuantity;
+            // For imperial volume, add fl oz in parentheses
+            if (unitSystem === 'imperial' && unitType === 'volume' && converted.flOz !== null && converted.flOz !== undefined) {
+                const flOzDisplay = formatQuantity(converted.flOz);
+                quantityDisplay = `${displayQty} ${converted.displayUnit} (${flOzDisplay} fl oz)`;
+            } else {
+                quantityDisplay = `${displayQty} ${converted.displayUnit}`;
+            }
         } else {
-            quantityDisplay = item.quantities.map(q => `${q.originalQuantity || q.value} ${q.originalUnit || q.unit || ''}`).join(' + ');
+            quantityDisplay = item.quantities.map(q => {
+                const qty = formatQuantity(q.originalQuantity || q.value);
+                return `${qty} ${q.originalUnit || q.unit || ''}`;
+            }).join(' + ');
         }
     }
     
@@ -1729,18 +2391,43 @@ function exportRecipes() {
         return;
     }
     
+    // Default filename
+    const defaultFilename = `recipe-book-${new Date().toISOString().split('T')[0]}.json`;
+    
+    // Prompt user for filename
+    const filename = prompt('Enter filename for export:', defaultFilename);
+    
+    // If user cancelled, don't export
+    if (filename === null) {
+        return;
+    }
+    
+    // Validate filename (remove invalid characters, ensure .json extension)
+    let cleanFilename = filename.trim();
+    if (!cleanFilename) {
+        cleanFilename = defaultFilename;
+    }
+    
+    // Remove invalid filename characters
+    cleanFilename = cleanFilename.replace(/[<>:"/\\|?*]/g, '');
+    
+    // Ensure .json extension
+    if (!cleanFilename.toLowerCase().endsWith('.json')) {
+        cleanFilename += '.json';
+    }
+    
     try {
         const dataStr = JSON.stringify(recipes, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
         const url = URL.createObjectURL(dataBlob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `recipe-book-${new Date().toISOString().split('T')[0]}.json`;
+        link.download = cleanFilename;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
-        showMessage(`Exported ${recipes.length} recipe${recipes.length !== 1 ? 's' : ''}`, 'success');
+        showMessage(`Exported ${recipes.length} recipe${recipes.length !== 1 ? 's' : ''} as ${cleanFilename}`, 'success');
     } catch (error) {
         console.error('Error exporting recipes:', error);
         showMessage('Error exporting recipes', 'error');
@@ -1804,6 +2491,7 @@ async function loadPreloadedRecipes() {
         consolidateIngredients();
         updateRecipeList();
         updateShoppingList();
+        updateTagFilters();
         
         const addedCount = newRecipes.length;
         const skippedCount = validRecipes.length - newRecipes.length;
@@ -1865,6 +2553,7 @@ function importRecipes(event) {
             consolidateIngredients();
             updateRecipeList();
             updateShoppingList();
+            updateTagFilters();
             
             const addedCount = validRecipes.length;
             showMessage(`Imported ${addedCount} recipe${addedCount !== 1 ? 's' : ''}. Check the boxes to include them in your shopping list.`, 'success');
@@ -1988,18 +2677,12 @@ function formatItemQuantity(item) {
     
     // If we have a single display quantity and unit, use it
     if (item.displayQuantity !== undefined && item.displayUnit !== undefined) {
-        let displayQty = item.displayQuantity;
-        if (displayQty >= 1) {
-            displayQty = Math.round(displayQty * 100) / 100;
-            displayQty = displayQty === Math.floor(displayQty) ? Math.floor(displayQty) : displayQty;
-        } else if (displayQty > 0 && item.displayUnitType !== 'count') {
-            displayQty = toFraction(displayQty);
-        }
+        // Format the quantity nicely (converts decimals to fractions when appropriate)
+        let displayQty = formatQuantity(item.displayQuantity);
         
         // For imperial volume, add fl oz in parentheses
         if (unitSystem === 'imperial' && item.displayUnitType === 'volume' && item.flOz !== null && item.flOz !== undefined) {
-            const flOzRounded = Math.round(item.flOz * 100) / 100;
-            const flOzDisplay = flOzRounded === Math.floor(flOzRounded) ? Math.floor(flOzRounded) : flOzRounded;
+            const flOzDisplay = formatQuantity(item.flOz);
             quantityDisplay = `${displayQty} ${item.displayUnit || ''} (${flOzDisplay} fl oz)`.trim();
         } else {
             quantityDisplay = `${displayQty} ${item.displayUnit || ''}`.trim();
@@ -2008,19 +2691,12 @@ function formatItemQuantity(item) {
     // If we have grouped quantities (different units), show them all
     else if (item.groupedQuantities && item.groupedQuantities.length > 0) {
         const parts = item.groupedQuantities.map(gq => {
-            let qty = gq.displayQuantity;
-            if (qty >= 1) {
-                qty = Math.round(qty * 100) / 100;
-                qty = qty === Math.floor(qty) ? Math.floor(qty) : qty;
-            } else if (qty > 0 && gq.unitType !== 'count') {
-                qty = toFraction(qty);
-            }
+            let qty = formatQuantity(gq.displayQuantity);
             let part = `${qty} ${gq.displayUnit || ''}`.trim();
             
             // For imperial volume, add fl oz in parentheses if available
             if (unitSystem === 'imperial' && gq.unitType === 'volume' && gq.flOz !== null && gq.flOz !== undefined) {
-                const flOzRounded = Math.round(gq.flOz * 100) / 100;
-                const flOzDisplay = flOzRounded === Math.floor(flOzRounded) ? Math.floor(flOzRounded) : flOzRounded;
+                const flOzDisplay = formatQuantity(gq.flOz);
                 part = `${part} (${flOzDisplay} fl oz)`;
             }
             
@@ -2041,16 +2717,19 @@ function formatItemQuantity(item) {
         }
         if (unitType && totalBase > 0) {
             const converted = convertToPreferredUnitSystem(totalBase, unitType);
+            let displayQty = converted.displayQuantity;
             // For imperial volume, add fl oz in parentheses
             if (unitSystem === 'imperial' && unitType === 'volume' && converted.flOz !== null && converted.flOz !== undefined) {
-                const flOzRounded = Math.round(converted.flOz * 100) / 100;
-                const flOzDisplay = flOzRounded === Math.floor(flOzRounded) ? Math.floor(flOzRounded) : flOzRounded;
-                quantityDisplay = `${converted.displayQuantity} ${converted.displayUnit} (${flOzDisplay} fl oz)`;
+                const flOzDisplay = formatQuantity(converted.flOz);
+                quantityDisplay = `${displayQty} ${converted.displayUnit} (${flOzDisplay} fl oz)`;
             } else {
-                quantityDisplay = `${converted.displayQuantity} ${converted.displayUnit}`;
+                quantityDisplay = `${displayQty} ${converted.displayUnit}`;
             }
         } else {
-            quantityDisplay = item.quantities.map(q => `${q.originalQuantity || q.value} ${q.originalUnit || q.unit || ''}`).join(' + ');
+            quantityDisplay = item.quantities.map(q => {
+                const qty = formatQuantity(q.originalQuantity || q.value);
+                return `${qty} ${q.originalUnit || q.unit || ''}`;
+            }).join(' + ');
         }
     }
     
@@ -2152,15 +2831,345 @@ function loadUnitSystem() {
 }
 
 // Initialize drag and drop and load saved recipes
+// Suggested tags for recipe form
+const SUGGESTED_TAGS = [
+    'breakfast', 'lunch', 'dinner', 'snack', 'dessert', 'appetizer',
+    'vegan', 'vegetarian', 'gluten-free', 'dairy-free', 'healthy',
+    'salad', 'soup', 'pasta', 'bread', 'smoothie', 'beverage',
+    'quick', 'make-ahead', 'meal-prep', 'one-pot', 'sheet-pan',
+    'spicy', 'sweet', 'savory', 'sour', 'bitter'
+];
+
+/**
+ * Get all available tags (from existing recipes + suggested tags)
+ */
+function getAllAvailableTags() {
+    const existingTags = new Set();
+    
+    // Collect all tags from existing recipes
+    recipes.forEach(recipe => {
+        if (recipe.tags && Array.isArray(recipe.tags)) {
+            recipe.tags.forEach(tag => existingTags.add(tag));
+        }
+    });
+    
+    // Add suggested tags
+    SUGGESTED_TAGS.forEach(tag => existingTags.add(tag));
+    
+    return Array.from(existingTags).sort();
+}
+
+/**
+ * Filter tag options for dropdown
+ */
+function filterTagOptions(searchText) {
+    const dropdown = document.getElementById('tagDropdown');
+    if (!dropdown) return;
+    
+    const searchLower = searchText.toLowerCase().trim();
+    const allTags = getAllAvailableTags();
+    
+    // Filter tags that match the search
+    let filteredTags = allTags;
+    if (searchLower) {
+        filteredTags = allTags.filter(tag => 
+            tag.toLowerCase().includes(searchLower)
+        );
+    }
+    
+    // If search text doesn't match any existing tag and is valid, show option to add it
+    const cleanSearch = searchLower.replace(/[^a-z0-9\-_]/g, '');
+    if (cleanSearch && !allTags.includes(cleanSearch) && !selectedTagsForForm.has(cleanSearch)) {
+        filteredTags.push(`[Add: ${cleanSearch}]`);
+    }
+    
+    dropdown.innerHTML = '';
+    
+    if (filteredTags.length === 0) {
+        dropdown.style.display = 'none';
+        return;
+    }
+    
+    dropdown.style.display = 'block';
+    
+    filteredTags.forEach(tag => {
+        const isAddNew = tag.startsWith('[Add: ');
+        const actualTag = isAddNew ? cleanSearch : tag;
+        const isSelected = selectedTagsForForm.has(actualTag);
+        
+        const option = document.createElement('div');
+        option.className = 'ingredient-option';
+        if (isSelected) {
+            option.style.opacity = '0.5';
+            option.style.cursor = 'default';
+        }
+        option.textContent = isAddNew ? `+ Add "${actualTag}"` : tag;
+        if (!isSelected) {
+            option.onmousedown = (e) => {
+                e.preventDefault(); // Prevent input from losing focus
+                selectTagForForm(actualTag);
+                const input = document.getElementById('tagSearchInput');
+                if (input) {
+                    input.value = '';
+                    input.focus(); // Keep focus on input
+                }
+            };
+        }
+        dropdown.appendChild(option);
+    });
+}
+
+/**
+ * Show tag dropdown
+ */
+function showTagDropdown() {
+    const dropdown = document.getElementById('tagDropdown');
+    const input = document.getElementById('tagSearchInput');
+    if (!dropdown || !input) return;
+    
+    filterTagOptions(input.value);
+}
+
+/**
+ * Hide tag dropdown
+ */
+let hideTagDropdownTimeout = null;
+function hideTagDropdown() {
+    // Clear any existing timeout
+    if (hideTagDropdownTimeout) {
+        clearTimeout(hideTagDropdownTimeout);
+    }
+    
+    // Delay to allow click events to fire
+    hideTagDropdownTimeout = setTimeout(() => {
+        const dropdown = document.getElementById('tagDropdown');
+        if (dropdown) {
+            dropdown.style.display = 'none';
+        }
+        hideTagDropdownTimeout = null;
+    }, 200);
+}
+
+/**
+ * Handle Enter key in tag input
+ */
+function handleTagInputEnter(event) {
+    event.preventDefault();
+    const input = document.getElementById('tagSearchInput');
+    if (!input) return;
+    
+    const searchText = input.value.trim().toLowerCase();
+    if (!searchText) return;
+    
+    // Clean the tag (remove invalid characters)
+    const cleanTag = searchText.replace(/[^a-z0-9\-_]/g, '');
+    if (!cleanTag) {
+        showMessage('Tag can only contain letters, numbers, hyphens, and underscores', 'error');
+        return;
+    }
+    
+    // Check if tag already selected
+    if (selectedTagsForForm.has(cleanTag)) {
+        input.value = '';
+        hideTagDropdown();
+        return;
+    }
+    
+    // Add the tag
+    selectTagForForm(cleanTag);
+    input.value = '';
+    hideTagDropdown();
+}
+
+/**
+ * Select a tag for the form
+ */
+function selectTagForForm(tag) {
+    if (selectedTagsForForm.has(tag)) {
+        return; // Already selected
+    }
+    
+    selectedTagsForForm.add(tag);
+    updateSelectedTagsDisplay();
+    
+    // Refresh dropdown to show updated state
+    const input = document.getElementById('tagSearchInput');
+    if (input) {
+        filterTagOptions(input.value);
+    }
+}
+
+/**
+ * Update the display of selected tags
+ */
+function updateSelectedTagsDisplay() {
+    const container = document.getElementById('selectedTagsDisplay');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    if (selectedTagsForForm.size === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    container.style.display = 'flex';
+    
+    Array.from(selectedTagsForForm).sort().forEach(tag => {
+        const chip = document.createElement('span');
+        chip.className = 'selected-tag-chip';
+        chip.innerHTML = `${tag} <span class="remove-tag" onclick="removeTagFromSelection('${tag}')">×</span>`;
+        container.appendChild(chip);
+    });
+}
+
+/**
+ * Remove tag from selection
+ */
+function removeTagFromSelection(tag) {
+    selectedTagsForForm.delete(tag);
+    updateSelectedTagsDisplay();
+    
+    // Refresh dropdown if it's open
+    const input = document.getElementById('tagSearchInput');
+    const dropdown = document.getElementById('tagDropdown');
+    if (input && dropdown && dropdown.style.display !== 'none') {
+        filterTagOptions(input.value);
+    }
+}
+
+/**
+ * Clear tag selection form
+ */
+function clearTagSelectionForm() {
+    selectedTagsForForm.clear();
+    const input = document.getElementById('tagSearchInput');
+    if (input) input.value = '';
+    updateSelectedTagsDisplay();
+    hideTagDropdown();
+}
+
+/**
+ * Check if we're in development mode
+ */
+function isDevelopmentMode() {
+    // Check if we're on localhost or have a dev parameter
+    const isLocalhost = window.location.hostname === 'localhost' || 
+                       window.location.hostname === '127.0.0.1' ||
+                       window.location.hostname === '';
+    const hasDevParam = new URLSearchParams(window.location.search).has('dev');
+    return isLocalhost || hasDevParam;
+}
+
+/**
+ * Export all recipes to WholeFoods.json format
+ */
+function exportWholeFoodsJson() {
+    if (recipes.length === 0) {
+        showMessage('No recipes to export', 'error');
+        return;
+    }
+    
+    // Prepare recipes for export (remove internal IDs, keep only essential data)
+    const exportData = recipes.map(recipe => {
+        const exported = {
+            name: recipe.name,
+            ingredients: recipe.ingredients.map(ing => ({
+                quantity: ing.quantity,
+                unit: ing.unit,
+                unitType: ing.unitType,
+                ingredient: ing.ingredient,
+                originalLine: ing.originalLine || `${ing.quantity || ''} ${ing.unit || ''} ${ing.ingredient}`.trim()
+            })),
+            originalText: recipe.originalText,
+            tags: recipe.tags || []
+        };
+        
+        // Add optional fields if they exist
+        if (recipe.about) {
+            exported.about = recipe.about;
+        }
+        if (recipe.instructions) {
+            exported.instructions = recipe.instructions;
+        }
+        
+        return exported;
+    });
+    
+    // Create JSON blob
+    const jsonString = JSON.stringify(exportData, null, 2);
+    const blob = new Blob([jsonString], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    // Download
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'WholeFoods.json';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showMessage(`Exported ${recipes.length} recipe${recipes.length !== 1 ? 's' : ''} to WholeFoods.json`, 'success');
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Show dev export button if in development mode
+    if (isDevelopmentMode()) {
+        const devButton = document.getElementById('devExportButton');
+        if (devButton) {
+            devButton.style.display = 'inline-block';
+        }
+    }
+    
     // Load unit system preference
     loadUnitSystem();
+    
+    // Initialize tag selection display
+    updateSelectedTagsDisplay();
     
     // Load shopping list sort preference
     loadShoppingListSort();
     
     // Load saved recipes from localStorage
     loadRecipes();
+    
+    // Load tag filter preferences
+    try {
+        // Load selected tag filters
+        const savedTagFilters = localStorage.getItem(SELECTED_TAG_FILTERS_KEY);
+        if (savedTagFilters) {
+            try {
+                const tags = JSON.parse(savedTagFilters);
+                selectedTagFilters = new Set(tags);
+            } catch (e) {
+                console.error('Error parsing saved tag filters:', e);
+            }
+        }
+        
+        // Load tag filter logic
+        const savedLogic = localStorage.getItem(TAG_FILTER_LOGIC_KEY);
+        if (savedLogic === 'and' || savedLogic === 'or') {
+            tagFilterLogic = savedLogic;
+        }
+        
+        // Legacy: migrate from old single tag filter
+        const savedFilter = localStorage.getItem(TAG_FILTER_KEY);
+        if (savedFilter && savedFilter !== 'all' && selectedTagFilters.size === 0) {
+            selectedTagFilters.add(savedFilter);
+            try {
+                localStorage.setItem(SELECTED_TAG_FILTERS_KEY, JSON.stringify(Array.from(selectedTagFilters)));
+            } catch (e) {
+                console.error('Error saving migrated tag filters:', e);
+            }
+        }
+    } catch (error) {
+        console.error('Error loading tag filters:', error);
+    }
+    
+    // Initialize tag filters and recipe list
+    updateTagFilters();
+    updateSelectedIngredientsDisplay();
 });
 
 

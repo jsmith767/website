@@ -199,6 +199,187 @@
             margin-bottom: 15px; 
             color: #ccc; 
         }
+        .tag-filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #e8e8e8;
+            border-radius: 20px;
+            background: white;
+            color: #2c2c2c;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tag-filter-btn:hover {
+            background: #f8f6f2;
+            border-color: #d48247;
+        }
+        .tag-filter-btn.active {
+            background: #d48247;
+            color: white;
+            border-color: #d48247;
+        }
+        .recipe-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-right: 4px;
+        }
+        .recipe-tag {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .tag-selection-btn {
+            padding: 6px 12px;
+            border: 2px solid #e8e8e8;
+            border-radius: 16px;
+            background: white;
+            color: #2c2c2c;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .tag-selection-btn:hover {
+            background: #f8f6f2;
+            border-color: #d48247;
+        }
+        .tag-selection-btn.selected {
+            background: #d48247;
+            color: white;
+            border-color: #d48247;
+        }
+        .selected-tag-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 16px;
+            font-size: 13px;
+            font-weight: 500;
+            gap: 6px;
+        }
+        .selected-tag-chip .remove-tag {
+            cursor: pointer;
+            font-weight: bold;
+            color: #1976d2;
+            margin-left: 4px;
+        }
+        .selected-tag-chip .remove-tag:hover {
+            color: #c62828;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .modal-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #6a6a6a;
+            cursor: pointer;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        .modal-close:hover {
+            background: #f8f6f2;
+            color: #2c2c2c;
+        }
+        .modal-body {
+            color: #6a6a6a;
+            font-size: 16px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+        }
+        .ingredient-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-top: 4px;
+        }
+        .ingredient-option {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.2s;
+        }
+        .ingredient-option:hover {
+            background: #f8f6f2;
+        }
+        .ingredient-option:last-child {
+            border-bottom: none;
+        }
+        .selected-ingredient {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            background: #d48247;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            gap: 8px;
+        }
+        .selected-ingredient .remove {
+            cursor: pointer;
+            font-weight: bold;
+            opacity: 0.8;
+        }
+        .selected-ingredient .remove:hover {
+            opacity: 1;
+        }
         @media only screen and (max-width: 600px) {
             .rc-hero h1 { font-size: 32px; }
             .rc-hero p { font-size: 16px; }
@@ -236,11 +417,47 @@
                 onkeypress="if(event.key === 'Enter') addRecipe()">
             <input type="hidden" id="editingRecipeId" value="">
             
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 8px;">Tags:</label>
+                <div style="position: relative; max-width: 400px; margin-bottom: 10px;">
+                    <input 
+                        type="text" 
+                        id="tagSearchInput" 
+                        placeholder="Search or add tags..." 
+                        style="width: 100%; padding: 10px 35px 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;"
+                        oninput="filterTagOptions(this.value)"
+                        onfocus="showTagDropdown()"
+                        onblur="hideTagDropdown()"
+                        onkeydown="if(event.key === 'Enter') { event.preventDefault(); handleTagInputEnter(event); }"
+                        autocomplete="off">
+                    <i class="fas fa-search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6a6a6a; pointer-events: none;"></i>
+                    <div id="tagDropdown" class="ingredient-dropdown" style="display: none;" onmousedown="event.preventDefault()">
+                        <!-- Tag options will be generated here -->
+                    </div>
+                </div>
+                <div id="selectedTagsDisplay" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 6px;">
+                    <!-- Selected tags will be displayed here -->
+                </div>
+            </div>
+            
             <textarea 
                 id="recipeInput" 
                 class="recipe-input-area" 
-                placeholder="Paste recipe here, for example:&#10;&#10;2 cups all-purpose flour&#10;1 tablespoon baking powder&#10;1/2 teaspoon salt&#10;3/4 cup sugar&#10;2 eggs&#10;1 cup milk&#10;1/3 cup butter, melted"
+                placeholder="Paste recipe here, for example:&#10;&#10;1 lb potatos cubed&#10;4 bell peppers&#10;1 bundle celery&#10;11 carrots&#10;6-8 zuccini&#10;2 leek&#10;4 cups of veggie stock&#10;1/2 jar curry paste&#10;2 cans coconut milk&#10;4 bok choi&#10;1 bunch cilantro"
                 style="width: 100%; min-height: 200px; padding: 15px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
+            
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 8px; margin-top: 15px;">About (optional):</label>
+            <textarea 
+                id="recipeAbout" 
+                placeholder="Add notes, description, or context about this recipe..."
+                style="width: 100%; min-height: 80px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
+            
+            <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 8px;">Preparation (optional):</label>
+            <textarea 
+                id="recipeInstructions" 
+                placeholder="Add step-by-step preparation instructions..."
+                style="width: 100%; min-height: 120px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
+            
             <button class="btn" onclick="addRecipe()">Add Recipe</button>
             
             <div id="editRecipeActions" style="display: none; margin-top: 15px;">
@@ -251,12 +468,42 @@
 
         <div class="rc-card">
             <h2>Manage Recipes</h2>
+            <div style="margin-bottom: 20px;">
+                <h3 style="font-size: 16px; color: #2c2c2c; margin-bottom: 10px;">Filter by Tag:</h3>
+                <div id="tagFiltersContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                    <!-- Tag filter buttons will be generated here -->
+                </div>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h3 style="font-size: 16px; color: #2c2c2c; margin-bottom: 10px;">Filter by Ingredient:</h3>
+                <div style="position: relative; max-width: 400px;">
+                    <input 
+                        type="text" 
+                        id="ingredientSearchInput" 
+                        placeholder="Search ingredients..." 
+                        style="width: 100%; padding: 10px 35px 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;"
+                        oninput="filterIngredientOptions(this.value)"
+                        onfocus="showIngredientDropdown()"
+                        onblur="hideIngredientDropdown()"
+                        autocomplete="off">
+                    <i class="fas fa-search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6a6a6a; pointer-events: none;"></i>
+                    <div id="ingredientDropdown" class="ingredient-dropdown" style="display: none;">
+                        <!-- Ingredient options will be generated here -->
+                    </div>
+                </div>
+                <div id="selectedIngredientsContainer" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;">
+                    <!-- Selected ingredients will be shown here -->
+                </div>
+            </div>
             <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
                 <button class="btn btn-secondary" onclick="exportRecipes()">Export Recipes</button>
                 <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">Import Recipes</button>
                 <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importRecipes(event)">
                 <button class="btn btn-secondary" onclick="loadPreloadedRecipes()">Load Preloaded Recipes</button>
                 <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+                <span id="devExportButton" style="display: none;">
+                    <button class="btn btn-secondary" onclick="exportWholeFoodsJson()" style="background: #9c27b0; border-color: #9c27b0;">Export to WholeFoods.json</button>
+                </span>
                 <div style="margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                     <label style="font-size: 14px; color: #6a6a6a;">Sort:</label>
                     <select id="recipeSortSelect" onchange="sortRecipes()" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
@@ -300,6 +547,45 @@
         </div>
         
     </section>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal-overlay" onclick="closeAboutModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="aboutModalTitle">About</h2>
+                <button class="modal-close" onclick="closeAboutModal()" title="Close">×</button>
+            </div>
+            <div class="modal-body" id="aboutModalBody">
+                <!-- About content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Preparation Modal -->
+    <div id="preparationModal" class="modal-overlay" onclick="closePreparationModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="preparationModalTitle">Preparation</h2>
+                <button class="modal-close" onclick="closePreparationModal()" title="Close">×</button>
+            </div>
+            <div class="modal-body" id="preparationModalBody">
+                <!-- Preparation content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Ingredients Modal -->
+    <div id="ingredientsModal" class="modal-overlay" onclick="closeIngredientsModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title" id="ingredientsModalTitle">Ingredients</h2>
+                <button class="modal-close" onclick="closeIngredientsModal()" title="Close">×</button>
+            </div>
+            <div class="modal-body" id="ingredientsModalBody">
+                <!-- Ingredients content will be inserted here -->
+            </div>
+        </div>
+    </div>
 
     <script src="recipe-consolidator.js"></script>
 </body>

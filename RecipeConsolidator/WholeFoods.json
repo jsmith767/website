@@ -1,6 +1,5 @@
 [
   {
-    "id": 1762240706954.6343,
     "name": "Blueberry, Banana & Chia Muffins",
     "ingredients": [
       {
@@ -109,10 +108,14 @@
         "originalLine": "1 cup fresh or frozen blueberries"
       }
     ],
-    "originalText": "2 cups gluten-free oat flour\n½ cup blanched almond flour\n½ cup gluten-free old-fashioned rolled oats\n¼ cup chia seeds\n2 teaspoons baking powder\n½ teaspoon baking soda\n1 teaspoon cinnamon\n¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\n2 medium, very ripe bananas (1 cup mashed)\n⅓ cup creamy almond butter or preferred nut/seed butter\n⅓ cup maple syrup\n½ cup unsweetened almond milk or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup fresh or frozen blueberries"
+    "originalText": "2 cups gluten-free oat flour\n½ cup blanched almond flour\n½ cup gluten-free old-fashioned rolled oats\n¼ cup chia seeds\n2 teaspoons baking powder\n½ teaspoon baking soda\n1 teaspoon cinnamon\n¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\n2 medium, very ripe bananas (1 cup mashed)\n⅓ cup creamy almond butter or preferred nut/seed butter\n⅓ cup maple syrup\n½ cup unsweetened almond milk or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup fresh or frozen blueberries",
+    "tags": [
+      "breakfast",
+      "dessert",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.137,
     "name": "Cinnamon-Spiced House Granola",
     "ingredients": [
       {
@@ -179,10 +182,13 @@
         "originalLine": "¼ cup water"
       }
     ],
-    "originalText": "3 cups gluten-free old-fashioned rolled oats\n1 cup sliced almonds\n1 tablespoon cinnamon\n½ teaspoon ground allspice\n¼ teaspoon sea salt\n½ cup maple syrup\n¼ cup unsweetened applesauce\n1 tablespoon pure vanilla extract\n¼ cup water"
+    "originalText": "3 cups gluten-free old-fashioned rolled oats\n1 cup sliced almonds\n1 tablespoon cinnamon\n½ teaspoon ground allspice\n¼ teaspoon sea salt\n½ cup maple syrup\n¼ cup unsweetened applesauce\n1 tablespoon pure vanilla extract\n¼ cup water",
+    "tags": [
+      "breakfast",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.6377,
     "name": "Vegetable Jambalaya",
     "ingredients": [
       {
@@ -324,10 +330,12 @@
         "originalLine": "Parsley"
       }
     ],
-    "originalText": "1 large yellow onion, diced\n2 large celery stalks, thinly sliced\n2 medium carrots, diced\n4 garlic cloves, minced\n1 red bell pepper, deseeded and diced\n1½ teaspoon dried oregano\n1½ teaspoon smoked paprika\n1 teaspoon dried thyme\n1 teaspoon onion powder\n1 teaspoon garlic powder\n¼ teaspoon red pepper flakes or to your preference\n2 bay leaves\n1 (14.5-ounce) can diced tomatoes (regular or fire-roasted)\n3 cups low-sodium vegetable broth (more if needed)\n1¼ cups long-grain brown rice\n1 cup frozen peas\n1 tablespoon tamari\n1 cup baby spinach or chopped kale\nSea salt and black pepper\nParsley"
+    "originalText": "1 large yellow onion, diced\n2 large celery stalks, thinly sliced\n2 medium carrots, diced\n4 garlic cloves, minced\n1 red bell pepper, deseeded and diced\n1½ teaspoon dried oregano\n1½ teaspoon smoked paprika\n1 teaspoon dried thyme\n1 teaspoon onion powder\n1 teaspoon garlic powder\n¼ teaspoon red pepper flakes or to your preference\n2 bay leaves\n1 (14.5-ounce) can diced tomatoes (regular or fire-roasted)\n3 cups low-sodium vegetable broth (more if needed)\n1¼ cups long-grain brown rice\n1 cup frozen peas\n1 tablespoon tamari\n1 cup baby spinach or chopped kale\nSea salt and black pepper\nParsley",
+    "tags": [
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.9612,
     "name": "Apricot, Cardamom & Blueberry Bars",
     "ingredients": [
       {
@@ -341,8 +349,8 @@
         "quantity": 1,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "gluten-fre old-fashioned rolled oats",
-        "originalLine": "1 cup gluten-fre old-fashioned rolled oats"
+        "ingredient": "gluten-free old-fashioned rolled oats",
+        "originalLine": "1 cup gluten-free old-fashioned rolled oats"
       },
       {
         "quantity": 0.5,
@@ -442,10 +450,14 @@
         "originalLine": "1 cup fresh or frozen blueberries"
       }
     ],
-    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-fre old-fashioned rolled oats\n½ cup water\n1 cup quinoa flakes\n¾ cup gluten-free oat flour\n½ cup coconut sugar\n½ cup walnuts, chopped\n¾ cup dried apricots, finely chopped 3 tablespoons hemp seeds or sesame seeds\n1 teaspoon cinnamon\n1¼ teaspoons ground cardamom\n¼ teaspoon sea salt\n⅔ cup unsweetened almond milk\n1 tablespoon pure vanilla extract\nZest from 1 large orange (1 heaping tablespoon)\n2 tablespoons freshly squeezed orange juice\n1 cup fresh or frozen blueberries"
+    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-free old-fashioned rolled oats\n½ cup water\n1 cup quinoa flakes\n¾ cup gluten-free oat flour\n½ cup coconut sugar\n½ cup walnuts, chopped\n¾ cup dried apricots, finely chopped 3 tablespoons hemp seeds or sesame seeds\n1 teaspoon cinnamon\n1¼ teaspoons ground cardamom\n¼ teaspoon sea salt\n⅔ cup unsweetened almond milk\n1 tablespoon pure vanilla extract\nZest from 1 large orange (1 heaping tablespoon)\n2 tablespoons freshly squeezed orange juice\n1 cup fresh or frozen blueberries",
+    "tags": [
+      "breakfast",
+      "dessert",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.7227,
     "name": "Cranberry-Orange Muffins with Rosemary",
     "ingredients": [
       {
@@ -572,10 +584,16 @@
         "originalLine": "3 tablespoons finely chopped fresh rosemary leaves"
       }
     ],
-    "originalText": "2 teaspoons whole psyllium husk\n⅓ cup water\n¾ cup blanched almond flour\n1¾ cup gluten-free oat flour\n1¾ cups gluten-free old-fashioned rolled oats\n1 tablespoon baking powder\n¾ teaspoon cinnamon\nHeaping ¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\nScant ½ cup unsweetened almond milk\n⅓ cup unsweetened applesauce\nZest of 1 large orange (1 heaping tablespoon)\n⅓ cup freshly squeezed orange juice\n3 tablespoons well-stirred tahini\n⅓ cup maple syrup\n1½ teaspoons pure vanilla extract\n1½ cups frozen or fresh cranberries\n3 tablespoons finely chopped fresh rosemary leaves"
+    "originalText": "2 teaspoons whole psyllium husk\n⅓ cup water\n¾ cup blanched almond flour\n1¾ cup gluten-free oat flour\n1¾ cups gluten-free old-fashioned rolled oats\n1 tablespoon baking powder\n¾ teaspoon cinnamon\nHeaping ¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\nScant ½ cup unsweetened almond milk\n⅓ cup unsweetened applesauce\nZest of 1 large orange (1 heaping tablespoon)\n⅓ cup freshly squeezed orange juice\n3 tablespoons well-stirred tahini\n⅓ cup maple syrup\n1½ teaspoons pure vanilla extract\n1½ cups frozen or fresh cranberries\n3 tablespoons finely chopped fresh rosemary leaves",
+    "tags": [
+      "breakfast",
+      "dessert",
+      "vegan"
+    ],
+    "about": "This is a classic muffin (my mom's favorite), just reinvented. Cranberries are rich in phytonutrients and are lower in sugar than most fruit but are generally passed over for other berries. Here, their tartness combines with oats, orange juice, and tahini to make a delicious low-sugar muffin. For an extra special touch and a little hint of elegance, add fresh chopped rosemary!",
+    "instructions": "1. Position the oven rack in the middle of the \noven and preheat to 350°F. \n2. In a small bowl, mix together the psyllium \nhusk and 1⁄2 cup water. Set aside for 5 minutes to thicken. \n3. Add the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg, and salt to a medium-sized bowl and mix, breaking up any chunks of almond flour. \n4. Add the almond milk, applesauce, orange \nzest and juice, tahini, maple syrup, vanilla, and the thickened psyllium mix to a blender and blend until smooth. \n5. Add the blended mixture to the bowl of dry \ningredients and mix using a spatula until no dry spots remain. Fold in the cranberries and \nrosemary. \n6. Scoop a heaping 1⁄2 cup of the batter, I like \nto use my 34 ounce spring-release scoop or disher, for each muffin and bake the muffins \nfor 23 to 26 minutes or until the muffins are \nalmost firm to the touch. \n7. Remove the muffins from the oven, place \non a cooling rack, and let them cool in the muffin tin for 15 minutes. If using a nonstick or traditional muffin tin, use a thin spatula to run along the edge of each muffin and \n(Continued on next page)"
   },
   {
-    "id": 1762240706954.0989,
     "name": "Tuesday Tempeh Tacos",
     "ingredients": [
       {
@@ -663,10 +681,10 @@
         "originalLine": "1 lime, cut into wedges"
       },
       {
-        "quantity": 8,
+        "quantity": 10,
         "unit": null,
         "unitType": "count",
-        "ingredient": "-10 corn tortillas (warmed)",
+        "ingredient": "corn tortillas (warmed)",
         "originalLine": "8-10 corn tortillas (warmed)"
       },
       {
@@ -677,10 +695,10 @@
         "originalLine": "1 head Boston lettuce (if using tortillas)"
       },
       {
-        "quantity": 1,
+        "quantity": 2,
         "unit": null,
         "unitType": "count",
-        "ingredient": "-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)",
+        "ingredient": "avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)",
         "originalLine": "1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)"
       },
       {
@@ -690,10 +708,12 @@
         "originalLine": "Chopped cilantro or parsley (optional)"
       }
     ],
-    "originalText": "1(8 ounce) package tempeh\n½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped\n1 red bell pepper, deseeded and diced\n1 small jalapeño, deseeded and diced (omit for less spicy option)\n2½ teaspoons chili powder\n2 teaspoons ground cumin\n1 teaspoon garlic powder\n½ teaspoon dried oregano\n½ teaspoon smoked paprika\n1 tablespoon tamari\n½ cup chunky salsa (your favorite!)\n1 lime, cut into wedges\n8-10 corn tortillas (warmed)\n1 head Boston lettuce (if using tortillas)\n1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)\nChopped cilantro or parsley (optional)"
+    "originalText": "1(8 ounce) package tempeh\n½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped\n1 red bell pepper, deseeded and diced\n1 small jalapeño, deseeded and diced (omit for less spicy option)\n2½ teaspoons chili powder\n2 teaspoons ground cumin\n1 teaspoon garlic powder\n½ teaspoon dried oregano\n½ teaspoon smoked paprika\n1 tablespoon tamari\n½ cup chunky salsa (your favorite!)\n1 lime, cut into wedges\n8-10 corn tortillas (warmed)\n1 head Boston lettuce (if using tortillas)\n1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)\nChopped cilantro or parsley (optional)",
+    "tags": [
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.4104,
     "name": "Sour Cream",
     "ingredients": [
       {
@@ -732,18 +752,21 @@
         "originalLine": "½ cup water"
       }
     ],
-    "originalText": "1 cup cashews, soaked in water for 2-3 hours\n1 tablespoon apple cider vinegar\n¾ teaspoon Dijon mustard\n¼ teaspoon sea salt\n½ cup water"
+    "originalText": "1 cup cashews, soaked in water for 2-3 hours\n1 tablespoon apple cider vinegar\n¾ teaspoon Dijon mustard\n¼ teaspoon sea salt\n½ cup water",
+    "tags": [
+      "add-on",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.564,
     "name": "Easy Apple-Berry Crumble",
     "ingredients": [
       {
         "quantity": 1.5,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "gluten free old-fashioned rolled oats",
-        "originalLine": "1½ cup gluten free old-fashioned rolled oats"
+        "ingredient": "gluten-free old-fashioned rolled oats",
+        "originalLine": "1½ cup gluten-free old-fashioned rolled oats"
       },
       {
         "quantity": 1,
@@ -822,10 +845,13 @@
         "originalLine": "Almond Butter Caramel (page 45)"
       }
     ],
-    "originalText": "1½ cup gluten free old-fashioned rolled oats\n1 tablespoon coconut sugar\n1¼ teaspoons cinnamon\n¼ teaspoon ground allspice\n¼ teaspoon sea salt\n3 tablespoons maple syrup\n1 tablespoon well-stirred almond or sunflower seed butter\n½ teaspoon pure vanilla extract\n2 apples, peel left on, chopped in ½-inch cubes (2 heaping cups)\n3 cups mixed frozen berries (blueberries, raspberries, and blackberries work well)\n1 teaspoon arrowroot starch\nAlmond Butter Caramel (page 45)"
+    "originalText": "1½ cup gluten-free old-fashioned rolled oats\n1 tablespoon coconut sugar\n1¼ teaspoons cinnamon\n¼ teaspoon ground allspice\n¼ teaspoon sea salt\n3 tablespoons maple syrup\n1 tablespoon well-stirred almond or sunflower seed butter\n½ teaspoon pure vanilla extract\n2 apples, peel left on, chopped in ½-inch cubes (2 heaping cups)\n3 cups mixed frozen berries (blueberries, raspberries, and blackberries work well)\n1 teaspoon arrowroot starch\nAlmond Butter Caramel (page 45)",
+    "tags": [
+      "dessert",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.9326,
     "name": "Nice-Cream",
     "ingredients": [
       {
@@ -850,17 +876,20 @@
         "originalLine": "1 cup sliced strawberries"
       },
       {
-        "quantity": 11,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)",
-        "originalLine": "11- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)"
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla extract",
+        "originalLine": "½ teaspoon vanilla extract"
       }
     ],
-    "originalText": "4 frozen overripe bananas, broken into chunks before freezing\n2 tablespoons almond butter\n1 cup sliced strawberries\n11- to 1½-inch piece vanilla bean, split and scraped (or ½ teaspoon extract)"
+    "originalText": "4 frozen overripe bananas, broken into chunks before freezing\n2 tablespoons almond butter\n1 cup sliced strawberries\n½ teaspoon vanilla extract",
+    "tags": [
+      "dessert",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.3232,
     "name": "Golden bowls",
     "ingredients": [
       {
@@ -938,10 +967,13 @@
         "originalLine": "Golden Tahini Sauce"
       }
     ],
-    "originalText": "1 cup dry white quinoa or brown rice\n¾ teaspoon each ground turmeric, coriander,\ngarlic powder\n4 grinds black pepper\n6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)\nPlant-based protein of choice (in this picture, 3 B's Burger, cut in half)\n1 bunch curly kale, stems removed, chopped (5 packed cups)\n½ lemon\n1½ cups cherry tomatoes, halved\n¼ cup raw or toasted pumpkin seeds\nGolden Tahini Sauce"
+    "originalText": "1 cup dry white quinoa or brown rice\n¾ teaspoon each ground turmeric, coriander,\ngarlic powder\n4 grinds black pepper\n6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)\nPlant-based protein of choice (in this picture, 3 B's Burger, cut in half)\n1 bunch curly kale, stems removed, chopped (5 packed cups)\n½ lemon\n1½ cups cherry tomatoes, halved\n¼ cup raw or toasted pumpkin seeds\nGolden Tahini Sauce",
+    "tags": [
+      "bowl",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.9844,
     "name": "Golden Tahini Sauce",
     "ingredients": [
       {
@@ -1000,10 +1032,13 @@
         "originalLine": "Pinch black pepper 2 tablespoons water"
       }
     ],
-    "originalText": "¼ cup well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n1 garlic clove, minced\n2 teaspoon maple syrup, optional\n1 teaspoon nutritional yeast\n¼ teaspoon ground turmeric\n⅛ teaspoon cayenne pepper\nPinch black pepper 2 tablespoons water"
+    "originalText": "¼ cup well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n1 garlic clove, minced\n2 teaspoon maple syrup, optional\n1 teaspoon nutritional yeast\n¼ teaspoon ground turmeric\n⅛ teaspoon cayenne pepper\nPinch black pepper 2 tablespoons water",
+    "tags": [
+      "sauce",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.488,
     "name": "Bitchn' sauce",
     "ingredients": [
       {
@@ -1011,36 +1046,14 @@
         "unit": "ml",
         "unitType": "volume",
         "ingredient": "water",
-        "originalLine": "1 1/2 c. + 4 tbsp. water",
-        "isCombined": true,
-        "originalPairs": [
-          {
-            "quantity": 1.5,
-            "unit": "c."
-          },
-          {
-            "quantity": 4,
-            "unit": "tbsp."
-          }
-        ]
+        "originalLine": "1 1/2 c. + 4 tbsp. water"
       },
       {
         "quantity": 270,
         "unit": "ml",
         "unitType": "volume",
         "ingredient": "grapeseed oil (or similar neutral oil)",
-        "originalLine": "1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)",
-        "isCombined": true,
-        "originalPairs": [
-          {
-            "quantity": 1,
-            "unit": "c."
-          },
-          {
-            "quantity": 2,
-            "unit": "tbsp."
-          }
-        ]
+        "originalLine": "1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)"
       },
       {
         "quantity": 1,
@@ -1054,18 +1067,7 @@
         "unit": "ml",
         "unitType": "volume",
         "ingredient": "lemon juice, fresh",
-        "originalLine": "1/2 c. + 4 tbsp. lemon juice, fresh",
-        "isCombined": true,
-        "originalPairs": [
-          {
-            "quantity": 0.5,
-            "unit": "c."
-          },
-          {
-            "quantity": 4,
-            "unit": "tbsp."
-          }
-        ]
+        "originalLine": "1/2 c. + 4 tbsp. lemon juice, fresh"
       },
       {
         "quantity": 6,
@@ -1124,10 +1126,13 @@
         "originalLine": "1/2 tsp. paprika"
       }
     ],
-    "originalText": "1 1/2 c. + 4 tbsp. water\n1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)\n1 c. raw almonds\n1/2 c. + 4 tbsp. lemon juice, fresh\n6 tbsp. nutritional yeast\n4 cloves garlic\n4 tsp. Tamari\n1 tsp. kosher salt\n1 tsp. cumin\n1 tsp. chili powder\n1/2 tsp. coriander\n1/2 tsp. paprika"
+    "originalText": "1 1/2 c. + 4 tbsp. water\n1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)\n1 c. raw almonds\n1/2 c. + 4 tbsp. lemon juice, fresh\n6 tbsp. nutritional yeast\n4 cloves garlic\n4 tsp. Tamari\n1 tsp. kosher salt\n1 tsp. cumin\n1 tsp. chili powder\n1/2 tsp. coriander\n1/2 tsp. paprika",
+    "tags": [
+      "sauce",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.9717,
     "name": "House hummus",
     "ingredients": [
       {
@@ -1172,10 +1177,14 @@
         "originalLine": "¼-½ cup water or aquafaba"
       }
     ],
-    "originalText": "3 cups cooked or canned chickpeas, drained and rinsed\n3 garlic cloves\n¼ cup well-stirred tahini\nScant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained\n¼ teaspoon sea salt or to taste\n¼-½ cup water or aquafaba"
+    "originalText": "3 cups cooked or canned chickpeas, drained and rinsed\n3 garlic cloves\n¼ cup well-stirred tahini\nScant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained\n¼ teaspoon sea salt or to taste\n¼-½ cup water or aquafaba",
+    "tags": [
+      "hummus",
+      "dip",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.8054,
     "name": "Spiced creamy carrot hummus",
     "ingredients": [
       {
@@ -1242,10 +1251,14 @@
         "originalLine": "¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba"
       }
     ],
-    "originalText": "1 medium carrot, roughly chopped (1 heaping cup)\n1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n2 teaspoons white miso\n2 garlic cloves\n½ teaspoon ground coriander\n½ teaspoon red pepper flakes or to your preference\n¼ teaspoon ground cumin\n¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba"
+    "originalText": "1 medium carrot, roughly chopped (1 heaping cup)\n1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n2 teaspoons white miso\n2 garlic cloves\n½ teaspoon ground coriander\n½ teaspoon red pepper flakes or to your preference\n¼ teaspoon ground cumin\n¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba",
+    "tags": [
+      "hummus",
+      "dip",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.6926,
     "name": "Bacon-ish Bits",
     "ingredients": [
       {
@@ -1281,18 +1294,7 @@
         "unit": "ml",
         "unitType": "volume",
         "ingredient": "tamari",
-        "originalLine": "1 tablespoon + 1 teaspoon tamari",
-        "isCombined": true,
-        "originalPairs": [
-          {
-            "quantity": 1,
-            "unit": "tablespoon"
-          },
-          {
-            "quantity": 1,
-            "unit": "teaspoon"
-          }
-        ]
+        "originalLine": "1 tablespoon + 1 teaspoon tamari"
       },
       {
         "quantity": 1,
@@ -1316,10 +1318,13 @@
         "originalLine": "½ cup sunflower seeds"
       }
     ],
-    "originalText": "1 teaspoon smoked paprika\n½ teaspoon onion powder\n½ teaspoon garlic powder\n1 teaspoon nutritional yeast\n1 tablespoon + 1 teaspoon tamari\n1 teaspoon maple syrup, optional\n½ cup sliced almonds\n½ cup sunflower seeds"
+    "originalText": "1 teaspoon smoked paprika\n½ teaspoon onion powder\n½ teaspoon garlic powder\n1 teaspoon nutritional yeast\n1 tablespoon + 1 teaspoon tamari\n1 teaspoon maple syrup, optional\n½ cup sliced almonds\n½ cup sunflower seeds",
+    "tags": [
+      "add-on",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.723,
     "name": "Hemp-Balsamic Dressing",
     "ingredients": [
       {
@@ -1365,10 +1370,13 @@
         "originalLine": "2 teaspoons tamari"
       }
     ],
-    "originalText": "2 pitted Medjool dates, soaked in hot water for 15-30 minutes\n3 tablespoons hemp seeds\n3 tablespoons balsamic vinegar\n3 tablespoons freshly squeezed orange juice\n2 tablespoons smooth Dijon mustard (not grainy)\n2 teaspoons tamari"
+    "originalText": "2 pitted Medjool dates, soaked in hot water for 15-30 minutes\n3 tablespoons hemp seeds\n3 tablespoons balsamic vinegar\n3 tablespoons freshly squeezed orange juice\n2 tablespoons smooth Dijon mustard (not grainy)\n2 teaspoons tamari",
+    "tags": [
+      "dressing",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.635,
     "name": "Loaded Lunch Salad with Hemp Balsamic Dressing",
     "ingredients": [
       {
@@ -1434,10 +1442,10 @@
         "originalLine": "Pinch dulse flakes, optional"
       },
       {
-        "quantity": 1,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional",
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "nuts, seeds, or Bacon-ish Bits (page 116), optional",
         "originalLine": "1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional"
       },
       {
@@ -1447,10 +1455,13 @@
         "originalLine": "Hemp-Balsamic Dressing"
       }
     ],
-    "originalText": "3 cups leafy greens (baby lettuce, arugula, or spinach)\n⅔ cup shredded red cabbage\n1 small carrot, peeled into strips\n¼ eup thinly sliced cucumber\n¼ cup quartered cherry tomatoes\n½ cup finely chopped broccoli or cauliflower\n¼-½ cup cooked quinoa\n¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus\nPinch dulse flakes, optional\n1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional\nHemp-Balsamic Dressing"
+    "originalText": "3 cups leafy greens (baby lettuce, arugula, or spinach)\n⅔ cup shredded red cabbage\n1 small carrot, peeled into strips\n¼ eup thinly sliced cucumber\n¼ cup quartered cherry tomatoes\n½ cup finely chopped broccoli or cauliflower\n¼-½ cup cooked quinoa\n¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus\nPinch dulse flakes, optional\n1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional\nHemp-Balsamic Dressing",
+    "tags": [
+      "salad",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.1296,
     "name": "Tahini Caesar Dressing",
     "ingredients": [
       {
@@ -1529,10 +1540,13 @@
         "originalLine": "¼ cup water"
       }
     ],
-    "originalText": "⅓ cup well-stirred tahini\n3 tablespoons freshly squeezed lemon juice\n1 teaspoon apple cider vinegar\n2 small garlic cloves\n2 tablespoons capers, drained\n1½ teaspoons Dijon mustard\n1 teaspoon nutritional yeast\n1 teaspoon maple syrup, optional\nPinch sea salt\nPinch black pepper\n¼ cup water"
+    "originalText": "⅓ cup well-stirred tahini\n3 tablespoons freshly squeezed lemon juice\n1 teaspoon apple cider vinegar\n2 small garlic cloves\n2 tablespoons capers, drained\n1½ teaspoons Dijon mustard\n1 teaspoon nutritional yeast\n1 teaspoon maple syrup, optional\nPinch sea salt\nPinch black pepper\n¼ cup water",
+    "tags": [
+      "dressing",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.603,
     "name": "Quick Smoked Chickpeas",
     "ingredients": [
       {
@@ -1591,10 +1605,13 @@
         "originalLine": "2 tablespoons water"
       }
     ],
-    "originalText": "1½ cups cooked or canned chickpeas, drained and rinsed\n2 teaspoons dehydrated minced onion\n¾ teaspoon smoked paprika\nPinch red pepper flakes or to your preference\n½ teaspoon coconut sugar, optional\n2 teaspoons tamari\n1 teaspoon balsamic vinegar\n2 tablespoons water"
+    "originalText": "1½ cups cooked or canned chickpeas, drained and rinsed\n2 teaspoons dehydrated minced onion\n¾ teaspoon smoked paprika\nPinch red pepper flakes or to your preference\n½ teaspoon coconut sugar, optional\n2 teaspoons tamari\n1 teaspoon balsamic vinegar\n2 tablespoons water",
+    "tags": [
+      "add-on",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.9773,
     "name": "Tahni Caesar Salad",
     "ingredients": [
       {
@@ -1644,10 +1661,13 @@
         "originalLine": "Tahini Caesar Dressing"
       }
     ],
-    "originalText": "1 large bunch curly kale, stems removed, chopped (6 packed cups)\n1 Lemon\n1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)\n½ cup Bacon-ish Bits (page 116)\nCashew Turmeric Parmesan (page 149)\nQuick Smoked Chickpeas\nTahini Caesar Dressing"
+    "originalText": "1 large bunch curly kale, stems removed, chopped (6 packed cups)\n1 Lemon\n1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)\n½ cup Bacon-ish Bits (page 116)\nCashew Turmeric Parmesan (page 149)\nQuick Smoked Chickpeas\nTahini Caesar Dressing",
+    "tags": [
+      "salad",
+      "vegan"
+    ]
   },
   {
-    "id": 1762240706954.874,
     "name": "After Ceremony Soup",
     "ingredients": [
       {
@@ -1728,6 +1748,10 @@
         "originalLine": "1 bunch cilantro"
       }
     ],
-    "originalText": "1 lb potatos cubed\n4 bell peppers\n1 bundle celery\n11 carrots\n6-8 zuccini\n2 leek\n4 cups of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro"
+    "originalText": "1 lb potatos cubed\n4 bell peppers\n1 bundle celery\n11 carrots\n6-8 zuccini\n2 leek\n4 cups of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro",
+    "tags": [
+      "soup",
+      "vegan"
+    ]
   }
 ]
