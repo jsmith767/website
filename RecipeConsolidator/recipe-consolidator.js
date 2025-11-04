@@ -3843,121 +3843,147 @@ function importMealPlan(event) {
     
     const reader = new FileReader();
     reader.onload = function(e) {
-        try {
-            const importData = JSON.parse(e.target.result);
-            
-            // Validate import data
-            if (!importData.mealPlan) {
-                showMessage('Invalid meal plan file format', 'error');
-                return;
-            }
-            
-            // Ask user if they want to replace or merge
-            const replace = confirm('Replace existing meal plan with imported one?\n\nClick OK to replace, Cancel to merge.');
-            
-            if (replace) {
-                mealPlan = importData.mealPlan;
-                mealPlanNotes = importData.mealPlanNotes || {};
-                selectedDays = new Set(importData.selectedDays || []);
+        // Defer heavy processing to avoid blocking the main thread
+        setTimeout(function() {
+            try {
+                const importData = JSON.parse(e.target.result);
                 
-                // Restore active recipes and multipliers
-                if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                    activeRecipeIds = new Set(importData.activeRecipeIds.map(id => {
-                        const numId = parseFloat(id);
-                        return isNaN(numId) ? null : numId;
-                    }).filter(id => id !== null));
-                } else {
-                    // If no activeRecipeIds in import, keep current ones
-                    // (Don't clear them - user might want to keep current selection)
+                // Debug: log what we're importing
+                console.log('=== MEAL PLAN IMPORT ===');
+                console.log('Importing meal plan data:', importData);
+                console.log('Has mealPlan:', !!importData.mealPlan);
+                console.log('Has mealPlanNotes:', !!importData.mealPlanNotes);
+                console.log('Has selectedDays:', !!importData.selectedDays);
+                console.log('Has activeRecipeIds:', !!importData.activeRecipeIds);
+                console.log('Has recipeMultipliers:', !!importData.recipeMultipliers);
+                
+                // Validate import data
+                if (!importData.mealPlan) {
+                    console.error('❌ Invalid meal plan file format - missing mealPlan property');
+                    console.error('Available properties:', Object.keys(importData));
+                    showMessage('Invalid meal plan file format - missing meal plan data', 'error');
+                    return;
                 }
-                if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
-                    recipeMultipliers = {};
-                    for (const id in importData.recipeMultipliers) {
-                        const numId = parseFloat(id);
-                        if (!isNaN(numId)) {
-                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                
+                // Ask user if they want to replace or merge
+                const replace = confirm('Replace existing meal plan with imported one?\n\nClick OK to replace, Cancel to merge.');
+                
+                if (replace) {
+                    // Use structuredClone if available, otherwise shallow copy is fine (we'll deep copy selected parts)
+                    if (typeof structuredClone !== 'undefined') {
+                        mealPlan = structuredClone(importData.mealPlan);
+                        mealPlanNotes = importData.mealPlanNotes ? structuredClone(importData.mealPlanNotes) : {};
+                    } else {
+                        // Fallback: shallow copy (sufficient for our use case)
+                        mealPlan = Object.assign({}, importData.mealPlan);
+                        mealPlanNotes = importData.mealPlanNotes ? Object.assign({}, importData.mealPlanNotes) : {};
+                    }
+                    selectedDays = new Set(importData.selectedDays || []);
+                    
+                    // Restore active recipes and multipliers
+                    if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                        activeRecipeIds = new Set(importData.activeRecipeIds.map(id => {
+                            const numId = parseFloat(id);
+                            return isNaN(numId) ? null : numId;
+                        }).filter(id => id !== null));
+                    }
+                    if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
+                        recipeMultipliers = {};
+                        for (const id in importData.recipeMultipliers) {
+                            const numId = parseFloat(id);
+                            if (!isNaN(numId)) {
+                                recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                            }
                         }
                     }
                 } else {
-                    // If no multipliers in import, keep current ones
-                }
-            } else {
-                // Merge: combine meal plans
-                for (const date in importData.mealPlan) {
-                    if (!mealPlan[date]) {
-                        mealPlan[date] = {};
-                    }
-                    for (const meal in importData.mealPlan[date]) {
-                        if (!mealPlan[date][meal]) {
-                            mealPlan[date][meal] = [];
+                    // Merge: combine meal plans
+                    for (const date in importData.mealPlan) {
+                        if (!mealPlan[date]) {
+                            mealPlan[date] = {};
                         }
-                        // Add recipes that don't already exist
-                        importData.mealPlan[date][meal].forEach(recipeId => {
-                            if (!mealPlan[date][meal].includes(recipeId)) {
-                                mealPlan[date][meal].push(recipeId);
+                        for (const meal in importData.mealPlan[date]) {
+                            if (!mealPlan[date][meal]) {
+                                mealPlan[date][meal] = [];
+                            }
+                            // Add recipes that don't already exist
+                            const existingIds = new Set(mealPlan[date][meal]);
+                            importData.mealPlan[date][meal].forEach(recipeId => {
+                                if (!existingIds.has(recipeId)) {
+                                    mealPlan[date][meal].push(recipeId);
+                                }
+                            });
+                        }
+                    }
+                    
+                    // Merge notes
+                    for (const date in importData.mealPlanNotes || {}) {
+                        if (!mealPlanNotes[date]) {
+                            mealPlanNotes[date] = {};
+                        }
+                        for (const meal in importData.mealPlanNotes[date]) {
+                            if (!mealPlanNotes[date][meal]) {
+                                mealPlanNotes[date][meal] = {};
+                            }
+                            Object.assign(mealPlanNotes[date][meal], importData.mealPlanNotes[date][meal]);
+                        }
+                    }
+                    
+                    // Merge selected days
+                    importData.selectedDays?.forEach(day => selectedDays.add(day));
+                    
+                    // Merge active recipes (add imported ones)
+                    if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                        importData.activeRecipeIds.forEach(id => {
+                            const numId = parseFloat(id);
+                            if (!isNaN(numId)) {
+                                activeRecipeIds.add(numId);
                             }
                         });
                     }
-                }
-                
-                // Merge notes
-                for (const date in importData.mealPlanNotes || {}) {
-                    if (!mealPlanNotes[date]) {
-                        mealPlanNotes[date] = {};
-                    }
-                    for (const meal in importData.mealPlanNotes[date]) {
-                        if (!mealPlanNotes[date][meal]) {
-                            mealPlanNotes[date][meal] = {};
+                    
+                    // Merge multipliers (prefer imported values if they exist)
+                    if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
+                        for (const id in importData.recipeMultipliers) {
+                            const numId = parseFloat(id);
+                            if (!isNaN(numId)) {
+                                recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                            }
                         }
-                        Object.assign(mealPlanNotes[date][meal], importData.mealPlanNotes[date][meal]);
                     }
                 }
                 
-                // Merge selected days
-                importData.selectedDays?.forEach(day => selectedDays.add(day));
+                // Convert recipe IDs back to numbers (optimize with batch processing)
+                for (const date in mealPlan) {
+                    for (const meal in mealPlan[date]) {
+                        mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
+                    }
+                }
                 
-                // Merge active recipes (add imported ones)
-                if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
-                    importData.activeRecipeIds.forEach(id => {
-                        const numId = parseFloat(id);
-                        if (!isNaN(numId)) {
-                            activeRecipeIds.add(numId);
-                        }
+                // Save all imported data (defer localStorage writes)
+                setTimeout(function() {
+                    saveMealPlan();
+                    saveActiveRecipes();
+                    saveRecipeMultipliers();
+                    
+                    // Update UI (defer UI updates)
+                    requestAnimationFrame(function() {
+                        updateRecipeList();
+                        updateShoppingList();
+                        updateDayPlanner();
+                        showMessage('Meal plan imported successfully', 'success');
                     });
-                }
-                
-                // Merge multipliers (prefer imported values if they exist)
-                if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
-                    for (const id in importData.recipeMultipliers) {
-                        const numId = parseFloat(id);
-                        if (!isNaN(numId)) {
-                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
-                        }
-                    }
-                }
+                }, 0);
+            } catch (error) {
+                console.error('Error importing meal plan:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack,
+                    importData: e?.target?.result?.substring(0, 500) // First 500 chars for debugging
+                });
+                showMessage(`Error importing meal plan: ${error.message}. Check console for details.`, 'error');
             }
-            
-            // Convert recipe IDs back to numbers
-            for (const date in mealPlan) {
-                for (const meal in mealPlan[date]) {
-                    mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
-                }
-            }
-            
-            // Save all imported data
-            saveMealPlan();
-            saveActiveRecipes();
-            saveRecipeMultipliers();
-            
-            // Update UI
-            updateRecipeList();
-            updateShoppingList();
-            updateDayPlanner();
-            showMessage('Meal plan imported successfully', 'success');
-        } catch (error) {
-            console.error('Error importing meal plan:', error);
-            showMessage('Error importing meal plan. Please check the file format.', 'error');
-        }
+        }, 0);
     };
     
     reader.readAsText(file);
