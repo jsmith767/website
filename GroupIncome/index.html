@@ -29,6 +29,20 @@
         .gi-registry-link { text-align: center; padding: 60px 10%; background: #e8e4dc; }
         .gi-registry-link a { display: inline-block; padding: 16px 40px; background: #2c2c2c; color: white; text-decoration: none; border-radius: 6px; font-size: 18px; font-weight: 500; transition: background 0.3s; }
         .gi-registry-link a:hover { background: #d48247; }
+        .carousel-container { position: relative; max-width: 100%; margin: 0 auto; }
+        .carousel-slides { position: relative; overflow: hidden; border-radius: 8px; min-height: 800px; }
+        .carousel-slide { display: none; text-align: center; animation: fadeIn 0.5s; }
+        .carousel-slide.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .carousel-slide img { max-width: 100%; height: auto; max-height: 700px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); margin-bottom: 20px; object-fit: contain; }
+        .carousel-slide p { font-size: 16px; color: #6a6a6a; font-style: italic; min-height: 40px; }
+        .carousel-controls { display: flex; justify-content: center; align-items: center; gap: 20px; margin-top: 30px; }
+        .carousel-btn { background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-size: 16px; cursor: pointer; transition: background 0.3s; font-family: 'Poppins', sans-serif; font-weight: 500; }
+        .carousel-btn:hover { background: #d48247; }
+        .carousel-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .carousel-indicators { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+        .carousel-indicator { width: 12px; height: 12px; border-radius: 50%; background: #ccc; border: none; cursor: pointer; transition: background 0.3s; padding: 0; }
+        .carousel-indicator.active { background: #d48247; }
         @media only screen and (max-width: 600px) {
             .gi-hero h1 { font-size: 36px; }
             .gi-hero p { font-size: 18px; }
@@ -143,6 +157,36 @@
 
     <section id="program" class="gi-section">
         <h2 class="gi-section-title">Program Model Overview</h2>
+        <div class="gi-content-card" style="padding: 40px;">
+            <div class="carousel-container">
+                <div class="carousel-slides">
+                    <div class="carousel-slide active">
+                        <img src="Images/SharingLow.png" alt="How the Group Income Program Works - Demonstration">
+                        <p>A visual demonstration of how the base program works when 10% is taken from Effective Income.</p>
+                        <p style="font-size: 14px; color: #999; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">Note: Each <img src="Images/cash.png" alt="cash unit" style="height: 20px; width: auto; vertical-align: middle; display: inline-block; margin: 0 2px;"> <span style="display: inline-flex; align-items: center;">=</span> $500</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/HighEarnerExample.png" alt="High Earner Example - Homeowner with Debt and Equity">
+                        <p>Example: Middle class homeowner</p>
+                        <p style="font-size: 14px; color: #999; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">Note: Each <img src="Images/cash.png" alt="cash unit" style="height: 20px; width: auto; vertical-align: middle; display: inline-block; margin: 0 2px;"> <span style="display: inline-flex; align-items: center;">=</span> $500</p>
+                    </div>
+                    <div class="carousel-slide">
+                        <img src="Images/MountainOfDebt.png" alt="Mountain of Debt Example - Student Loans">
+                        <p>Example: The mountain of debt scenario (e.g., student loans).</p>
+                        <p style="font-size: 14px; color: #999; margin-top: 10px; display: flex; align-items: center; justify-content: center; gap: 8px;">Note: Each <img src="Images/cash.png" alt="cash unit" style="height: 20px; width: auto; vertical-align: middle; display: inline-block; margin: 0 2px;"> <span style="display: inline-flex; align-items: center;">=</span> $500</p>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn" aria-label="Previous slide">← Previous</button>
+                    <div class="carousel-indicators">
+                        <button class="carousel-indicator active" data-slide="0" aria-label="Go to slide 1"></button>
+                        <button class="carousel-indicator" data-slide="1" aria-label="Go to slide 2"></button>
+                        <button class="carousel-indicator" data-slide="2" aria-label="Go to slide 3"></button>
+                    </div>
+                    <button class="carousel-btn" id="nextBtn" aria-label="Next slide">Next →</button>
+                </div>
+            </div>
+        </div>
         <div class="gi-content-card">
             <h3>1. Base Contributions</h3>
             <p><strong>Universal Contribution Rate:</strong> 10% of Effective Income (EI) for all participants.</p>
@@ -281,6 +325,85 @@
                 if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
             });
         });
+        
+        // Carousel functionality
+        (function() {
+            let currentSlide = 0;
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            let autoRotateInterval;
+            
+            function showSlide(index) {
+                // Remove active class from all slides and indicators
+                slides.forEach(slide => slide.classList.remove('active'));
+                indicators.forEach(indicator => indicator.classList.remove('active'));
+                
+                // Add active class to current slide and indicator
+                if (slides[index]) {
+                    slides[index].classList.add('active');
+                }
+                if (indicators[index]) {
+                    indicators[index].classList.add('active');
+                }
+                
+                currentSlide = index;
+            }
+            
+            function nextSlide() {
+                const next = (currentSlide + 1) % slides.length;
+                showSlide(next);
+            }
+            
+            function prevSlide() {
+                const prev = (currentSlide - 1 + slides.length) % slides.length;
+                showSlide(prev);
+            }
+            
+            function startAutoRotate() {
+                // Auto-rotate every 10 seconds
+                autoRotateInterval = setInterval(nextSlide, 10000);
+            }
+            
+            function stopAutoRotate() {
+                if (autoRotateInterval) {
+                    clearInterval(autoRotateInterval);
+                }
+            }
+            
+            // Button event listeners
+            nextBtn.addEventListener('click', () => {
+                nextSlide();
+                stopAutoRotate();
+                startAutoRotate(); // Restart auto-rotate after manual navigation
+            });
+            
+            prevBtn.addEventListener('click', () => {
+                prevSlide();
+                stopAutoRotate();
+                startAutoRotate(); // Restart auto-rotate after manual navigation
+            });
+            
+            // Indicator event listeners
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    showSlide(index);
+                    stopAutoRotate();
+                    startAutoRotate(); // Restart auto-rotate after manual navigation
+                });
+            });
+            
+            // Pause auto-rotate on hover
+            const carouselContainer = document.querySelector('.carousel-container');
+            if (carouselContainer) {
+                carouselContainer.addEventListener('mouseenter', stopAutoRotate);
+                carouselContainer.addEventListener('mouseleave', startAutoRotate);
+            }
+            
+            // Start auto-rotation
+            startAutoRotate();
+        })();
     </script>
 </body>
 </html>
