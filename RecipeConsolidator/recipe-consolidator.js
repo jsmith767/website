@@ -3861,14 +3861,25 @@ function importMealPlan(event) {
                 selectedDays = new Set(importData.selectedDays || []);
                 
                 // Restore active recipes and multipliers
-                if (importData.activeRecipeIds) {
-                    activeRecipeIds = new Set(importData.activeRecipeIds.map(id => parseFloat(id)));
+                if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
+                    activeRecipeIds = new Set(importData.activeRecipeIds.map(id => {
+                        const numId = parseFloat(id);
+                        return isNaN(numId) ? null : numId;
+                    }).filter(id => id !== null));
+                } else {
+                    // If no activeRecipeIds in import, keep current ones
+                    // (Don't clear them - user might want to keep current selection)
                 }
-                if (importData.recipeMultipliers) {
+                if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
                     recipeMultipliers = {};
                     for (const id in importData.recipeMultipliers) {
-                        recipeMultipliers[parseFloat(id)] = importData.recipeMultipliers[id];
+                        const numId = parseFloat(id);
+                        if (!isNaN(numId)) {
+                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                        }
                     }
+                } else {
+                    // If no multipliers in import, keep current ones
                 }
             } else {
                 // Merge: combine meal plans
@@ -3906,16 +3917,22 @@ function importMealPlan(event) {
                 importData.selectedDays?.forEach(day => selectedDays.add(day));
                 
                 // Merge active recipes (add imported ones)
-                if (importData.activeRecipeIds) {
+                if (importData.activeRecipeIds && Array.isArray(importData.activeRecipeIds)) {
                     importData.activeRecipeIds.forEach(id => {
-                        activeRecipeIds.add(parseFloat(id));
+                        const numId = parseFloat(id);
+                        if (!isNaN(numId)) {
+                            activeRecipeIds.add(numId);
+                        }
                     });
                 }
                 
                 // Merge multipliers (prefer imported values if they exist)
-                if (importData.recipeMultipliers) {
+                if (importData.recipeMultipliers && typeof importData.recipeMultipliers === 'object') {
                     for (const id in importData.recipeMultipliers) {
-                        recipeMultipliers[parseFloat(id)] = importData.recipeMultipliers[id];
+                        const numId = parseFloat(id);
+                        if (!isNaN(numId)) {
+                            recipeMultipliers[numId] = importData.recipeMultipliers[id];
+                        }
                     }
                 }
             }
