@@ -3438,6 +3438,482 @@ function removeMealSlotFromDay(date, mealType) {
 }
 
 /**
+ * Export meal plan to JSON
+ */
+function exportMealPlan() {
+    if (selectedDays.size === 0) {
+        showMessage('No meal plan to export', 'error');
+        return;
+    }
+    
+    // Default filename
+    const defaultFilename = `meal-plan-${new Date().toISOString().split('T')[0]}.json`;
+    
+    // Prompt user for filename
+    const filename = prompt('Enter filename for export:', defaultFilename);
+    
+    // If user cancelled, don't export
+    if (filename === null) {
+        return;
+    }
+    
+    // Validate filename (remove invalid characters, ensure .json extension)
+    let cleanFilename = filename.trim();
+    if (!cleanFilename) {
+        cleanFilename = defaultFilename;
+    }
+    
+    // Remove invalid filename characters
+    cleanFilename = cleanFilename.replace(/[<>:"/\\|?*]/g, '');
+    
+    // Ensure .json extension
+    if (!cleanFilename.toLowerCase().endsWith('.json')) {
+        cleanFilename += '.json';
+    }
+    
+    try {
+        const exportData = {
+            mealPlan: mealPlan,
+            mealPlanNotes: mealPlanNotes,
+            selectedDays: Array.from(selectedDays),
+            exportDate: new Date().toISOString()
+        };
+        
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(dataBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = cleanFilename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showMessage(`Exported meal plan as ${cleanFilename}`, 'success');
+    } catch (error) {
+        console.error('Error exporting meal plan:', error);
+        showMessage('Error exporting meal plan', 'error');
+    }
+}
+
+/**
+ * Export meal plan in printable format
+ */
+function exportMealPlanPrintable() {
+    if (selectedDays.size === 0) {
+        showMessage('No meal plan to export', 'error');
+        return;
+    }
+    
+    // Sort days chronologically
+    const sortedDays = Array.from(selectedDays).sort();
+    
+    let html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Meal Plan</title>
+    <style>
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #2c2c2c;
+        }
+        h1 {
+            color: #d48247;
+            border-bottom: 3px solid #d48247;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .day-section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        .day-header {
+            font-size: 24px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .meal-section {
+            margin-bottom: 25px;
+        }
+        .meal-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d48247;
+            margin-bottom: 10px;
+        }
+        .recipe-item {
+            margin-bottom: 8px;
+            padding: 8px;
+            background: #f8f6f2;
+            border-left: 3px solid #d48247;
+            padding-left: 12px;
+        }
+        .recipe-name {
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+        .recipe-note {
+            font-size: 14px;
+            color: #6a6a6a;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        .empty-meal {
+            color: #999;
+            font-style: italic;
+            padding: 8px;
+        }
+        @media print {
+            body {
+                padding: 10px;
+            }
+            .day-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Meal Plan</h1>
+`;
+    
+    for (const date of sortedDays) {
+        if (!mealPlan[date]) continue;
+        
+        html += `    <div class="day-section">\n`;
+        html += `        <div class="day-header">${formatDate(date)}</div>\n`;
+        
+        // Get all meal types for this day
+        const mealTypes = Object.keys(mealPlan[date]).filter(meal => 
+            mealPlan[date][meal] && Array.isArray(mealPlan[date][meal])
+        );
+        
+        if (mealTypes.length === 0) {
+            html += `        <div class="empty-meal">No meals planned</div>\n`;
+        } else {
+            for (const meal of mealTypes) {
+                const recipeIds = mealPlan[date][meal];
+                html += `        <div class="meal-section">\n`;
+                html += `            <div class="meal-title">${capitalizeMealType(meal)}</div>\n`;
+                
+                if (recipeIds.length === 0) {
+                    html += `            <div class="empty-meal">No recipes</div>\n`;
+                } else {
+                    recipeIds.forEach((recipeId, index) => {
+                        const recipe = recipes.find(r => r.id === recipeId);
+                        if (recipe) {
+                            const note = getRecipeNote(date, meal, recipeId, index);
+                            html += `            <div class="recipe-item">\n`;
+                            html += `                <div class="recipe-name">${escapeHtml(recipe.name)}</div>\n`;
+                            if (note) {
+                                html += `                <div class="recipe-note">Note: ${escapeHtml(note)}</div>\n`;
+                            }
+                            html += `            </div>\n`;
+                        }
+                    });
+                }
+                
+                html += `        </div>\n`;
+            }
+        }
+        
+        html += `    </div>\n`;
+    }
+    
+    html += `</body>\n</html>`;
+    
+    // Create blob and download
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `meal-plan-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showMessage('Meal plan exported for printing', 'success');
+}
+
+/**
+ * Export meal plan in visual format (matching website layout)
+ */
+function exportMealPlanVisual() {
+    if (selectedDays.size === 0) {
+        showMessage('No meal plan to export', 'error');
+        return;
+    }
+    
+    // Sort days chronologically
+    const sortedDays = Array.from(selectedDays).sort();
+    
+    let html = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Meal Plan - Visual Layout</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #2c2c2c;
+        }
+        h1 {
+            color: #d48247;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        .days-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+        .day-card {
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px;
+            min-width: 300px;
+            max-width: 350px;
+            flex: 1 1 300px;
+            page-break-inside: avoid;
+        }
+        .day-header {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8e8e8;
+        }
+        .meal-slot-print {
+            min-height: 60px;
+            padding: 12px;
+            background: #f8f6f2;
+            border-radius: 6px;
+            border: 2px solid #d48247;
+            margin-bottom: 15px;
+        }
+        .meal-slot-label-print {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d48247;
+            margin-bottom: 8px;
+        }
+        .recipe-item-print {
+            background: white;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid #d48247;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        .recipe-name-print {
+            font-weight: 600;
+            color: #2c2c2c;
+        }
+        .recipe-note-print {
+            font-size: 12px;
+            color: #6a6a6a;
+            font-style: italic;
+            margin-top: 4px;
+            padding-left: 8px;
+        }
+        .empty-meal-print {
+            color: #999;
+            font-style: italic;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 10px;
+            }
+            .day-card {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            .days-container {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Meal Plan</h1>
+    <div class="days-container">
+`;
+    
+    for (const date of sortedDays) {
+        if (!mealPlan[date]) continue;
+        
+        html += `        <div class="day-card">\n`;
+        html += `            <div class="day-header">${formatDate(date)}</div>\n`;
+        
+        // Get all meal types for this day, sorted by typical order
+        const mealOrder = ['prep', 'breakfast', 'lunch', 'dinner', 'late-night'];
+        const mealTypes = Object.keys(mealPlan[date]).filter(meal => 
+            mealPlan[date][meal] && Array.isArray(mealPlan[date][meal])
+        ).sort((a, b) => {
+            const indexA = mealOrder.indexOf(a);
+            const indexB = mealOrder.indexOf(b);
+            if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+            if (indexA === -1) return 1;
+            if (indexB === -1) return -1;
+            return indexA - indexB;
+        });
+        
+        if (mealTypes.length === 0) {
+            html += `            <div class="meal-slot-print">\n`;
+            html += `                <div class="empty-meal-print">No meals planned</div>\n`;
+            html += `            </div>\n`;
+        } else {
+            for (const meal of mealTypes) {
+                const recipeIds = mealPlan[date][meal];
+                html += `            <div class="meal-slot-print">\n`;
+                html += `                <div class="meal-slot-label-print">${capitalizeMealType(meal)}</div>\n`;
+                
+                if (recipeIds.length === 0) {
+                    html += `                <div class="empty-meal-print">No recipes</div>\n`;
+                } else {
+                    recipeIds.forEach((recipeId, index) => {
+                        const recipe = recipes.find(r => r.id === recipeId);
+                        if (recipe) {
+                            const note = getRecipeNote(date, meal, recipeId, index);
+                            html += `                <div class="recipe-item-print">\n`;
+                            html += `                    <div class="recipe-name-print">${escapeHtml(recipe.name)}</div>\n`;
+                            if (note) {
+                                html += `                    <div class="recipe-note-print">📝 ${escapeHtml(note)}</div>\n`;
+                            }
+                            html += `                </div>\n`;
+                        }
+                    });
+                }
+                
+                html += `            </div>\n`;
+            }
+        }
+        
+        html += `        </div>\n`;
+    }
+    
+    html += `    </div>\n</body>\n</html>`;
+    
+    // Create blob and download
+    const blob = new Blob([html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `meal-plan-visual-${new Date().toISOString().split('T')[0]}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    showMessage('Visual meal plan exported for printing', 'success');
+}
+
+/**
+ * Import meal plan from JSON
+ */
+function importMealPlan(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importData = JSON.parse(e.target.result);
+            
+            // Validate import data
+            if (!importData.mealPlan) {
+                showMessage('Invalid meal plan file format', 'error');
+                return;
+            }
+            
+            // Ask user if they want to replace or merge
+            const replace = confirm('Replace existing meal plan with imported one?\n\nClick OK to replace, Cancel to merge.');
+            
+            if (replace) {
+                mealPlan = importData.mealPlan;
+                mealPlanNotes = importData.mealPlanNotes || {};
+                selectedDays = new Set(importData.selectedDays || []);
+            } else {
+                // Merge: combine meal plans
+                for (const date in importData.mealPlan) {
+                    if (!mealPlan[date]) {
+                        mealPlan[date] = {};
+                    }
+                    for (const meal in importData.mealPlan[date]) {
+                        if (!mealPlan[date][meal]) {
+                            mealPlan[date][meal] = [];
+                        }
+                        // Add recipes that don't already exist
+                        importData.mealPlan[date][meal].forEach(recipeId => {
+                            if (!mealPlan[date][meal].includes(recipeId)) {
+                                mealPlan[date][meal].push(recipeId);
+                            }
+                        });
+                    }
+                }
+                
+                // Merge notes
+                for (const date in importData.mealPlanNotes || {}) {
+                    if (!mealPlanNotes[date]) {
+                        mealPlanNotes[date] = {};
+                    }
+                    for (const meal in importData.mealPlanNotes[date]) {
+                        if (!mealPlanNotes[date][meal]) {
+                            mealPlanNotes[date][meal] = {};
+                        }
+                        Object.assign(mealPlanNotes[date][meal], importData.mealPlanNotes[date][meal]);
+                    }
+                }
+                
+                // Merge selected days
+                importData.selectedDays?.forEach(day => selectedDays.add(day));
+            }
+            
+            // Convert recipe IDs back to numbers
+            for (const date in mealPlan) {
+                for (const meal in mealPlan[date]) {
+                    mealPlan[date][meal] = mealPlan[date][meal].map(id => parseFloat(id));
+                }
+            }
+            
+            saveMealPlan();
+            updateDayPlanner();
+            showMessage('Meal plan imported successfully', 'success');
+        } catch (error) {
+            console.error('Error importing meal plan:', error);
+            showMessage('Error importing meal plan. Please check the file format.', 'error');
+        }
+    };
+    
+    reader.readAsText(file);
+    event.target.value = ''; // Reset file input
+}
+
+/**
  * Clear meal plan
  */
 function clearMealPlan() {

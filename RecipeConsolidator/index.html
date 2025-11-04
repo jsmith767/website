@@ -751,6 +751,11 @@
                 <h2 style="margin: 0;">Day Planner</h2>
                 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-secondary" onclick="addDayToPlanner()" style="padding: 8px 15px; font-size: 14px;">Add Day</button>
+                    <button class="btn btn-secondary" onclick="exportMealPlan()" style="padding: 8px 15px; font-size: 14px;">Export Meal Plan</button>
+                    <button class="btn btn-secondary" onclick="exportMealPlanPrintable()" style="padding: 8px 15px; font-size: 14px;">Print Meal Plan (List)</button>
+                    <button class="btn btn-secondary" onclick="exportMealPlanVisual()" style="padding: 8px 15px; font-size: 14px;">Print Meal Plan (Visual)</button>
+                    <button class="btn btn-secondary" onclick="document.getElementById('importMealPlanInput').click()" style="padding: 8px 15px; font-size: 14px;">Import Meal Plan</button>
+                    <input type="file" id="importMealPlanInput" accept=".json" style="display: none;" onchange="importMealPlan(event)">
                     <button class="btn btn-secondary" onclick="clearMealPlan()" style="padding: 8px 15px; font-size: 14px; background: #ffebee; color: #c62828; border-color: #c62828;">Clear Plan</button>
                 </div>
             </div>
