@@ -651,7 +651,72 @@
                 style="width: 100%; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif; margin-bottom: 15px;"
                 onkeypress="if(event.key === 'Enter') addRecipe()">
             <input type="hidden" id="editingRecipeId" value="">
-            
+
+            <div style="margin: 5px 0; display: flex; justify-content: flex-end;">
+                <button 
+                    type="button"
+                    class="btn btn-secondary"
+                    style="padding: 4px 10px; font-size: 11px; background: #f0f0f0; color: #555; border-radius: 14px;"
+                    onclick="toggleAdvancedSourceFields()">
+                    Toggle source & affiliate fields
+                </button>
+            </div>
+
+            <div id="advancedSourceFields" style="display: none; border: 1px dashed #e0e0e0; border-radius: 6px; padding: 8px; margin: 4px 0 8px; background: #faf9f7;">
+                <div style="font-size: 12px; color: #8a6a3b; margin-bottom: 8px;">
+                    For your own curated recipes: optionally track book/website source and affiliate links. 
+                    People adding their own recipes can ignore this section.
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                    <div style="flex: 1 1 180px; min-width: 160px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Source Type:</label>
+                        <select id="recipeSourceType" style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                            <option value="">None / Personal</option>
+                            <option value="book">Book</option>
+                            <option value="website">Website</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div style="flex: 2 1 220px; min-width: 180px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Source Title:</label>
+                        <input 
+                            type="text" 
+                            id="recipeSourceTitle" 
+                            placeholder="Book or website name"
+                            style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                    <div style="flex: 1 1 140px; min-width: 140px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Book Pages (optional):</label>
+                        <input 
+                            type="text" 
+                            id="recipeSourcePages" 
+                            placeholder="e.g., 145–147"
+                            style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                    </div>
+                    <div style="flex: 2 1 220px; min-width: 180px;">
+                        <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Source URL (optional):</label>
+                        <input 
+                            type="url" 
+                            id="recipeSourceUrl" 
+                            placeholder="Canonical recipe URL (non-affiliate)"
+                            style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 5px;">
+                    <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Affiliate Link (optional):</label>
+                    <input 
+                        type="url" 
+                        id="recipeAffiliateUrl" 
+                        placeholder="Affiliate link to purchase the book or product"
+                        style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
+                </div>
+            </div>
+
             <div style="margin-bottom: 15px;">
                 <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 8px;">Tags:</label>
                 <div style="position: relative; max-width: 400px; margin-bottom: 10px;">
@@ -693,7 +758,7 @@
                 placeholder="Add step-by-step preparation instructions..."
                 style="width: 100%; min-height: 120px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
             
-            <button class="btn" onclick="addRecipe()">Add Recipe</button>
+            <button class="btn" id="addRecipeButton" onclick="addRecipe()">Add Recipe</button>
             
             <div id="editRecipeActions" style="display: none; margin-top: 15px;">
                 <button class="btn" onclick="saveRecipeEdit()">Save Changes</button>
@@ -736,6 +801,7 @@
                 <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importRecipes(event)">
                 <button class="btn btn-secondary" onclick="loadPreloadedRecipes()">Load Preloaded Recipes</button>
                 <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
+                <button class="btn btn-secondary" onclick="emailRecipesToCreator()" title="Open an email draft with your recipes JSON so you can send it to the tool creator.">Email My Recipes to Creator</button>
                 <span id="devExportButton" style="display: none;">
                     <button class="btn btn-secondary" onclick="exportWholeFoodsJson()" style="background: #9c27b0; border-color: #9c27b0;">Export to WholeFoods.json</button>
                 </span>
@@ -868,6 +934,19 @@
             </div>
             <div class="modal-body" id="ingredientsModalBody">
                 <!-- Ingredients content will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Ingredient Review Modal -->
+    <div id="ingredientReviewModal" class="modal-overlay" onclick="closeIngredientReviewModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title">Review Parsed Ingredients</h2>
+                <button class="modal-close" onclick="closeIngredientReviewModal()" title="Close">×</button>
+            </div>
+            <div class="modal-body" id="ingredientReviewModalBody" style="font-size: 14px; color: #4a4a4a;">
+                <!-- Review content will be inserted here -->
             </div>
         </div>
     </div>

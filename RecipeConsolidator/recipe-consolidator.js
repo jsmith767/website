@@ -40,6 +40,20 @@ const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
 
+// Temporary state for ingredient review before saving a new recipe or edit
+let pendingRecipeForReview = null;
+let pendingIngredientsForReview = null;
+
+/**
+ * Toggle visibility of advanced source & affiliate fields in the Add Recipe form
+ */
+function toggleAdvancedSourceFields() {
+    const container = document.getElementById('advancedSourceFields');
+    if (!container) return;
+    const isHidden = container.style.display === 'none' || container.style.display === '';
+    container.style.display = isHidden ? 'block' : 'none';
+}
+
 /**
  * Save recipes to localStorage
  */
@@ -260,6 +274,14 @@ const INGREDIENT_ALIASES = {
     'milk': ['whole milk', '2% milk', 'skim milk']
 };
 
+// Common prep / descriptor words we want in notes, not in the base ingredient name
+const INGREDIENT_PREP_WORDS = [
+    'fresh', 'dried', 'ground', 'chopped', 'diced', 'sliced', 'minced',
+    'grated', 'crushed', 'peeled', 'shredded', 'finely', 'roughly',
+    'coarsely', 'halved', 'quartered', 'ripe', 'large', 'small', 'medium',
+    'optional', 'to taste'
+];
+
 // Auto-tagging rules based on ingredients and recipe names
 const AUTO_TAG_RULES = {
     'breakfast': {
@@ -350,9 +372,31 @@ function normalizeIngredientName(name) {
     
     let normalized = name.toLowerCase().trim();
     
-    // Remove common prefixes/suffixes
-    normalized = normalized.replace(/^(fresh |dried |ground |chopped |diced |sliced |minced |grated |crushed )/i, '');
-    normalized = normalized.replace(/(,.*|\(.*\))/g, ''); // Remove notes in parentheses or after commas
+    // Pull out anything in parentheses as a note (but don't use it for the key)
+    // e.g. "soy sauce (or tamari)" -> name "soy sauce", note "(or tamari)"
+    normalized = normalized.replace(/\(.*?\)/g, '').trim();
+    
+    // Remove any trailing descriptive clause after a comma
+    // e.g. "onion, finely chopped" -> "onion"
+    normalized = normalized.split(',')[0].trim();
+    
+    const prepRegex = new RegExp(
+        `^(?:${INGREDIENT_PREP_WORDS.join('|')})\\s+|\\s+(?:${INGREDIENT_PREP_WORDS.join('|')})$`,
+        'gi'
+    );
+    normalized = normalized.replace(prepRegex, '').trim();
+    
+    // Collapse multiple spaces
+    normalized = normalized.replace(/\s+/g, ' ').trim();
+    
+    // Very simple plural normalization for common patterns
+    if (normalized.endsWith('es')) {
+        // tomatoes -> tomato, potatoes -> potato
+        normalized = normalized.replace(/(tomatoes|potatoes)$/i, m => m.slice(0, -2));
+    } else if (normalized.endsWith('s')) {
+        // onions -> onion, carrots -> carrot
+        normalized = normalized.slice(0, -1);
+    }
     
     // Check aliases
     for (const [key, aliases] of Object.entries(INGREDIENT_ALIASES)) {
@@ -362,6 +406,131 @@ function normalizeIngredientName(name) {
     }
     
     return normalized;
+}
+
+/**
+ * Infer "notes" (prep/alternatives/etc.) from an ingredient display name
+ * by stripping out the normalized base name and keeping the rest.
+ */
+function inferIngredientNotes(rawName) {
+    if (!rawName) return '';
+    
+    const normalized = normalizeIngredientName(rawName);
+    if (!normalized) return '';
+    
+    const lowerRaw = rawName.toLowerCase();
+    const lowerNorm = normalized.toLowerCase();
+    const idx = lowerRaw.indexOf(lowerNorm);
+    if (idx === -1) return '';
+    
+    // Remove the normalized part and surrounding punctuation/whitespace
+    const before = rawName.slice(0, idx).trim();
+    const after = rawName.slice(idx + normalized.length).trim();
+    let combined = [before, after].filter(Boolean).join(' ').trim();
+    combined = combined.replace(/^[,.-\s]+|[,.-\s]+$/g, '');
+
+    if (!combined) return '';
+
+    // Strip a single layer of wrapping parentheses if present
+    combined = combined.replace(/^\((.*)\)$/, '$1').trim();
+
+    // If there is a dash, prefer the part after the dash (e.g. "es — cubed" -> "cubed")
+    if (combined.includes('—')) {
+        const parts = combined.split('—').map(p => p.trim()).filter(Boolean);
+        // Drop trivial plural suffix fragments like "s" or "es"
+        const filtered = parts.filter(p => !/^(s|es)$/i.test(p));
+        combined = (filtered[0] || parts[parts.length - 1] || '').trim();
+    }
+
+    // If what's left is just a plural suffix, treat as no notes
+    if (/^(s|es)$/i.test(combined)) {
+        return '';
+    }
+
+    // Some adjectives (like "kosher" or "sea") are really part of the ingredient
+    // name (e.g. "kosher salt", "sea salt") and shouldn't be treated as notes.
+    const adjective = combined.toLowerCase();
+    if (adjective === 'kosher' || adjective === 'sea') {
+        return '';
+    }
+
+    return combined;
+}
+
+/**
+ * Move obvious prep/descriptor words out of the ingredient name into notes
+ * e.g. "sliced almonds" -> ingredient: "almonds", notes: "sliced"
+ */
+function splitPrepWordsFromName(name, existingNotes) {
+    if (!name) {
+        return { ingredientName: '', notes: existingNotes || '' };
+    }
+    
+    let ingredientName = name.trim();
+    // Remove any parenthetical note fragments from the ingredient name itself;
+    // their content should already have been picked up as notes by inferIngredientNotes
+    ingredientName = ingredientName.replace(/\(.*?\)/g, '').trim();
+    const notesParts = existingNotes ? [existingNotes] : [];
+    
+    // Keep pulling prep words from start/end until nothing changes
+    let changed = true;
+    while (changed && ingredientName) {
+        changed = false;
+        const lower = ingredientName.toLowerCase();
+        
+        for (const word of INGREDIENT_PREP_WORDS) {
+            const wl = word.toLowerCase();
+            const prefix = wl + ' ';
+            const suffix = ' ' + wl;
+            
+            if (lower.startsWith(prefix)) {
+                ingredientName = ingredientName.slice(prefix.length).trim();
+                notesParts.push(word);
+                changed = true;
+                break;
+            }
+            
+            if (lower.endsWith(suffix)) {
+                ingredientName = ingredientName.slice(0, lower.lastIndexOf(suffix)).trim();
+                notesParts.push(word);
+                changed = true;
+                break;
+            }
+        }
+    }
+    
+    // Clean trailing commas/spaces from ingredient name
+    ingredientName = ingredientName.replace(/[,\s]+$/g, '').trim();
+    
+    // Split notes into tokens, clean trivial plural fragments, dedupe, and rejoin
+    const rawTokens = notesParts
+        .join(', ')
+        .split(/\s*,\s*/)
+        .map(t => t.trim())
+        .filter(Boolean);
+        
+    // For each token, drop tiny plural suffix artifacts like "s" or "es"
+    const tokens = [];
+    for (const t of rawTokens) {
+        const words = t.split(/\s+/).filter(Boolean);
+        const keptWords = words.filter(w => !/^(s|es)$/i.test(w));
+        if (keptWords.length) {
+            tokens.push(keptWords.join(' '));
+        }
+    }
+        
+    const seen = new Set();
+    const unique = [];
+    for (const t of tokens) {
+        const key = t.toLowerCase();
+        if (!seen.has(key)) {
+            seen.add(key);
+            unique.push(t);
+        }
+    }
+    
+    const notes = unique.join(', ').trim();
+    return { ingredientName, notes };
 }
 
 /**
@@ -687,13 +856,26 @@ function parseIngredientLine(line) {
                     }
                     
                     // Find the ingredient name (should be in the last remaining text)
-                    const ingredientName = remainingText || allPairs[allPairs.length - 1].remaining || '';
+                    let ingredientName = remainingText || allPairs[allPairs.length - 1].remaining || '';
+                    ingredientName = ingredientName.trim();
+
+                    // Extract notes from ingredientName if possible
+                    let notes = '';
+                    const dashIndex = ingredientName.indexOf('—');
+                    if (dashIndex !== -1) {
+                        notes = ingredientName.slice(dashIndex + 1).trim();
+                        ingredientName = ingredientName.slice(0, dashIndex).trim();
+                    }
+                    if (!notes) {
+                        notes = inferIngredientNotes(ingredientName);
+                    }
                     
                     return {
                         quantity: totalBaseValue,
                         unit: unitTypes[0] === 'volume' ? 'ml' : 'g',
                         unitType: unitTypes[0],
-                        ingredient: ingredientName.trim(),
+                        ingredient: ingredientName,
+                        notes: notes || undefined,
                         originalLine: line,
                         isCombined: true,
                         originalPairs: allPairs.map(p => ({
@@ -714,10 +896,23 @@ function parseIngredientLine(line) {
     const quantityResult = extractQuantity(line);
     if (!quantityResult) {
         // No quantity found, might be just an ingredient name
+        let ingredientName = line.trim();
+        let notes = '';
+        const dashIndex = ingredientName.indexOf('—');
+        if (dashIndex !== -1) {
+            notes = ingredientName.slice(dashIndex + 1).trim();
+            ingredientName = ingredientName.slice(0, dashIndex).trim();
+        }
+        if (!notes) {
+            notes = inferIngredientNotes(ingredientName);
+        }
+        const split = splitPrepWordsFromName(ingredientName, notes);
         return {
             quantity: 1,
             unit: null,
-            ingredient: line,
+            unitType: 'count',
+            ingredient: split.ingredientName,
+            notes: split.notes || undefined,
             originalLine: line
         };
     }
@@ -751,11 +946,25 @@ function parseIngredientLine(line) {
                 continue;
             }
             
+            // Extract notes from ingredient if possible
+            let ingredientName = ingredient.trim();
+            let notes = '';
+            const dashIndex = ingredientName.indexOf('—');
+            if (dashIndex !== -1) {
+                notes = ingredientName.slice(dashIndex + 1).trim();
+                ingredientName = ingredientName.slice(0, dashIndex).trim();
+            }
+            if (!notes) {
+                notes = inferIngredientNotes(ingredientName);
+            }
+            
+            const split = splitPrepWordsFromName(ingredientName, notes);
             return {
                 quantity: quantity,
                 unit: unit,
                 unitType: 'volume',
-                ingredient: ingredient,
+                ingredient: split.ingredientName,
+                notes: split.notes || undefined,
                 originalLine: line
             };
         }
@@ -781,22 +990,48 @@ function parseIngredientLine(line) {
                 continue;
             }
             
+            // Extract notes from ingredient if possible
+            let ingredientName = ingredient.trim();
+            let notes = '';
+            const dashIndex = ingredientName.indexOf('—');
+            if (dashIndex !== -1) {
+                notes = ingredientName.slice(dashIndex + 1).trim();
+                ingredientName = ingredientName.slice(0, dashIndex).trim();
+            }
+            if (!notes) {
+                notes = inferIngredientNotes(ingredientName);
+            }
+            
+            const split = splitPrepWordsFromName(ingredientName, notes);
             return {
                 quantity: quantity,
                 unit: unit,
                 unitType: 'weight',
-                ingredient: ingredient,
+                ingredient: split.ingredientName,
+                notes: split.notes || undefined,
                 originalLine: line
             };
         }
     }
     
     // No unit found, assume count/whole item
+    let ingredientName = rest.trim();
+    let notes = '';
+    const dashIndex = ingredientName.indexOf('—');
+    if (dashIndex !== -1) {
+        notes = ingredientName.slice(dashIndex + 1).trim();
+        ingredientName = ingredientName.slice(0, dashIndex).trim();
+    }
+    if (!notes) {
+        notes = inferIngredientNotes(ingredientName);
+    }
+    const split = splitPrepWordsFromName(ingredientName, notes);
     return {
         quantity: quantity,
         unit: null,
         unitType: 'count',
-        ingredient: rest,
+        ingredient: split.ingredientName,
+        notes: split.notes || undefined,
         originalLine: line
     };
 }
@@ -1112,6 +1347,34 @@ function parseRecipe(recipeText) {
 }
 
 /**
+ * Build a normalized, human-readable text block from a recipe's parsed ingredients.
+ * Used when editing so the user adjusts the cleaned-up version rather than the raw paste.
+ */
+function getEditableRecipeText(recipe) {
+    if (!recipe) return '';
+    
+    const ingList = recipe.ingredients;
+    if (!Array.isArray(ingList) || ingList.length === 0) {
+        return recipe.originalText || '';
+    }
+    
+    return ingList.map(ing => {
+        const qty = ing.quantity != null ? formatQuantity(ing.quantity) : '';
+        const unit = ing.unit ? spellOutUnit(ing.unit) : '';
+        const qtyUnit = [qty, unit].filter(Boolean).join(' ');
+        const name = ing.ingredient || '';
+        const notes = ing.notes || ing.preparation || '';
+        
+        let line = [qtyUnit, name].filter(Boolean).join(' ');
+        if (notes) {
+            line = line ? `${line} — ${notes}` : notes;
+        }
+        
+        return line.trim();
+    }).join('\n');
+}
+
+/**
  * Edit an existing recipe
  */
 function editRecipe(recipeId) {
@@ -1125,14 +1388,13 @@ function editRecipe(recipeId) {
     const nameInput = document.getElementById('recipeName');
     const textInput = document.getElementById('recipeInput');
     const editingIdInput = document.getElementById('editingRecipeId');
-    const editActions = document.getElementById('editRecipeActions');
-    const addRecipeTitle = document.getElementById('addRecipeTitle');
-    const addRecipeDescription = document.getElementById('addRecipeDescription');
     const aboutInput = document.getElementById('recipeAbout');
     const instructionsInput = document.getElementById('recipeInstructions');
     
+    // Keep form fields in sync (for about/instructions/source) but do not rely
+    // on re-parsing this textarea for edits; use the review modal instead.
     nameInput.value = recipe.name;
-    textInput.value = recipe.originalText;
+    textInput.value = getEditableRecipeText(recipe);
     editingIdInput.value = recipeId;
     if (aboutInput) aboutInput.value = recipe.about || '';
     if (instructionsInput) instructionsInput.value = recipe.instructions || '';
@@ -1144,13 +1406,23 @@ function editRecipe(recipeId) {
     }
     updateSelectedTagsDisplay();
     
-    // Show edit mode
-    editActions.style.display = 'block';
-    addRecipeTitle.textContent = 'Edit Recipe';
-    addRecipeDescription.textContent = 'Make changes to the recipe below. The tool will re-parse ingredients when you save.';
+    // Seed the review modal with the current recipe data
+    pendingRecipeForReview = {
+        id: recipe.id,
+        name: recipe.name,
+        originalText: recipe.originalText || '',
+        tags: recipe.tags || [],
+        about: recipe.about || '',
+        instructions: recipe.instructions || '',
+        sourceType: recipe.sourceType || '',
+        sourceTitle: recipe.sourceTitle || '',
+        sourcePages: recipe.sourcePages || '',
+        sourceUrl: recipe.sourceUrl || '',
+        affiliateUrl: recipe.affiliateUrl || ''
+    };
+    pendingIngredientsForReview = (recipe.ingredients || []).map(ing => ({ ...ing }));
     
-    // Scroll to the form
-    document.getElementById('addRecipeCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    openIngredientReviewModal();
 }
 
 /**
@@ -1162,12 +1434,6 @@ function saveRecipeEdit() {
     
     if (!recipeId || isNaN(recipeId)) {
         showMessage('No recipe being edited', 'error');
-        return;
-    }
-    
-    const recipe = recipes.find(r => r.id === recipeId);
-    if (!recipe) {
-        showMessage('Recipe not found', 'error');
         return;
     }
     
@@ -1196,45 +1462,36 @@ function saveRecipeEdit() {
     // Get about and instructions
     const aboutInput = document.getElementById('recipeAbout');
     const instructionsInput = document.getElementById('recipeInstructions');
+    const sourceTypeInput = document.getElementById('recipeSourceType');
+    const sourceTitleInput = document.getElementById('recipeSourceTitle');
+    const sourcePagesInput = document.getElementById('recipeSourcePages');
+    const sourceUrlInput = document.getElementById('recipeSourceUrl');
+    const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
     const about = aboutInput ? aboutInput.value.trim() : '';
     const instructions = instructionsInput ? instructionsInput.value.trim() : '';
+    const sourceType = sourceTypeInput ? sourceTypeInput.value.trim() : '';
+    const sourceTitle = sourceTitleInput ? sourceTitleInput.value.trim() : '';
+    const sourcePages = sourcePagesInput ? sourcePagesInput.value.trim() : '';
+    const sourceUrl = sourceUrlInput ? sourceUrlInput.value.trim() : '';
+    const affiliateUrl = affiliateUrlInput ? affiliateUrlInput.value.trim() : '';
     
-    // Update recipe
-    recipe.name = recipeName;
-    recipe.ingredients = ingredients;
-    recipe.originalText = recipeText;
-    recipe.tags = tags;
-    recipe.about = about || undefined;
-    recipe.instructions = instructions || undefined;
+    // Store data for review before final save, including the ID so we know it's an edit
+    pendingRecipeForReview = {
+        id: recipeId,
+        name: recipeName,
+        originalText: recipeText,
+        tags,
+        about,
+        instructions,
+        sourceType,
+        sourceTitle,
+        sourcePages,
+        sourceUrl,
+        affiliateUrl
+    };
+    pendingIngredientsForReview = ingredients;
     
-    // Clear form
-    nameInput.value = '';
-    input.value = '';
-    editingIdInput.value = '';
-    if (aboutInput) aboutInput.value = '';
-    if (instructionsInput) instructionsInput.value = '';
-    clearTagSelectionForm();
-    
-    // Hide edit mode
-    const editActions = document.getElementById('editRecipeActions');
-    const addRecipeTitle = document.getElementById('addRecipeTitle');
-    const addRecipeDescription = document.getElementById('addRecipeDescription');
-    editActions.style.display = 'none';
-    addRecipeTitle.textContent = 'Add Recipe';
-    addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
-    
-    // Save to localStorage
-    saveRecipes();
-    
-    // Consolidate ingredients
-    consolidateIngredients();
-    
-    // Update UI
-    updateRecipeList();
-    updateShoppingList();
-    updateDayPlanner();
-    updateTagFilters();
-    showMessage(`Recipe updated with ${ingredients.length} ingredients`, 'success');
+    openIngredientReviewModal();
 }
 
 /**
@@ -1247,21 +1504,35 @@ function cancelRecipeEdit() {
     const editActions = document.getElementById('editRecipeActions');
     const addRecipeTitle = document.getElementById('addRecipeTitle');
     const addRecipeDescription = document.getElementById('addRecipeDescription');
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
+    const sourceTypeInput = document.getElementById('recipeSourceType');
+    const sourceTitleInput = document.getElementById('recipeSourceTitle');
+    const sourcePagesInput = document.getElementById('recipeSourcePages');
+    const sourceUrlInput = document.getElementById('recipeSourceUrl');
+    const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
+    const addRecipeButton = document.getElementById('addRecipeButton');
     
     // Clear form
     nameInput.value = '';
     textInput.value = '';
     editingIdInput.value = '';
-    const aboutInput = document.getElementById('recipeAbout');
-    const instructionsInput = document.getElementById('recipeInstructions');
     if (aboutInput) aboutInput.value = '';
     if (instructionsInput) instructionsInput.value = '';
+    if (sourceTypeInput) sourceTypeInput.value = '';
+    if (sourceTitleInput) sourceTitleInput.value = '';
+    if (sourcePagesInput) sourcePagesInput.value = '';
+    if (sourceUrlInput) sourceUrlInput.value = '';
+    if (affiliateUrlInput) affiliateUrlInput.value = '';
     clearTagSelectionForm();
     
     // Hide edit mode
     editActions.style.display = 'none';
     addRecipeTitle.textContent = 'Add Recipe';
     addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
+    if (addRecipeButton) {
+        addRecipeButton.style.display = 'inline-block';
+    }
 }
 
 /**
@@ -1277,15 +1548,6 @@ function generateAutoTags(recipeName, ingredients) {
  * Add a recipe to the collection
  */
 function addRecipe() {
-    const editingIdInput = document.getElementById('editingRecipeId');
-    const editingId = editingIdInput.value;
-    
-    // If we're in edit mode, save the edit instead
-    if (editingId) {
-        saveRecipeEdit();
-        return;
-    }
-    
     const input = document.getElementById('recipeInput');
     const recipeText = input.value.trim();
     
@@ -1311,47 +1573,416 @@ function addRecipe() {
     // Get about and instructions
     const aboutInput = document.getElementById('recipeAbout');
     const instructionsInput = document.getElementById('recipeInstructions');
+    const sourceTypeInput = document.getElementById('recipeSourceType');
+    const sourceTitleInput = document.getElementById('recipeSourceTitle');
+    const sourcePagesInput = document.getElementById('recipeSourcePages');
+    const sourceUrlInput = document.getElementById('recipeSourceUrl');
+    const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
     const about = aboutInput ? aboutInput.value.trim() : '';
     const instructions = instructionsInput ? instructionsInput.value.trim() : '';
+    const sourceType = sourceTypeInput ? sourceTypeInput.value.trim() : '';
+    const sourceTitle = sourceTitleInput ? sourceTitleInput.value.trim() : '';
+    const sourcePages = sourcePagesInput ? sourcePagesInput.value.trim() : '';
+    const sourceUrl = sourceUrlInput ? sourceUrlInput.value.trim() : '';
+    const affiliateUrl = affiliateUrlInput ? affiliateUrlInput.value.trim() : '';
     
-    // Create recipe object
-    const recipe = {
-        id: Date.now(),
+    // Store data for review before final save
+    pendingRecipeForReview = {
         name: recipeName,
-        ingredients: ingredients,
         originalText: recipeText,
-        tags: tags,
-        about: about || undefined,
-        instructions: instructions || undefined
+        tags,
+        about,
+        instructions,
+        sourceType,
+        sourceTitle,
+        sourcePages,
+        sourceUrl,
+        affiliateUrl
     };
+    pendingIngredientsForReview = ingredients;
     
-    // Clear form
-    nameInput.value = '';
-    input.value = '';
-    if (aboutInput) aboutInput.value = '';
-    if (instructionsInput) instructionsInput.value = '';
-    clearTagSelectionForm();
+    openIngredientReviewModal();
+}
+
+/**
+ * Open ingredient review modal showing how lines were parsed/normalized
+ */
+function openIngredientReviewModal() {
+    if (!pendingIngredientsForReview || !pendingRecipeForReview) {
+        showMessage('Nothing to review', 'error');
+        return;
+    }
     
-    recipes.push(recipe);
+    const modal = document.getElementById('ingredientReviewModal');
+    const body = document.getElementById('ingredientReviewModalBody');
+    if (!modal || !body) return;
     
-    // Automatically activate new recipes with multiplier 1
-    activeRecipeIds.add(recipe.id);
-    recipeMultipliers[recipe.id] = 1;
+    const rows = pendingIngredientsForReview.map((ing, index) => {
+        const qty = ing.quantity != null ? formatQuantity(ing.quantity) : '';
+        const unit = ing.unit ? spellOutUnit(ing.unit) : '';
+        const qtyUnit = [qty, unit].filter(Boolean).join(' ');
+
+        const rawName = (ing.ingredient || '').trim();
+        const displayIngredient = rawName;
+        const prepDisplay = (ing.notes || ing.preparation || inferIngredientNotes(rawName)) || '';
+        
+        const qtyDisplay = qtyUnit || '';
+        const ingredientDisplay = displayIngredient || '';
+        
+        return `
+            <tr>
+                <td style="padding: 6px 8px; border-bottom: 1px solid #eee; font-family: monospace; font-size: 12px; white-space: normal; word-break: break-word;">
+                    ${escapeHtml(ing.originalLine || `${qtyUnit} ${rawName}`.trim())}
+                </td>
+                <td style="padding: 6px 8px; border-bottom: 1px solid #eee; white-space: nowrap; vertical-align: top;">
+                    <span 
+                        id="ir-qty-display-${index}" 
+                        style="cursor: pointer; display: inline-block;"
+                        onclick="startIngredientInlineEdit(${index}, 'quantity')"
+                        title="Click to edit quantity">
+                        ${qtyDisplay ? escapeHtml(qtyDisplay) : '<span style="color:#bbb;">Click to set</span>'}
+                    </span>
+                    <input 
+                        id="ir-qty-input-${index}"
+                        type="text"
+                        value="${escapeHtml(qtyDisplay)}"
+                        style="display: none; width: 120px; padding: 3px 5px; margin-top: 2px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; box-sizing: border-box;"
+                        onblur="finishIngredientInlineEdit(${index}, 'quantity')"
+                        onkeydown="handleIngredientInlineKey(event, ${index}, 'quantity')"
+                    >
+                </td>
+                <td style="padding: 6px 8px; border-bottom: 1px solid #eee; white-space: normal; word-break: break-word; vertical-align: top;">
+                    <span 
+                        id="ir-ingredient-display-${index}" 
+                        style="cursor: pointer; display: inline-block;"
+                        onclick="startIngredientInlineEdit(${index}, 'ingredient')"
+                        title="Click to edit ingredient name">
+                        ${ingredientDisplay ? escapeHtml(ingredientDisplay) : '<span style="color:#bbb;">Click to set</span>'}
+                    </span>
+                    <input 
+                        id="ir-ingredient-input-${index}"
+                        type="text"
+                        value="${escapeHtml(ingredientDisplay)}"
+                        style="display: none; width: 100%; padding: 3px 5px; margin-top: 2px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; box-sizing: border-box;"
+                        onblur="finishIngredientInlineEdit(${index}, 'ingredient')"
+                        onkeydown="handleIngredientInlineKey(event, ${index}, 'ingredient')"
+                    >
+                </td>
+                <td style="padding: 6px 8px; border-bottom: 1px solid #eee; font-style: italic; white-space: normal; word-break: break-word; vertical-align: top;">
+                    <span 
+                        id="ir-prep-display-${index}" 
+                        style="cursor: pointer; display: inline-block;"
+                        onclick="startIngredientInlineEdit(${index}, 'preparation')"
+                        title="Click to edit preparation notes">
+                        ${prepDisplay ? escapeHtml(prepDisplay) : '<span style="color:#bbb;">Click to add</span>'}
+                    </span>
+                    <input 
+                        id="ir-prep-input-${index}"
+                        type="text"
+                        value="${escapeHtml(prepDisplay)}"
+                        placeholder="e.g., finely chopped"
+                        style="display: none; width: 100%; padding: 3px 5px; margin-top: 2px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; font-style: italic; box-sizing: border-box;"
+                        onblur="finishIngredientInlineEdit(${index}, 'preparation')"
+                        onkeydown="handleIngredientInlineKey(event, ${index}, 'preparation')"
+                    >
+                </td>
+            </tr>
+        `;
+    }).join('');
+    
+    body.innerHTML = `
+        <p style="margin-bottom: 10px;">
+            Double-check that the ingredients below look right before adding 
+            <strong>${escapeHtml(pendingRecipeForReview.name)}</strong> to your collection.
+        </p>
+        <div style="max-height: 320px; overflow-y: auto; border: 1px solid #eee; border-radius: 4px; background: #fff;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+                <thead>
+                    <tr style="background: #f8f6f2;">
+                        <th style="text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd;">Original line</th>
+                        <th style="text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd;">Quantity</th>
+                        <th style="text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd;">Ingredient</th>
+                        <th style="text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd;">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${rows}
+                </tbody>
+            </table>
+        </div>
+        <p style="margin-top: 10px; font-size: 12px; color: #777;">
+            Click any quantity, ingredient name, or preparation note to quickly adjust it. 
+            If something bigger looks off, close this window and edit the recipe text before trying again.
+        </p>
+        <div style="margin-top: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button class="btn btn-secondary" style="padding: 6px 12px; font-size: 13px; background: #f0f0f0; color: #555;" onclick="addEmptyIngredientRow()">
+                + Add ingredient
+            </button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;" onclick="closeIngredientReviewModal()">Cancel</button>
+                <button class="btn" style="padding: 8px 16px; font-size: 14px;" onclick="confirmIngredientReview()">Looks Good, Save Recipe</button>
+            </div>
+        </div>
+    `;
+    
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close ingredient review modal
+ */
+function closeIngredientReviewModal(event) {
+    if (event && event.target && event.target.id === 'ingredientReviewModal') {
+        // Clicked on overlay
+    }
+    const modal = document.getElementById('ingredientReviewModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+    document.body.style.overflow = '';
+}
+
+/**
+ * Begin inline edit for a field in the review table
+ */
+function startIngredientInlineEdit(index, field) {
+    if (!pendingIngredientsForReview || !pendingIngredientsForReview[index]) return;
+    
+    const prefix = field === 'quantity' ? 'qty' : (field === 'preparation' ? 'prep' : 'ingredient');
+    const displayEl = document.getElementById(`ir-${prefix}-display-${index}`);
+    const inputEl = document.getElementById(`ir-${prefix}-input-${index}`);
+    if (!displayEl || !inputEl) return;
+    
+    displayEl.style.display = 'none';
+    inputEl.style.display = 'inline-block';
+    inputEl.focus();
+    inputEl.select();
+}
+
+/**
+ * Finish inline edit (on blur or Enter)
+ */
+function finishIngredientInlineEdit(index, field) {
+    if (!pendingIngredientsForReview || !pendingIngredientsForReview[index]) return;
+    
+    const ing = pendingIngredientsForReview[index];
+    const prefix = field === 'quantity' ? 'qty' : (field === 'preparation' ? 'prep' : 'ingredient');
+    const displayEl = document.getElementById(`ir-${prefix}-display-${index}`);
+    const inputEl = document.getElementById(`ir-${prefix}-input-${index}`);
+    if (!displayEl || !inputEl) return;
+    
+    const value = inputEl.value.trim();
+    
+    if (field === 'quantity') {
+        if (value) {
+            // Split on first space: first token is quantity, rest is unit
+            const parts = value.split(/\s+/);
+            const qtyStr = parts.shift();
+            const unitStr = parts.join(' ').trim();
+            const parsedQty = parseFraction(qtyStr);
+            if (!isNaN(parsedQty) && isFinite(parsedQty) && parsedQty > 0) {
+                ing.quantity = parsedQty;
+                ing.unit = unitStr || null;
+            }
+        }
+        const qty = ing.quantity != null ? formatQuantity(ing.quantity) : '';
+        const unit = ing.unit ? spellOutUnit(ing.unit) : '';
+        const qtyUnit = [qty, unit].filter(Boolean).join(' ');
+        displayEl.innerHTML = qtyUnit ? escapeHtml(qtyUnit) : '<span style="color:#bbb;">Click to set</span>';
+    } else if (field === 'ingredient') {
+        if (value) {
+            ing.ingredient = value;
+        }
+        // For display, show exactly what the user entered (word-wrapped).
+        // We'll still normalize internally later when grouping ingredients.
+        const displayIngredient = ing.ingredient || '';
+        displayEl.innerHTML = displayIngredient 
+            ? escapeHtml(displayIngredient) 
+            : '<span style="color:#bbb;">Click to set</span>';
+    } else if (field === 'preparation') {
+        if (value) {
+            ing.notes = value;
+        } else {
+            ing.notes = undefined;
+        }
+        displayEl.innerHTML = ing.notes 
+            ? escapeHtml(ing.notes) 
+            : '<span style="color:#bbb;">Click to add</span>';
+    }
+    
+    inputEl.style.display = 'none';
+    displayEl.style.display = 'inline-block';
+}
+
+/**
+ * Handle Enter/Escape keys in inline editor
+ */
+function handleIngredientInlineKey(event, index, field) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        finishIngredientInlineEdit(index, field);
+    } else if (event.key === 'Escape') {
+        event.preventDefault();
+        // Cancel edit: just hide input and show display without saving
+        const prefix = field === 'quantity' ? 'qty' : (field === 'preparation' ? 'prep' : 'ingredient');
+        const displayEl = document.getElementById(`ir-${prefix}-display-${index}`);
+        const inputEl = document.getElementById(`ir-${prefix}-input-${index}`);
+        if (displayEl && inputEl) {
+            inputEl.style.display = 'none';
+            displayEl.style.display = 'inline-block';
+        }
+    }
+}
+
+/**
+ * Add a new blank ingredient row in the review modal so users can manually
+ * introduce additional ingredients when editing or adding.
+ */
+function addEmptyIngredientRow() {
+    if (!pendingIngredientsForReview) {
+        pendingIngredientsForReview = [];
+    }
+    
+    pendingIngredientsForReview.push({
+        quantity: null,
+        unit: null,
+        unitType: 'count',
+        ingredient: '',
+        notes: '',
+        originalLine: '(added manually)'
+    });
+    
+    openIngredientReviewModal();
+}
+
+/**
+ * Confirm ingredient review and actually create/save the recipe
+ */
+function confirmIngredientReview() {
+    if (!pendingIngredientsForReview || !pendingRecipeForReview) {
+        closeIngredientReviewModal();
+        return;
+    }
+    
+    const {
+        id,
+        name,
+        originalText,
+        tags,
+        about,
+        instructions,
+        sourceType,
+        sourceTitle,
+        sourcePages,
+        sourceUrl,
+        affiliateUrl
+    } = pendingRecipeForReview;
+
+    let isEdit = !!id;
+    let recipe;
+
+    if (isEdit) {
+        // Update existing recipe
+        recipe = recipes.find(r => r.id === id);
+        if (!recipe) {
+            // If something went wrong and we can't find it, fall back to creating new
+            isEdit = false;
+        }
+    }
+
+    if (isEdit && recipe) {
+        recipe.name = name;
+        recipe.ingredients = pendingIngredientsForReview;
+        recipe.originalText = originalText;
+        recipe.tags = tags;
+        recipe.about = about || undefined;
+        recipe.instructions = instructions || undefined;
+        recipe.sourceType = sourceType || undefined;
+        recipe.sourceTitle = sourceTitle || undefined;
+        recipe.sourcePages = sourcePages || undefined;
+        recipe.sourceUrl = sourceUrl || undefined;
+        recipe.affiliateUrl = affiliateUrl || undefined;
+    } else {
+        // Create a brand-new recipe
+        recipe = {
+            id: Date.now(),
+            name,
+            ingredients: pendingIngredientsForReview,
+            originalText,
+            tags,
+            about: about || undefined,
+            instructions: instructions || undefined,
+            sourceType: sourceType || undefined,
+            sourceTitle: sourceTitle || undefined,
+            sourcePages: sourcePages || undefined,
+            sourceUrl: sourceUrl || undefined,
+            affiliateUrl: affiliateUrl || undefined,
+            instructionsVisibility: 'hidden'
+        };
+        
+        recipes.push(recipe);
+        
+        // Automatically activate new recipes with multiplier 1
+        activeRecipeIds.add(recipe.id);
+        recipeMultipliers[recipe.id] = 1;
+    }
     
     // Save to localStorage
+    // Ensure notes field is present where applicable before saving/exporting
     saveRecipes();
     saveActiveRecipes();
     saveRecipeMultipliers();
     
-    // Consolidate ingredients
+    // Consolidate ingredients and update UI
     consolidateIngredients();
-    
-    // Update UI
     updateRecipeList();
     updateShoppingList();
     updateDayPlanner();
     updateTagFilters();
-    showMessage(`Added recipe with ${ingredients.length} ingredients`, 'success');
+    
+    // Clear form after successful save or edit
+    const nameInput = document.getElementById('recipeName');
+    const input = document.getElementById('recipeInput');
+    const aboutInput = document.getElementById('recipeAbout');
+    const instructionsInput = document.getElementById('recipeInstructions');
+    const sourceTypeInput = document.getElementById('recipeSourceType');
+    const sourceTitleInput = document.getElementById('recipeSourceTitle');
+    const sourcePagesInput = document.getElementById('recipeSourcePages');
+    const sourceUrlInput = document.getElementById('recipeSourceUrl');
+    const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
+    const editingIdInput = document.getElementById('editingRecipeId');
+    const editActions = document.getElementById('editRecipeActions');
+    const addRecipeTitle = document.getElementById('addRecipeTitle');
+    const addRecipeDescription = document.getElementById('addRecipeDescription');
+    
+    if (nameInput) nameInput.value = '';
+    if (input) input.value = '';
+    if (aboutInput) aboutInput.value = '';
+    if (instructionsInput) instructionsInput.value = '';
+    if (sourceTypeInput) sourceTypeInput.value = '';
+    if (sourceTitleInput) sourceTitleInput.value = '';
+    if (sourcePagesInput) sourcePagesInput.value = '';
+    if (sourceUrlInput) sourceUrlInput.value = '';
+    if (affiliateUrlInput) affiliateUrlInput.value = '';
+    if (editingIdInput) editingIdInput.value = '';
+    if (editActions) editActions.style.display = 'none';
+    if (addRecipeTitle) addRecipeTitle.textContent = 'Add Recipe';
+    if (addRecipeDescription) {
+        addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
+    }
+    clearTagSelectionForm();
+    
+    // Reset pending state and close modal
+    pendingRecipeForReview = null;
+    pendingIngredientsForReview = null;
+    closeIngredientReviewModal();
+    
+    showMessage(
+        isEdit ? `Recipe updated with ${recipe.ingredients.length} ingredients` 
+               : `Added recipe with ${recipe.ingredients.length} ingredients`,
+        'success'
+    );
 }
 
 /**
@@ -1659,6 +2290,15 @@ function updateRecipeList() {
                         ${recipe.ingredients.length} ingredient${recipe.ingredients.length !== 1 ? 's' : ''}
                         ${isActive ? '<span style="color: #2e7d32; margin-left: 10px;">✓ Active</span>' : '<span style="color: #999; margin-left: 10px;">Inactive</span>'}
                     </div>
+                    ${(recipe.sourceTitle || recipe.sourceType || recipe.sourcePages || recipe.affiliateUrl) ? `
+                        <div style="margin-top: 4px; font-size: 13px; color: #8a6a3b;">
+                            Source: 
+                            ${recipe.sourceTitle ? `<span>${recipe.sourceTitle}</span>` : ''}
+                            ${recipe.sourcePages ? `<span>${recipe.sourceTitle ? ', ' : ''}pp. ${recipe.sourcePages}</span>` : ''}
+                            ${(!recipe.sourceTitle && !recipe.sourcePages && recipe.sourceType) ? `<span>${recipe.sourceType}</span>` : ''}
+                            ${recipe.affiliateUrl ? `<span style="margin-left: 6px; color: #b26a1a;">(affiliate link available)</span>` : ''}
+                        </div>
+                    ` : ''}
                     <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
                         ${getRecipeTagsDisplay(recipe)}
                     </div>
@@ -1859,7 +2499,7 @@ function closeAboutModal(event) {
  */
 function toggleRecipePreparation(recipeId) {
     const recipe = recipes.find(r => r.id === recipeId);
-    if (!recipe || !recipe.instructions) return;
+    if (!recipe) return;
     
     const modal = document.getElementById('preparationModal');
     const modalTitle = document.getElementById('preparationModalTitle');
@@ -1867,8 +2507,84 @@ function toggleRecipePreparation(recipeId) {
     
     if (!modal || !modalTitle || !modalBody) return;
     
+    const visibility = recipe.instructionsVisibility || 'hidden';
     modalTitle.textContent = `Preparation: ${recipe.name}`;
-    modalBody.textContent = recipe.instructions;
+
+    if (visibility === 'full' && recipe.instructions) {
+        // Future option: show full steps when you intentionally mark a recipe as fully visible
+        modalBody.textContent = recipe.instructions;
+    } else {
+        // Default: keep instructions hidden and direct people to the source / affiliate link
+        const parts = [];
+
+        parts.push(
+            `<p style="margin-bottom: 12px;">
+                The ingredients and context for this recipe are consolidated here, but the step‑by‑step instructions are not shown.
+            </p>`
+        );
+
+        if (recipe.sourceTitle || recipe.sourceType || recipe.sourcePages || recipe.sourceUrl) {
+            let sourceText = '';
+            if (recipe.sourceType === 'book' && recipe.sourceTitle) {
+                sourceText = `From <em>${recipe.sourceTitle}</em>`;
+                if (recipe.sourcePages) {
+                    sourceText += ` (pp. ${recipe.sourcePages})`;
+                }
+            } else if (recipe.sourceTitle) {
+                sourceText = `From <em>${recipe.sourceTitle}</em>`;
+            } else if (recipe.sourceType) {
+                sourceText = `Source: ${recipe.sourceType}`;
+            }
+
+            if (sourceText) {
+                parts.push(
+                    `<p style="margin-bottom: 12px; color: #8a6a3b;">
+                        ${sourceText}
+                    </p>`
+                );
+            }
+
+            if (recipe.sourceUrl) {
+                parts.push(
+                    `<p style="margin-bottom: 12px;">
+                        Original recipe:
+                        <a href="${recipe.sourceUrl}" target="_blank" rel="noopener noreferrer">
+                            ${recipe.sourceUrl}
+                        </a>
+                    </p>`
+                );
+            }
+        }
+
+        if (recipe.affiliateUrl) {
+            const affiliateLabel = recipe.sourceType === 'book'
+                ? 'Buy this book (affiliate link)'
+                : 'Purchase via affiliate link';
+
+            parts.push(
+                `<p style="margin-top: 16px;">
+                    <a href="${recipe.affiliateUrl}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       style="display: inline-block; padding: 10px 18px; background: #d48247; color: white; border-radius: 6px; text-decoration: none; font-weight: 500;">
+                        ${affiliateLabel}
+                    </a>
+                </p>`
+            );
+        }
+
+        if (parts.length === 1) {
+            // No structured source info; show a simple generic note
+            parts.push(
+                `<p style="margin-top: 8px; font-size: 14px; color: #6a6a6a;">
+                    You can keep the full preparation steps in your own copy of the book or original recipe.
+                </p>`
+            );
+        }
+
+        modalBody.innerHTML = parts.join('');
+    }
+
     modal.classList.add('active');
     
     // Prevent body scroll when modal is open
@@ -2147,6 +2863,22 @@ function getIngredientCategory(ingredientName) {
     if (!ingredientName) return 'Other';
     
     const nameLower = ingredientName.toLowerCase();
+    
+    // Special-case overrides for tricky items
+    // Anything explicitly called "juice" should be treated as a beverage
+    if (/\bjuice\b/.test(nameLower)) {
+        return 'Beverages';
+    }
+    
+    // Any kind of "milk" (including plant milks) is easiest to find with dairy-ish items
+    if (/\bmilk\b/.test(nameLower)) {
+        return 'Dairy & Eggs';
+    }
+    
+    // Make sure berries (including plural) end up in Fruits
+    if (nameLower.includes('blueberr')) {
+        return 'Fruits';
+    }
     
     // Find the best match (longest keyword that matches) across all categories
     let bestMatch = null;
@@ -4469,6 +5201,32 @@ function exportRecipes() {
 }
 
 /**
+ * Open an email draft so a user can send their recipes JSON to the tool creator
+ */
+function emailRecipesToCreator() {
+    if (recipes.length === 0) {
+        showMessage('No recipes to email', 'error');
+        return;
+    }
+
+    try {
+        const dataStr = JSON.stringify(recipes, null, 2);
+        const subject = encodeURIComponent('Recipe Consolidator export');
+        const bodyIntro = 'Here are my recipes from the Recipe Consolidator tool:\n\n';
+        const body = encodeURIComponent(bodyIntro + dataStr);
+
+        // TODO: replace with your preferred email address
+        const toAddress = 'you@example.com';
+
+        window.location.href = `mailto:${toAddress}?subject=${subject}&body=${body}`;
+        showMessage('Opening your email client with recipes attached in the body.', 'success');
+    } catch (error) {
+        console.error('Error preparing email export:', error);
+        showMessage('Error preparing recipes for email', 'error');
+    }
+}
+
+/**
  * Load preloaded recipes from WholeFoods.json
  */
 async function loadPreloadedRecipes() {
@@ -5120,7 +5878,9 @@ function exportWholeFoodsJson() {
                 unit: ing.unit,
                 unitType: ing.unitType,
                 ingredient: ing.ingredient,
-                originalLine: ing.originalLine || `${ing.quantity || ''} ${ing.unit || ''} ${ing.ingredient}`.trim()
+                originalLine: ing.originalLine || `${ing.quantity || ''} ${ing.unit || ''} ${ing.ingredient}`.trim(),
+                // Persist parsed notes so they survive round-trips through WholeFoods.json
+                ...(ing.notes ? { notes: ing.notes } : {})
             })),
             originalText: recipe.originalText,
             tags: recipe.tags || []
