@@ -4,45 +4,45 @@
     "ingredients": [
       {
         "quantity": 2,
-        "unit": "cups",
+        "unit": "cup",
         "unitType": "volume",
         "ingredient": "gluten-free oat flour",
-        "originalLine": "2 cups gluten-free oat flour"
+        "originalLine": "2 cup gluten-free oat flour"
       },
       {
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "blanched almond flour",
-        "originalLine": "½ cup blanched almond flour"
+        "originalLine": "1/2 cup blanched almond flour"
       },
       {
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "gluten-free old-fashioned rolled oats",
-        "originalLine": "½ cup gluten-free old-fashioned rolled oats"
+        "originalLine": "1/2 cup gluten-free old-fashioned rolled oats"
       },
       {
         "quantity": 0.25,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "chia seeds",
-        "originalLine": "¼ cup chia seeds"
+        "originalLine": "1/4 cup chia seeds"
       },
       {
         "quantity": 2,
-        "unit": "teaspoons",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "baking powder",
-        "originalLine": "2 teaspoons baking powder"
+        "originalLine": "2 teaspoon baking powder"
       },
       {
         "quantity": 0.5,
         "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "baking soda",
-        "originalLine": "½ teaspoon baking soda"
+        "originalLine": "1/2 teaspoon baking soda"
       },
       {
         "quantity": 1,
@@ -55,43 +55,47 @@
         "quantity": 0.25,
         "unit": "teaspoon",
         "unitType": "volume",
-        "ingredient": "ground nutmeg",
-        "originalLine": "¼ teaspoon ground nutmeg"
+        "ingredient": "nutmeg",
+        "originalLine": "1/4 teaspoon nutmeg — ground",
+        "notes": "ground"
       },
       {
         "quantity": 0.75,
         "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "sea salt",
-        "originalLine": "¾ teaspoon sea salt"
+        "originalLine": "3/4 teaspoon sea salt"
       },
       {
         "quantity": 2,
         "unit": null,
         "unitType": "count",
-        "ingredient": "medium, very ripe bananas (1 cup mashed)",
-        "originalLine": "2 medium, very ripe bananas (1 cup mashed)"
+        "ingredient": "bananas",
+        "originalLine": "2 bananas — very ripe bananas (1 cup mashed)",
+        "notes": "very ripe bananas (1 cup mashed)"
       },
       {
         "quantity": 0.3333333333333333,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "creamy almond butter or preferred nut/seed butter",
-        "originalLine": "⅓ cup creamy almond butter or preferred nut/seed butter"
+        "ingredient": "creamy almond butter",
+        "originalLine": "1/3 cup creamy almond butter — or preferred nut/seed butter",
+        "notes": "or preferred nut/seed butter"
       },
       {
         "quantity": 0.3333333333333333,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "maple syrup",
-        "originalLine": "⅓ cup maple syrup"
+        "originalLine": "1/3 cup maple syrup"
       },
       {
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "unsweetened almond milk or organic soy milk",
-        "originalLine": "½ cup unsweetened almond milk or organic soy milk"
+        "ingredient": "unsweetened almond milk",
+        "originalLine": "1/2 cup unsweetened almond milk — or organic soy milk",
+        "notes": "or organic soy milk"
       },
       {
         "quantity": 1,
@@ -104,11 +108,12 @@
         "quantity": 1,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "fresh or frozen blueberries",
-        "originalLine": "1 cup fresh or frozen blueberries"
+        "ingredient": "blueberries",
+        "originalLine": "1 cup blueberries — fresh or frozen",
+        "notes": "fresh or frozen"
       }
     ],
-    "originalText": "2 cups gluten-free oat flour\n½ cup blanched almond flour\n½ cup gluten-free old-fashioned rolled oats\n¼ cup chia seeds\n2 teaspoons baking powder\n½ teaspoon baking soda\n1 teaspoon cinnamon\n¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\n2 medium, very ripe bananas (1 cup mashed)\n⅓ cup creamy almond butter or preferred nut/seed butter\n⅓ cup maple syrup\n½ cup unsweetened almond milk or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup fresh or frozen blueberries",
+    "originalText": "2 cup gluten-free oat flour\n1/2 cup blanched almond flour\n1/2 cup gluten-free old-fashioned rolled oats\n1/4 cup chia seeds\n2 teaspoon baking powder\n1/2 teaspoon baking soda\n1 teaspoon cinnamon\n1/4 teaspoon nutmeg — ground\n3/4 teaspoon sea salt\n2 bananas — very ripe bananas (1 cup mashed)\n1/3 cup creamy almond butter — or preferred nut/seed butter\n1/3 cup maple syrup\n1/2 cup unsweetened almond milk — or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup blueberries — fresh or frozen",
     "tags": [
       "breakfast",
       "dessert",
@@ -384,22 +389,25 @@
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "walnuts, chopped",
-        "originalLine": "1/2 cup walnuts, chopped"
+        "ingredient": "walnuts",
+        "originalLine": "1/2 cup walnuts — chopped",
+        "notes": "chopped"
       },
       {
         "quantity": 0.75,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "dried apricot",
-        "originalLine": "3/4 cup dried apricots, finely chopped"
+        "originalLine": "3/4 cup dried apricot",
+        "notes": "dried"
       },
       {
         "quantity": 3,
         "unit": "tablespoon",
         "unitType": "volume",
-        "ingredient": "hemp seeds or sesame seeds",
-        "originalLine": "3 tablespoon hemp seeds or sesame seeds"
+        "ingredient": "hemp seeds",
+        "originalLine": "3 tablespoon hemp seeds — or sesame seeds",
+        "notes": "or sesame seeds"
       },
       {
         "quantity": 1,
@@ -412,8 +420,9 @@
         "quantity": 1.25,
         "unit": "teaspoon",
         "unitType": "volume",
-        "ingredient": "ground cardamom",
-        "originalLine": "1 1/4 teaspoon ground cardamom"
+        "ingredient": "cardamom",
+        "originalLine": "1 1/4 teaspoon cardamom — ground",
+        "notes": "ground"
       },
       {
         "quantity": 0.25,
@@ -440,25 +449,28 @@
         "quantity": 1,
         "unit": null,
         "unitType": "count",
-        "ingredient": "Zest from 1 large orange (1 heaping tablespoon)",
-        "originalLine": "1 Zest from 1 large orange (1 heaping tablespoon)"
+        "ingredient": "Zest from 1 large orange",
+        "originalLine": "1 Zest from 1 large orange — (1 heaping tablespoon)",
+        "notes": "(1 heaping tablespoon)"
       },
       {
         "quantity": 2,
         "unit": "tablespoon",
         "unitType": "volume",
         "ingredient": "orange juice",
-        "originalLine": "2 tablespoon freshly squeezed orange juice"
+        "originalLine": "2 tablespoon orange juice — fresh squeezed",
+        "notes": "fresh squeezed"
       },
       {
         "quantity": 1,
         "unit": "cup",
         "unitType": "volume",
         "ingredient": "blueberries",
-        "originalLine": "1 cup fresh or frozen blueberries"
+        "originalLine": "1 cup blueberries — fresh or frozen",
+        "notes": "fresh or frozen"
       }
     ],
-    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-free old-fashioned rolled oats\n1/2 cup water\n1 cup quinoa flakes\n3/4 cup gluten-free oat flour\n1/2 cup coconut sugar\n1/2 cup walnuts, chopped\n3/4 cup dried apricots, finely chopped\n3 tablespoon hemp seeds or sesame seeds\n1 teaspoon cinnamon\n1 1/4 teaspoon ground cardamom\n1/4 teaspoon sea salt\n2/3 cup unsweetened almond milk\n1 tablespoon pure vanilla extract\n1 Zest from 1 large orange (1 heaping tablespoon)\n2 tablespoon freshly squeezed orange juice\n1 cup fresh or frozen blueberries",
+    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-free old-fashioned rolled oats\n1/2 cup water\n1 cup quinoa flakes\n3/4 cup gluten-free oat flour\n1/2 cup coconut sugar\n1/2 cup walnuts — chopped\n3/4 cup dried apricot\n3 tablespoon hemp seeds — or sesame seeds\n1 teaspoon cinnamon\n1 1/4 teaspoon cardamom — ground\n1/4 teaspoon sea salt\n2/3 cup unsweetened almond milk\n1 tablespoon pure vanilla extract\n1 Zest from 1 large orange — (1 heaping tablespoon)\n2 tablespoon orange juice — fresh squeezed\n1 cup blueberries — fresh or frozen",
     "tags": [
       "breakfast",
       "dessert",
@@ -1051,38 +1063,40 @@
     "ingredients": [
       {
         "quantity": 420,
-        "unit": "ml",
+        "unit": "milliliter",
         "unitType": "volume",
         "ingredient": "water",
-        "originalLine": "1 1/2 c. + 4 tbsp. water"
+        "originalLine": "420 milliliter water"
       },
       {
         "quantity": 270,
-        "unit": "ml",
+        "unit": "milliliter",
         "unitType": "volume",
-        "ingredient": "grapeseed oil (or similar neutral oil)",
-        "originalLine": "1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)"
+        "ingredient": "grapeseed oil",
+        "originalLine": "270 milliliter grapeseed oil (or similar neutral oil)",
+        "notes": "or similar neutral oil"
       },
       {
         "quantity": 1,
-        "unit": "c.",
+        "unit": "cup",
         "unitType": "volume",
         "ingredient": "raw almonds",
-        "originalLine": "1 c. raw almonds"
+        "originalLine": "1 cup raw almonds"
       },
       {
         "quantity": 180,
-        "unit": "ml",
+        "unit": "milliliter",
         "unitType": "volume",
-        "ingredient": "lemon juice, fresh",
-        "originalLine": "1/2 c. + 4 tbsp. lemon juice, fresh"
+        "ingredient": "lemon juice",
+        "originalLine": "180 milliliter lemon juice, fresh",
+        "notes": "fresh"
       },
       {
         "quantity": 6,
-        "unit": "tbsp.",
+        "unit": "tablespoon",
         "unitType": "volume",
         "ingredient": "nutritional yeast",
-        "originalLine": "6 tbsp. nutritional yeast"
+        "originalLine": "6 tablespoon nutritional yeast"
       },
       {
         "quantity": 4,
@@ -1093,48 +1107,48 @@
       },
       {
         "quantity": 4,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "Tamari",
-        "originalLine": "4 tsp. Tamari"
+        "originalLine": "4 teaspoon Tamari"
       },
       {
         "quantity": 1,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "kosher salt",
-        "originalLine": "1 tsp. kosher salt"
+        "originalLine": "1 teaspoon kosher salt"
       },
       {
         "quantity": 1,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "cumin",
-        "originalLine": "1 tsp. cumin"
+        "originalLine": "1 teaspoon cumin"
       },
       {
         "quantity": 1,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "chili powder",
-        "originalLine": "1 tsp. chili powder"
+        "originalLine": "1 teaspoon chili powder"
       },
       {
         "quantity": 0.5,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "coriander",
-        "originalLine": "1/2 tsp. coriander"
+        "originalLine": "1/2 teaspoon coriander"
       },
       {
         "quantity": 0.5,
-        "unit": "tsp.",
+        "unit": "teaspoon",
         "unitType": "volume",
         "ingredient": "paprika",
-        "originalLine": "1/2 tsp. paprika"
+        "originalLine": "1/2 teaspoon paprika"
       }
     ],
-    "originalText": "1 1/2 c. + 4 tbsp. water\n1 c. + 2 tbsp. grapeseed oil (or similar neutral oil)\n1 c. raw almonds\n1/2 c. + 4 tbsp. lemon juice, fresh\n6 tbsp. nutritional yeast\n4 cloves garlic\n4 tsp. Tamari\n1 tsp. kosher salt\n1 tsp. cumin\n1 tsp. chili powder\n1/2 tsp. coriander\n1/2 tsp. paprika",
+    "originalText": "420 milliliter water\n270 milliliter grapeseed oil (or similar neutral oil)\n1 cup raw almonds\n180 milliliter lemon juice, fresh\n6 tablespoon nutritional yeast\n4 cloves garlic\n4 teaspoon Tamari\n1 teaspoon kosher salt\n1 teaspoon cumin\n1 teaspoon chili powder\n1/2 teaspoon coriander\n1/2 teaspoon paprika",
     "tags": [
       "sauce",
       "vegan"
@@ -1308,15 +1322,17 @@
         "quantity": 1,
         "unit": "teaspoon",
         "unitType": "volume",
-        "ingredient": "maple syrup, optional",
-        "originalLine": "1 teaspoon maple syrup, optional"
+        "ingredient": "maple syrup",
+        "originalLine": "1 teaspoon maple syrup, optional",
+        "notes": "optional"
       },
       {
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "sliced almonds",
-        "originalLine": "1/2 cup sliced almonds"
+        "ingredient": "almonds",
+        "originalLine": "1/2 cup sliced almonds",
+        "notes": "sliced"
       },
       {
         "quantity": 0.5,
@@ -1682,29 +1698,30 @@
         "quantity": 1,
         "unit": "pound",
         "unitType": "weight",
-        "ingredient": "potatos",
-        "originalLine": "1 pound potatos cubed"
+        "ingredient": "potato",
+        "originalLine": "1 pound potato — cubed",
+        "notes": "cubed"
       },
       {
         "quantity": 4,
         "unit": null,
         "unitType": "count",
-        "ingredient": "bell peppers",
-        "originalLine": "4 bell peppers"
+        "ingredient": "bell pepper",
+        "originalLine": "4 bell pepper"
       },
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "bundle",
         "unitType": "count",
-        "ingredient": "bundle celery",
+        "ingredient": "celery",
         "originalLine": "1 bundle celery"
       },
       {
         "quantity": 11,
         "unit": null,
         "unitType": "count",
-        "ingredient": "carrots",
-        "originalLine": "11 carrots"
+        "ingredient": "carrot",
+        "originalLine": "11 carrot"
       },
       {
         "quantity": 8,
@@ -1729,16 +1746,16 @@
       },
       {
         "quantity": 0.5,
-        "unit": null,
+        "unit": "jar",
         "unitType": "count",
-        "ingredient": "jar curry paste",
+        "ingredient": "curry paste",
         "originalLine": "1/2 jar curry paste"
       },
       {
         "quantity": 2,
-        "unit": null,
+        "unit": "cans",
         "unitType": "count",
-        "ingredient": "cans coconut milk",
+        "ingredient": "coconut milk",
         "originalLine": "2 cans coconut milk"
       },
       {
@@ -1750,142 +1767,16 @@
       },
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "bunch",
         "unitType": "count",
-        "ingredient": "bunch cilantro",
+        "ingredient": "cilantro",
         "originalLine": "1 bunch cilantro"
       }
     ],
-    "originalText": "1 pound potatos cubed\n4 bell peppers\n1 bundle celery\n11 carrots\n8 zuccini\n2 leek\n4 cup of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro",
+    "originalText": "1 pound potato — cubed\n4 bell pepper\n1 bundle celery\n11 carrot\n8 zuccini\n2 leek\n4 cup of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro",
     "tags": [
       "soup",
       "vegan"
     ]
-  },
-  {
-    "name": "Recipe 22",
-    "ingredients": [
-      {
-        "quantity": 1,
-        "unit": "tablespoon",
-        "unitType": "volume",
-        "ingredient": "whole psyllium husk",
-        "originalLine": "1 tablespoon whole psyllium husk"
-      },
-      {
-        "quantity": 1,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "gluten-free old-fashioned rolled oats",
-        "originalLine": "1 cup gluten-free old-fashioned rolled oats"
-      },
-      {
-        "quantity": 0.5,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "water",
-        "originalLine": "1/2 cup water"
-      },
-      {
-        "quantity": 1,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "quinoa flakes",
-        "originalLine": "1 cup quinoa flakes"
-      },
-      {
-        "quantity": 0.75,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "gluten-free oat flour",
-        "originalLine": "3/4 cup gluten-free oat flour"
-      },
-      {
-        "quantity": 0.5,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "coconut sugar",
-        "originalLine": "1/2 cup coconut sugar"
-      },
-      {
-        "quantity": 0.5,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "walnuts— chopped",
-        "originalLine": "1/2 cup walnuts— chopped"
-      },
-      {
-        "quantity": 0.75,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "dried apricot — finely chopped",
-        "originalLine": "3/4 cup dried apricot — finely chopped"
-      },
-      {
-        "quantity": 1,
-        "unit": "teaspoon",
-        "unitType": "volume",
-        "ingredient": "cinnamon",
-        "originalLine": "1 teaspoon cinnamon"
-      },
-      {
-        "quantity": 1.25,
-        "unit": "teaspoon",
-        "unitType": "volume",
-        "ingredient": "ground cardamom",
-        "originalLine": "1 1/4 teaspoon ground cardamom"
-      },
-      {
-        "quantity": 0.25,
-        "unit": "teaspoon",
-        "unitType": "volume",
-        "ingredient": "sea salt",
-        "originalLine": "1/4 teaspoon sea salt"
-      },
-      {
-        "quantity": 0.6666666666666666,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "unsweetened almond milk",
-        "originalLine": "2/3 cup unsweetened almond milk"
-      },
-      {
-        "quantity": 1,
-        "unit": "tablespoon",
-        "unitType": "volume",
-        "ingredient": "pure vanilla extract",
-        "originalLine": "1 tablespoon pure vanilla extract"
-      },
-      {
-        "quantity": 1,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "Zest from 1 large orange (1 heaping tablespoon)",
-        "originalLine": "1 Zest from 1 large orange (1 heaping tablespoon)"
-      },
-      {
-        "quantity": 2,
-        "unit": "tablespoon",
-        "unitType": "volume",
-        "ingredient": "orange juice — freshly squeezed",
-        "originalLine": "2 tablespoon orange juice — freshly squeezed"
-      },
-      {
-        "quantity": 1,
-        "unit": "cup",
-        "unitType": "volume",
-        "ingredient": "blueberries — fresh or frozen",
-        "originalLine": "1 cup blueberries — fresh or frozen"
-      },
-      {
-        "quantity": 3,
-        "unit": "tablespoon",
-        "unitType": "volume",
-        "ingredient": "hemp seeds — or sesame seeds",
-        "originalLine": "3 tablespoon hemp seeds — or sesame seeds"
-      }
-    ],
-    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-free old-fashioned rolled oats\n1/2 cup water\n1 cup quinoa flakes\n3/4 cup gluten-free oat flour\n1/2 cup coconut sugar\n1/2 cup walnuts— chopped\n3/4 cup dried apricot — finely chopped\n1 teaspoon cinnamon\n1 1/4 teaspoon ground cardamom\n1/4 teaspoon sea salt\n2/3 cup unsweetened almond milk\n1 tablespoon pure vanilla extract\n1 Zest from 1 large orange (1 heaping tablespoon)\n2 tablespoon orange juice — freshly squeezed\n1 cup blueberries — fresh or frozen\n3 tablespoon hemp seeds — or sesame seeds",
-    "tags": []
   }
 ]
