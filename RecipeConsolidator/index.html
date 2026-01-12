@@ -615,6 +615,105 @@
         .selected-ingredient .remove:hover {
             opacity: 1;
         }
+
+        /* Recipe Assistant (chat) */
+        .assistant-messages {
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            background: #ffffff;
+            padding: 12px;
+            max-height: 360px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .assistant-msg {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            max-width: 85%;
+        }
+        .assistant-msg.user { align-self: flex-end; }
+        .assistant-msg.assistant { align-self: flex-start; }
+        .assistant-bubble {
+            padding: 10px 12px;
+            border-radius: 10px;
+            font-size: 14px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .assistant-msg.user .assistant-bubble {
+            background: #d48247;
+            color: #ffffff;
+            border-top-right-radius: 4px;
+        }
+        .assistant-msg.assistant .assistant-bubble {
+            background: #f8f6f2;
+            color: #2c2c2c;
+            border-top-left-radius: 4px;
+        }
+        .assistant-meta {
+            font-size: 12px;
+            color: #8a8a8a;
+        }
+        .assistant-input-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        .assistant-input-row input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .assistant-input-row input:focus {
+            outline: none;
+            border-color: #d48247;
+        }
+        .assistant-suggestions {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .assistant-chip {
+            border: 1px solid #e8e8e8;
+            background: #ffffff;
+            color: #2c2c2c;
+            padding: 6px 10px;
+            border-radius: 18px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .assistant-chip:hover {
+            border-color: #d48247;
+            color: #d48247;
+        }
+        .assistant-inline-actions {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .assistant-mini-btn {
+            padding: 6px 10px;
+            font-size: 13px;
+            border-radius: 6px;
+            border: 1px solid #e8e8e8;
+            background: #ffffff;
+            color: #2c2c2c;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+        .assistant-mini-btn:hover {
+            border-color: #d48247;
+            color: #d48247;
+        }
         @media only screen and (max-width: 600px) {
             .rc-hero h1 { font-size: 32px; }
             .rc-hero p { font-size: 16px; }
@@ -819,6 +918,33 @@
             <div id="noRecipesMessage" style="text-align: center; padding: 40px; color: #6a6a6a;">
                 <i class="fas fa-book" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
                 <p>No recipes loaded yet. Add a recipe above or import from a file.</p>
+            </div>
+        </div>
+
+        <div class="rc-card" id="assistantCard">
+            <h2>Recipe Assistant (beta)</h2>
+            <p style="margin-bottom: 12px; color: #6a6a6a;">
+                Ask for recipes based on ingredients you have. This uses your saved recipes + preloaded recipes (if you loaded them) and can suggest basic substitutions.
+            </p>
+            <div id="assistantMessages" class="assistant-messages" aria-live="polite"></div>
+            <div class="assistant-suggestions">
+                <button class="assistant-chip" type="button" onclick="assistantFillAndSend('I have chicken, broccoli, and rice. What can I make?')">Try: chicken + broccoli + rice</button>
+                <button class="assistant-chip" type="button" onclick="assistantFillAndSend('I have blueberries, orange juice, and almond milk. What recipes fit?')">Try: blueberries + OJ + almond milk</button>
+                <button class="assistant-chip" type="button" onclick="assistantFillAndSend('What can I make with chickpeas, tomatoes, and spinach?')">Try: chickpeas + tomatoes + spinach</button>
+                <button class="assistant-chip" type="button" onclick="assistantFillAndSend('I need a substitution for buttermilk')">Try: substitute buttermilk</button>
+            </div>
+            <div class="assistant-input-row">
+                <input
+                    id="assistantInput"
+                    type="text"
+                    placeholder='e.g. "I have x, y, z—what can I make?" or "substitute for buttermilk"'
+                    onkeydown="if(event.key === 'Enter') { event.preventDefault(); assistantSend(); }"
+                    autocomplete="off"
+                >
+                <button class="btn" type="button" onclick="assistantSend()">Ask</button>
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: #8a8a8a;">
+                Tip: For a real AI chatbot (natural conversation + smarter substitutions), we can add a small server endpoint so you don’t expose an API key in the browser.
             </div>
         </div>
 

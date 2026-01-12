@@ -44,6 +44,352 @@ let unitSystem = 'imperial';
 let pendingRecipeForReview = null;
 let pendingIngredientsForReview = null;
 
+// ----------------------------
+// Recipe Assistant (local-first)
+// ----------------------------
+
+// Feature flag: keep the assistant code available, but hide it from the site until it's ready.
+const ENABLE_RECIPE_ASSISTANT_UI = false;
+
+// If you later add a backend endpoint (recommended for real AI), set this to a URL like:
+// const RECIPE_ASSISTANT_API_URL = '/api/recipe-assistant';
+const RECIPE_ASSISTANT_API_URL = '';
+
+// Minimal pantry assumption (used for matching; not required)
+const RECIPE_ASSISTANT_PANTRY = [
+    'salt',
+    'pepper',
+    'olive oil',
+    'vegetable oil',
+    'butter',
+    'water',
+    'flour',
+    'sugar',
+    'garlic',
+    'onion'
+];
+
+// Simple substitution hints. Keys should be normalized ingredient names.
+const INGREDIENT_SUBSTITUTIONS = {
+    'buttermilk': [
+        'Milk + lemon juice (or vinegar): 1 cup milk + 1 tbsp acid, rest 5–10 min',
+        'Yogurt thinned with milk',
+        'Kefir'
+    ],
+    'egg': [
+        'For baking: 1 tbsp ground flax + 3 tbsp water (per egg)',
+        'For binding: chia egg (1 tbsp chia + 3 tbsp water)',
+        'For moisture: applesauce (varies by recipe)'
+    ],
+    'butter': [
+        'Olive oil (often works in sautés; baking is recipe-dependent)',
+        'Ghee',
+        'Coconut oil (will add flavor)'
+    ],
+    'sour cream': [
+        'Greek yogurt',
+        'Crème fraîche',
+        'Labneh'
+    ],
+    'heavy cream': [
+        'Half-and-half + butter (roughly 3/4 cup half-and-half + 1/4 cup melted butter)',
+        'Coconut cream (adds coconut flavor)'
+    ],
+    'brown sugar': [
+        'White sugar + a bit of molasses',
+        'Coconut sugar (flavor differs)'
+    ],
+    'soy sauce': [
+        'Tamari (gluten-free if certified)',
+        'Coconut aminos (sweeter)',
+        'Salt + a bit of acid (worst-case)'
+    ],
+    'lemon': [
+        'Lime',
+        'Vinegar (small amount, depends on use)'
+    ],
+    'lime': [
+        'Lemon',
+        'Vinegar (small amount, depends on use)'
+    ],
+    'coconut milk': [
+        'Heavy cream (not vegan, flavor differs)',
+        'Cashew cream (blend cashews + water)',
+        'Oat cream'
+    ]
+};
+
+function assistantGetEl(id) {
+    return document.getElementById(id);
+}
+
+function assistantScrollToBottom() {
+    const box = assistantGetEl('assistantMessages');
+    if (!box) return;
+    box.scrollTop = box.scrollHeight;
+}
+
+function assistantAppendUserMessage(text) {
+    const box = assistantGetEl('assistantMessages');
+    if (!box) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'assistant-msg user';
+    const bubble = document.createElement('div');
+    bubble.className = 'assistant-bubble';
+    bubble.textContent = text;
+    wrapper.appendChild(bubble);
+    box.appendChild(wrapper);
+    assistantScrollToBottom();
+}
+
+function assistantAppendAssistantHtml(html, metaText = '') {
+    const box = assistantGetEl('assistantMessages');
+    if (!box) return;
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'assistant-msg assistant';
+    const bubble = document.createElement('div');
+    bubble.className = 'assistant-bubble';
+    bubble.innerHTML = html;
+    wrapper.appendChild(bubble);
+
+    if (metaText) {
+        const meta = document.createElement('div');
+        meta.className = 'assistant-meta';
+        meta.textContent = metaText;
+        wrapper.appendChild(meta);
+    }
+
+    box.appendChild(wrapper);
+    assistantScrollToBottom();
+}
+
+function assistantFillAndSend(text) {
+    const input = assistantGetEl('assistantInput');
+    if (input) input.value = text;
+    assistantSend();
+}
+
+function assistantNormalizeList(items) {
+    const out = [];
+    const seen = new Set();
+    for (const raw of items) {
+        const n = normalizeIngredientName(raw);
+        if (!n) continue;
+        if (seen.has(n)) continue;
+        seen.add(n);
+        out.push(n);
+    }
+    return out;
+}
+
+function assistantExtractWantedIngredients(queryText) {
+    if (!queryText) return [];
+    const lower = queryText.toLowerCase();
+
+    // Try to focus on the part after common phrases ("i have", "uses", "with")
+    let focus = lower;
+    const match = lower.match(/\b(i have|i've got|we have|using|uses|with)\b([\s\S]*)$/i);
+    if (match && match[2]) {
+        focus = match[2];
+    }
+
+    focus = focus
+        .replace(/basic pantry items?/g, '')
+        .replace(/pantry items?/g, '')
+        .replace(/ingredients?/g, '')
+        .replace(/\band\b/gi, ',');
+
+    const parts = focus.split(/[,;\n]+/).map(s => s.trim()).filter(Boolean);
+
+    // If the user wrote something like "x y z" without commas, fallback to splitting on " & "
+    const expanded = [];
+    for (const p of parts) {
+        const more = p.split(/\s*&\s*/).map(s => s.trim()).filter(Boolean);
+        expanded.push(...more);
+    }
+
+    return assistantNormalizeList(expanded);
+}
+
+function assistantRecipeIngredientSet(recipe) {
+    const set = new Set();
+    if (!recipe || !Array.isArray(recipe.ingredients)) return set;
+    for (const ing of recipe.ingredients) {
+        const name = normalizeIngredientName(ing.ingredient || '');
+        if (name) set.add(name);
+    }
+    return set;
+}
+
+function assistantIsPantryItem(normalizedIngredient) {
+    const pantrySet = new Set(RECIPE_ASSISTANT_PANTRY.map(i => normalizeIngredientName(i)));
+    return pantrySet.has(normalizedIngredient);
+}
+
+function assistantFindRecipeMatches(wanted, limit = 6) {
+    const wantSet = new Set(wanted);
+    const scored = [];
+
+    for (const recipe of recipes) {
+        const ingSet = assistantRecipeIngredientSet(recipe);
+        if (ingSet.size === 0) continue;
+
+        let overlap = 0;
+        for (const w of wantSet) {
+            if (ingSet.has(w)) overlap += 1;
+        }
+
+        if (overlap === 0) continue;
+
+        // Compute "missing" = ingredients in recipe not in wanted and not in pantry
+        let missingCount = 0;
+        for (const rIng of ingSet) {
+            if (wantSet.has(rIng)) continue;
+            if (assistantIsPantryItem(rIng)) continue;
+            missingCount += 1;
+        }
+
+        scored.push({
+            recipe,
+            overlap,
+            missingCount
+        });
+    }
+
+    scored.sort((a, b) => {
+        // Highest overlap first, then fewer missing ingredients, then alphabetical
+        if (b.overlap !== a.overlap) return b.overlap - a.overlap;
+        if (a.missingCount !== b.missingCount) return a.missingCount - b.missingCount;
+        return (a.recipe.name || '').localeCompare(b.recipe.name || '');
+    });
+
+    return scored.slice(0, limit);
+}
+
+function assistantSubstitutionFor(queryText) {
+    if (!queryText) return '';
+    const lower = queryText.toLowerCase();
+    const m = lower.match(/\b(sub(stitute|stitution)\s+(for|to replace)|replace)\b([\s\S]*)$/i);
+    const tail = m && m[4] ? m[4].trim() : '';
+    const normalized = normalizeIngredientName(tail || lower);
+    if (!normalized) return '';
+    const hints = INGREDIENT_SUBSTITUTIONS[normalized];
+    if (!hints || hints.length === 0) return '';
+    const items = hints.map(h => `<li>${escapeHtml(h)}</li>`).join('');
+    return `
+        <div><strong>Substitution ideas for "${escapeHtml(normalized)}":</strong></div>
+        <ul style="margin: 8px 0 0 18px; padding: 0;">${items}</ul>
+    `;
+}
+
+function assistantRenderMatches(wanted, matches) {
+    const wantedText = wanted.length ? wanted.map(escapeHtml).join(', ') : '';
+    const pantryText = RECIPE_ASSISTANT_PANTRY.map(p => escapeHtml(p)).join(', ');
+
+    if (!matches || matches.length === 0) {
+        return `
+            <div><strong>I couldn’t find any good matches</strong> in your current recipe library.</div>
+            <div style="margin-top: 8px;">Try loading more recipes (e.g. <strong>Load Preloaded Recipes</strong>) or add a few recipes first.</div>
+            <div style="margin-top: 8px; color: #6a6a6a; font-size: 13px;">Pantry assumed: ${pantryText}</div>
+        `;
+    }
+
+    const rows = matches.map(({ recipe, overlap, missingCount }) => {
+        const safeName = escapeHtml(recipe.name || 'Untitled recipe');
+        const activeLabel = activeRecipeIds.has(recipe.id) ? 'Remove from list' : 'Add to list';
+        return `
+            <div style="padding: 10px 10px; border: 1px solid #e8e8e8; border-radius: 8px; background: #fff; margin-top: 10px;">
+                <div style="display:flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap;">
+                    <div>
+                        <div style="font-weight: 600; color: #2c2c2c;">${safeName}</div>
+                        <div style="font-size: 13px; color: #6a6a6a; margin-top: 2px;">
+                            Match: ${overlap} ingredient${overlap !== 1 ? 's' : ''} • Missing (non-pantry): ${missingCount}
+                        </div>
+                    </div>
+                    <div class="assistant-inline-actions">
+                        <button class="assistant-mini-btn" type="button" onclick="toggleRecipeActive(${recipe.id})">${escapeHtml(activeLabel)}</button>
+                        <button class="assistant-mini-btn" type="button" onclick="showIngredientsModal(${recipe.id})">Ingredients</button>
+                        <button class="assistant-mini-btn" type="button" onclick="showAboutModal(${recipe.id})">About</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+
+    return `
+        <div><strong>Ingredients you mentioned:</strong> ${wantedText || '(none detected)'}</div>
+        <div style="margin-top: 8px;"><strong>Top matches:</strong></div>
+        ${rows}
+        <div style="margin-top: 10px; color: #6a6a6a; font-size: 13px;">Pantry assumed: ${pantryText}</div>
+    `;
+}
+
+async function assistantSend() {
+    const input = assistantGetEl('assistantInput');
+    if (!input) return;
+    const text = (input.value || '').trim();
+    if (!text) return;
+
+    assistantAppendUserMessage(text);
+    input.value = '';
+
+    // If we have a backend AI endpoint later, use it.
+    if (RECIPE_ASSISTANT_API_URL) {
+        try {
+            assistantAppendAssistantHtml('Thinking…');
+            const response = await fetch(RECIPE_ASSISTANT_API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    query: text,
+                    recipes: recipes.map(r => ({
+                        id: r.id,
+                        name: r.name,
+                        tags: r.tags || [],
+                        ingredients: (r.ingredients || []).map(i => i.ingredient)
+                    }))
+                })
+            });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+            // Replace "Thinking…" with actual response by appending a new message (simple approach)
+            assistantAppendAssistantHtml(escapeHtml(data.message || 'OK'));
+            return;
+        } catch (e) {
+            console.warn('Assistant AI endpoint failed; falling back to local assistant:', e);
+        }
+    }
+
+    // Substitution-only query?
+    const subHtml = assistantSubstitutionFor(text);
+    if (subHtml) {
+        assistantAppendAssistantHtml(subHtml);
+        return;
+    }
+
+    // Local recipe matching
+    const wanted = assistantExtractWantedIngredients(text);
+    const matches = assistantFindRecipeMatches(wanted, 6);
+    assistantAppendAssistantHtml(assistantRenderMatches(wanted, matches));
+}
+
+function initRecipeAssistant() {
+    const card = assistantGetEl('assistantCard');
+    if (!ENABLE_RECIPE_ASSISTANT_UI) {
+        if (card) card.style.display = 'none';
+        return;
+    }
+    if (card) card.style.display = 'block';
+
+    const box = assistantGetEl('assistantMessages');
+    if (!box) return;
+    assistantAppendAssistantHtml(
+        'Tell me what ingredients you want to use (comma-separated works great), and I’ll suggest recipes from your library.<br><br>Example: <strong>"I have tofu, broccoli, and rice. What can I make?"</strong>'
+    );
+}
+
 /**
  * Toggle visibility of advanced source & affiliate fields in the Add Recipe form
  */
@@ -5975,6 +6321,9 @@ document.addEventListener('DOMContentLoaded', function() {
     updateTagFilters();
     updateSelectedIngredientsDisplay();
     updateDayPlanner();
+
+    // Recipe Assistant (beta)
+    initRecipeAssistant();
 });
 
 

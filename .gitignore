@@ -13,3 +13,6 @@ GroupIncome/*.pptx
 GroupIncome/*.py
 GroupIncome/tools/
 
+# RecipeConsolidator - private notes
+RecipeConsolidator/ROADMAP-private.md
+
