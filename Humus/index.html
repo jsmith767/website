@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Humus — A Regenerative Ecosystem for Community Prosperity</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
+    <style>
+        .humus-body { background: #f2ede4; color: #3d3429; font-family: 'Poppins', sans-serif; line-height: 1.7; }
+        .humus-nav { background: #e8e0d4; box-shadow: 0 2px 10px rgba(61, 52, 41, 0.12); position: sticky; top: 0; z-index: 1000; padding: 15px 0; }
+        .humus-nav .container { display: flex; justify-content: space-between; align-items: center; padding: 0 10%; flex-wrap: wrap; gap: 12px; }
+        .humus-nav ul { display: flex; flex-wrap: wrap; list-style: none; gap: 18px 24px; margin: 0; padding: 0; justify-content: flex-end; }
+        .humus-nav a { color: #3d3429; text-decoration: none; font-weight: 500; transition: color 0.3s; font-size: 15px; }
+        .humus-nav a:hover { color: #5d7a4a; }
+        .humus-hero {
+            background: linear-gradient(145deg, #3d4f35 0%, #5c4a3a 45%, #8b7355 100%);
+            color: #f8f4eb;
+            padding: 100px 10% 80px;
+            text-align: center;
+        }
+        .humus-hero h1 { font-size: 52px; margin-bottom: 16px; font-weight: 700; line-height: 1.15; }
+        .humus-hero .humus-tagline { font-size: 22px; max-width: 720px; margin: 0 auto 12px; opacity: 0.95; }
+        .humus-hero .humus-hero-note { font-size: 15px; opacity: 0.82; font-style: italic; margin-top: 18px; }
+        .humus-section { padding: 72px 10%; max-width: 1200px; margin: 0 auto; }
+        .humus-section-title { font-size: 40px; color: #3d3429; margin-bottom: 28px; font-weight: 600; border-bottom: 3px solid #8b7355; padding-bottom: 14px; }
+        .humus-content-card { background: #faf8f4; padding: 36px; border-radius: 8px; box-shadow: 0 2px 14px rgba(61, 52, 41, 0.08); margin-bottom: 28px; border: 1px solid #d9cfc0; }
+        .humus-content-card h3 { font-size: 26px; color: #5d7a4a; margin-bottom: 18px; font-weight: 600; }
+        .humus-content-card h4 { font-size: 19px; color: #5c4a3a; margin-top: 24px; margin-bottom: 12px; font-weight: 600; }
+        .humus-content-card p { font-size: 17px; color: #4a4339; margin-bottom: 16px; line-height: 1.8; }
+        .humus-content-card ul { list-style: none; padding: 0; margin: 18px 0; }
+        .humus-content-card ul li { padding: 14px 0; border-bottom: 1px solid #e0d6c8; font-size: 17px; color: #4a4339; }
+        .humus-content-card ul li:last-child { border-bottom: none; }
+        .humus-content-card ul li strong { color: #3d3429; font-weight: 600; display: block; margin-bottom: 6px; }
+        .humus-crosslink { text-align: center; padding: 56px 10%; background: #ddd2c2; }
+        .humus-crosslink a { display: inline-block; padding: 14px 36px; background: #3d3429; color: #f8f4eb; text-decoration: none; border-radius: 6px; font-size: 17px; font-weight: 500; transition: background 0.3s; margin: 6px; }
+        .humus-crosslink a:hover { background: #5d7a4a; }
+        .humus-crosslink .humus-crosslink-sub { margin-top: 16px; color: #5c5346; font-size: 15px; }
+        .humus-crosslink .humus-crosslink-sub a { display: inline; padding: 0; background: none; color: #5d7a4a; text-decoration: underline; margin: 0; }
+        .humus-crosslink .humus-crosslink-sub a:hover { background: none; color: #3d4f35; }
+        @media only screen and (max-width: 768px) {
+            .humus-hero h1 { font-size: 34px; }
+            .humus-hero .humus-tagline { font-size: 18px; }
+            .humus-section-title { font-size: 30px; }
+            .humus-nav ul { justify-content: flex-start; }
+            .humus-content-card { padding: 24px; }
+        }
+    </style>
+</head>
+<body class="humus-body">
+    <nav class="humus-nav">
+        <div class="container">
+            <div>
+                <a href="../index.html" style="color: #3d3429; text-decoration: none; font-size: 19px; font-weight: 600;">← Back to Main Site</a>
+            </div>
+            <ul>
+                <li><a href="#vision">Vision</a></li>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#spam">SPaM Model</a></li>
+                <li><a href="#legal">Legal &amp; Tax</a></li>
+                <li><a href="#flows">Resource Flows</a></li>
+                <li><a href="#governance">Governance</a></li>
+                <li><a href="#principles">Principles</a></li>
+                <li><a href="#financial">Financial</a></li>
+                <li><a href="#branding">Branding</a></li>
+                <li><a href="#advantages">Advantages</a></li>
+                <li><a href="#conclusion">Conclusion</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="humus-hero">
+        <h1>Humus</h1>
+        <p class="humus-tagline">A regenerative ecosystem for community prosperity</p>
+        <p class="humus-hero-note">Seeds, Plants &amp; Mycelium (SPaM) — autonomous nodes, network canopy, and tax-aware legal flows</p>
+    </div>
+
+    <section id="vision" class="humus-section">
+        <h2 class="humus-section-title">Vision</h2>
+        <div class="humus-content-card">
+            <p>A world where economic security is a shared human right, supported through interconnected, regenerative communities. Stability emerges from shared prosperity and systemic support, not scarcity or centralization.</p>
+        </div>
+    </section>
+
+    <section id="mission" class="humus-section">
+        <h2 class="humus-section-title">Mission</h2>
+        <div class="humus-content-card">
+            <p>To create a cooperative ecosystem in which members pool resources, access predictable support, and enable network growth. Humus allows resources to flow transparently between communities (Plants), supporting both current members and the emergence of new nodes.</p>
+        </div>
+    </section>
+
+    <section id="overview" class="humus-section">
+        <h2 class="humus-section-title">Overview</h2>
+        <div class="humus-content-card">
+            <h3>Abstract</h3>
+            <p>Humus is a network of autonomous communities (Plants) that pool resources, share labor, and propagate resilience through an interconnected network (Mycelium). Members (Seeds) contribute according to their means, receive equitable support, and may seed new nodes. The ecosystem leverages SPaM (Seeds, Plants, Mycelium) as an internal metaphor while operationalizing contributions, grants, and resource flows across 501(d) and 501(c)(3) structures, creating a tax-aware, legally compliant, and scalable network.</p>
+        </div>
+    </section>
+
+    <section id="spam" class="humus-section">
+        <h2 class="humus-section-title">SPaM Metaphor</h2>
+        <div class="humus-content-card">
+            <p>The <strong>Canopy</strong> is the <strong>Mycelium</strong>: the network connecting nodes, redistributing resources, supporting propagation, and weaving the whole ecosystem together.</p>
+            <ul>
+                <li><strong>Seeds</strong> Individuals or small groups initiating participation. Their labor, contributions, and ideas form the basis of community growth.</li>
+                <li><strong>Plants</strong> Local communities (typically structured as 501(d)s, LLCs, or co-ops) that pool resources, provide mutual aid, and develop shared infrastructure.</li>
+                <li><strong>Mycelium (Canopy)</strong> The network connecting Plants, redistributing resources, providing guidance, supporting replication, and enabling systemic resilience.</li>
+            </ul>
+            <p><strong>Key principle:</strong> Some Seeds will flourish into Plants, others may fail, and resources from dormant or exited nodes recycle into the Mycelium to support new growth.</p>
+        </div>
+    </section>
+
+    <section id="legal" class="humus-section">
+        <h2 class="humus-section-title">Legal and Tax Architecture</h2>
+        <div class="humus-content-card">
+            <h3>Node-level: 501(d) Plants</h3>
+            <ul>
+                <li>Members pool income, labor, or investment-equivalent wealth.</li>
+                <li>Members may work for the 501(d), meaning earned contributions through the node are not taxed individually.</li>
+                <li>Plants can distribute funds for members’ basic needs (housing, food, utilities, education) under IRS rules.</li>
+                <li>Nodes can support exiting members to seed new Plants, maintaining network propagation.</li>
+            </ul>
+        </div>
+        <div class="humus-content-card">
+            <h3>Network-level: Mycelium (501(c)(3) or coordinating body)</h3>
+            <ul>
+                <li>Can accept tax-deductible donations, including cash, stock, or other assets.</li>
+                <li>Redistributes resources to Plants or directly to members through grants or program-related support.</li>
+                <li>Provides system-level coordination (e.g., replication funding, shared resources, technical guidance) while preserving autonomy of each Plant.</li>
+                <li>Serves as the network tissue, ensuring resource flows between nodes and supporting growth and stability.</li>
+            </ul>
+        </div>
+        <div class="humus-content-card">
+            <h3>Hybrid or nonprofit-adjacent nodes</h3>
+            <p>The network can include LLCs, co-ops, or informal collectives. Legal flexibility allows nodes to participate and receive support without all being formal 501(d)s. Tax and legal compliance are maintained by structuring transfers, grants, and resource allocations appropriately.</p>
+        </div>
+    </section>
+
+    <section id="flows" class="humus-section">
+        <h2 class="humus-section-title">Resource Flows</h2>
+        <div class="humus-content-card">
+            <ul>
+                <li><strong>Seed contribution</strong> Individual Seeds contribute labor, wealth, or other resources to their Plant.</li>
+                <li><strong>Plant allocation</strong> Resources are pooled and distributed according to local needs; administrative overhead is minimized.</li>
+                <li><strong>Plant-to-Mycelium</strong> Plants contribute to the Mycelium to support other nodes, replication, and systemic infrastructure.</li>
+                <li><strong>Mycelium-to-network</strong> The Mycelium redistributes pooled resources across Plants and, when needed, directly to Seeds, ensuring network-wide stability.</li>
+                <li><strong>Propagation support</strong> Exiting Seeds or dormant nodes may receive funding or guidance to start new Plants, turning exits into network growth.</li>
+            </ul>
+            <p><strong>Core principle:</strong> The system balances autonomy, reciprocity, and propagation, allowing resource flows to follow ecological rules rather than strict proportionality.</p>
+        </div>
+    </section>
+
+    <section id="governance" class="humus-section">
+        <h2 class="humus-section-title">Governance and Participation</h2>
+        <div class="humus-content-card">
+            <h3>Plant governance</h3>
+            <p>Each community sets internal rules, labor contribution expectations, and dispute resolution mechanisms.</p>
+            <h3>Mycelium governance</h3>
+            <p>Provides network-level guidance, resource allocation formulas, and replication support; operates transparently and democratically.</p>
+            <h3>Transparency</h3>
+            <p>Resource flows, rules, and eligibility criteria are visible to all members.</p>
+            <h3>Propagation incentives</h3>
+            <p>The system encourages seeding new Plants as the measure of growth rather than retention of members or resources.</p>
+        </div>
+    </section>
+
+    <section id="principles" class="humus-section">
+        <h2 class="humus-section-title">Philosophical Principles</h2>
+        <div class="humus-content-card">
+            <ul>
+                <li><strong>Regeneration</strong> Resources and knowledge are recycled to support emerging nodes.</li>
+                <li><strong>Propagation</strong> Success is measured by network expansion and member flourishing, not individual accumulation.</li>
+                <li><strong>Human-centered ecology</strong> The network is modeled after natural ecosystems — adaptive, resilient, and interdependent.</li>
+                <li><strong>Transparency and trust</strong> Members understand system mechanics even if exact flows vary dynamically.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="financial" class="humus-section">
+        <h2 class="humus-section-title">Financial and Tax Considerations</h2>
+        <div class="humus-content-card">
+            <ul>
+                <li><strong>Members</strong> Earned income contributed to Plants via work for the 501(d) is not taxed as individual income.</li>
+                <li><strong>501(d) Plants</strong> Can pool, invest, and disburse funds; distributions for basic needs follow IRS rules to minimize taxes.</li>
+                <li><strong>Mycelium (501(c)(3))</strong> Accepts deductible donations, including stocks or assets, and redistributes resources to Plants or Seeds according to network rules.</li>
+                <li><strong>Investments</strong> Pooled funds can be invested at node or network level; distributions to members are taxable upon receipt, but growth accrues within the node until disbursed.</li>
+            </ul>
+            <p style="font-size: 15px; color: #6b6358; font-style: italic; margin-bottom: 0;">This overview is descriptive, not individualized tax or legal advice.</p>
+        </div>
+    </section>
+
+    <section id="branding" class="humus-section">
+        <h2 class="humus-section-title">Branding and Culture</h2>
+        <div class="humus-content-card">
+            <p><strong>Brand:</strong> Humus — fertile ground for human flourishing, growth, and shared prosperity.</p>
+            <p><strong>Internal metaphor:</strong> SPaM — Seeds, Plants, Mycelium — propagation, interconnection, and systemic support.</p>
+            <p><strong>Messaging:</strong> Regeneration, networked support, and community resilience.</p>
+            <h4>Tagline examples</h4>
+            <ul>
+                <li>“Where communities take root and thrive.”</li>
+                <li>“Fertile ground for mutual aid.”</li>
+                <li>“The human ecosystem, growing together.”</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="advantages" class="humus-section">
+        <h2 class="humus-section-title">Key Advantages</h2>
+        <div class="humus-content-card">
+            <ul>
+                <li>Multi-node, self-propagating ecosystem.</li>
+                <li>Transparent, predictable, yet flexible resource flows.</li>
+                <li>Legal and tax-aware design through 501(d), 501(c)(3), LLCs, and co-ops.</li>
+                <li>Focused on propagation and replication rather than retention.</li>
+                <li>The SPaM metaphor grounds the system in resilience, growth, and shared prosperity.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="conclusion" class="humus-section">
+        <h2 class="humus-section-title">Conclusion</h2>
+        <div class="humus-content-card">
+            <p>Humus is more than a mutual aid network — it is a living ecosystem where Seeds grow into Plants, and the Mycelium connects communities for resilience and systemic prosperity. By combining autonomous nodes, network coordination, and SPaM-inspired flows, Humus transforms mutual aid from static resource sharing into self-propagating, regenerative support for human flourishing.</p>
+        </div>
+    </section>
+
+    <div class="humus-crosslink">
+        <a href="../index.html">Back to julian-smith.org</a>
+        <p class="humus-crosslink-sub">A parallel model to the <a href="../GroupIncome/index.html">Group Income Program</a> — related goals, different structure.</p>
+    </div>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+    </script>
+</body>
+</html>
