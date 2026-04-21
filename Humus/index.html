@@ -39,6 +39,15 @@
         .humus-crosslink .humus-crosslink-sub { margin-top: 16px; color: #5c5346; font-size: 15px; }
         .humus-crosslink .humus-crosslink-sub a { display: inline; padding: 0; background: none; color: #5d7a4a; text-decoration: underline; margin: 0; }
         .humus-crosslink .humus-crosslink-sub a:hover { background: none; color: #3d4f35; }
+        .humus-flow-figure { margin: 0; text-align: center; }
+        .humus-flow-figure img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(61, 52, 41, 0.12);
+            border: 1px solid #d9cfc0;
+        }
+        .humus-flow-figure figcaption { margin-top: 14px; font-size: 15px; color: #6b6358; font-style: italic; }
         @media only screen and (max-width: 768px) {
             .humus-hero h1 { font-size: 34px; }
             .humus-hero .humus-tagline { font-size: 18px; }
@@ -140,6 +149,12 @@
 
     <section id="flows" class="humus-section">
         <h2 class="humus-section-title">Resource Flows</h2>
+        <div class="humus-content-card">
+            <figure class="humus-flow-figure">
+                <img src="HumusFlow.png" alt="Humus ecosystem diagram: flows between Seeds, Plants as local communities, and the Mycelium network canopy" loading="lazy">
+                <figcaption>How resources move through Seeds, Plants, and the Mycelium (canopy) network.</figcaption>
+            </figure>
+        </div>
         <div class="humus-content-card">
             <ul>
                 <li><strong>Seed contribution</strong> Individual Seeds contribute labor, wealth, or other resources to their Plant.</li>
