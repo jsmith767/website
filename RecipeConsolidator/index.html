@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="../style.css">
     <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
     <style>
-        .rc-body { 
-            background: #f8f6f2; 
-            color: #2c2c2c; 
+        .rc-body {
+            background: #f8f6f2;
+            color: #2c2c2c;
             font-family: 'Poppins', sans-serif; 
             line-height: 1.7; 
             min-height: 100vh;
@@ -36,10 +36,10 @@
             transition: color 0.3s; 
             font-size: 16px; 
         }
-        .rc-nav a:hover { 
-            color: #d48247; 
+        .rc-nav a:hover {
+            color: #d48247;
         }
-        .rc-hero { 
+        .rc-hero {
             background: linear-gradient(135deg, #d48247 0%, #c9672e 100%); 
             color: white; 
             padding: 60px 10% 40px; 
@@ -112,14 +112,13 @@
         .recipe-list { 
             margin-top: 20px; 
         }
-        .recipe-item { 
-            background: #f8f6f2; 
-            padding: 15px; 
-            border-radius: 6px; 
-            margin-bottom: 10px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
+        .recipe-item {
+            background: #f8f6f2;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 4px;
+            display: flex;
+            flex-direction: column;
         }
         .recipe-item-name { 
             font-weight: 500; 
@@ -714,12 +713,237 @@
             border-color: #d48247;
             color: #d48247;
         }
+        /* Workflow tabs */
+        .rc-workflow-tabs {
+            background: #ffffff;
+            border-bottom: 2px solid #e8e8e8;
+            position: sticky;
+            top: 64px;
+            z-index: 999;
+        }
+        .rc-workflow-tabs .container {
+            display: flex;
+            padding: 0 10%;
+            overflow-x: auto;
+        }
+        .rc-tab {
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            color: #6a6a6a;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            transition: color 0.2s, border-color 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .rc-tab:hover { color: #d48247; }
+        .rc-tab.active { color: #d48247; border-bottom-color: #d48247; }
+        .rc-tab .tab-badge {
+            background: #d48247;
+            color: white;
+            border-radius: 10px;
+            font-size: 11px;
+            padding: 1px 7px;
+            font-weight: 600;
+        }
+
+        /* Collapsible Add Recipe */
+        .rc-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            user-select: none;
+        }
+        .rc-card-header h2 { margin: 0; }
+        .rc-card-toggle {
+            background: none;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #6a6a6a;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+        }
+        .rc-card-toggle:hover { border-color: #d48247; color: #d48247; }
+        .rc-card-body {
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+        }
+        .rc-card-body.collapsed {
+            max-height: 0 !important;
+            opacity: 0;
+        }
+
+        /* Compact recipe action buttons */
+        .recipe-action-btn {
+            background: none;
+            border: 1px solid #e8e8e8;
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 13px;
+            color: #6a6a6a;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .recipe-action-btn:hover { border-color: #d48247; color: #d48247; }
+        .recipe-action-btn.danger:hover { border-color: #c62828; color: #c62828; }
+
+        /* Actions overflow menu */
+        .rc-actions-menu { position: relative; }
+        .rc-actions-menu[open] .rc-actions-btn { border-color: #d48247; color: #d48247; }
+        .rc-actions-btn {
+            list-style: none;
+            padding: 8px 14px;
+            border: 2px solid #e8e8e8;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: #6a6a6a;
+            cursor: pointer;
+            background: white;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .rc-actions-btn:hover { border-color: #d48247; color: #d48247; }
+        .rc-actions-btn::-webkit-details-marker { display: none; }
+        .rc-actions-dropdown {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 6px);
+            background: white;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            min-width: 220px;
+            z-index: 200;
+            padding: 6px 0;
+        }
+        .rc-actions-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 10px 16px;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: #2c2c2c;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s;
+        }
+        .rc-actions-item:hover { background: #f8f6f2; }
+        .rc-actions-item.danger { color: #c62828; }
+        .rc-actions-item.danger:hover { background: #ffebee; }
+        .rc-actions-item i { width: 16px; text-align: center; color: #6a6a6a; }
+        .rc-actions-item.danger i { color: #c62828; }
+        .rc-actions-divider { height: 1px; background: #e8e8e8; margin: 6px 0; }
+
+        /* Filters bar */
+        .rc-filters {
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: visible;
+        }
+        .rc-filter-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            flex-wrap: wrap;
+        }
+        .rc-filter-row + .rc-filter-row {
+            border-top: 1px solid #f0f0f0;
+        }
+        .rc-filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #6a6a6a;
+            white-space: nowrap;
+            padding-top: 4px;
+            min-width: 90px;
+        }
+
+        /* Unified filter chips */
+        .unified-filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .tag-chip { background: #fff3e0; color: #b8541a; }
+        .ing-chip { background: #e8f5e9; color: #2e7d32; }
+        .clear-chip { background: #f0f0f0; color: #6a6a6a; cursor: pointer; }
+        .clear-chip:hover { background: #ffebee; color: #c62828; }
+        .chip-remove { cursor: pointer; font-weight: bold; margin-left: 2px; opacity: 0.7; }
+        .chip-remove:hover { opacity: 1; }
+
+        /* Show more button */
+        .recipe-show-more-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 10px;
+            margin-top: 4px;
+            background: none;
+            border: 2px dashed #e8e8e8;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            color: #6a6a6a;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .recipe-show-more-btn:hover { border-color: #d48247; color: #d48247; }
+
+        /* Collapsible recipe rows */
+        .recipe-row-summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 4px 0;
+            user-select: none;
+        }
+        .recipe-row-summary:hover .recipe-expand-icon { color: #d48247; }
+        .recipe-row-detail {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        /* Section anchors */
+        .rc-section-anchor { scroll-margin-top: 120px; }
+
         @media only screen and (max-width: 600px) {
             .rc-hero h1 { font-size: 32px; }
             .rc-hero p { font-size: 16px; }
             .rc-section { padding: 20px 5%; }
             .rc-card { padding: 20px; }
             .recipe-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
 </head>
@@ -732,15 +956,38 @@
         </div>
     </nav>
 
+    <div class="rc-workflow-tabs">
+        <div class="container">
+            <a class="rc-tab active" id="tab-recipes" href="#section-recipes" onclick="setActiveTab('recipes')">
+                <i class="fas fa-book-open"></i> Recipes
+                <span class="tab-badge" id="tab-recipe-count" style="display:none">0</span>
+            </a>
+            <a class="rc-tab" id="tab-planner" href="#section-planner" onclick="setActiveTab('planner')">
+                <i class="fas fa-calendar-alt"></i> Day Planner
+            </a>
+            <a class="rc-tab" id="tab-shopping" href="#section-shopping" onclick="setActiveTab('shopping')">
+                <i class="fas fa-shopping-cart"></i> Shopping List
+                <span class="tab-badge" id="tab-active-count" style="display:none">0</span>
+            </a>
+        </div>
+    </div>
+
     <div class="rc-hero">
         <h1>Recipe Consolidator</h1>
-        <p>Plan meals for multiday events by consolidating recipes into a single shopping list</p>
+        <p>Add recipes, plan your days, and get a consolidated shopping list for your event</p>
     </div>
 
     <section class="rc-section">
+        <div id="section-recipes" class="rc-section-anchor"></div>
         <div class="rc-card" id="addRecipeCard">
-            <h2 id="addRecipeTitle">Add Recipe</h2>
-            <p style="margin-bottom: 15px; color: #6a6a6a;" id="addRecipeDescription">
+            <div class="rc-card-header" onclick="toggleAddRecipeForm()">
+                <h2 id="addRecipeTitle">Add Recipe</h2>
+                <button class="rc-card-toggle" id="addRecipeToggleBtn" onclick="event.stopPropagation(); toggleAddRecipeForm()">
+                    <i class="fas fa-chevron-up" id="addRecipeToggleIcon"></i> Collapse
+                </button>
+            </div>
+            <div class="rc-card-body" id="addRecipeBody">
+            <p style="margin: 15px 0; color: #6a6a6a;" id="addRecipeDescription">
                 Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.
             </p>
             <input 
@@ -863,61 +1110,85 @@
                 <button class="btn" onclick="saveRecipeEdit()">Save Changes</button>
                 <button class="btn btn-secondary" onclick="cancelRecipeEdit()" style="margin-left: 10px;">Cancel</button>
             </div>
+            </div><!-- end rc-card-body -->
         </div>
 
         <div class="rc-card">
-            <h2>Manage Recipes</h2>
-            <div style="margin-bottom: 20px;">
-                <h3 style="font-size: 16px; color: #2c2c2c; margin-bottom: 10px;">Filter by Tag:</h3>
-                <div id="tagFiltersContainer" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                    <!-- Tag filter buttons will be generated here -->
-                </div>
+            <!-- Card header: title + sort + actions menu -->
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
+                <h2 style="margin: 0; flex: 1;">Manage Recipes</h2>
+                <select id="recipeSortSelect" onchange="sortRecipes()" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
+                    <option value="name-asc">A → Z</option>
+                    <option value="name-desc">Z → A</option>
+                    <option value="added-desc">Recently Added</option>
+                    <option value="added-asc">Oldest First</option>
+                </select>
+                <details class="rc-actions-menu">
+                    <summary class="rc-actions-btn"><i class="fas fa-ellipsis-h"></i> Actions</summary>
+                    <div class="rc-actions-dropdown">
+                        <button class="rc-actions-item" onclick="loadPreloadedRecipes(); closeActionsMenu()">
+                            <i class="fas fa-download"></i> Load Starter Recipes
+                        </button>
+                        <button class="rc-actions-item" onclick="document.getElementById('importFileInput').click(); closeActionsMenu()">
+                            <i class="fas fa-file-import"></i> Import from File
+                        </button>
+                        <button class="rc-actions-item" onclick="exportRecipes(); closeActionsMenu()">
+                            <i class="fas fa-file-export"></i> Export to File
+                        </button>
+                        <button class="rc-actions-item" onclick="emailRecipesToCreator(); closeActionsMenu()">
+                            <i class="fas fa-envelope"></i> Email Recipes to Creator
+                        </button>
+                        <span id="devExportButton" style="display: none;">
+                            <button class="rc-actions-item" onclick="exportWholeFoodsJson(); closeActionsMenu()" style="color: #9c27b0;">
+                                <i class="fas fa-database"></i> Export to WholeFoods.json
+                            </button>
+                        </span>
+                        <div class="rc-actions-divider"></div>
+                        <button class="rc-actions-item danger" onclick="clearAll(); closeActionsMenu()">
+                            <i class="fas fa-trash"></i> Clear All Recipes
+                        </button>
+                    </div>
+                </details>
+                <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importRecipes(event)">
             </div>
-            <div style="margin-bottom: 20px;">
-                <h3 style="font-size: 16px; color: #2c2c2c; margin-bottom: 10px;">Filter by Ingredient:</h3>
-                <div style="position: relative; max-width: 400px;">
-                    <input 
-                        type="text" 
-                        id="ingredientSearchInput" 
-                        placeholder="Search ingredients..." 
-                        style="width: 100%; padding: 10px 35px 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;"
-                        oninput="filterIngredientOptions(this.value)"
-                        onfocus="showIngredientDropdown()"
-                        onblur="hideIngredientDropdown()"
-                        autocomplete="off">
-                    <i class="fas fa-search" style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #6a6a6a; pointer-events: none;"></i>
-                    <div id="ingredientDropdown" class="ingredient-dropdown" style="display: none;">
-                        <!-- Ingredient options will be generated here -->
+
+            <!-- Filters -->
+            <div class="rc-filters">
+                <div class="rc-filter-row" style="align-items: center;">
+                    <div style="position: relative; flex: 1;">
+                        <i class="fas fa-search" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #bbb; font-size: 13px; pointer-events: none;"></i>
+                        <input
+                            type="text"
+                            id="unifiedFilterInput"
+                            placeholder="Search recipes, or filter by tag / ingredient..."
+                            style="width: 100%; padding: 9px 32px 9px 34px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;"
+                            oninput="onUnifiedFilterInput(this.value)"
+                            onfocus="onUnifiedFilterFocus()"
+                            onblur="onUnifiedFilterBlur()"
+                            onkeydown="onUnifiedFilterKeydown(event)"
+                            autocomplete="off">
+                        <i class="fas fa-times" id="unifiedFilterClear" onclick="clearUnifiedFilter()" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #bbb; cursor: pointer; font-size: 13px; display: none;"></i>
+                        <div id="unifiedFilterDropdown" class="ingredient-dropdown" style="display: none;"></div>
+                    </div>
+                    <div id="tagLogicToggle" style="display: none; flex-shrink: 0; display: flex; gap: 4px;">
+                        <button id="tagLogicOr" class="tag-filter-btn" onclick="setTagFilterLogic('or')" style="padding: 6px 10px; font-size: 12px;">ANY</button>
+                        <button id="tagLogicAnd" class="tag-filter-btn" onclick="setTagFilterLogic('and')" style="padding: 6px 10px; font-size: 12px;">ALL</button>
                     </div>
                 </div>
-                <div id="selectedIngredientsContainer" style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px;">
-                    <!-- Selected ingredients will be shown here -->
-                </div>
+                <div id="activeFiltersContainer" style="display: none; flex-wrap: wrap; gap: 6px; padding: 8px 16px 10px;"></div>
             </div>
-            <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-                <button class="btn btn-secondary" onclick="exportRecipes()">Export Recipes</button>
-                <button class="btn btn-secondary" onclick="document.getElementById('importFileInput').click()">Import Recipes</button>
-                <input type="file" id="importFileInput" accept=".json" style="display: none;" onchange="importRecipes(event)">
-                <button class="btn btn-secondary" onclick="loadPreloadedRecipes()">Load Preloaded Recipes</button>
-                <button class="btn btn-secondary" onclick="clearAll()">Clear All</button>
-                <button class="btn btn-secondary" onclick="emailRecipesToCreator()" title="Open an email draft with your recipes JSON so you can send it to the tool creator.">Email My Recipes to Creator</button>
-                <span id="devExportButton" style="display: none;">
-                    <button class="btn btn-secondary" onclick="exportWholeFoodsJson()" style="background: #9c27b0; border-color: #9c27b0;">Export to WholeFoods.json</button>
-                </span>
-                <div style="margin-left: auto; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                    <label style="font-size: 14px; color: #6a6a6a;">Sort:</label>
-                    <select id="recipeSortSelect" onchange="sortRecipes()" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
-                        <option value="name-asc">Name (A-Z)</option>
-                        <option value="name-desc">Name (Z-A)</option>
-                        <option value="added-desc">Recently Added</option>
-                        <option value="added-asc">Oldest First</option>
-                    </select>
-                </div>
+            <!-- Legacy hidden elements kept for JS compatibility -->
+            <div style="display:none">
+                <div id="tagFiltersContainer"></div>
+                <input id="ingredientSearchInput">
+                <div id="ingredientDropdown"></div>
+                <div id="selectedIngredientsContainer"></div>
             </div>
+
             <div id="recipeList" class="recipe-list"></div>
             <div id="noRecipesMessage" style="text-align: center; padding: 40px; color: #6a6a6a;">
                 <i class="fas fa-book" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
-                <p>No recipes loaded yet. Add a recipe above or import from a file.</p>
+                <p>No recipes yet. Add one above or use <strong>Actions → Load Starter Recipes</strong> to get started.</p>
             </div>
         </div>
 
@@ -948,7 +1219,8 @@
             </div>
         </div>
 
-        <div class="rc-card" id="dayPlannerCard" style="display: none;">
+        <div id="section-planner" class="rc-section-anchor"></div>
+        <div class="rc-card" id="dayPlannerCard">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
                 <h2 style="margin: 0;">Day Planner</h2>
                 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
@@ -998,7 +1270,8 @@
             </div>
         </div>
 
-        <div class="rc-card" id="shoppingListCard" style="display: none;">
+        <div id="section-shopping" class="rc-section-anchor"></div>
+        <div class="rc-card" id="shoppingListCard">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
                 <h2 style="margin: 0;">Shopping List</h2>
                 <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">

@@ -22,6 +22,7 @@ let selectedTagFilters = new Set(); // Selected tags for filtering recipes
 let tagFilterLogic = 'or'; // 'and' or 'or' - whether recipes must have ALL selected tags (and) or ANY selected tag (or)
 let selectedIngredients = new Set(); // Selected ingredients for filtering
 let selectedTagsForForm = new Set(); // Tags selected when adding/editing a recipe
+let recipeSearchQuery = ''; // Generic search query across name/tags/ingredients
 let mealPlan = {}; // Object to store meal plan: { date: { breakfast: [recipeIds], lunch: [recipeIds], dinner: [recipeIds] } }
 let mealPlanNotes = {}; // Object to store notes for recipe instances: { date: { meal: { recipeId: "note" } } }
 let selectedDays = new Set(); // Selected days for the planner
@@ -291,7 +292,7 @@ function assistantRenderMatches(wanted, matches) {
     if (!matches || matches.length === 0) {
         return `
             <div><strong>I couldn’t find any good matches</strong> in your current recipe library.</div>
-            <div style="margin-top: 8px;">Try loading more recipes (e.g. <strong>Load Preloaded Recipes</strong>) or add a few recipes first.</div>
+            <div style="margin-top: 8px;">Try loading more recipes (e.g. <strong>Load Starter Recipes</strong>) or add a few recipes first.</div>
             <div style="margin-top: 8px; color: #6a6a6a; font-size: 13px;">Pantry assumed: ${pantryText}</div>
         `;
     }
@@ -2286,6 +2287,7 @@ function confirmIngredientReview() {
     updateShoppingList();
     updateDayPlanner();
     updateTagFilters();
+    updateTabBadges();
     
     // Clear form after successful save or edit
     const nameInput = document.getElementById('recipeName');
@@ -2323,6 +2325,12 @@ function confirmIngredientReview() {
     pendingRecipeForReview = null;
     pendingIngredientsForReview = null;
     closeIngredientReviewModal();
+
+    // Collapse the Add Recipe form after saving
+    const addBody = document.getElementById('addRecipeBody');
+    if (addBody && !addBody.classList.contains('collapsed')) {
+        toggleAddRecipeForm();
+    }
     
     showMessage(
         isEdit ? `Recipe updated with ${recipe.ingredients.length} ingredients` 
@@ -2509,12 +2517,13 @@ function toggleRecipeActive(recipeId) {
     // Save active state
     saveActiveRecipes();
     saveRecipeMultipliers();
-    
+
     // Update UI
     updateRecipeList();
     consolidateIngredients();
     updateShoppingList();
     updateDayPlanner();
+    updateTabBadges();
 }
 
 /**
@@ -2617,64 +2626,108 @@ function updateRecipeList() {
         });
     }
     
-    for (const recipe of sortedRecipes) {
+    // Generic search filter
+    if (recipeSearchQuery) {
+        const q = recipeSearchQuery.toLowerCase();
+        sortedRecipes = sortedRecipes.filter(recipe => {
+            if ((recipe.name || '').toLowerCase().includes(q)) return true;
+            if ((recipe.tags || []).some(t => t.toLowerCase().includes(q))) return true;
+            if ((recipe.ingredients || []).some(i => (i.ingredient || '').toLowerCase().includes(q))) return true;
+            return false;
+        });
+    }
+
+    const PAGE_SIZE = 8;
+    const showAll = list.dataset.showAll === 'true';
+    const visibleRecipes = showAll ? sortedRecipes : sortedRecipes.slice(0, PAGE_SIZE);
+    const hiddenCount = sortedRecipes.length - visibleRecipes.length;
+
+    for (const recipe of visibleRecipes) {
         const isActive = activeRecipeIds.has(recipe.id);
         const multiplier = recipeMultipliers[recipe.id] || 1;
         const item = document.createElement('div');
         item.className = 'recipe-item';
+        item.dataset.recipeId = recipe.id;
         item.style.background = isActive ? '#e8f5e9' : '#f8f6f2';
         item.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 15px; flex: 1;">
-                <label style="display: flex; align-items: center; cursor: pointer;">
-                    <input type="checkbox" ${isActive ? 'checked' : ''} 
-                           onchange="toggleRecipeActive(${recipe.id})" 
-                           style="margin-right: 10px; width: 20px; height: 20px; cursor: pointer;">
+            <!-- Collapsed row (always visible) -->
+            <div class="recipe-row-summary" onclick="toggleRecipeExpand(${recipe.id}, event)">
+                <label style="display: flex; align-items: center; cursor: pointer;" onclick="event.stopPropagation()">
+                    <input type="checkbox" ${isActive ? 'checked' : ''}
+                           onchange="toggleRecipeActive(${recipe.id})"
+                           style="width: 18px; height: 18px; cursor: pointer;">
                 </label>
-                <div style="flex: 1;">
-                    <div class="recipe-item-name">${recipe.name}</div>
-                    <div style="font-size: 14px; color: #6a6a6a; margin-top: 5px;">
-                        ${recipe.ingredients.length} ingredient${recipe.ingredients.length !== 1 ? 's' : ''}
-                        ${isActive ? '<span style="color: #2e7d32; margin-left: 10px;">✓ Active</span>' : '<span style="color: #999; margin-left: 10px;">Inactive</span>'}
-                    </div>
-                    ${(recipe.sourceTitle || recipe.sourceType || recipe.sourcePages || recipe.affiliateUrl) ? `
-                        <div style="margin-top: 4px; font-size: 13px; color: #8a6a3b;">
-                            Source: 
-                            ${recipe.sourceTitle ? `<span>${recipe.sourceTitle}</span>` : ''}
-                            ${recipe.sourcePages ? `<span>${recipe.sourceTitle ? ', ' : ''}pp. ${recipe.sourcePages}</span>` : ''}
-                            ${(!recipe.sourceTitle && !recipe.sourcePages && recipe.sourceType) ? `<span>${recipe.sourceType}</span>` : ''}
-                            ${recipe.affiliateUrl ? `<span style="margin-left: 6px; color: #b26a1a;">(affiliate link available)</span>` : ''}
-                        </div>
-                    ` : ''}
-                    <div style="margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px;">
+                <div style="flex: 1; min-width: 0;">
+                    <div class="recipe-item-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${recipe.name}</div>
+                    <div style="font-size: 13px; color: #6a6a6a; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                        <span>${recipe.ingredients.length} ingredient${recipe.ingredients.length !== 1 ? 's' : ''}</span>
+                        ${isActive ? `<span style="color: #2e7d32;">✓ Active${multiplier !== 1 ? ' ×' + multiplier : ''}</span>` : ''}
                         ${getRecipeTagsDisplay(recipe)}
                     </div>
                 </div>
-                ${isActive ? `
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <label style="display: flex; align-items: center; font-size: 14px; color: #2c2c2c;">
-                            <span style="margin-right: 5px;">×</span>
-                            <input type="number" 
-                                   value="${multiplier}" 
-                                   min="0" 
+                <i class="fas fa-chevron-down recipe-expand-icon" id="expand-icon-${recipe.id}" style="color: #bbb; font-size: 13px; transition: transform 0.2s; flex-shrink: 0;"></i>
+            </div>
+
+            <!-- Expanded details (hidden by default) -->
+            <div class="recipe-row-detail" id="recipe-detail-${recipe.id}" style="display: none;">
+                ${(recipe.sourceTitle || recipe.sourceType || recipe.sourcePages || recipe.affiliateUrl) ? `
+                    <div style="font-size: 13px; color: #8a6a3b; margin-bottom: 10px;">
+                        Source:
+                        ${recipe.sourceTitle ? `<span>${recipe.sourceTitle}</span>` : ''}
+                        ${recipe.sourcePages ? `<span>${recipe.sourceTitle ? ', ' : ''}pp. ${recipe.sourcePages}</span>` : ''}
+                        ${(!recipe.sourceTitle && !recipe.sourcePages && recipe.sourceType) ? `<span>${recipe.sourceType}</span>` : ''}
+                        ${recipe.affiliateUrl ? `<span style="margin-left: 6px; color: #b26a1a;">(affiliate link available)</span>` : ''}
+                    </div>
+                ` : ''}
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+                    <div class="recipe-item-actions">
+                        <button class="recipe-action-btn" onclick="showIngredientsModal(${recipe.id})" title="Show Ingredients"><i class="fas fa-list-ul"></i> Ingredients</button>
+                        ${recipe.about ? `<button class="recipe-action-btn" onclick="showAboutModal(${recipe.id})" title="About"><i class="fas fa-info-circle"></i> About</button>` : ''}
+                        ${recipe.instructions ? `<button class="recipe-action-btn" onclick="toggleRecipePreparation(${recipe.id})" title="Preparation"><i class="fas fa-utensils"></i> Prep</button>` : ''}
+                        <button class="recipe-action-btn" onclick="editRecipeTags(${recipe.id})" title="Edit Tags"><i class="fas fa-tag"></i> Tags</button>
+                        <button class="recipe-action-btn" onclick="editRecipe(${recipe.id})" title="Edit"><i class="fas fa-pen"></i> Edit</button>
+                        <button class="recipe-action-btn danger" onclick="removeRecipe(${recipe.id})" title="Remove"><i class="fas fa-trash"></i></button>
+                    </div>
+                    ${isActive ? `
+                        <label style="display: flex; align-items: center; font-size: 14px; color: #2c2c2c; gap: 6px;">
+                            <span style="color: #6a6a6a;">Servings ×</span>
+                            <input type="number"
+                                   value="${multiplier}"
+                                   min="0"
                                    step="0.5"
                                    onchange="setRecipeMultiplier(${recipe.id}, this.value)"
                                    onblur="setRecipeMultiplier(${recipe.id}, this.value)"
                                    style="width: 60px; padding: 5px; border: 2px solid #e8e8e8; border-radius: 4px; font-size: 14px; text-align: center;">
                         </label>
-                    </div>
-                ` : ''}
-            </div>
-                <div class="recipe-item-actions">
-                    <button class="btn btn-secondary" onclick="showIngredientsModal(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show Ingredients">Show Ingredients</button>
-                    ${recipe.about ? `<button class="btn btn-secondary" onclick="showAboutModal(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show About">About</button>` : ''}
-                    ${recipe.instructions ? `<button class="btn btn-secondary" onclick="toggleRecipePreparation(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Show Preparation">Preparation</button>` : ''}
-                    <button class="btn btn-secondary" onclick="editRecipeTags(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;" title="Edit Tags">Tags</button>
-                    <button class="btn btn-secondary" onclick="editRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px; margin-right: 5px;">Edit</button>
-                    <button class="btn btn-secondary" onclick="removeRecipe(${recipe.id})" style="padding: 8px 15px; font-size: 14px;">Remove</button>
+                    ` : ''}
                 </div>
+            </div>
         `;
         list.appendChild(item);
     }
+
+    if (hiddenCount > 0) {
+        const showMoreBtn = document.createElement('button');
+        showMoreBtn.className = 'recipe-show-more-btn';
+        showMoreBtn.innerHTML = `<i class="fas fa-chevron-down"></i> Show ${hiddenCount} more recipe${hiddenCount !== 1 ? 's' : ''}`;
+        showMoreBtn.onclick = () => { list.dataset.showAll = 'true'; updateRecipeList(); };
+        list.appendChild(showMoreBtn);
+    } else if (showAll && sortedRecipes.length > PAGE_SIZE) {
+        const showLessBtn = document.createElement('button');
+        showLessBtn.className = 'recipe-show-more-btn';
+        showLessBtn.innerHTML = `<i class="fas fa-chevron-up"></i> Show less`;
+        showLessBtn.onclick = () => { list.dataset.showAll = 'false'; updateRecipeList(); };
+        list.appendChild(showLessBtn);
+    }
+}
+
+function toggleRecipeExpand(recipeId, event) {
+    const detail = document.getElementById(`recipe-detail-${recipeId}`);
+    const icon = document.getElementById(`expand-icon-${recipeId}`);
+    if (!detail) return;
+    const isOpen = detail.style.display !== 'none';
+    detail.style.display = isOpen ? 'none' : 'block';
+    if (icon) icon.style.transform = isOpen ? '' : 'rotate(180deg)';
 }
 
 /**
@@ -2711,6 +2764,7 @@ function toggleTagFilter(tag) {
     }
     
     updateTagFilters();
+    renderActiveFilters();
     updateRecipeList();
 }
 
@@ -2725,6 +2779,7 @@ function setTagFilterLogic(logic) {
         console.error('Error saving tag filter logic:', error);
     }
     updateTagFilters();
+    renderActiveFilters();
     updateRecipeList();
 }
 
@@ -3391,15 +3446,20 @@ function updateDayPlanner() {
     const card = document.getElementById('dayPlannerCard');
     
     if (!container || !card) return;
-    
-    // Show planner if there are active recipes or days
-    if (activeRecipeIds.size > 0 || selectedDays.size > 0) {
-        card.style.display = 'block';
-    } else {
-        card.style.display = 'none';
+
+    card.style.display = 'block';
+
+    // Show empty state if no active recipes and no days planned
+    if (activeRecipeIds.size === 0 && selectedDays.size === 0) {
+        container.innerHTML = `
+            <div class="empty-state" style="width:100%;">
+                <i class="fas fa-calendar-alt"></i>
+                <p>No recipes selected yet.</p>
+                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#section-recipes" onclick="setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to recipes you want to plan.</p>
+            </div>`;
         return;
     }
-    
+
     container.innerHTML = '';
     
     // Sort days chronologically
@@ -5315,13 +5375,19 @@ function updateShoppingList() {
     const card = document.getElementById('shoppingListCard');
     const list = document.getElementById('shoppingList');
     
-    // Only show shopping list if there are active recipes with ingredients
+    card.style.display = 'block';
+
+    // Show empty state if no active recipes
     if (activeRecipeIds.size === 0 || Object.keys(consolidatedIngredients).length === 0) {
-        card.style.display = 'none';
+        list.innerHTML = `
+            <div class="empty-state">
+                <i class="fas fa-shopping-cart"></i>
+                <p>No recipes selected yet.</p>
+                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#section-recipes" onclick="setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to each recipe you want to include.</p>
+            </div>`;
         return;
     }
-    
-    card.style.display = 'block';
+
     list.innerHTML = '';
     
     // Get all ingredients
@@ -5491,6 +5557,7 @@ function removeRecipe(recipeId) {
     updateRecipeList();
     updateShoppingList();
     updateDayPlanner();
+    updateTabBadges();
     showMessage('Recipe removed', 'success');
 }
 
@@ -6320,11 +6387,284 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize tag filters and recipe list
     updateTagFilters();
     updateSelectedIngredientsDisplay();
+    renderActiveFilters();
     updateDayPlanner();
 
     // Recipe Assistant (beta)
     initRecipeAssistant();
+
+    // Collapse Add Recipe form if recipes already exist
+    if (recipes.length > 0) {
+        const body = document.getElementById('addRecipeBody');
+        const icon = document.getElementById('addRecipeToggleIcon');
+        const btn = document.getElementById('addRecipeToggleBtn');
+        if (body) {
+            body.style.maxHeight = body.scrollHeight + 'px';
+            body.classList.add('collapsed');
+            if (icon) { icon.className = 'fas fa-chevron-down'; }
+            if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i> Expand';
+        }
+    } else {
+        const body = document.getElementById('addRecipeBody');
+        if (body) body.style.maxHeight = body.scrollHeight + 'px';
+    }
+
+    updateTabBadges();
 });
 
+function setRecipeSearch(value) {
+    recipeSearchQuery = value.trim();
+    const clearBtn = document.getElementById('recipeSearchClear');
+    if (clearBtn) clearBtn.style.display = recipeSearchQuery ? 'block' : 'none';
+    document.getElementById('recipeList').dataset.showAll = 'false';
+    updateRecipeList();
+}
 
+function clearRecipeSearch() {
+    recipeSearchQuery = '';
+    const input = document.getElementById('recipeSearchInput');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('recipeSearchClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    updateRecipeList();
+}
 
+// --- Unified filter bar ---
+
+function onUnifiedFilterInput(value) {
+    recipeSearchQuery = value.trim();
+    const clearBtn = document.getElementById('unifiedFilterClear');
+    if (clearBtn) clearBtn.style.display = value.length > 0 ? 'block' : 'none';
+    document.getElementById('recipeList').dataset.showAll = 'false';
+    updateRecipeList();
+    renderUnifiedDropdown(value);
+}
+
+function onUnifiedFilterFocus() {
+    const input = document.getElementById('unifiedFilterInput');
+    renderUnifiedDropdown(input ? input.value : '');
+}
+
+function onUnifiedFilterBlur() {
+    setTimeout(() => {
+        const dd = document.getElementById('unifiedFilterDropdown');
+        if (dd) dd.style.display = 'none';
+    }, 200);
+}
+
+function onUnifiedFilterKeydown(e) {
+    if (e.key === 'Escape') {
+        clearUnifiedFilter();
+        document.getElementById('unifiedFilterInput').blur();
+    }
+}
+
+function clearUnifiedFilter() {
+    recipeSearchQuery = '';
+    const input = document.getElementById('unifiedFilterInput');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('unifiedFilterClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    const dd = document.getElementById('unifiedFilterDropdown');
+    if (dd) dd.style.display = 'none';
+    document.getElementById('recipeList').dataset.showAll = 'false';
+    updateRecipeList();
+}
+
+function renderUnifiedDropdown(query) {
+    const dd = document.getElementById('unifiedFilterDropdown');
+    if (!dd) return;
+
+    const q = (query || '').toLowerCase().trim();
+
+    // Collect all tags and ingredients
+    const allTags = new Set();
+    for (const r of recipes) (r.tags || []).forEach(t => allTags.add(t));
+
+    const allIngredients = getAllIngredients();
+
+    const matchingTags = Array.from(allTags).filter(t =>
+        !selectedTagFilters.has(t) && (q === '' || t.toLowerCase().includes(q))
+    ).sort().slice(0, 8);
+
+    const matchingIngredients = allIngredients.filter(i =>
+        !selectedIngredients.has(i) && q !== '' && i.toLowerCase().includes(q)
+    ).slice(0, 6);
+
+    if (matchingTags.length === 0 && matchingIngredients.length === 0) {
+        dd.style.display = 'none';
+        return;
+    }
+
+    let html = '';
+
+    if (matchingTags.length > 0) {
+        html += `<div style="padding: 6px 12px 4px; font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Tags</div>`;
+        html += matchingTags.map(tag =>
+            `<div class="ingredient-option" onmousedown="addTagFilterFromSearch('${tag.replace(/'/g, "\\'")}')">
+                <i class="fas fa-tag" style="margin-right: 8px; color: #d48247; font-size: 11px;"></i>${escapeHtml(tag)}
+            </div>`
+        ).join('');
+    }
+
+    if (matchingIngredients.length > 0) {
+        html += `<div style="padding: 6px 12px 4px; font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 0.5px;">Ingredients</div>`;
+        html += matchingIngredients.map(ing =>
+            `<div class="ingredient-option" onmousedown="addIngredientFilterFromSearch('${ing.replace(/'/g, "\\'")}')">
+                <i class="fas fa-carrot" style="margin-right: 8px; color: #6a6a6a; font-size: 11px;"></i>${escapeHtml(ing)}
+            </div>`
+        ).join('');
+    }
+
+    dd.innerHTML = html;
+    dd.style.display = 'block';
+}
+
+function addTagFilterFromSearch(tag) {
+    selectedTagFilters.add(tag);
+    try { localStorage.setItem(SELECTED_TAG_FILTERS_KEY, JSON.stringify(Array.from(selectedTagFilters))); } catch(e) {}
+    // Clear the text search since user picked a chip
+    recipeSearchQuery = '';
+    const input = document.getElementById('unifiedFilterInput');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('unifiedFilterClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    const dd = document.getElementById('unifiedFilterDropdown');
+    if (dd) dd.style.display = 'none';
+    document.getElementById('recipeList').dataset.showAll = 'false';
+    renderActiveFilters();
+    updateRecipeList();
+}
+
+function addIngredientFilterFromSearch(ingredient) {
+    selectedIngredients.add(ingredient);
+    recipeSearchQuery = '';
+    const input = document.getElementById('unifiedFilterInput');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('unifiedFilterClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    const dd = document.getElementById('unifiedFilterDropdown');
+    if (dd) dd.style.display = 'none';
+    document.getElementById('recipeList').dataset.showAll = 'false';
+    renderActiveFilters();
+    updateRecipeList();
+}
+
+function renderActiveFilters() {
+    const container = document.getElementById('activeFiltersContainer');
+    const logicToggle = document.getElementById('tagLogicToggle');
+    if (!container) return;
+
+    const hasFilters = selectedTagFilters.size > 0 || selectedIngredients.size > 0;
+    container.style.display = hasFilters ? 'flex' : 'none';
+
+    // Show AND/OR toggle only when 2+ tag filters
+    if (logicToggle) {
+        logicToggle.style.display = selectedTagFilters.size >= 2 ? 'flex' : 'none';
+        const orBtn = document.getElementById('tagLogicOr');
+        const andBtn = document.getElementById('tagLogicAnd');
+        if (orBtn) orBtn.classList.toggle('active', tagFilterLogic === 'or');
+        if (andBtn) andBtn.classList.toggle('active', tagFilterLogic === 'and');
+    }
+
+    if (!hasFilters) { container.innerHTML = ''; return; }
+
+    let html = '';
+    for (const tag of Array.from(selectedTagFilters).sort()) {
+        html += `<span class="unified-filter-chip tag-chip">
+            <i class="fas fa-tag" style="font-size:10px;"></i> ${escapeHtml(tag)}
+            <span class="chip-remove" onclick="removeTagFilter('${tag.replace(/'/g, "\\'")}')">×</span>
+        </span>`;
+    }
+    for (const ing of Array.from(selectedIngredients).sort()) {
+        html += `<span class="unified-filter-chip ing-chip">
+            <i class="fas fa-carrot" style="font-size:10px;"></i> ${escapeHtml(ing)}
+            <span class="chip-remove" onclick="removeIngredientFilter('${ing.replace(/'/g, "\\'")}')">×</span>
+        </span>`;
+    }
+    if (selectedTagFilters.size > 0 || selectedIngredients.size > 0) {
+        html += `<span class="unified-filter-chip clear-chip" onclick="clearAllFilters()">Clear all ×</span>`;
+    }
+    container.innerHTML = html;
+}
+
+function removeTagFilter(tag) {
+    selectedTagFilters.delete(tag);
+    try { localStorage.setItem(SELECTED_TAG_FILTERS_KEY, JSON.stringify(Array.from(selectedTagFilters))); } catch(e) {}
+    renderActiveFilters();
+    updateRecipeList();
+}
+
+function removeIngredientFilter(ing) {
+    selectedIngredients.delete(ing);
+    renderActiveFilters();
+    updateRecipeList();
+}
+
+function clearAllFilters() {
+    selectedTagFilters.clear();
+    selectedIngredients.clear();
+    recipeSearchQuery = '';
+    const input = document.getElementById('unifiedFilterInput');
+    if (input) input.value = '';
+    const clearBtn = document.getElementById('unifiedFilterClear');
+    if (clearBtn) clearBtn.style.display = 'none';
+    try { localStorage.setItem(SELECTED_TAG_FILTERS_KEY, '[]'); } catch(e) {}
+    renderActiveFilters();
+    updateRecipeList();
+}
+
+function closeActionsMenu() {
+    const menu = document.querySelector('.rc-actions-menu');
+    if (menu) menu.removeAttribute('open');
+}
+
+// Close actions menu when clicking outside
+document.addEventListener('click', function(e) {
+    const menu = document.querySelector('.rc-actions-menu');
+    if (menu && menu.open && !menu.contains(e.target)) {
+        menu.removeAttribute('open');
+    }
+});
+
+function toggleAddRecipeForm() {
+    const body = document.getElementById('addRecipeBody');
+    const icon = document.getElementById('addRecipeToggleIcon');
+    const btn = document.getElementById('addRecipeToggleBtn');
+    if (!body) return;
+
+    if (body.classList.contains('collapsed')) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        body.classList.remove('collapsed');
+        if (icon) icon.className = 'fas fa-chevron-up';
+        if (btn) btn.innerHTML = '<i class="fas fa-chevron-up"></i> Collapse';
+        // After transition, set to 'none' so it can grow if content changes
+        setTimeout(() => { if (!body.classList.contains('collapsed')) body.style.maxHeight = 'none'; }, 320);
+    } else {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+            body.classList.add('collapsed');
+            if (icon) icon.className = 'fas fa-chevron-down';
+            if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i> Expand';
+        });
+    }
+}
+
+function setActiveTab(tab) {
+    document.querySelectorAll('.rc-tab').forEach(t => t.classList.remove('active'));
+    const el = document.getElementById('tab-' + tab);
+    if (el) el.classList.add('active');
+}
+
+function updateTabBadges() {
+    const countEl = document.getElementById('tab-recipe-count');
+    const activeEl = document.getElementById('tab-active-count');
+    if (countEl) {
+        countEl.textContent = recipes.length;
+        countEl.style.display = recipes.length > 0 ? 'inline' : 'none';
+    }
+    if (activeEl) {
+        activeEl.textContent = activeRecipeIds.size;
+        activeEl.style.display = activeRecipeIds.size > 0 ? 'inline' : 'none';
+    }
+}
