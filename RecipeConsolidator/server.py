@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Recipe image extraction proxy server.
-Reads ANTHROPIC_API_KEY from environment or a .env file in the project root.
+Recipe server: image extraction + access key auth.
+Reads ANTHROPIC_API_KEY and RECIPE_ACCESS_KEY from environment or .env file.
 
 Usage:
     python3 server.py
@@ -13,6 +13,8 @@ import os
 import json
 import base64
 import cgi
+import secrets
+import time
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 
@@ -47,13 +49,15 @@ Return ONLY the JSON object — no markdown, no explanation, no code fences."""
 
 PORT = 8001
 ALLOWED_ORIGIN = 'http://localhost:8000'
+TOKEN_TTL_DAYS = 30
 
 
 class RecipeHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == '/health':
-            self.send_json(200, {'status': 'ok'})
+            access_key_set = bool(os.environ.get('RECIPE_ACCESS_KEY'))
+            self.send_json(200, {'status': 'ok', 'authEnabled': access_key_set})
         else:
             self.send_error(404)
 
@@ -63,13 +67,38 @@ class RecipeHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_POST(self):
-        if self.path != '/api/extract-recipe':
+        if self.path == '/auth':
+            self._handle_auth()
+        elif self.path == '/api/extract-recipe':
+            self._handle_extract()
+        else:
             self.send_error(404)
+
+    def _handle_auth(self):
+        try:
+            length = int(self.headers.get('Content-Length', 0))
+            body = json.loads(self.rfile.read(length))
+            passphrase = body.get('passphrase', '')
+        except Exception:
+            self.send_json(400, {'error': 'Invalid request'})
             return
 
+        access_key = os.environ.get('RECIPE_ACCESS_KEY', '')
+        if not access_key:
+            self.send_json(503, {'error': 'No access key configured on this server'})
+            return
+
+        if passphrase == access_key:
+            token = secrets.token_hex(32)
+            expires = int(time.time()) + TOKEN_TTL_DAYS * 86400
+            self.send_json(200, {'token': token, 'expires': expires})
+        else:
+            self.send_json(401, {'error': 'Incorrect access key'})
+
+    def _handle_extract(self):
         api_key = os.environ.get('ANTHROPIC_API_KEY')
         if not api_key:
-            self.send_json(500, {'error': 'ANTHROPIC_API_KEY is not set. Add it to your .env file or environment.'})
+            self.send_json(500, {'error': 'ANTHROPIC_API_KEY is not set.'})
             return
 
         try:
@@ -99,17 +128,13 @@ class RecipeHandler(BaseHTTPRequestHandler):
                 messages=[{
                     'role': 'user',
                     'content': [
-                        {
-                            'type': 'image',
-                            'source': {'type': 'base64', 'media_type': media_type, 'data': b64}
-                        },
+                        {'type': 'image', 'source': {'type': 'base64', 'media_type': media_type, 'data': b64}},
                         {'type': 'text', 'text': EXTRACT_PROMPT}
                     ]
                 }]
             )
 
             text = message.content[0].text.strip()
-            # Strip markdown fences if the model included them anyway
             if text.startswith('```'):
                 text = text.split('\n', 1)[1]
                 text = text.rsplit('```', 1)[0].strip()
@@ -119,7 +144,7 @@ class RecipeHandler(BaseHTTPRequestHandler):
             self.send_json(200, recipe_data)
 
         except json.JSONDecodeError as e:
-            self.send_json(500, {'error': f'Could not parse Claude response as JSON: {e}', 'raw': text if 'text' in dir() else ''})
+            self.send_json(500, {'error': f'Could not parse Claude response as JSON: {e}'})
         except Exception as e:
             self.send_json(500, {'error': str(e)})
 
@@ -142,9 +167,8 @@ class RecipeHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == '__main__':
-    print(f'Recipe extraction server → http://localhost:{PORT}')
-    if not os.environ.get('ANTHROPIC_API_KEY'):
-        print('  ⚠  ANTHROPIC_API_KEY not found — add it to /Users/juliansmith/projects/website/.env')
-    else:
-        print('  ✓  ANTHROPIC_API_KEY loaded')
+    print(f'Recipe server → http://localhost:{PORT}')
+    print(f'  ANTHROPIC_API_KEY: {"✓ loaded" if os.environ.get("ANTHROPIC_API_KEY") else "⚠  not set"}')
+    access_key = os.environ.get('RECIPE_ACCESS_KEY')
+    print(f'  RECIPE_ACCESS_KEY: {"✓ loaded" if access_key else "⚠  not set — prep instructions will be visible to all"}')
     HTTPServer(('', PORT), RecipeHandler).serve_forever()

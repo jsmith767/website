@@ -1403,6 +1403,32 @@
         </div>
     </div>
 
+    <!-- Access Key Modal -->
+    <div id="accessKeyModal" class="modal-overlay" onclick="closeAccessKeyModal(event)">
+        <div class="modal-content" style="max-width: 400px;" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-lock" style="margin-right: 8px; color: #d48247;"></i> Enter Access Key</h2>
+                <button class="modal-close" onclick="closeAccessKeyModal()" title="Close">×</button>
+            </div>
+            <div style="font-size: 15px; color: #6a6a6a; margin-bottom: 20px;">
+                This recipe's preparation steps are protected. Enter the access key to unlock them.
+            </div>
+            <div style="position: relative;">
+                <input
+                    type="password"
+                    id="accessKeyInput"
+                    placeholder="Access key…"
+                    style="width: 100%; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif;"
+                    onkeydown="if(event.key === 'Enter') submitAccessKey()">
+            </div>
+            <div id="accessKeyError" style="display: none; color: #c62828; font-size: 13px; margin-top: 8px;"></div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px;">
+                <button class="btn btn-secondary" onclick="closeAccessKeyModal()">Cancel</button>
+                <button class="btn" id="accessKeySubmitBtn" onclick="submitAccessKey()">Unlock</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Ingredients Modal -->
     <div id="ingredientsModal" class="modal-overlay" onclick="closeIngredientsModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">

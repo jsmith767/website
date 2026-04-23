@@ -2690,7 +2690,7 @@ function updateRecipeList() {
                     <div class="recipe-item-actions">
                         <button class="recipe-action-btn" onclick="showIngredientsModal(${recipe.id})" title="Show Ingredients"><i class="fas fa-list-ul"></i> Ingredients</button>
                         ${recipe.about ? `<button class="recipe-action-btn" onclick="showAboutModal(${recipe.id})" title="About"><i class="fas fa-info-circle"></i> About</button>` : ''}
-                        ${recipe.instructions ? `<button class="recipe-action-btn" onclick="toggleRecipePreparation(${recipe.id})" title="Preparation"><i class="fas fa-utensils"></i> Prep</button>` : ''}
+                        ${recipe.instructions ? `<button class="recipe-action-btn" onclick="toggleRecipePreparation(${recipe.id})" title="Preparation"><i class="fas fa-utensils"></i> Prep ${(recipe.sourceTitle || recipe.sourceType || recipe.sourceUrl) && !isAuthenticated() ? '<i class="fas fa-lock" style="font-size:10px; opacity:0.6;"></i>' : ''}</button>` : ''}
                         <button class="recipe-action-btn" onclick="editRecipeTags(${recipe.id})" title="Edit Tags"><i class="fas fa-tag"></i> Tags</button>
                         <button class="recipe-action-btn" onclick="editRecipe(${recipe.id})" title="Edit"><i class="fas fa-pen"></i> Edit</button>
                         <button class="recipe-action-btn danger" onclick="removeRecipe(${recipe.id})" title="Remove"><i class="fas fa-trash"></i></button>
@@ -2915,14 +2915,29 @@ function toggleRecipePreparation(recipeId) {
     
     if (!modal || !modalTitle || !modalBody) return;
     
-    const visibility = recipe.instructionsVisibility || 'hidden';
+    const hasSource = recipe.sourceTitle || recipe.sourceType || recipe.sourceUrl;
+    const explicitVisibility = recipe.instructionsVisibility;
+    const defaultVisibility = hasSource ? 'hidden' : 'full';
+    const visibility = explicitVisibility || defaultVisibility;
     modalTitle.textContent = `Preparation: ${recipe.name}`;
 
-    if (visibility === 'full' && recipe.instructions) {
-        // Future option: show full steps when you intentionally mark a recipe as fully visible
+    // If hidden but user is authenticated, show anyway
+    const canSeeProtected = isAuthenticated();
+
+    if (recipe.instructions && (visibility === 'full' || canSeeProtected)) {
+        modalBody.style.whiteSpace = 'pre-wrap';
         modalBody.textContent = recipe.instructions;
+        if (canSeeProtected && visibility !== 'full') {
+            modalBody.innerHTML = `<div style="font-size:12px; color:#2e7d32; margin-bottom:12px;"><i class="fas fa-unlock"></i> Unlocked</div><pre style="white-space:pre-wrap; font-family:inherit; margin:0;">${escapeHtml(recipe.instructions)}</pre>`;
+        }
+    } else if (visibility === 'hidden' && !canSeeProtected) {
+        // Prompt for access key
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        openAccessKeyModal(recipe.id);
+        return;
     } else {
-        // Default: keep instructions hidden and direct people to the source / affiliate link
+        // Recipe is from a book/website — direct to source rather than reproducing it
         const parts = [];
 
         parts.push(
@@ -6638,6 +6653,79 @@ document.addEventListener('click', function(e) {
 
 const RECIPE_SERVER_URL = 'http://localhost:8001/api/extract-recipe';
 const RECIPE_SERVER_HEALTH_URL = 'http://localhost:8001/health';
+const RECIPE_AUTH_URL = 'http://localhost:8001/auth';
+const AUTH_STORAGE_KEY = 'rc_auth_token';
+const AUTH_EXPIRES_KEY = 'rc_auth_expires';
+
+function isAuthenticated() {
+    const token = localStorage.getItem(AUTH_STORAGE_KEY);
+    const expires = parseInt(localStorage.getItem(AUTH_EXPIRES_KEY) || '0');
+    return token && Date.now() / 1000 < expires;
+}
+
+let _pendingPrepRecipeId = null;
+
+function openAccessKeyModal(recipeId) {
+    _pendingPrepRecipeId = recipeId;
+    const modal = document.getElementById('accessKeyModal');
+    const input = document.getElementById('accessKeyInput');
+    const error = document.getElementById('accessKeyError');
+    if (error) { error.style.display = 'none'; error.textContent = ''; }
+    if (input) input.value = '';
+    if (modal) { modal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    setTimeout(() => { if (input) input.focus(); }, 100);
+}
+
+function closeAccessKeyModal(event) {
+    if (event && event.target && event.target.id !== 'accessKeyModal') return;
+    const modal = document.getElementById('accessKeyModal');
+    if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+    _pendingPrepRecipeId = null;
+}
+
+async function submitAccessKey() {
+    const input = document.getElementById('accessKeyInput');
+    const error = document.getElementById('accessKeyError');
+    const btn = document.getElementById('accessKeySubmitBtn');
+    const passphrase = input ? input.value.trim() : '';
+    if (!passphrase) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Checking…';
+    if (error) error.style.display = 'none';
+
+    try {
+        const res = await fetch(RECIPE_AUTH_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ passphrase }),
+            signal: AbortSignal.timeout(5000)
+        });
+        const data = await res.json();
+        if (res.ok) {
+            localStorage.setItem(AUTH_STORAGE_KEY, data.token);
+            localStorage.setItem(AUTH_EXPIRES_KEY, data.expires);
+            const modal = document.getElementById('accessKeyModal');
+            if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+            // Open the prep modal for the pending recipe
+            if (_pendingPrepRecipeId !== null) {
+                const id = _pendingPrepRecipeId;
+                _pendingPrepRecipeId = null;
+                toggleRecipePreparation(id);
+            }
+        } else {
+            if (error) { error.textContent = data.error || 'Incorrect key.'; error.style.display = 'block'; }
+        }
+    } catch {
+        if (error) {
+            error.innerHTML = 'Could not reach the server. Make sure <code>server.py</code> is running.';
+            error.style.display = 'block';
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Unlock';
+    }
+}
 let pendingImageFile = null;
 
 function setAddRecipeMode(mode) {
