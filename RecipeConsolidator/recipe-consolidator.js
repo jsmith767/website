@@ -6637,6 +6637,7 @@ document.addEventListener('click', function(e) {
 // --- Image recipe extraction ---
 
 const RECIPE_SERVER_URL = 'http://localhost:8001/api/extract-recipe';
+const RECIPE_SERVER_HEALTH_URL = 'http://localhost:8001/health';
 let pendingImageFile = null;
 
 function setAddRecipeMode(mode) {
@@ -6649,9 +6650,10 @@ function setAddRecipeMode(mode) {
     if (mode === 'image') {
         if (imageSection) imageSection.style.display = 'block';
         if (descEl) descEl.style.display = 'none';
-        if (textFields) textFields.closest('label, div, textarea') && (textFields.style.display = 'none');
+        if (textFields) textFields.style.display = 'none';
         modeBtnText.classList.remove('active');
         modeBtnImage.classList.add('active');
+        checkServerStatus();
     } else {
         if (imageSection) imageSection.style.display = 'none';
         if (descEl) descEl.style.display = 'block';
@@ -6659,6 +6661,46 @@ function setAddRecipeMode(mode) {
         modeBtnText.classList.add('active');
         modeBtnImage.classList.remove('active');
     }
+}
+
+async function checkServerStatus() {
+    const banner = document.getElementById('serverStatusBanner');
+    const extractBtn = document.getElementById('extractImageBtn');
+    if (!banner) return;
+
+    banner.style.display = 'flex';
+    banner.style.background = '#f8f6f2';
+    banner.style.color = '#6a6a6a';
+    banner.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Checking extraction server…';
+
+    try {
+        const res = await fetch(RECIPE_SERVER_HEALTH_URL, { signal: AbortSignal.timeout(3000) });
+        if (res.ok) {
+            banner.style.background = '#e8f5e9';
+            banner.style.color = '#2e7d32';
+            banner.innerHTML = '<i class="fas fa-circle" style="font-size:8px;"></i> Extraction server is running';
+            setTimeout(() => { banner.style.display = 'none'; }, 2500);
+        } else {
+            showServerOfflineBanner(banner);
+        }
+    } catch {
+        showServerOfflineBanner(banner);
+    }
+}
+
+function showServerOfflineBanner(banner) {
+    const extractBtn = document.getElementById('extractImageBtn');
+    banner.style.display = 'flex';
+    banner.style.background = '#fff8e1';
+    banner.style.color = '#7a5c00';
+    banner.style.border = '1px solid #ffe082';
+    banner.innerHTML = `
+        <i class="fas fa-plug" style="flex-shrink:0;"></i>
+        <span>
+            Extraction server is offline — images can't be processed right now.
+            Start it with: <code style="background:#f5e9c0; padding:1px 5px; border-radius:3px;">python3 RecipeConsolidator/server.py</code>
+        </span>`;
+    if (extractBtn) extractBtn.disabled = true;
 }
 
 function handleImageDrop(event) {
@@ -6681,7 +6723,9 @@ function loadImagePreview(file) {
         document.getElementById('imagePreviewName').textContent = file.name;
         document.getElementById('imageDropPrompt').style.display = 'none';
         document.getElementById('imagePreviewWrap').style.display = 'block';
-        document.getElementById('extractImageBtn').style.display = 'inline-flex';
+        const extractBtn = document.getElementById('extractImageBtn');
+        extractBtn.style.display = 'inline-flex';
+        extractBtn.disabled = false;
         document.getElementById('clearImageBtn').style.display = 'inline-flex';
         document.getElementById('imageExtractStatus').textContent = '';
     };

@@ -1042,6 +1042,7 @@
 
             <!-- Image upload section -->
             <div id="imageUploadSection" style="display: none; margin-bottom: 20px;">
+                <div id="serverStatusBanner" style="display: none; margin-bottom: 14px; padding: 10px 14px; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 10px;"></div>
                 <div id="imageDropZone" class="rc-drop-zone" onclick="document.getElementById('recipeImageInput').click()" ondragover="event.preventDefault(); this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImageDrop(event)">
                     <input type="file" id="recipeImageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
                     <div id="imageDropPrompt">

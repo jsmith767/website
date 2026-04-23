@@ -51,6 +51,12 @@ ALLOWED_ORIGIN = 'http://localhost:8000'
 
 class RecipeHandler(BaseHTTPRequestHandler):
 
+    def do_GET(self):
+        if self.path == '/health':
+            self.send_json(200, {'status': 'ok'})
+        else:
+            self.send_error(404)
+
     def do_OPTIONS(self):
         self.send_response(200)
         self._cors()
