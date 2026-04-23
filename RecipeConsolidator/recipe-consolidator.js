@@ -2268,8 +2268,14 @@ function confirmIngredientReview() {
             instructionsVisibility: 'hidden'
         };
         
+        // Attach image if one was extracted
+        if (window._pendingRecipeImageData) {
+            recipe.imageData = window._pendingRecipeImageData;
+            window._pendingRecipeImageData = null;
+        }
+
         recipes.push(recipe);
-        
+
         // Automatically activate new recipes with multiplier 1
         activeRecipeIds.add(recipe.id);
         recipeMultipliers[recipe.id] = 1;
@@ -2657,6 +2663,7 @@ function updateRecipeList() {
                            onchange="toggleRecipeActive(${recipe.id})"
                            style="width: 18px; height: 18px; cursor: pointer;">
                 </label>
+                ${recipe.imageData ? `<img src="${recipe.imageData}" style="width:36px; height:36px; border-radius:4px; object-fit:cover; flex-shrink:0;">` : ''}
                 <div style="flex: 1; min-width: 0;">
                     <div class="recipe-item-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${recipe.name}</div>
                     <div style="font-size: 13px; color: #6a6a6a; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
@@ -6626,6 +6633,170 @@ document.addEventListener('click', function(e) {
         menu.removeAttribute('open');
     }
 });
+
+// --- Image recipe extraction ---
+
+const RECIPE_SERVER_URL = 'http://localhost:8001/api/extract-recipe';
+let pendingImageFile = null;
+
+function setAddRecipeMode(mode) {
+    const imageSection = document.getElementById('imageUploadSection');
+    const descEl = document.getElementById('addRecipeDescription');
+    const textFields = document.getElementById('recipeInput');
+    const modeBtnText = document.getElementById('modeBtnText');
+    const modeBtnImage = document.getElementById('modeBtnImage');
+
+    if (mode === 'image') {
+        if (imageSection) imageSection.style.display = 'block';
+        if (descEl) descEl.style.display = 'none';
+        if (textFields) textFields.closest('label, div, textarea') && (textFields.style.display = 'none');
+        modeBtnText.classList.remove('active');
+        modeBtnImage.classList.add('active');
+    } else {
+        if (imageSection) imageSection.style.display = 'none';
+        if (descEl) descEl.style.display = 'block';
+        if (textFields) textFields.style.display = '';
+        modeBtnText.classList.add('active');
+        modeBtnImage.classList.remove('active');
+    }
+}
+
+function handleImageDrop(event) {
+    event.preventDefault();
+    document.getElementById('imageDropZone').classList.remove('drag-over');
+    const file = event.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadImagePreview(file);
+}
+
+function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (file) loadImagePreview(file);
+}
+
+function loadImagePreview(file) {
+    pendingImageFile = file;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        document.getElementById('imagePreview').src = e.target.result;
+        document.getElementById('imagePreviewName').textContent = file.name;
+        document.getElementById('imageDropPrompt').style.display = 'none';
+        document.getElementById('imagePreviewWrap').style.display = 'block';
+        document.getElementById('extractImageBtn').style.display = 'inline-flex';
+        document.getElementById('clearImageBtn').style.display = 'inline-flex';
+        document.getElementById('imageExtractStatus').textContent = '';
+    };
+    reader.readAsDataURL(file);
+}
+
+function clearImageUpload() {
+    pendingImageFile = null;
+    document.getElementById('recipeImageInput').value = '';
+    document.getElementById('imagePreview').src = '';
+    document.getElementById('imagePreviewName').textContent = '';
+    document.getElementById('imageDropPrompt').style.display = 'block';
+    document.getElementById('imagePreviewWrap').style.display = 'none';
+    document.getElementById('extractImageBtn').style.display = 'none';
+    document.getElementById('clearImageBtn').style.display = 'none';
+    document.getElementById('imageExtractStatus').textContent = '';
+}
+
+async function extractRecipeFromImage() {
+    if (!pendingImageFile) return;
+
+    const statusEl = document.getElementById('imageExtractStatus');
+    const extractBtn = document.getElementById('extractImageBtn');
+    extractBtn.disabled = true;
+    extractBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Extracting…';
+    statusEl.textContent = '';
+
+    try {
+        // Resize image client-side to keep payload reasonable (max 1200px)
+        const resizedBlob = await resizeImage(pendingImageFile, 1200);
+
+        const formData = new FormData();
+        formData.append('image', resizedBlob, pendingImageFile.name);
+
+        const response = await fetch(RECIPE_SERVER_URL, { method: 'POST', body: formData });
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.error || 'Server error');
+
+        fillRecipeFormFromExtraction(data);
+        setAddRecipeMode('text');
+        statusEl.textContent = '';
+        showMessage('Recipe extracted — review the fields below and click Add Recipe', 'success');
+    } catch (err) {
+        if (err.message.includes('fetch') || err.message.includes('network') || err.message.includes('Failed')) {
+            statusEl.innerHTML = '<span style="color:#c62828;"><i class="fas fa-exclamation-circle"></i> Could not reach the extraction server. Is <code>server.py</code> running on port 8001?</span>';
+        } else {
+            statusEl.innerHTML = `<span style="color:#c62828;"><i class="fas fa-exclamation-circle"></i> ${escapeHtml(err.message)}</span>`;
+        }
+    } finally {
+        extractBtn.disabled = false;
+        extractBtn.innerHTML = '<i class="fas fa-magic"></i> Extract Recipe';
+    }
+}
+
+function fillRecipeFormFromExtraction(data) {
+    // Name
+    const nameInput = document.getElementById('recipeName');
+    if (nameInput && data.name) nameInput.value = data.name;
+
+    // Servings appended to description
+    let desc = data.description || '';
+    if (data.servings) desc = `Serves ${data.servings}${desc ? '\n\n' + desc : ''}`;
+    const aboutInput = document.getElementById('recipeAbout');
+    if (aboutInput) aboutInput.value = desc;
+
+    // Instructions
+    const instrInput = document.getElementById('recipeInstructions');
+    if (instrInput && data.instructions) instrInput.value = data.instructions;
+
+    // Build ingredient text for the parser
+    if (Array.isArray(data.ingredients) && data.ingredients.length > 0) {
+        const lines = data.ingredients.map(ing => {
+            const parts = [ing.quantity, ing.unit, ing.ingredient, ing.preparation].filter(Boolean);
+            return parts.join(' ');
+        });
+        const recipeInput = document.getElementById('recipeInput');
+        if (recipeInput) recipeInput.value = lines.join('\n');
+    }
+
+    // Tags
+    if (Array.isArray(data.tags) && data.tags.length > 0) {
+        selectedTagsForForm = new Set(data.tags);
+        updateSelectedTagsDisplay();
+    }
+
+    // Store image data on the pending recipe so it gets saved
+    if (data.imageData) {
+        window._pendingRecipeImageData = data.imageData;
+    }
+}
+
+function resizeImage(file, maxPx) {
+    return new Promise((resolve) => {
+        const img = new Image();
+        const url = URL.createObjectURL(file);
+        img.onload = () => {
+            URL.revokeObjectURL(url);
+            let { width, height } = img;
+            if (width <= maxPx && height <= maxPx) {
+                resolve(file);
+                return;
+            }
+            const scale = Math.min(maxPx / width, maxPx / height);
+            width = Math.round(width * scale);
+            height = Math.round(height * scale);
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+            canvas.toBlob(resolve, file.type || 'image/jpeg', 0.88);
+        };
+        img.src = url;
+    });
+}
 
 function toggleAddRecipeForm() {
     const body = document.getElementById('addRecipeBody');

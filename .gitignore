@@ -16,3 +16,6 @@ GroupIncome/tools/
 # RecipeConsolidator - private notes
 RecipeConsolidator/ROADMAP-private.md
 
+# API keys - never commit
+.env
+

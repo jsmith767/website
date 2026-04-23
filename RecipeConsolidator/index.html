@@ -713,6 +713,48 @@
             border-color: #d48247;
             color: #d48247;
         }
+        /* Add recipe mode toggle */
+        .rc-add-mode-toggle {
+            display: flex;
+            gap: 6px;
+            margin: 16px 0 20px;
+            border-bottom: 2px solid #e8e8e8;
+            padding-bottom: 0;
+        }
+        .rc-mode-btn {
+            padding: 8px 18px;
+            border: none;
+            border-bottom: 3px solid transparent;
+            background: none;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            color: #6a6a6a;
+            cursor: pointer;
+            margin-bottom: -2px;
+            transition: color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .rc-mode-btn:hover { color: #d48247; }
+        .rc-mode-btn.active { color: #d48247; border-bottom-color: #d48247; }
+
+        /* Image drop zone */
+        .rc-drop-zone {
+            border: 2px dashed #d48247;
+            border-radius: 10px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: #fdf9f5;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .rc-drop-zone:hover, .rc-drop-zone.drag-over {
+            background: #fff3e0;
+            border-color: #b8703d;
+        }
+
         /* Workflow tabs */
         .rc-workflow-tabs {
             background: #ffffff;
@@ -987,6 +1029,42 @@
                 </button>
             </div>
             <div class="rc-card-body" id="addRecipeBody">
+
+            <!-- Mode toggle -->
+            <div class="rc-add-mode-toggle">
+                <button class="rc-mode-btn active" id="modeBtnText" onclick="setAddRecipeMode('text')">
+                    <i class="fas fa-keyboard"></i> Paste Text
+                </button>
+                <button class="rc-mode-btn" id="modeBtnImage" onclick="setAddRecipeMode('image')">
+                    <i class="fas fa-camera"></i> From Image
+                </button>
+            </div>
+
+            <!-- Image upload section -->
+            <div id="imageUploadSection" style="display: none; margin-bottom: 20px;">
+                <div id="imageDropZone" class="rc-drop-zone" onclick="document.getElementById('recipeImageInput').click()" ondragover="event.preventDefault(); this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleImageDrop(event)">
+                    <input type="file" id="recipeImageInput" accept="image/*" style="display:none" onchange="handleImageSelect(event)">
+                    <div id="imageDropPrompt">
+                        <i class="fas fa-image" style="font-size: 36px; color: #d48247; margin-bottom: 12px;"></i>
+                        <p style="font-size: 15px; font-weight: 500; color: #2c2c2c; margin: 0 0 6px;">Drop a photo here or click to browse</p>
+                        <p style="font-size: 13px; color: #6a6a6a; margin: 0;">Works with cookbook pages, recipe cards, screenshots</p>
+                    </div>
+                    <div id="imagePreviewWrap" style="display: none;">
+                        <img id="imagePreview" style="max-height: 220px; max-width: 100%; border-radius: 6px; object-fit: contain;">
+                        <p id="imagePreviewName" style="margin: 8px 0 0; font-size: 13px; color: #6a6a6a;"></p>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                    <button class="btn" id="extractImageBtn" onclick="extractRecipeFromImage()" style="display: none;">
+                        <i class="fas fa-magic"></i> Extract Recipe
+                    </button>
+                    <button class="btn btn-secondary" id="clearImageBtn" onclick="clearImageUpload()" style="display: none;">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                    <div id="imageExtractStatus" style="font-size: 14px; color: #6a6a6a;"></div>
+                </div>
+            </div>
+
             <p style="margin: 15px 0; color: #6a6a6a;" id="addRecipeDescription">
                 Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.
             </p>
