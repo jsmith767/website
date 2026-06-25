@@ -346,6 +346,7 @@
                         <li><a href="#details" onclick="closemenu()">Details</a></li>
                         <li><a href="#builder" onclick="closemenu()">The Builder</a></li>
                         <li><a href="#history" onclick="closemenu()">History</a></li>
+                        <li><a href="#contact" onclick="closemenu()">Contact</a></li>
                     </ul>
                 </div>
             </nav>
@@ -375,12 +376,12 @@
                     <div class="agnis-carousel">
                         <div class="agnis-track" id="agnis-track">
                             <div class="agnis-media-box">
-                                <img src="images/Fire-Amphibious.jpg" alt="AGNIS exterior">
-                            </div>
-                            <div class="agnis-media-box">
                                 <video playsinline muted loop autoplay id="agnis-video">
                                     <source src="images/Fire-Effect-trimmed.mp4" type="video/mp4">
                                 </video>
+                            </div>
+                            <div class="agnis-media-box">
+                                <img src="images/Fire-Amphibious.jpg" alt="AGNIS exterior">
                             </div>
                             <div class="agnis-media-box">
                                 <img src="images/Fire-undershot.jpg" alt="AGNIS interior">
@@ -448,11 +449,9 @@
                     </div>
                     <div class="about-col-2">
                         <h1 class="sub-title">The Builder</h1>
-                        <p style="color: #ababab; margin-bottom: 20px; line-height: 1.8;">Julian Smith — inventor, facilitator, and the mind behind AGNIS.</p>
-                        <p style="color: #ababab;">
-                            <i class="fa-solid fa-paper-plane" style="color: var(--accent); margin-right: 10px;"></i>
-                            <a href="mailto:cuddlesmithllc@gmail.com" style="color: #ababab; text-decoration: none;">cuddlesmithllc@gmail.com</a>
-                        </p>
+                        <p style="color: #ababab; margin-bottom: 16px; line-height: 1.8;">Julian Smith is an inventor, facilitator, and maker with a deep love for community, fire, and structural beauty. He builds things that bring people together — tools for connection, structures for gathering, and spaces that feel alive.</p>
+                        <p style="color: #ababab; margin-bottom: 16px; line-height: 1.8;">AGNIS grew out of years of collecting materials, attending burns, and holding a vision — then letting creativity find the way to make it real. A core value running through the whole project is reclaiming — giving discarded things a second life. The struts, the steel pentagon, the sheet covering, the floating trampoline, and the foam pads are all reclaimed materials that found their way into something new.</p>
+                        <p style="color: #ababab; line-height: 1.8;">He continues to iterate on the structure, adding systems that let it float, covers that make it all-season, and new ideas that keep AGNIS evolving.</p>
                     </div>
                 </div>
             </div>
@@ -477,6 +476,19 @@
             </div>
         </div>
 
+        <!-- Contact -->
+        <div id="contact" style="padding: 60px 0 40px;">
+            <div class="container" style="text-align: center;">
+                <h1 class="sub-title">Get in Touch</h1>
+                <p style="color: #ababab; margin-bottom: 28px; line-height: 1.8;">Interested in bringing AGNIS to your event, gathering, or celebration? Reach out.</p>
+                <p>
+                    <a href="mailto:info@cuddlesmith.com" style="color: var(--accent); font-size: 18px; text-decoration: none;">
+                        <i class="fa-solid fa-paper-plane" style="margin-right: 10px;"></i>info@cuddlesmith.com
+                    </a>
+                </p>
+            </div>
+        </div>
+
         <div class="copyright">
             <p>Copyright Julian. Made with <i class="fa-solid fa-heart"></i></p>
         </div>
@@ -492,11 +504,11 @@
             async function buildTimeline() {
                 const PX_PER_MONTH = 22;
                 const PAD_TOP    = 40;
-                const PAD_BOTTOM = 180;
-                const CARD_W     = 180;
-                const CARD_H     = 200;
-                const NEAR       = 35;
-                const FAR        = NEAR + CARD_W + 12;
+                const PAD_BOTTOM = 300;
+                const CARD_W     = 200;
+                const CARD_H     = 210;
+                const NEAR       = 44;
+                const FAR        = NEAR + CARD_W + 16;
                 const DOT_R      = 6;
 
                 const res = await fetch('AGNIS-events.json');
@@ -511,21 +523,25 @@
                 const tl = document.getElementById('timeline');
                 tl.style.height = Math.ceil(totalHeight) + 'px';
 
-                const last = { left: null, right: null };
+                const placed = { left: [], right: [] };
 
                 events.forEach((ev, i) => {
                     const months = (toMs(ev.date) - minMs) / msPerMonth;
                     const top  = PAD_TOP + months * PX_PER_MONTH;
                     const side = i % 2 === 0 ? 'left' : 'right';
 
-                    let offset = NEAR;
-                    const prev = last[side];
-                    if (prev) {
-                        const vertOverlap = top < prev.top + CARD_H && top + CARD_H > prev.top;
-                        const sameCol     = Math.abs(offset - prev.offset) < CARD_W;
-                        if (vertOverlap && sameCol) offset = FAR;
+                    // Try each column in order; pick the first with no vertical overlap
+                    const cols = [NEAR, FAR];
+                    let offset = FAR; // fallback
+                    for (const col of cols) {
+                        const fits = placed[side].every(prev => {
+                            const vertOverlap = top < prev.top + CARD_H && top + CARD_H > prev.top;
+                            const horizOverlap = Math.abs(col - prev.offset) < CARD_W;
+                            return !(vertOverlap && horizOverlap);
+                        });
+                        if (fits) { offset = col; break; }
                     }
-                    last[side] = { top, offset };
+                    placed[side].push({ top, offset });
 
                     const dot = document.createElement('div');
                     dot.className = 'tl-dot';

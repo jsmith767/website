@@ -73,6 +73,12 @@
     "image": null
   },
   {
+    "date": "2024-09",
+    "label": "2024 — Sh'bang",
+    "text": "AGNIS returns to Sh'bang for Labor Day weekend — and for the first time, the dome floats, lifted on pontoons Julian fabricated himself.",
+    "image": "images/Fire-Amphibious.jpg"
+  },
+  {
     "date": "2025-06",
     "label": "June 2025 — Birthday",
     "text": "A birthday celebration and the first test of a weather-resistant covering system, bringing AGNIS one step closer to being truly all-season.",
@@ -86,8 +92,26 @@
   },
   {
     "date": "2025-09",
+    "label": "2025 — Sh'bang",
+    "text": "AGNIS at Sh'bang for Labor Day weekend.",
+    "image": null
+  },
+  {
+    "date": "2025-09",
     "label": "2025 — Lookout Arts Quarry",
     "text": "AGNIS floated at the Lookout Arts Quarry.",
+    "image": null
+  },
+  {
+    "date": "2025-10",
+    "label": "October 2025 — Private Wedding",
+    "text": "AGNIS appeared at its first wedding.",
+    "image": null
+  },
+  {
+    "date": "2026-06",
+    "label": "June 2026 — Birthday",
+    "text": "A new milestone: AGNIS floats for the first time on a floating trampoline, transforming it into a fully amphibious structure.",
     "image": "images/FloatingDome.jpeg"
   }
 ]
