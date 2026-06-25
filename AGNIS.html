@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AGNIS — Amphibious Geodesic Nexus and Ignited Space</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
+        <style>
+            /* ---- AGNIS color scheme: amber/orange instead of red ---- */
+            :root { --accent: #e87700; }
+
+            #header {
+                height: auto;
+                background-image: none;
+                background: transparent;
+            }
+
+            nav ul li a::after,
+            .tab-links::after          { background: var(--accent); }
+            .btn                        { border-color: var(--accent); }
+            .btn:hover, .btn.btn2       { background: var(--accent); }
+            #history-toggle {
+                background: var(--accent);
+                color: #fff;
+                border-color: var(--accent);
+                font-weight: 600;
+                letter-spacing: 0.04em;
+            }
+            #history-toggle:hover {
+                background: #ff6a00;
+                border-color: #ff6a00;
+            }
+            .services-list div:hover    { background: var(--accent); }
+            .copyright i                { color: var(--accent); }
+            .contact-left p i           { color: var(--accent); }
+            .layer                      { background: linear-gradient(rgba(0,0,0,0.6), var(--accent)); }
+            .layer a                    { color: var(--accent); }
+            .social-icons a:hover       { color: var(--accent); }
+            @media only screen and (max-width: 600px) {
+                nav ul { background: var(--accent); }
+            }
+
+            /* ---- Nav ---- */
+            .site-nav {
+                position: sticky;
+                top: 0;
+                z-index: 100;
+                background: rgba(8,8,8,0.95);
+                backdrop-filter: blur(6px);
+                padding: 12px 0;
+            }
+            .nav-container {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 10%;
+            }
+            .nav-logo img { height: 40px; }
+            .hamburger-menu {
+                display: none;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+            }
+            .close-menu {
+                display: none;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 24px;
+                cursor: pointer;
+                position: absolute;
+                top: 20px;
+                left: 20px;
+            }
+            .menu-overlay {
+                display: none;
+                position: fixed;
+                inset: 0;
+                background: rgba(0,0,0,0.5);
+                z-index: 98;
+            }
+            .menu-overlay.active { display: block; }
+            #sidemenu { display: flex; list-style: none; }
+            #sidemenu li a {
+                color: #fff;
+                text-decoration: none;
+                font-size: 16px;
+                padding: 8px 16px;
+                display: block;
+                position: relative;
+            }
+            #sidemenu li a::after {
+                content: '';
+                width: 0;
+                height: 2px;
+                background: var(--accent);
+                position: absolute;
+                left: 16px;
+                bottom: 4px;
+                transition: 0.3s;
+            }
+            #sidemenu li a:hover::after { width: calc(100% - 32px); }
+
+            /* ---- About ---- */
+            .about-tagline {
+                font-size: 1.15em;
+                color: #ababab;
+                margin: 16px 0 24px;
+            }
+
+            /* ---- Carousel ---- */
+            .agnis-carousel-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                margin-top: 40px;
+            }
+            .agnis-carousel {
+                flex: 1;
+                overflow: hidden;
+                border-radius: 12px;
+            }
+            .agnis-track {
+                display: flex;
+                transition: transform 0.5s ease;
+            }
+            .agnis-media-box {
+                min-width: 100%;
+                aspect-ratio: 16/9;
+                overflow: hidden;
+                border-radius: 12px;
+                background: #1a1a1a;
+            }
+            .agnis-media-box img,
+            .agnis-media-box video {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+            }
+            .carousel-btn {
+                background: rgba(255,255,255,0.1);
+                border: none;
+                color: #fff;
+                font-size: 20px;
+                padding: 12px 16px;
+                border-radius: 8px;
+                cursor: pointer;
+                transition: background 0.3s;
+                flex-shrink: 0;
+            }
+            .carousel-btn:hover { background: var(--accent); }
+            .carousel-dots {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 16px;
+            }
+            .dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #555;
+                cursor: pointer;
+                transition: background 0.3s;
+            }
+            .dot.active { background: var(--accent); }
+
+            /* ---- Sections ---- */
+            #gallery { padding: 80px 0; }
+            #details { padding: 30px 0 80px; }
+            #builder { padding: 80px 0; }
+            #history { padding: 0 0 80px; }
+
+            /* ---- History hero ---- */
+            .history-hero {
+                position: relative;
+                height: 45vh;
+                min-height: 280px;
+                overflow: hidden;
+            }
+            .history-hero img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center 30%;
+                display: block;
+            }
+            .history-hero-overlay {
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(rgba(8,8,8,0.1) 0%, rgba(8,8,8,0.85) 80%, #080808 100%);
+                display: flex;
+                align-items: flex-end;
+                padding: 0 10% 36px;
+            }
+
+            /* ---- History timeline ---- */
+            .timeline-wrapper {
+                position: relative;
+                margin-top: 40px;
+            }
+            .timeline-wrapper.collapsed {
+                max-height: 520px;
+                overflow: hidden;
+            }
+            .timeline-fade {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                height: 200px;
+                background: linear-gradient(transparent, #080808);
+                pointer-events: none;
+                z-index: 10;
+            }
+            .timeline-wrapper:not(.collapsed) .timeline-fade { display: none; }
+            .timeline {
+                position: relative;
+                /* height set by JS */
+            }
+            .timeline::before {
+                content: '';
+                position: absolute;
+                left: 50%;
+                top: 0;
+                bottom: 0;
+                width: 2px;
+                background: #2a2a2a;
+                transform: translateX(-50%);
+            }
+            /* Dots, connectors, cards — all absolutely positioned by JS */
+            .tl-dot {
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 12px;
+                height: 12px;
+                background: var(--accent);
+                border-radius: 50%;
+                z-index: 3;
+                box-shadow: 0 0 0 3px rgba(232,119,0,0.2);
+            }
+            .tl-connector {
+                position: absolute;
+                height: 2px;
+                background: #333;
+                z-index: 2;
+            }
+            .tl-card {
+                position: absolute;
+                background: #1a1a1a;
+                border-radius: 10px;
+                overflow: hidden;
+                transition: transform 0.2s ease, box-shadow 0.2s ease;
+            }
+            .tl-card:hover {
+                transform: scale(1.35);
+                box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+                z-index: 100 !important;
+            }
+            .tl-card img {
+                width: 100%;
+                aspect-ratio: 4/3;
+                object-fit: cover;
+                display: block;
+            }
+            .tl-placeholder {
+                width: 100%;
+                aspect-ratio: 4/3;
+                background: #2a2a2a;
+            }
+            .tl-card-text {
+                padding: 10px 14px 14px;
+            }
+            .tl-card-text h3 {
+                color: #fff;
+                font-size: 13px;
+                font-weight: 600;
+                margin-bottom: 5px;
+            }
+            .tl-card-text p {
+                color: #ababab;
+                font-size: 12px;
+                line-height: 1.6;
+            }
+            @media only screen and (max-width: 768px) {
+                .timeline::before { left: 18px; }
+                .tl-dot  { left: 16px; transform: none; }
+                .tl-connector { display: none; }
+                .tl-card.left, .tl-card.right {
+                    position: static;
+                    width: 100%;
+                    margin-left: 40px;
+                    margin-bottom: 32px;
+                    right: auto;
+                    left: auto;
+                }
+            }
+
+            /* ---- Mobile ---- */
+            @media only screen and (max-width: 768px) {
+                .hamburger-menu { display: block; }
+                .close-menu { display: block; }
+                #sidemenu {
+                    position: fixed;
+                    top: 0;
+                    right: -260px;
+                    width: 240px;
+                    height: 100vh;
+                    background: #1a1a1a;
+                    flex-direction: column;
+                    padding: 70px 0 30px;
+                    z-index: 99;
+                    transition: right 0.3s ease;
+                }
+                #sidemenu.active { right: 0; }
+                #sidemenu li a { padding: 14px 24px; font-size: 17px; }
+                #sidemenu li a::after { left: 24px; bottom: 8px; }
+            }
+        </style>
+    </head>
+    <body>
+
+        <div id="header">
+            <nav class="site-nav">
+                <div class="nav-container">
+                    <div class="nav-logo-section"></div>
+                    <button class="hamburger-menu" onclick="openmenu()" aria-label="Open menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="menu-overlay" id="menu-overlay" onclick="closemenu()"></div>
+                    <ul id="sidemenu">
+                        <button class="close-menu" onclick="closemenu()" aria-label="Close menu">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <li><a href="index.html" onclick="closemenu()">Home</a></li>
+                        <li><a href="#about" onclick="closemenu()">AGNIS</a></li>
+                        <li><a href="#gallery" onclick="closemenu()">Gallery</a></li>
+                        <li><a href="#details" onclick="closemenu()">Details</a></li>
+                        <li><a href="#builder" onclick="closemenu()">The Builder</a></li>
+                        <li><a href="#history" onclick="closemenu()">History</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <!-- About -->
+        <div id="about">
+            <div class="container">
+                <div style="text-align: center;">
+                    <h1 class="sub-title">AGNIS</h1>
+                    <p class="about-tagline">
+                        <strong>A</strong>mphibious &nbsp;<strong>G</strong>eodesic &nbsp;<strong>N</strong>exus &nbsp;and &nbsp;<strong>I</strong>gnited &nbsp;<strong>S</strong>pace
+                    </p>
+                    <p>AGNIS is a one-of-a-kind geodesic structure designed to exist at the intersection of land and water. Built for gathering, ceremony, and creative expression, it offers an immersive environment where fire, form, and community converge. Whether hosting intimate gatherings or open events, AGNIS is a space for those drawn to connection, beauty, and the elemental.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery -->
+        <div id="gallery">
+            <div class="container">
+                <h1 class="sub-title" style="text-align: center;">Gallery</h1>
+                <div class="agnis-carousel-wrapper">
+                    <button class="carousel-btn carousel-btn-prev" onclick="moveCarousel(-1)" aria-label="Previous">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="agnis-carousel">
+                        <div class="agnis-track" id="agnis-track">
+                            <div class="agnis-media-box">
+                                <img src="images/Fire-Amphibious.jpg" alt="AGNIS exterior">
+                            </div>
+                            <div class="agnis-media-box">
+                                <video playsinline muted loop autoplay id="agnis-video">
+                                    <source src="images/Fire-Effect-trimmed.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="agnis-media-box">
+                                <img src="images/Fire-undershot.jpg" alt="AGNIS interior">
+                            </div>
+                            <div class="agnis-media-box">
+                                <img src="images/FloatingDome.jpeg" alt="Floating dome">
+                            </div>
+                            <div class="agnis-media-box">
+                                <video playsinline muted loop autoplay id="floating-video">
+                                    <source src="images/FloatingOffVid.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="agnis-media-box">
+                                <img src="images/FloatingAtSunset.jpeg" alt="Floating at sunset">
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-btn-next" onclick="moveCarousel(1)" aria-label="Next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="carousel-dots" id="agnis-dots"></div>
+            </div>
+        </div>
+
+        <!-- Details -->
+        <div id="details">
+            <div class="container">
+                <h1 class="sub-title">Details</h1>
+                <div class="services-list">
+                    <div>
+                        <i class="fa-solid fa-fire"></i>
+                        <h2>The Space</h2>
+                        <p>A geodesic dome designed for gathering, art, and ceremony — amphibious and fire-capable</p>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-dollar-sign"></i>
+                        <h2>Reciprocity</h2>
+                        <ul>
+                            <li>$500–$1000 to bring AGNIS to your location</li>
+                            <li>$100–$200 per night</li>
+                            <li>Exact amount depends on location, event, and context — let's talk</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-location-dot"></i>
+                        <h2>Location</h2>
+                        <p>AGNIS is home on the Kitsap Peninsula and travels throughout the PNW.</p>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <h2>Scheduling</h2>
+                        <p>Reach out to bring AGNIS to your event or private gathering.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- The Builder -->
+        <div id="builder">
+            <div class="container">
+                <div class="row">
+                    <div class="about-col-1">
+                        <img src="images/CaptainSmith.jpeg" alt="Captain Smith" style="border-radius: 15px; width: 100%;">
+                    </div>
+                    <div class="about-col-2">
+                        <h1 class="sub-title">The Builder</h1>
+                        <p style="color: #ababab; margin-bottom: 20px; line-height: 1.8;">Julian Smith — inventor, facilitator, and the mind behind AGNIS.</p>
+                        <p style="color: #ababab;">
+                            <i class="fa-solid fa-paper-plane" style="color: var(--accent); margin-right: 10px;"></i>
+                            <a href="mailto:cuddlesmithllc@gmail.com" style="color: #ababab; text-decoration: none;">cuddlesmithllc@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- History -->
+        <div id="history">
+            <div class="history-hero">
+                <img src="images/Fire-undershot.jpg" alt="SOAK 2018 — first fire ceiling">
+                <div class="history-hero-overlay">
+                    <h1 class="sub-title">History</h1>
+                </div>
+            </div>
+            <div class="container">
+                <div class="timeline-wrapper collapsed" id="timeline-wrapper">
+                    <div class="timeline-fade"></div>
+                    <div class="timeline" id="timeline"></div>
+                </div>
+                <div style="text-align:center; margin-top: 32px;">
+                    <button class="btn" id="history-toggle" onclick="toggleHistory()">See Full History</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>Copyright Julian. Made with <i class="fa-solid fa-heart"></i></p>
+        </div>
+
+        <script>
+            function toggleHistory() {
+                const wrapper = document.getElementById('timeline-wrapper');
+                const btn = document.getElementById('history-toggle');
+                const collapsed = wrapper.classList.toggle('collapsed');
+                btn.textContent = collapsed ? 'See Full History' : 'Collapse';
+            }
+
+            async function buildTimeline() {
+                const PX_PER_MONTH = 22;
+                const PAD_TOP    = 40;
+                const PAD_BOTTOM = 180;
+                const CARD_W     = 180;
+                const CARD_H     = 200;
+                const NEAR       = 35;
+                const FAR        = NEAR + CARD_W + 12;
+                const DOT_R      = 6;
+
+                const res = await fetch('AGNIS-events.json');
+                const events = await res.json();
+
+                const toMs = d => new Date(d + '-01').getTime();
+                const minMs = toMs(events[0].date);
+                const maxMs = toMs(events[events.length - 1].date);
+                const msPerMonth = 1000 * 60 * 60 * 24 * 30.44;
+
+                const totalHeight = ((maxMs - minMs) / msPerMonth) * PX_PER_MONTH + PAD_TOP + PAD_BOTTOM;
+                const tl = document.getElementById('timeline');
+                tl.style.height = Math.ceil(totalHeight) + 'px';
+
+                const last = { left: null, right: null };
+
+                events.forEach((ev, i) => {
+                    const months = (toMs(ev.date) - minMs) / msPerMonth;
+                    const top  = PAD_TOP + months * PX_PER_MONTH;
+                    const side = i % 2 === 0 ? 'left' : 'right';
+
+                    let offset = NEAR;
+                    const prev = last[side];
+                    if (prev) {
+                        const vertOverlap = top < prev.top + CARD_H && top + CARD_H > prev.top;
+                        const sameCol     = Math.abs(offset - prev.offset) < CARD_W;
+                        if (vertOverlap && sameCol) offset = FAR;
+                    }
+                    last[side] = { top, offset };
+
+                    const dot = document.createElement('div');
+                    dot.className = 'tl-dot';
+                    dot.style.top = top + 'px';
+                    tl.appendChild(dot);
+
+                    const conn = document.createElement('div');
+                    conn.className = 'tl-connector';
+                    conn.style.top   = (top + DOT_R) + 'px';
+                    conn.style.width = (offset - DOT_R) + 'px';
+                    conn.style.left  = side === 'left'
+                        ? `calc(50% - ${offset}px)`
+                        : `calc(50% + ${DOT_R}px)`;
+                    tl.appendChild(conn);
+
+                    const card = document.createElement('div');
+                    card.className    = 'tl-card';
+                    card.style.top    = top + 'px';
+                    card.style.width  = CARD_W + 'px';
+                    card.style.zIndex = i + 1;
+                    if (side === 'left') {
+                        card.style.right = `calc(50% + ${offset}px)`;
+                    } else {
+                        card.style.left  = `calc(50% + ${offset}px)`;
+                    }
+                    card.innerHTML = (ev.image
+                        ? `<img src="${ev.image}" alt="${ev.label}" style="object-position:${ev.imagePosition || 'center'}">`
+                        : `<div class="tl-placeholder"></div>`)
+                        + `<div class="tl-card-text"><h3>${ev.label}</h3><p>${ev.text}</p></div>`;
+                    tl.appendChild(card);
+                });
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', buildTimeline);
+            } else {
+                buildTimeline();
+            }
+        </script>
+
+        <script>
+            var sidemenu = document.getElementById('sidemenu');
+            var overlay = document.getElementById('menu-overlay');
+            function openmenu() {
+                sidemenu.classList.add('active');
+                overlay.classList.add('active');
+            }
+            function closemenu() {
+                sidemenu.classList.remove('active');
+                overlay.classList.remove('active');
+            }
+        </script>
+
+
+        <script>
+            (function () {
+                'use strict';
+                let currentIndex = 0;
+                let isAnimating = false;
+                const track = document.getElementById('agnis-track');
+                const carousel = document.querySelector('.agnis-carousel');
+                const items = document.querySelectorAll('.agnis-media-box');
+                const total = items.length;
+
+                function update() {
+                    if (!track || !carousel) return;
+                    track.style.transition = 'transform 0.5s ease';
+                    track.style.transform = `translateX(${-currentIndex * carousel.offsetWidth}px)`;
+                    document.querySelectorAll('#agnis-dots .dot').forEach((d, i) => {
+                        d.classList.toggle('active', i === currentIndex);
+                    });
+                    [
+                        { id: 'agnis-video', slide: 1 },
+                        { id: 'floating-video', slide: 4 }
+                    ].forEach(({ id, slide }) => {
+                        const v = document.getElementById(id);
+                        if (!v) return;
+                        if (currentIndex === slide) v.play().catch(() => {});
+                        else { v.pause(); v.currentTime = 0; }
+                    });
+                }
+
+                window.moveCarousel = function (dir) {
+                    if (isAnimating) return;
+                    isAnimating = true;
+                    currentIndex = (currentIndex + dir + total) % total;
+                    update();
+                    setTimeout(() => { isAnimating = false; }, 500);
+                };
+
+                function initDots() {
+                    const container = document.getElementById('agnis-dots');
+                    if (!container) return;
+                    container.innerHTML = '';
+                    for (let i = 0; i < total; i++) {
+                        const dot = document.createElement('span');
+                        dot.className = 'dot' + (i === 0 ? ' active' : '');
+                        dot.addEventListener('click', () => {
+                            if (isAnimating) return;
+                            isAnimating = true;
+                            currentIndex = i;
+                            update();
+                            setTimeout(() => { isAnimating = false; }, 500);
+                        });
+                        container.appendChild(dot);
+                    }
+                }
+
+                function init() {
+                    setTimeout(() => { initDots(); update(); }, 100);
+                }
+
+                window.addEventListener('resize', update);
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', init);
+                } else {
+                    init();
+                }
+            })();
+        </script>
+
+    </body>
+</html>

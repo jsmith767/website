@@ -1,0 +1,93 @@
+[
+  {
+    "date": "2018-06",
+    "label": "2018 — SOAK",
+    "text": "At SOAK, a regional burn in Oregon, Julian encountered his first fire ceiling. The experience lodged itself somewhere deep.",
+    "image": "images/SOAK2018.jpg"
+  },
+  {
+    "date": "2018-07",
+    "label": "2018 — The First One",
+    "text": "Within a month he had built his own — strung up in a carport, then taken out to the Alvord Desert to celebrate his birthday.",
+    "image": "images/CarportFire.jpg"
+  },
+  {
+    "date": "2019-06",
+    "label": "2019 — The Dirty Marshmallow",
+    "text": "A second version found its home underneath the Dirty Marshmallow — suspended beneath a slide-out bed — and made the return trip to the Alvord for another birthday in the desert.",
+    "image": "images/VanFire.JPG"
+  },
+  {
+    "date": "2020-09",
+    "label": "The Steel Years",
+    "text": "All the while, Julian was quietly collecting steel — from construction sites, from trampolines — holding a vision of a geodesic dome.",
+    "image": "images/AlvordSunriseFireAndDome.jpg"
+  },
+  {
+    "date": "2022-05",
+    "label": "May 15, 2022 — AGNIS is Born",
+    "text": "Fabrication complete, the dome was assembled for the first time. That vision became real, and AGNIS was born.",
+    "image": "images/DomeComplete.JPEG",
+    "imagePosition": "top"
+  },
+  {
+    "date": "2022-07",
+    "label": "July 2022 — Samadhi Summer",
+    "text": "AGNIS made its first appearance at Samadhi Summer.",
+    "image": null
+  },
+  {
+    "date": "2022-08",
+    "label": "August 2022 — Heart Expansion",
+    "text": "The dome joins Heart Expansion in Duvall for the first time.",
+    "image": null
+  },
+  {
+    "date": "2023-07",
+    "label": "2023 — Sh'bang",
+    "text": "The dome made it to Sh'bang — Julian's first year at the event. AGNIS was borrowed by the festival that year.",
+    "image": "images/shbang.jpg"
+  },
+  {
+    "date": "2023-08",
+    "label": "2023 — Samadhi Summer",
+    "text": "Samadhi Summer at the Lookout Arts Quarry.",
+    "image": null
+  },
+  {
+    "date": "2024-06",
+    "label": "2024 — Acro Campout",
+    "text": "The first year AGNIS attended Acro Campout.",
+    "image": null
+  },
+  {
+    "date": "2024-07",
+    "label": "2024 — SamaDay Summer",
+    "text": "SamaDay Summer in Ballard.",
+    "image": null
+  },
+  {
+    "date": "2024-08",
+    "label": "August 2024 — Heart Expansion",
+    "text": "The dome rejoins Heart Expansion in Duvall.",
+    "image": null
+  },
+  {
+    "date": "2025-06",
+    "label": "June 2025 — Birthday",
+    "text": "A birthday celebration and the first test of a weather-resistant covering system, bringing AGNIS one step closer to being truly all-season.",
+    "image": "images/TarpCoveringJune2025.jpg"
+  },
+  {
+    "date": "2025-08",
+    "label": "2025 — Acro Campout",
+    "text": "AGNIS returns to Acro Campout for its second year.",
+    "image": "images/AcroCampoutAug2025.jpg"
+  },
+  {
+    "date": "2025-09",
+    "label": "2025 — Lookout Arts Quarry",
+    "text": "AGNIS floated at the Lookout Arts Quarry.",
+    "image": "images/FloatingDome.jpeg"
+  }
+]
