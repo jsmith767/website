@@ -1738,38 +1738,58 @@ function editRecipe(recipeId) {
     const aboutInput = document.getElementById('recipeAbout');
     const instructionsInput = document.getElementById('recipeInstructions');
     
-    // Keep form fields in sync (for about/instructions/source) but do not rely
-    // on re-parsing this textarea for edits; use the review modal instead.
     nameInput.value = recipe.name;
     textInput.value = getEditableRecipeText(recipe);
     editingIdInput.value = recipeId;
-    if (aboutInput) aboutInput.value = recipe.about || '';
-    if (instructionsInput) instructionsInput.value = recipe.instructions || '';
-    
-    // Load recipe tags into form
+
+    // Servings
+    const servingsInput = document.getElementById('recipeServings');
+    if (servingsInput) servingsInput.value = recipe.servings || '';
+
+    // About/prep — only populate if authenticated
+    const authed = isAuthenticated();
+    if (aboutInput) aboutInput.value = authed ? (recipe.about || '') : '';
+    if (instructionsInput) instructionsInput.value = authed ? (recipe.instructions || '') : '';
+    updateFormLockState();
+
+    // Source fields
+    const sourceTypeInput = document.getElementById('recipeSourceType');
+    const sourceTitleInput = document.getElementById('recipeSourceTitle');
+    const sourcePagesInput = document.getElementById('recipeSourcePages');
+    const sourceUrlInput = document.getElementById('recipeSourceUrl');
+    const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
+    if (authed) {
+        if (sourceTypeInput) sourceTypeInput.value = recipe.sourceType || '';
+        if (sourceTitleInput) sourceTitleInput.value = recipe.sourceTitle || '';
+        if (sourcePagesInput) sourcePagesInput.value = recipe.sourcePages || '';
+        if (sourceUrlInput) sourceUrlInput.value = recipe.sourceUrl || '';
+        if (affiliateUrlInput) affiliateUrlInput.value = recipe.affiliateUrl || '';
+        // Show source fields if recipe has source data
+        if (recipe.sourceTitle || recipe.sourceType) {
+            const sourceFields = document.getElementById('advancedSourceFields');
+            if (sourceFields) sourceFields.style.display = 'block';
+        }
+    }
+
+    // Tags
     selectedTagsForForm.clear();
     if (recipe.tags && Array.isArray(recipe.tags)) {
         recipe.tags.forEach(tag => selectedTagsForForm.add(tag));
     }
     updateSelectedTagsDisplay();
-    
-    // Seed the review modal with the current recipe data
-    pendingRecipeForReview = {
-        id: recipe.id,
-        name: recipe.name,
-        originalText: recipe.originalText || '',
-        tags: recipe.tags || [],
-        about: recipe.about || '',
-        instructions: recipe.instructions || '',
-        sourceType: recipe.sourceType || '',
-        sourceTitle: recipe.sourceTitle || '',
-        sourcePages: recipe.sourcePages || '',
-        sourceUrl: recipe.sourceUrl || '',
-        affiliateUrl: recipe.affiliateUrl || ''
-    };
-    pendingIngredientsForReview = (recipe.ingredients || []).map(ing => ({ ...ing }));
-    
-    openIngredientReviewModal();
+
+    // Show the edit action buttons, hide the add button
+    const addBtn = document.getElementById('addRecipeButton');
+    const editActions = document.getElementById('editRecipeActions');
+    const titleEl = document.getElementById('addRecipeTitle');
+    if (addBtn) addBtn.style.display = 'none';
+    if (editActions) editActions.style.display = 'block';
+    if (titleEl) titleEl.textContent = `Editing: ${recipe.name}`;
+
+    // Expand the form and scroll to it
+    const body = document.getElementById('addRecipeBody');
+    if (body && body.classList.contains('collapsed')) toggleAddRecipeForm();
+    document.getElementById('addRecipeCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 /**
@@ -1822,6 +1842,9 @@ function saveRecipeEdit() {
     const sourceUrl = sourceUrlInput ? sourceUrlInput.value.trim() : '';
     const affiliateUrl = affiliateUrlInput ? affiliateUrlInput.value.trim() : '';
     
+    const servingsInput2 = document.getElementById('recipeServings');
+    const servings = servingsInput2 ? servingsInput2.value.trim() : '';
+
     // Store data for review before final save, including the ID so we know it's an edit
     pendingRecipeForReview = {
         id: recipeId,
@@ -1830,6 +1853,7 @@ function saveRecipeEdit() {
         tags,
         about,
         instructions,
+        servings,
         sourceType,
         sourceTitle,
         sourcePages,
@@ -1860,8 +1884,10 @@ function cancelRecipeEdit() {
     const affiliateUrlInput = document.getElementById('recipeAffiliateUrl');
     const addRecipeButton = document.getElementById('addRecipeButton');
     
+    const servingsInput = document.getElementById('recipeServings');
     // Clear form
     nameInput.value = '';
+    if (servingsInput) servingsInput.value = '';
     textInput.value = '';
     editingIdInput.value = '';
     if (aboutInput) aboutInput.value = '';
@@ -1933,6 +1959,9 @@ function addRecipe() {
     const sourceUrl = sourceUrlInput ? sourceUrlInput.value.trim() : '';
     const affiliateUrl = affiliateUrlInput ? affiliateUrlInput.value.trim() : '';
     
+    const servingsInputAdd = document.getElementById('recipeServings');
+    const servings = servingsInputAdd ? servingsInputAdd.value.trim() : '';
+
     // Store data for review before final save
     pendingRecipeForReview = {
         name: recipeName,
@@ -1940,6 +1969,7 @@ function addRecipe() {
         tags,
         about,
         instructions,
+        servings,
         sourceType,
         sourceTitle,
         sourcePages,
@@ -2219,6 +2249,7 @@ function confirmIngredientReview() {
         tags,
         about,
         instructions,
+        servings,
         sourceType,
         sourceTitle,
         sourcePages,
@@ -2245,6 +2276,7 @@ function confirmIngredientReview() {
         recipe.tags = tags;
         recipe.about = about || undefined;
         recipe.instructions = instructions || undefined;
+        recipe.servings = servings || undefined;
         recipe.sourceType = sourceType || undefined;
         recipe.sourceTitle = sourceTitle || undefined;
         recipe.sourcePages = sourcePages || undefined;
@@ -2268,11 +2300,16 @@ function confirmIngredientReview() {
             instructionsVisibility: 'hidden'
         };
         
-        // Attach image if one was extracted
+        // Attach image if extracted from image
         if (window._pendingRecipeImageData) {
             recipe.imageData = window._pendingRecipeImageData;
             window._pendingRecipeImageData = null;
         }
+        // Servings: prefer pendingRecipeForReview (typed in form), fall back to image extraction
+        if (!recipe.servings && window._pendingRecipeServings) {
+            recipe.servings = window._pendingRecipeServings;
+        }
+        window._pendingRecipeServings = null;
 
         recipes.push(recipe);
 
@@ -2310,7 +2347,9 @@ function confirmIngredientReview() {
     const addRecipeTitle = document.getElementById('addRecipeTitle');
     const addRecipeDescription = document.getElementById('addRecipeDescription');
     
+    const servingsInput = document.getElementById('recipeServings');
     if (nameInput) nameInput.value = '';
+    if (servingsInput) servingsInput.value = '';
     if (input) input.value = '';
     if (aboutInput) aboutInput.value = '';
     if (instructionsInput) instructionsInput.value = '';
@@ -2668,6 +2707,7 @@ function updateRecipeList() {
                     <div class="recipe-item-name" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${recipe.name}</div>
                     <div style="font-size: 13px; color: #6a6a6a; margin-top: 2px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
                         <span>${recipe.ingredients.length} ingredient${recipe.ingredients.length !== 1 ? 's' : ''}</span>
+                        ${recipe.servings ? `<span><i class="fas fa-users" style="font-size:11px;"></i> Serves ${escapeHtml(String(recipe.servings))}</span>` : ''}
                         ${isActive ? `<span style="color: #2e7d32;">✓ Active${multiplier !== 1 ? ' ×' + multiplier : ''}</span>` : ''}
                         ${getRecipeTagsDisplay(recipe)}
                     </div>
@@ -2689,8 +2729,8 @@ function updateRecipeList() {
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                     <div class="recipe-item-actions">
                         <button class="recipe-action-btn" onclick="showIngredientsModal(${recipe.id})" title="Show Ingredients"><i class="fas fa-list-ul"></i> Ingredients</button>
-                        ${recipe.about ? `<button class="recipe-action-btn" onclick="showAboutModal(${recipe.id})" title="About"><i class="fas fa-info-circle"></i> About</button>` : ''}
-                        ${recipe.instructions ? `<button class="recipe-action-btn" onclick="toggleRecipePreparation(${recipe.id})" title="Preparation"><i class="fas fa-utensils"></i> Prep ${(recipe.sourceTitle || recipe.sourceType || recipe.sourceUrl) && !isAuthenticated() ? '<i class="fas fa-lock" style="font-size:10px; opacity:0.6;"></i>' : ''}</button>` : ''}
+                        ${recipe.about ? `<button class="recipe-action-btn" onclick="showAboutModal(${recipe.id})" title="About"><i class="fas fa-info-circle"></i> About ${!isAuthenticated() ? '<i class="fas fa-lock" style="font-size:10px; opacity:0.6;"></i>' : ''}</button>` : ''}
+                        ${recipe.instructions ? `<button class="recipe-action-btn" onclick="toggleRecipePreparation(${recipe.id})" title="Preparation"><i class="fas fa-utensils"></i> Prep ${!isAuthenticated() ? '<i class="fas fa-lock" style="font-size:10px; opacity:0.6;"></i>' : ''}</button>` : ''}
                         <button class="recipe-action-btn" onclick="editRecipeTags(${recipe.id})" title="Edit Tags"><i class="fas fa-tag"></i> Tags</button>
                         <button class="recipe-action-btn" onclick="editRecipe(${recipe.id})" title="Edit"><i class="fas fa-pen"></i> Edit</button>
                         <button class="recipe-action-btn danger" onclick="removeRecipe(${recipe.id})" title="Remove"><i class="fas fa-trash"></i></button>
@@ -2865,18 +2905,25 @@ function closeIngredientsModal(event) {
 function showAboutModal(recipeId) {
     const recipe = recipes.find(r => r.id === recipeId);
     if (!recipe || !recipe.about) return;
-    
+
+    if (!isAuthenticated()) {
+        openAccessKeyModal(recipeId, 'about');
+        return;
+    }
+
     const modal = document.getElementById('aboutModal');
     const modalTitle = document.getElementById('aboutModalTitle');
     const modalBody = document.getElementById('aboutModalBody');
-    
+
     if (!modal || !modalTitle || !modalBody) return;
-    
+
     modalTitle.textContent = `About: ${recipe.name}`;
-    modalBody.textContent = recipe.about;
+    modalBody.style.whiteSpace = 'pre-wrap';
+    let html = '';
+    if (hasSource) html += `<div style="font-size:12px; color:#2e7d32; margin-bottom:12px;"><i class="fas fa-unlock"></i> Unlocked</div>`;
+    html += escapeHtml(recipe.about);
+    modalBody.innerHTML = html;
     modal.classList.add('active');
-    
-    // Prevent body scroll when modal is open
     document.body.style.overflow = 'hidden';
 }
 
@@ -2915,29 +2962,19 @@ function toggleRecipePreparation(recipeId) {
     
     if (!modal || !modalTitle || !modalBody) return;
     
-    const hasSource = recipe.sourceTitle || recipe.sourceType || recipe.sourceUrl;
-    const explicitVisibility = recipe.instructionsVisibility;
-    const defaultVisibility = hasSource ? 'hidden' : 'full';
-    const visibility = explicitVisibility || defaultVisibility;
     modalTitle.textContent = `Preparation: ${recipe.name}`;
 
-    // If hidden but user is authenticated, show anyway
-    const canSeeProtected = isAuthenticated();
-
-    if (recipe.instructions && (visibility === 'full' || canSeeProtected)) {
-        modalBody.style.whiteSpace = 'pre-wrap';
-        modalBody.textContent = recipe.instructions;
-        if (canSeeProtected && visibility !== 'full') {
-            modalBody.innerHTML = `<div style="font-size:12px; color:#2e7d32; margin-bottom:12px;"><i class="fas fa-unlock"></i> Unlocked</div><pre style="white-space:pre-wrap; font-family:inherit; margin:0;">${escapeHtml(recipe.instructions)}</pre>`;
-        }
-    } else if (visibility === 'hidden' && !canSeeProtected) {
-        // Prompt for access key
+    if (!isAuthenticated()) {
         modal.classList.remove('active');
         document.body.style.overflow = '';
-        openAccessKeyModal(recipe.id);
+        openAccessKeyModal(recipe.id, 'prep');
         return;
+    }
+
+    if (recipe.instructions) {
+        modalBody.innerHTML = `<div style="font-size:12px; color:#2e7d32; margin-bottom:12px;"><i class="fas fa-unlock"></i> Unlocked</div><pre style="white-space:pre-wrap; font-family:inherit; margin:0;">${escapeHtml(recipe.instructions)}</pre>`;
     } else {
-        // Recipe is from a book/website — direct to source rather than reproducing it
+        // No instructions stored — direct to source
         const parts = [];
 
         parts.push(
@@ -6411,6 +6448,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateSelectedIngredientsDisplay();
     renderActiveFilters();
     updateDayPlanner();
+    updateFormLockState();
 
     // Recipe Assistant (beta)
     initRecipeAssistant();
@@ -6636,6 +6674,24 @@ function clearAllFilters() {
     updateRecipeList();
 }
 
+function updateFormLockState() {
+    const authed = isAuthenticated();
+    const aboutTA = document.getElementById('recipeAbout');
+    const prepTA = document.getElementById('recipeInstructions');
+    const aboutLock = document.getElementById('aboutLockBadge');
+    const aboutUnlock = document.getElementById('aboutUnlockBadge');
+    const prepLock = document.getElementById('prepLockBadge');
+    const prepUnlock = document.getElementById('prepUnlockBadge');
+
+    if (aboutTA) aboutTA.disabled = !authed;
+    if (prepTA) prepTA.disabled = !authed;
+
+    if (aboutLock) aboutLock.style.display = authed ? 'none' : 'inline-flex';
+    if (aboutUnlock) aboutUnlock.style.display = authed ? 'inline-flex' : 'none';
+    if (prepLock) prepLock.style.display = authed ? 'none' : 'inline-flex';
+    if (prepUnlock) prepUnlock.style.display = authed ? 'inline-flex' : 'none';
+}
+
 function closeActionsMenu() {
     const menu = document.querySelector('.rc-actions-menu');
     if (menu) menu.removeAttribute('open');
@@ -6663,10 +6719,12 @@ function isAuthenticated() {
     return token && Date.now() / 1000 < expires;
 }
 
-let _pendingPrepRecipeId = null;
+let _pendingAuthRecipeId = null;
+let _pendingAuthModal = null; // 'prep' or 'about'
 
-function openAccessKeyModal(recipeId) {
-    _pendingPrepRecipeId = recipeId;
+function openAccessKeyModal(recipeId, target = 'prep') {
+    _pendingAuthRecipeId = recipeId;
+    _pendingAuthModal = target;
     const modal = document.getElementById('accessKeyModal');
     const input = document.getElementById('accessKeyInput');
     const error = document.getElementById('accessKeyError');
@@ -6680,7 +6738,8 @@ function closeAccessKeyModal(event) {
     if (event && event.target && event.target.id !== 'accessKeyModal') return;
     const modal = document.getElementById('accessKeyModal');
     if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
-    _pendingPrepRecipeId = null;
+    _pendingAuthRecipeId = null;
+    _pendingAuthModal = null;
 }
 
 async function submitAccessKey() {
@@ -6707,11 +6766,18 @@ async function submitAccessKey() {
             localStorage.setItem(AUTH_EXPIRES_KEY, data.expires);
             const modal = document.getElementById('accessKeyModal');
             if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
-            // Open the prep modal for the pending recipe
-            if (_pendingPrepRecipeId !== null) {
-                const id = _pendingPrepRecipeId;
-                _pendingPrepRecipeId = null;
-                toggleRecipePreparation(id);
+            updateFormLockState();
+            updateRecipeList();
+
+            // Open the intended modal for the pending recipe
+            if (_pendingAuthRecipeId !== null) {
+                const id = _pendingAuthRecipeId;
+                const target = _pendingAuthModal;
+                _pendingAuthRecipeId = null;
+                _pendingAuthModal = null;
+                if (target === 'about') showAboutModal(id);
+                else if (target === 'prep') toggleRecipePreparation(id);
+                // 'edit' just unlocks the form fields in place
             }
         } else {
             if (error) { error.textContent = data.error || 'Incorrect key.'; error.style.display = 'block'; }
@@ -6874,11 +6940,10 @@ function fillRecipeFormFromExtraction(data) {
     const nameInput = document.getElementById('recipeName');
     if (nameInput && data.name) nameInput.value = data.name;
 
-    // Servings appended to description
-    let desc = data.description || '';
-    if (data.servings) desc = `Serves ${data.servings}${desc ? '\n\n' + desc : ''}`;
+    // Store servings separately; keep description clean
+    if (data.servings) window._pendingRecipeServings = data.servings;
     const aboutInput = document.getElementById('recipeAbout');
-    if (aboutInput) aboutInput.value = desc;
+    if (aboutInput) aboutInput.value = data.description || '';
 
     // Instructions
     const instrInput = document.getElementById('recipeInstructions');

@@ -19,26 +19,26 @@
   },
   {
     "date": "2020-09",
-    "label": "The Steel Years",
+    "label": "2020 — The Steel Years",
     "text": "All the while, Julian was quietly collecting steel — from construction sites, from trampolines — holding a vision of a geodesic dome.",
     "image": null
   },
   {
     "date": "2022-05",
-    "label": "May 15, 2022 — AGNIS is Born",
+    "label": "2022 — AGNIS is Born",
     "text": "Fabrication complete, the dome was assembled for the first time. That vision became real, and AGNIS was born.",
     "image": "images/DomeComplete.JPEG",
     "imagePosition": "top"
   },
   {
     "date": "2022-07",
-    "label": "July 2022 — Samadhi Summer",
+    "label": "2022 — Samadhi Summer",
     "text": "AGNIS made its first appearance at Samadhi Summer.",
     "image": null
   },
   {
     "date": "2022-08",
-    "label": "August 2022 — Heart Expansion",
+    "label": "2022 — Heart Expansion",
     "text": "The dome joins Heart Expansion in Duvall for the first time.",
     "image": null
   },
@@ -68,7 +68,7 @@
   },
   {
     "date": "2024-08",
-    "label": "August 2024 — Heart Expansion",
+    "label": "2024 — Heart Expansion",
     "text": "The dome rejoins Heart Expansion in Duvall.",
     "image": null
   },
@@ -80,7 +80,7 @@
   },
   {
     "date": "2025-06",
-    "label": "June 2025 — Birthday",
+    "label": "2025 — Birthday",
     "text": "A birthday celebration and the first test of a weather-resistant covering system, bringing AGNIS one step closer to being truly all-season.",
     "image": "images/TarpCoveringJune2025.jpg"
   },
@@ -89,6 +89,12 @@
     "label": "2025 — Acro Campout",
     "text": "AGNIS returns to Acro Campout for its second year.",
     "image": "images/AcroCampoutAug2025.jpg"
+  },
+  {
+    "date": "2025-08",
+    "label": "2025 — Little Big Fest",
+    "text": "AGNIS attended Little Big Fest.",
+    "image": "images/LBF2025.jpg"
   },
   {
     "date": "2025-09",
@@ -104,14 +110,38 @@
   },
   {
     "date": "2025-10",
-    "label": "October 2025 — Private Wedding",
+    "label": "2025 — Private Wedding",
     "text": "AGNIS appeared at its first wedding.",
     "image": null
   },
   {
     "date": "2026-06",
-    "label": "June 2026 — Birthday",
+    "label": "2026 — Birthday",
     "text": "A new milestone: AGNIS floats for the first time on a floating trampoline, transforming it into a fully amphibious structure.",
     "image": "images/FloatingDome.jpeg"
+  },
+  {
+    "date": "2026-06-09",
+    "label": "2026 — Goodenough Community Summer Gathering",
+    "text": "AGNIS joins the Goodenough Community Summer Gathering.",
+    "image": null
+  },
+  {
+    "date": "2026-06-18",
+    "label": "2026 — Convergence of Intentional Communities",
+    "text": "AGNIS attends the Convergence of Intentional Communities.",
+    "image": null
+  },
+  {
+    "date": "2026-08-14",
+    "label": "2026 — Little Big Fest",
+    "text": "AGNIS returns to Little Big Fest.",
+    "image": "images/LandAGNIS.jpg"
+  },
+  {
+    "date": "2026-08-30",
+    "label": "2026 — Acro Campout",
+    "text": "AGNIS returns to Acro Campout.",
+    "image": "images/NightWaterAGNIS.jpg"
   }
 ]
