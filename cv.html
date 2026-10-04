@@ -310,6 +310,8 @@ function build() {
     sqs.push(q);
   }
   geo = { W, H, W0, H0, sqs, rects };
+  cancelAnimationFrame(anim);
+  world.style.transform = "";
   view = null;
   render();
 }
@@ -376,13 +378,15 @@ function fitText() {
   if (view) draw(view);
 }
 
-function draw(v) {
+// `also` is a second view: during a zoom the layout is fixed at one view and the world is scaled, so anything visible at either end stays drawn.
+function draw(v, also) {
   const { W, H, sqs } = geo;
   const big = 4 * Math.max(W, H);
+  const gone = (q, u) => { const x = q.x * u.sc + u.tx, y = q.y * u.sc + u.ty, s = q.s * u.sc; return s < 1.5 || x > W || y > H || x + s < 0 || y + s < 0; };
   sqs.forEach((q, i) => {
     const e = els[i];
     const x = q.x * v.sc + v.tx, y = q.y * v.sc + v.ty, s = q.s * v.sc;
-    const hide = s < 1.5 || x > W || y > H || x + s < 0 || y + s < 0;
+    const hide = gone(q, v) && (!also || gone(q, also));
     for (const el of [e.bg, e.svg, e.fg]) el.style.display = hide ? "none" : "";
     if (hide) return;
     const pos = { left: x + "px", top: y + "px", width: s + "px", height: s + "px" };
@@ -394,15 +398,26 @@ function draw(v) {
     path.setAttribute("stroke-width", Math.max(s * 0.005, 0.6));
     const font = e.font * e.ratio * v.sc;
     Object.assign(e.fg.style, pos, { padding: s * 0.07 + "px", fontSize: font + "px", "--ow": Math.max(s * 0.0048, 2) + "px" });
-    e.fg.classList.toggle("tiny", font < 1.5 || s > big);
+    const tiny = u => e.font * e.ratio * u.sc < 1.5 || q.s * u.sc > big;
+    e.fg.classList.toggle("tiny", tiny(v) && (!also || tiny(also)));
   });
 }
 
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function animateTo(b) {
   cancelAnimationFrame(anim);
+  world.style.transform = "";
   const a = view, { W, H } = geo;
   if (!a || matchMedia("(prefers-reduced-motion: reduce)").matches) { view = b; draw(b); return; }
+  // Lay text out once, at the more zoomed-in end, and scale the whole world between the two views. Re-laying text out every frame makes it shake on phones. Very long jumps fall back to per-frame layout.
+  const ref = a.sc > b.sc ? a : b, far = ref === a ? b : a;
+  const glide = ref.sc / far.sc <= 8;
+  const show = v => {
+    if (!glide) { draw(v); return; }
+    const k = v.sc / ref.sc;
+    world.style.transform = `translate(${v.tx - k * ref.tx}px, ${v.ty - k * ref.ty}px) scale(${k})`;
+  };
+  if (glide) { world.style.transformOrigin = "0 0"; draw(ref, far); show(a); }
   const ca = { x: (W / 2 - a.tx) / a.sc, y: (H / 2 - a.ty) / a.sc }, cb = { x: (W / 2 - b.tx) / b.sc, y: (H / 2 - b.ty) / b.sc };
   const la = Math.log(a.sc), lb = Math.log(b.sc), t0 = performance.now();
   const step = now => {
@@ -412,8 +427,8 @@ function animateTo(b) {
     const k = Math.abs(lb - la) > 1e-6 ? (1 / sc - 1 / a.sc) / (1 / b.sc - 1 / a.sc) : u;
     const cx = ca.x + (cb.x - ca.x) * k, cy = ca.y + (cb.y - ca.y) * k;
     view = t < 1 ? { sc, tx: W / 2 - cx * sc, ty: H / 2 - cy * sc } : b;
-    draw(view);
-    if (t < 1) anim = requestAnimationFrame(step);
+    if (t < 1) { show(view); anim = requestAnimationFrame(step); }
+    else { world.style.transform = ""; draw(b); }
   };
   anim = requestAnimationFrame(step);
 }
