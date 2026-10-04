@@ -374,6 +374,8 @@ function fitText() {
     el.style.fontSize = fs + "px";
     while (el.scrollHeight > el.clientHeight + 1 && r > 0.55) { r *= 0.94; el.style.fontSize = fs * r + "px"; }
     e.ratio = r;
+    // Each square's text is laid out once, at the size it has when focused, and only scaled after that, so lines never re-wrap as the view zooms.
+    e.cs = f.sq; e.cfont = fs * r; e.fsc = f.sc;
   });
   if (view) draw(view);
 }
@@ -396,8 +398,9 @@ function draw(v, also) {
     const path = e.svg.firstChild;
     path.setAttribute("d", arcPath(s, q.d));
     path.setAttribute("stroke-width", Math.max(s * 0.005, 0.6));
-    const font = e.font * e.ratio * v.sc;
-    Object.assign(e.fg.style, pos, { padding: s * 0.07 + "px", fontSize: font + "px", "--ow": Math.max(s * 0.0048, 2) + "px" });
+    const k = v.sc / e.fsc;
+    Object.assign(e.fg.style, { left: pos.left, top: pos.top, width: e.cs + "px", height: e.cs + "px", padding: e.cs * 0.07 + "px", fontSize: e.cfont + "px", transformOrigin: "0 0", transform: `scale(${k})` });
+    e.fg.style.setProperty("--ow", Math.max(s * 0.0048, 2) / k + "px");
     const tiny = u => e.font * e.ratio * u.sc < 1.5 || q.s * u.sc > big;
     e.fg.classList.toggle("tiny", tiny(v) && (!also || tiny(also)));
   });
