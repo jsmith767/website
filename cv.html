@@ -44,13 +44,14 @@ body {
 .app { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
 
 .bar {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px 12px; flex-wrap: wrap;
   padding-block: 10px; padding-inline: 16px; border-bottom: 1px solid var(--line);
 }
 .who { display: flex; align-items: baseline; gap: 10px; min-width: 0; flex-wrap: wrap; }
 .who strong { font-family: var(--f-display); font-weight: 400; font-size: 20px; letter-spacing: .01em; }
 .who span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.actions { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.who { flex-shrink: 0; }
 button, a.btn, select {
   font: 500 13px/1 var(--f-body); color: var(--ink); background: transparent;
   border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; cursor: pointer;
@@ -206,7 +207,7 @@ const ALL_LEVELS = [
     "What kind of trust grows when we meet each other's needs directly, without treating anyone's needs as more important than anyone else's?",
     "How do I keep unlearning the white supremacy, patriarchy, and capitalism I was raised inside, and decolonize the way I live, relate, and hold space?",
     "How can psychedelics and touch meet each other with integrity?",
-    "What does it mean to be religious but not spiritual?"
+    "What does it mean to be religious but not spiritual, devoted to practice and community without claiming to know what lies beyond them?"
   ]},
   { key: "parts", label: "Parts", years: "Always", core: {
     line: "No single core. Many parts, in relationship.",
