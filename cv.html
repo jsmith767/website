@@ -69,6 +69,7 @@ svg.arc { position: absolute; pointer-events: none; overflow: visible; }
 svg.arc path { fill: none; stroke: var(--gold); stroke-linecap: round; opacity: .7; }
 .sq { position: absolute; box-sizing: border-box; overflow: hidden; line-height: 1.35; }
 .sq.go { cursor: zoom-in; }
+.sq.back { cursor: zoom-out; }
 .sq.tiny > * { display: none; }
 .sq.go:hover { background: color-mix(in oklab, var(--accent) 7%, transparent); }
 .sq:focus-visible { outline: var(--ow) solid var(--accent); outline-offset: calc(var(--ow) * -1); }
@@ -89,7 +90,7 @@ svg.arc path { fill: none; stroke: var(--gold); stroke-linecap: round; opacity: 
 .links { display: flex; flex-wrap: wrap; gap: .3em 1em; margin-top: .15em; font-family: var(--f-mono); font-size: .72em; }
 .links a { color: var(--gold); text-decoration: underline; text-decoration-thickness: .08em; text-underline-offset: .2em; }
 .links a:hover { color: var(--accent); }
-.sq.go .links a { pointer-events: none; }
+.sq.go .links a, .sq.back .links a { pointer-events: none; }
 .qs { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: .9em; font-family: var(--f-display); font-style: italic; font-weight: 300; font-size: 1.3em; line-height: 1.3; }
 .qs li::marker { font-family: var(--f-mono); font-style: normal; font-size: .6em; color: var(--gold); }
 .core-line { font-family: var(--f-display); font-weight: 300; font-size: 2.4em; line-height: 1.1; margin: .2em 0 .5em; }
@@ -324,7 +325,9 @@ function focusFor(i) {
   let sc = Math.min(aw / R.w, ah / R.h);
   let sq = sc * q.s;
   const sqMax = Math.min(aw, ah);
-  if (sq < 360 && sqMax > sq) { sq = Math.max(sq, Math.min(sqMax, 360)); sc = sq / q.s; }
+  // Every step should zoom: when the remaining rectangle runs against the screen's long side, fitting all of it would leave this square no bigger than the last one, so let it take most of the short side and leave the next square peeking in.
+  const sqMin = Math.min(sqMax, Math.max(360, 0.8 * sqMax));
+  if (sq < sqMin) { sq = sqMin; sc = sq / q.s; }
   let tx = (W - R.w * sc) / 2 - R.x * sc;
   let ty = (H - R.h * sc) / 2 - R.y * sc;
   const qx = q.x * sc + tx, qy = q.y * sc + ty, qs = q.s * sc;
@@ -443,6 +446,7 @@ function apply(animate) {
     const i = +el.dataset.i;
     const go = i > focus;
     el.classList.toggle("go", go);
+    el.classList.toggle("back", i < focus);
     el.tabIndex = go ? 0 : -1;
     el.querySelectorAll("a").forEach(a => { a.tabIndex = i === focus ? 0 : -1; });
     if (go) { el.setAttribute("role", "button"); el.setAttribute("aria-label", "Go deeper to " + (i < CONTENT ? LEVELS[i].label : "the next square")); }
@@ -454,9 +458,28 @@ function apply(animate) {
   if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "nearest" });
 }
 
-function go(i) {
+// The browser's Back button retraces the zoom. `trail` mirrors the history entries this page has added; going deeper adds one, and stepping out to where you just were goes back instead of adding another.
+let trail = [0], pos = 0;
+const urlFor = i => location.pathname + location.search + (i > 0 && i < CONTENT ? "#" + LEVELS[i].key : "");
+function record(i, was) {
+  try {
+    if (i < was && pos > 0 && trail[pos - 1] === i) { history.back(); return true; }
+    if (i > was) { trail.length = pos + 1; trail.push(i); pos++; history.pushState({ i, n: pos }, "", urlFor(i)); }
+    else { trail[pos] = i; history.replaceState({ i, n: pos }, "", urlFor(i)); }
+  } catch (err) {}
+  return false;
+}
+window.addEventListener("popstate", e => {
+  const st = e.state;
+  let i = st && typeof st.i === "number" ? st.i : Math.max(0, LEVELS.findIndex(L => L.key === location.hash.slice(1)));
+  if (st && typeof st.n === "number") { pos = st.n; trail[pos] = i; }
+  go(i, true);
+});
+
+function go(i, fromHistory) {
   i = Math.max(0, Math.min(N - 1, i));
   if (i === focus) return;
+  if (!fromHistory && record(i, focus)) return;
   focus = i;
   apply(true);
 }
@@ -464,7 +487,7 @@ function go(i) {
 nav.innerHTML = LEVELS.map((L, i) => `<button type="button" class="chip" data-i="${i}"><span>${esc(L.label)}</span><small>${phiPow(i)} · ${esc(L.years)}</small></button>`).join("");
 nav.addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) go(+b.dataset.i); });
 outBtn.addEventListener("click", () => go(focus - 1));
-world.addEventListener("click", e => { const s = e.target.closest(".sq.go"); if (s) { e.preventDefault(); go(+s.dataset.i); } });
+world.addEventListener("click", e => { const s = e.target.closest(".sq.go, .sq.back"); if (s) { e.preventDefault(); go(+s.dataset.i); } });
 world.addEventListener("keydown", e => {
   const s = e.target.closest(".sq.go");
   if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); go(+s.dataset.i); }
@@ -506,6 +529,8 @@ document.title = "Julian Smith · " + LENS.sub;
 const hashKey = (location.hash || "").slice(1);
 const fromHash = LEVELS.findIndex(L => L.key === hashKey);
 if (fromHash > 0) focus = fromHash;
+trail = [focus];
+try { history.replaceState({ i: focus, n: 0 }, "", urlFor(focus)); } catch (err) {}
 
 build();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitText(); });
