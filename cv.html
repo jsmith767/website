@@ -311,7 +311,7 @@ function build() {
   }
   geo = { W, H, W0, H0, sqs, rects };
   cancelAnimationFrame(anim);
-  world.style.transform = "";
+  world.style.transform = ""; world.style.willChange = "";
   view = null;
   render();
 }
@@ -406,7 +406,7 @@ function draw(v, also) {
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 function animateTo(b) {
   cancelAnimationFrame(anim);
-  world.style.transform = "";
+  world.style.transform = ""; world.style.willChange = "";
   const a = view, { W, H } = geo;
   if (!a || matchMedia("(prefers-reduced-motion: reduce)").matches) { view = b; draw(b); return; }
   // Lay text out once, at the more zoomed-in end, and scale the whole world between the two views. Re-laying text out every frame makes it shake on phones. Very long jumps fall back to per-frame layout.
@@ -417,7 +417,8 @@ function animateTo(b) {
     const k = v.sc / ref.sc;
     world.style.transform = `translate(${v.tx - k * ref.tx}px, ${v.ty - k * ref.ty}px) scale(${k})`;
   };
-  if (glide) { world.style.transformOrigin = "0 0"; draw(ref, far); show(a); }
+  // will-change keeps one full-resolution picture of that layout for the whole zoom, so it does not blur and then sharpen.
+  if (glide) { world.style.transformOrigin = "0 0"; world.style.willChange = "transform"; draw(ref, far); show(a); }
   const ca = { x: (W / 2 - a.tx) / a.sc, y: (H / 2 - a.ty) / a.sc }, cb = { x: (W / 2 - b.tx) / b.sc, y: (H / 2 - b.ty) / b.sc };
   const la = Math.log(a.sc), lb = Math.log(b.sc), t0 = performance.now();
   const step = now => {
@@ -428,7 +429,7 @@ function animateTo(b) {
     const cx = ca.x + (cb.x - ca.x) * k, cy = ca.y + (cb.y - ca.y) * k;
     view = t < 1 ? { sc, tx: W / 2 - cx * sc, ty: H / 2 - cy * sc } : b;
     if (t < 1) { show(view); anim = requestAnimationFrame(step); }
-    else { world.style.transform = ""; draw(b); }
+    else { world.style.transform = ""; world.style.willChange = ""; draw(b); }
   };
   anim = requestAnimationFrame(step);
 }
