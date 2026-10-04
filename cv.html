@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Julian Smith · CV</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap">
+<style>
+/* Layout: a golden-ratio tiling that fills the stage; each square is one layer of the CV, spiralling inward from now to roots. Clicking zooms the world so the chosen square fills the view. */
+:root {
+  --bg: #eceee8;
+  --surface: #f7f8f4;
+  --ink: #1b231f;
+  --muted: #59635d;
+  --line: #b8bfb6;
+  --accent: #2c6855;
+  --gold: #a9771a;
+  --f-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+    --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+  --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+}
+[hidden] { display: none !important; }
+html, body { height: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 14px; overflow: hidden;
+  -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+}
+.app { height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+
+.bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 10px; padding-inline: 16px; border-bottom: 1px solid var(--line);
+}
+.who { display: flex; align-items: baseline; gap: 10px; min-width: 0; flex-wrap: wrap; }
+.who strong { font-family: var(--f-display); font-weight: 400; font-size: 20px; letter-spacing: .01em; }
+.who span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.actions { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
+button, a.btn, select {
+  font: 500 13px/1 var(--f-body); color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px; cursor: pointer;
+  text-decoration: none;
+}
+button:hover:not(:disabled), a.btn:hover, select:hover { border-color: var(--accent); color: var(--accent); }
+button:disabled { opacity: .4; cursor: default; }
+button:focus-visible, a.btn:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+#stage { position: relative; overflow: hidden; min-height: 0; touch-action: manipulation; }
+#world { position: absolute; inset: 0; }
+
+.sqbg { position: absolute; box-sizing: border-box; border-style: solid; border-color: var(--line); }
+svg.arc { position: absolute; pointer-events: none; overflow: visible; }
+svg.arc path { fill: none; stroke: var(--gold); stroke-linecap: round; opacity: .7; }
+.sq { position: absolute; box-sizing: border-box; overflow: hidden; line-height: 1.35; }
+.sq.go { cursor: zoom-in; }
+.sq.tiny > * { display: none; }
+.sq.go:hover { background: color-mix(in oklab, var(--accent) 7%, transparent); }
+.sq:focus-visible { outline: var(--ow) solid var(--accent); outline-offset: calc(var(--ow) * -1); }
+
+.eyebrow {
+  display: flex; justify-content: space-between; gap: 1em;
+  font-family: var(--f-mono); font-size: .7em; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); padding-bottom: .7em; margin-bottom: 1em;
+  border-bottom: .09em solid var(--line); font-variant-numeric: tabular-nums;
+}
+.eyebrow b { color: var(--gold); font-weight: 500; }
+.lt { font-family: var(--f-display); font-weight: 300; font-size: 2.2em; line-height: 1.05; margin: 0 0 .55em; text-wrap: balance; }
+.items { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .8em; }
+.items li { display: flex; flex-direction: column; gap: .15em; }
+.it { font-weight: 500; }
+.meta { font-family: var(--f-mono); font-size: .74em; color: var(--accent); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
+.note { font-size: .86em; color: var(--muted); }
+.links { display: flex; flex-wrap: wrap; gap: .3em 1em; margin-top: .15em; font-family: var(--f-mono); font-size: .72em; }
+.links a { color: var(--gold); text-decoration: underline; text-decoration-thickness: .08em; text-underline-offset: .2em; }
+.links a:hover { color: var(--accent); }
+.sq.go .links a { pointer-events: none; }
+.qs { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: .9em; font-family: var(--f-display); font-style: italic; font-weight: 300; font-size: 1.3em; line-height: 1.3; }
+.qs li::marker { font-family: var(--f-mono); font-style: normal; font-size: .6em; color: var(--gold); }
+.core-line { font-family: var(--f-display); font-weight: 300; font-size: 2.4em; line-height: 1.1; margin: .2em 0 .5em; }
+.core-words { font-family: var(--f-mono); font-size: .85em; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 1.2em; line-height: 1.7; }
+.joke { font-family: var(--f-display); font-style: italic; font-weight: 300; font-size: 2.6em; line-height: 1.1; margin: 1.2em 0 0; }
+.plain .qs { font-size: 18px; }
+.plain .core-line { font-size: 28px; }
+.plain .core-words { font-size: 13px; }
+.name { font-family: var(--f-display); font-weight: 300; font-size: 3.8em; line-height: 1; margin: .15em 0 .3em; text-wrap: balance; }
+.role { margin: 0 0 1.2em; color: var(--muted); }
+.lede { margin: 0 0 1.2em; font-size: 1.08em; line-height: 1.5; max-width: 30em; }
+.hint { margin: 0; font-family: var(--f-mono); font-size: .74em; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+
+.levels {
+  display: flex; gap: 6px; overflow-x: auto; padding-block: 10px; padding-inline: 16px;
+  border-top: 1px solid var(--line); scrollbar-width: thin;
+}
+.chip { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 7px 10px; flex-shrink: 0; }
+.chip small { font-family: var(--f-mono); font-size: 10px; font-weight: 400; color: var(--muted); letter-spacing: .04em; }
+.chip[aria-current="true"], .chip[aria-current="true"]:hover:not(:disabled) { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip[aria-current="true"] small { color: var(--bg); opacity: .8; }
+
+.plain { position: fixed; inset: 0; background: var(--bg); overflow-y: auto; z-index: 10; }
+.plain-in { max-width: 720px; margin: 0 auto; padding-block: 24px 48px; padding-inline: 16px; }
+.plain-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.plain h1 { font-family: var(--f-display); font-weight: 300; font-size: 40px; margin: 0; }
+.plain .role { font-size: 15px; }
+.plain section { padding-block: 18px; border-top: 1px solid var(--line); }
+.plain h2 { display: flex; justify-content: space-between; gap: 12px; font-family: var(--f-display); font-weight: 400; font-size: 24px; margin: 0 0 12px; }
+.plain h2 span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); font-weight: 400; align-self: center; }
+.plain .items { font-size: 15px; }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="bar">
+    <div class="who"><strong>Julian Smith</strong><span id="sub">CV</span></div>
+    <div class="actions">
+      <a class="btn" href="index.html">Home</a>
+      <a class="btn" href="publications.html">Publications</a>
+      <select id="lens" aria-label="View this CV as"></select>
+      <button id="out" type="button" disabled>Zoom out</button>
+      <button id="listBtn" type="button">Read as a list</button>
+    </div>
+  </header>
+  <main id="stage" aria-label="Golden spiral CV. Each square is one layer deeper."><div id="world"></div></main>
+  <nav class="levels" id="nav" aria-label="Layers"></nav>
+</div>
+
+<div class="plain" id="plain" hidden>
+  <div class="plain-in" id="plainIn"></div>
+</div>
+
+<script>
+const SG = "https://www.sacredgarden.life/ordination";
+const ALL_LEVELS = [
+  { key: "now", label: "Now", years: "2026" },
+  { key: "ceremony", label: "Ceremony", years: "2023–2026", items: [
+    ["Pathways Program", "Sacred Garden Community · 2026", "Advanced training for facilitators serving within community", [["Pathways", SG]]],
+    ["Psilocybin Facilitation Training", "Synaptic Institute · 2023–24", "Qualifies for licensure under Oregon's Measure 109", [["Synaptic", "https://www.synaptic.institute"]]],
+    ["Working With Groups", "School of Consent · 2025", "The Wheel of Consent in facilitated group events", [["School of Consent", "https://www.schoolofconsent.org/wwg"]]],
+    ["10-day silent Vipassana course", "Goenka tradition · 2024", "", [["Vipassana", "https://www.dhamma.org/en-US/about/vipassana"]]]
+  ]},
+  { key: "consent", label: "Consent & touch", years: "2023–now", items: [
+    ["Founder and facilitator", "Vulnerability Whore · 2024–now", "Somatically grounded workshops on wants, limits, and consent", [["vulnerabilitywhore.com", "https://vulnerabilitywhore.com"]]],
+    ["Founder and professional cuddler", "CuddleSmith and Cuddlist · 2023–now", "Platonic physical and emotional connection", [["CuddleSmith", "https://cuddlesmith.com/cuddling.html"], ["Cuddlist profile", "https://cuddlist.com/juliansmith/"]]],
+    ["Like A Pro: the Wheel of Consent for practitioners", "School of Consent · 2023", "", [["School of Consent", "https://www.schoolofconsent.org/like-a-pro"]]],
+    ["Professional cuddler training", "Cuddlist · 2023", "", [["Cuddlist training", "https://training.cuddlist.com/"]]]
+  ]},
+  { key: "creation", label: "Creation", years: "Now", items: [
+    ["Builder of AGNIS", "Geodesic structure · reclaimed materials", "A venue for gathering, ceremony, and creative expression at the meeting of land and water", [["AGNIS", "https://cuddlesmith.com/AGNIS"]]],
+    ["Websites I build", "CuddleSmith · Vulnerability Whore · Radical Communal Groups · julian-smith.org", "For my own work and for the groups I organize with", [["cuddlesmith.com", "https://cuddlesmith.com"], ["vulnerabilitywhore.com", "https://vulnerabilitywhore.com"], ["radicalcommunalgroups.org", "https://radicalcommunalgroups.org"], ["julian-smith.org", "https://julian-smith.org"]]],
+    ["Mutual aid visioning", "Group Income · Humus", "Two designs for communities pooling what they have so that everyone prospers", [["Group Income", "GroupIncome/index.html"], ["Humus", "Humus/index.html"]]],
+    ["Recipe Consolidator", "Meal-planning tool", "Merges several recipes into one shopping list", [["Try it", "RecipeConsolidator/index.html"]]]
+  ]},
+  { key: "community", label: "Community", years: "Now", items: [
+    ["The Goodenough Community", "Tahuya, WA", "A 50-year-old intentional community devoted to deep relationship and regenerative community", [["goodenough.org", "https://www.goodenough.org/about"]]],
+    ["Sacred Garden Community", "Member and facilitator", "Serving within community, guided by care, respect, and trust", [["Sacred Garden", "https://www.sacredgarden.life/about"]]],
+    ["Radical Communal Groups", "Organizing group · Western Washington", "A network for communal living, income sharing, and mutual aid", [["radicalcommunalgroups.org", "https://radicalcommunalgroups.org"]]]
+  ]},
+  { key: "wilderness", label: "Wilderness", years: "2010–2025", items: [
+    ["Wilderness First Responder, including CPR", "NOLS · recertified 2025", "", [["NOLS", "https://www.nols.edu/about/about/"]]],
+    ["Search and rescue volunteer, Emergency Medical Responder", "Eugene, OR · 2017–19"],
+    ["Search and rescue volunteer", "Palouse Clearwater SAR · 2010–11"],
+    ["Professional tracking", "Joel Hardin Tracking Services · 2011"],
+    ["Permaculture seminar with Sepp Holzer", "Dayton, MT · 2012"],
+    ["Ski instructor", "Eldora Mountain Resort · 2012–13"]
+  ]},
+  { key: "science", label: "Science", years: "2010–now", items: [
+    ["PhD in Physics", "University of Oregon · 2020", "Biophysics and neuroscience: how neurons use fractal geometry to optimize their connections", [["Dissertation", "https://scholarsbank.uoregon.edu/items/c2741fd2-a1fd-48ef-9862-eb4f106fed29"]]],
+    ["More than a dozen peer-reviewed papers", "Scientific Reports · PLOS ONE · Frontiers", "", [["All publications", "publications.html"]]],
+    ["Fractal analysis consultant", "Fractals Research · 2015–20", "Pollock authentication; award-winning fractal carpets with the Mohawk Group", [["Relaxing Floors", "https://www.mohawkgroup.com/carpet/collections/relaxing-floors"]]],
+    ["Founder, CloudSmiths", "AI art authentication · 2021–now", "Machine learning that tells authentic Pollocks from imitations", [["PLOS ONE paper", "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0302962"]]],
+    ["VP of Data Science and Engineering", "Sipscience · 2020–22"]
+  ]},
+  { key: "teaching", label: "Teaching", years: "2009–2015", items: [
+    ["Orientation Committee co-chair", "UO Physics", "Trained new teaching assistants and ran first-year orientation"],
+    ["Science Literacy Fellow and lab instructor", "University of Oregon · Washington State"],
+    ["Communicating Science Workshop", "Alan Alda Center · 2014"],
+    ["Math instructor and volunteer mentor", "Underberg, South Africa · 2012"],
+    ["Physics and math tutor", "Pullman and Boulder · 2009–13"]
+  ]},
+  { key: "roots", label: "Roots", years: "Always", items: [
+    ["Grew up on Vashon Island", "Puget Sound, WA"],
+    ["BS in Physics, cum laude", "Washington State University · 2011", "Minor in Mathematics"],
+    ["Nature", "Backpacking · alpine touring · mountaineering", "And barefoot wandering"],
+    ["Movement and play", "Partner acrobatics · juggling"],
+    ["Travel", "30 countries · 2 years on the road · hitchhiking", "The Americas, Europe, and Africa; conversational German and Spanish"],
+    ["Culture", "Reading · film · theater"]
+  ]},
+  { key: "questions", label: "Questions I'm holding", years: "Open", questions: [
+    "How do we parent beyond power, raising children through relationship rather than control?",
+    "What would it take to share income and resources within our community, across our bioregion, and beyond, so that no one goes without?",
+    "What kind of trust grows when we meet each other's needs directly?",
+    "How do I keep unlearning the white supremacy, patriarchy, and capitalism I was raised inside, and decolonize the way I live, relate, and hold space?"
+  ]},
+  { key: "parts", label: "Parts", years: "Always", core: {
+    line: "No single core. Many parts, in relationship.",
+    words: ["Care", "Respect", "Trust", "Compassion", "Curiosity"],
+    note: "Each square from here holds one of my parts. Keep going."
+  }}
+];
+const TAIL = ["The part that wants to keep going.", "The part that's sure it's φ all the way down.", "The part that needs this to be the bottom.", "The part that knows it isn't.", "The part that just wants to say hi."];
+// A lens is the same set of layers in a different order, with its own framing. Layer content is written once, above.
+const HERE = " · Tahuya, WA · he/they";
+const DEEPER = " Each square inside this one goes a layer further back into what the work grows from.";
+const LENSES = {
+  general: { name: "General", sub: "CV",
+    role: "Facilitator, builder, and physicist" + HERE,
+    lede: "A physicist by training who now works in facilitation, touch, and community." + DEEPER,
+    order: ["ceremony", "consent", "creation", "community", "science", "wilderness", "teaching", "roots", "questions", "parts"] },
+  facilitation: { name: "Facilitation", sub: "Facilitation CV",
+    role: "Ceremonial facilitator and somatic practitioner" + HERE,
+    lede: "A physicist by training who now serves as a facilitator within Sacred Garden Community." + DEEPER,
+    order: ["ceremony", "consent", "creation", "community", "wilderness", "science", "teaching", "roots", "questions", "parts"] },
+  science: { name: "Science and data", sub: "Science CV",
+    role: "Physicist and data scientist" + HERE,
+    lede: "A physicist and machine-learning practitioner whose research follows fractal geometry through neurons, perception, and art." + DEEPER,
+    order: ["science", "teaching", "creation", "wilderness", "community", "ceremony", "consent", "roots", "questions", "parts"] },
+  touch: { name: "Consent and touch", sub: "Consent and touch CV",
+    role: "Professional cuddler and consent educator" + HERE,
+    lede: "A professional cuddler and workshop facilitator whose work centers on consent-based touch and presence." + DEEPER,
+    order: ["consent", "ceremony", "community", "creation", "wilderness", "science", "teaching", "roots", "questions", "parts"] },
+  creator: { name: "Creator", sub: "Creator CV",
+    role: "Inventor and creator" + HERE,
+    lede: "An inventor and maker who builds structures, tools, and websites that bring people together." + DEEPER,
+    order: ["creation", "science", "wilderness", "community", "teaching", "ceremony", "consent", "roots", "questions", "parts"] }
+};
+const lensKey = (k => LENSES[k] ? k : "general")(new URLSearchParams(location.search).get("lens"));
+const LENS = LENSES[lensKey];
+const ROLE = LENS.role, LEDE = LENS.lede;
+const LEVELS = [ALL_LEVELS[0], ...LENS.order.map(k => ALL_LEVELS.find(L => L.key === k))];
+
+const PHI = (1 + Math.sqrt(5)) / 2;
+const S0 = 1000;
+const CONTENT = LEVELS.length;
+const N = CONTENT + TAIL.length;
+const SUP = { "0": "⁰", "1": "¹", "2": "²", "3": "³", "4": "⁴", "5": "⁵", "6": "⁶", "7": "⁷", "8": "⁸", "9": "⁹" };
+const phiPow = n => "φ" + (n === 0 ? "⁰" : "⁻" + String(n).split("").map(c => SUP[c]).join(""));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const isExternal = u => /^https?:/.test(u);
+
+const stage = document.getElementById("stage");
+const world = document.getElementById("world");
+const nav = document.getElementById("nav");
+const outBtn = document.getElementById("out");
+let geo = null;
+let focus = 0;
+
+function itemsHTML(items) {
+  return '<ul class="items">' + items.map(([t, m, n, links]) =>
+    `<li><span class="it">${esc(t)}</span><span class="meta">${esc(m)}</span>${n ? `<span class="note">${esc(n)}</span>` : ""}` +
+    (links && links.length ? `<span class="links">${links.map(([l, u]) => isExternal(u)
+      ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)} ↗</a>`
+      : `<a href="${esc(u)}">${esc(l)} →</a>`).join("")}</span>` : "") +
+    `</li>`
+  ).join("") + "</ul>";
+}
+function levelHTML(i) {
+  if (i >= CONTENT) return `<div class="eyebrow"><span><b>${phiPow(i)}</b> · A part</span><span></span></div><p class="joke">${esc(TAIL[i - CONTENT])}</p>`;
+  const L = LEVELS[i];
+  const eyebrow = `<div class="eyebrow"><span><b>${phiPow(i)}</b> · ${esc(L.label)}</span><span>${esc(L.years)}</span></div>`;
+  if (i === 0) {
+    return eyebrow + `<h1 class="name">Julian Smith</h1><p class="role">${esc(ROLE)}</p><p class="lede">${esc(LEDE)}</p><p class="hint">Tap a square to go deeper</p>`;
+  }
+  return eyebrow + `<h2 class="lt">${esc(L.label)}</h2>` + bodyHTML(L);
+}
+function bodyHTML(L) {
+  if (L.questions) return '<ol class="qs">' + L.questions.map(q => `<li>${esc(q)}</li>`).join("") + "</ol>";
+  if (L.core) return `<p class="core-line">${esc(L.core.line)}</p><p class="core-words">${L.core.words.map(esc).join(" · ")}</p><p class="note">${esc(L.core.note)}</p>`;
+  return itemsHTML(L.items);
+}
+
+function measure() {
+  let W = stage.clientWidth, H = stage.clientHeight;
+  if (!W || !H) { W = 900; H = 600; }
+  return { W, H };
+}
+
+function build() {
+  const { W, H } = measure();
+  const portrait = H > W;
+  let r = portrait ? { x: 0, y: 0, w: S0, h: S0 * PHI } : { x: 0, y: 0, w: S0 * PHI, h: S0 };
+  const W0 = r.w, H0 = r.h;
+  const start = portrait ? 1 : 0;
+  const sqs = [], rects = [];
+  for (let i = 0; i < N; i++) {
+    rects.push({ ...r });
+    const d = (start + i) % 4;
+    let s, q;
+    if (d === 0) { s = r.h; q = { x: r.x, y: r.y, s, d }; r = { x: r.x + s, y: r.y, w: r.w - s, h: r.h }; }
+    else if (d === 1) { s = r.w; q = { x: r.x, y: r.y, s, d }; r = { x: r.x, y: r.y + s, w: r.w, h: r.h - s }; }
+    else if (d === 2) { s = r.h; q = { x: r.x + r.w - s, y: r.y, s, d }; r = { x: r.x, y: r.y, w: r.w - s, h: r.h }; }
+    else { s = r.w; q = { x: r.x, y: r.y + r.h - s, s, d }; r = { x: r.x, y: r.y, w: r.w, h: r.h - s }; }
+    sqs.push(q);
+  }
+  geo = { W, H, W0, H0, sqs, rects };
+  view = null;
+  render();
+}
+
+function focusFor(i) {
+  const { W, H, sqs, rects } = geo;
+  const m = Math.min(16, W * 0.03);
+  const aw = W - 2 * m, ah = H - 2 * m;
+  const R = rects[i], q = sqs[i];
+  let sc = Math.min(aw / R.w, ah / R.h);
+  let sq = sc * q.s;
+  const sqMax = Math.min(aw, ah);
+  if (sq < 360 && sqMax > sq) { sq = Math.max(sq, Math.min(sqMax, 360)); sc = sq / q.s; }
+  let tx = (W - R.w * sc) / 2 - R.x * sc;
+  let ty = (H - R.h * sc) / 2 - R.y * sc;
+  const qx = q.x * sc + tx, qy = q.y * sc + ty, qs = q.s * sc;
+  if (qx < m) tx += m - qx;
+  if (qx + qs > W - m) tx -= qx + qs - (W - m);
+  if (qy < m) ty += m - qy;
+  if (qy + qs > H - m) ty -= qy + qs - (H - m);
+  return { sc, tx, ty, sq: qs };
+}
+
+function arcPath(s, d) {
+  const a = `A ${s} ${s} 0 0 1`;
+  if (d === 0) return `M 0 ${s} ${a} ${s} 0`;
+  if (d === 1) return `M 0 0 ${a} ${s} ${s}`;
+  if (d === 2) return `M ${s} 0 ${a} 0 ${s}`;
+  return `M ${s} ${s} ${a} 0 0`;
+}
+
+// Everything is drawn in screen pixels, recomputed each frame, so deep squares stay crisp.
+let els = [], view = null, anim = 0;
+function render() {
+  const { sqs } = geo;
+  let html = "";
+  sqs.forEach((q, i) => {
+    const tint = i < CONTENT ? 3 + i * 2.2 : 2 + (i % 2) * 4;
+    html += `<div class="sqbg" style="background:color-mix(in oklab, var(--accent) ${tint}%, var(--surface))"></div>` +
+      `<svg class="arc" aria-hidden="true"><path/></svg>` +
+      `<div class="sq" data-i="${i}">${levelHTML(i)}</div>`;
+  });
+  world.innerHTML = html;
+  const kids = world.children;
+  els = sqs.map((q, i) => ({ bg: kids[i * 3], svg: kids[i * 3 + 1], fg: kids[i * 3 + 2], ratio: 1 }));
+  fitText();
+  view = focusFor(focus);
+  draw(view);
+  apply();
+}
+
+function fitText() {
+  geo.sqs.forEach((q, i) => {
+    const e = els[i], f = focusFor(i), el = e.fg;
+    const fs = Math.min(18, Math.max(12, f.sq * 0.026));
+    e.font = fs / f.sc;
+    Object.assign(el.style, { display: "", left: "0px", top: "0px", width: f.sq + "px", height: f.sq + "px", padding: f.sq * 0.07 + "px" });
+    el.classList.remove("tiny");
+    let r = 1;
+    el.style.fontSize = fs + "px";
+    while (el.scrollHeight > el.clientHeight + 1 && r > 0.55) { r *= 0.94; el.style.fontSize = fs * r + "px"; }
+    e.ratio = r;
+  });
+  if (view) draw(view);
+}
+
+function draw(v) {
+  const { W, H, sqs } = geo;
+  const big = 4 * Math.max(W, H);
+  sqs.forEach((q, i) => {
+    const e = els[i];
+    const x = q.x * v.sc + v.tx, y = q.y * v.sc + v.ty, s = q.s * v.sc;
+    const hide = s < 1.5 || x > W || y > H || x + s < 0 || y + s < 0;
+    for (const el of [e.bg, e.svg, e.fg]) el.style.display = hide ? "none" : "";
+    if (hide) return;
+    const pos = { left: x + "px", top: y + "px", width: s + "px", height: s + "px" };
+    Object.assign(e.bg.style, pos, { borderWidth: Math.max(s * 0.0016, 0.5) + "px" });
+    Object.assign(e.svg.style, pos);
+    e.svg.setAttribute("viewBox", `0 0 ${s} ${s}`);
+    const path = e.svg.firstChild;
+    path.setAttribute("d", arcPath(s, q.d));
+    path.setAttribute("stroke-width", Math.max(s * 0.005, 0.6));
+    const font = e.font * e.ratio * v.sc;
+    Object.assign(e.fg.style, pos, { padding: s * 0.07 + "px", fontSize: font + "px", "--ow": Math.max(s * 0.0048, 2) + "px" });
+    e.fg.classList.toggle("tiny", font < 1.5 || s > big);
+  });
+}
+
+const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+function animateTo(b) {
+  cancelAnimationFrame(anim);
+  const a = view, { W, H } = geo;
+  if (!a || matchMedia("(prefers-reduced-motion: reduce)").matches) { view = b; draw(b); return; }
+  const ca = { x: (W / 2 - a.tx) / a.sc, y: (H / 2 - a.ty) / a.sc }, cb = { x: (W / 2 - b.tx) / b.sc, y: (H / 2 - b.ty) / b.sc };
+  const la = Math.log(a.sc), lb = Math.log(b.sc), t0 = performance.now();
+  const step = now => {
+    const t = Math.min(1, (now - t0) / 1000), u = ease(t);
+    const sc = Math.exp(la + (lb - la) * u);
+    // Move the center in step with the zoom so the path feels like one continuous dive.
+    const k = Math.abs(lb - la) > 1e-6 ? (1 / sc - 1 / a.sc) / (1 / b.sc - 1 / a.sc) : u;
+    const cx = ca.x + (cb.x - ca.x) * k, cy = ca.y + (cb.y - ca.y) * k;
+    view = t < 1 ? { sc, tx: W / 2 - cx * sc, ty: H / 2 - cy * sc } : b;
+    draw(view);
+    if (t < 1) anim = requestAnimationFrame(step);
+  };
+  anim = requestAnimationFrame(step);
+}
+
+function apply(animate) {
+  if (animate) animateTo(focusFor(focus));
+  world.querySelectorAll(".sq").forEach(el => {
+    const i = +el.dataset.i;
+    const go = i > focus;
+    el.classList.toggle("go", go);
+    el.tabIndex = go ? 0 : -1;
+    el.querySelectorAll("a").forEach(a => { a.tabIndex = i === focus ? 0 : -1; });
+    if (go) { el.setAttribute("role", "button"); el.setAttribute("aria-label", "Go deeper to " + (i < CONTENT ? LEVELS[i].label : "the next square")); }
+    else { el.removeAttribute("role"); el.removeAttribute("aria-label"); }
+  });
+  outBtn.disabled = focus === 0;
+  nav.querySelectorAll(".chip").forEach((b, i) => b.setAttribute("aria-current", i === focus ? "true" : "false"));
+  const active = nav.children[focus];
+  if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "nearest" });
+}
+
+function go(i) {
+  i = Math.max(0, Math.min(N - 1, i));
+  if (i === focus) return;
+  focus = i;
+  apply(true);
+}
+
+nav.innerHTML = LEVELS.map((L, i) => `<button type="button" class="chip" data-i="${i}"><span>${esc(L.label)}</span><small>${phiPow(i)} · ${esc(L.years)}</small></button>`).join("");
+nav.addEventListener("click", e => { const b = e.target.closest(".chip"); if (b) go(+b.dataset.i); });
+outBtn.addEventListener("click", () => go(focus - 1));
+world.addEventListener("click", e => { const s = e.target.closest(".sq.go"); if (s) { e.preventDefault(); go(+s.dataset.i); } });
+world.addEventListener("keydown", e => {
+  const s = e.target.closest(".sq.go");
+  if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); go(+s.dataset.i); }
+});
+
+const plain = document.getElementById("plain");
+document.getElementById("plainIn").innerHTML =
+  `<div class="plain-head"><h1>Julian Smith</h1><button type="button" id="closePlain">Back to the spiral</button></div><p class="role">${esc(ROLE)}</p><p class="lede">${esc(LEDE.split(". ")[0])}.</p>` +
+  LEVELS.slice(1).map(L => `<section><h2>${esc(L.label)}<span>${esc(L.years)}</span></h2>${bodyHTML(L)}</section>`).join("");
+document.getElementById("listBtn").addEventListener("click", () => { plain.hidden = false; document.getElementById("closePlain").focus(); });
+document.getElementById("closePlain").addEventListener("click", () => { plain.hidden = true; document.getElementById("listBtn").focus(); });
+
+document.addEventListener("keydown", e => {
+  if (!plain.hidden) { if (e.key === "Escape") { plain.hidden = true; } return; }
+  if (e.target.closest && e.target.closest(".sq.go") && (e.key === "Enter" || e.key === " ")) return;
+  if (["ArrowRight", "ArrowDown", "PageDown"].includes(e.key)) { e.preventDefault(); go(focus + 1); }
+  else if (["ArrowLeft", "ArrowUp", "PageUp", "Escape"].includes(e.key)) { e.preventDefault(); go(focus - 1); }
+});
+
+let wheelAcc = 0, wheelLock = 0;
+stage.addEventListener("wheel", e => {
+  e.preventDefault();
+  const now = Date.now();
+  if (now < wheelLock) return;
+  wheelAcc += e.deltaY;
+  if (Math.abs(wheelAcc) > 60) {
+    go(focus + (wheelAcc > 0 ? 1 : -1));
+    wheelAcc = 0;
+    wheelLock = now + 750;
+  }
+}, { passive: false });
+
+const lensSel = document.getElementById("lens");
+lensSel.innerHTML = Object.entries(LENSES).map(([k, l]) => `<option value="${k}"${k === lensKey ? " selected" : ""}>View: ${esc(l.name)}</option>`).join("");
+lensSel.addEventListener("change", () => { location.href = lensSel.value === "general" ? "cv.html" : "cv.html?lens=" + lensSel.value; });
+document.getElementById("sub").textContent = LENS.sub;
+document.title = "Julian Smith · " + LENS.sub;
+
+const hashKey = (location.hash || "").slice(1);
+const fromHash = LEVELS.findIndex(L => L.key === hashKey);
+if (fromHash > 0) focus = fromHash;
+
+build();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitText(); });
+let rt;
+window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(build, 120); });
+</script>
+
+</body>
+</html>

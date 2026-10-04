@@ -1,0 +1,115 @@
+/* Home page. Same palette and type as cv.html and publications.html, so the three read as one site. */
+:root {
+  --bg: #eceee8; --surface: #f7f8f4; --ink: #1b231f; --muted: #59635d;
+  --line: #b8bfb6; --accent: #2c6855; --gold: #a9771a;
+  --f-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+    --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+  --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 16px; line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 10px 24px; }
+
+/* ---------- header ---------- */
+#header {
+  width: 100%; min-height: 100vh; color: #fff;
+  background: linear-gradient(rgba(15,20,17,.45), rgba(15,20,17,0) 30%), url(images/headshot.png) center / cover;
+}
+nav { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; padding-top: 8px; }
+nav ul li { display: inline-block; list-style: none; margin: 10px 0 10px 28px; }
+nav ul li a {
+  color: #fff; text-decoration: none; position: relative;
+  font-family: var(--f-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+}
+nav ul li a::after {
+  content: ''; width: 0; height: 2px; background: #d6a548;
+  position: absolute; left: 0; bottom: -6px; transition: width .3s;
+}
+nav ul li a:hover::after { width: 100%; }
+nav .fas { display: none; cursor: pointer; }
+.header-text { margin-top: 18vh; font-size: 24px; line-height: 1.4; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+.header-text h1 { font-family: var(--f-display); font-weight: 300; font-size: clamp(44px, 8vw, 84px); line-height: 1; margin-bottom: 18px; }
+.header-text h1 span { color: #d6a548; font-style: italic; }
+.header-text p { font-family: var(--f-mono); font-size: 15px; letter-spacing: .08em; text-transform: uppercase; line-height: 1.9; }
+
+/* ---------- sections ---------- */
+#about, #offerings, #projects, #contact { padding: 72px 0 24px; }
+.sub-title { font-family: var(--f-display); font-weight: 300; font-size: clamp(36px, 6vw, 52px); line-height: 1.05; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+.row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 32px; }
+.about-col-1 { flex: 1 1 320px; }
+.about-col-1 img { width: 100%; display: block; border-radius: 4px; border: 1px solid var(--line); }
+.about-col-2 { flex: 1.5 1 380px; }
+.about-col-2 p { margin-top: 18px; max-width: 38em; }
+.about-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+
+.btn {
+  display: inline-block; font: 500 14px/1 var(--f-body); color: var(--ink); background: transparent;
+  border: 1px solid var(--line); border-radius: 4px; padding: 12px 18px; text-decoration: none; cursor: pointer;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.btn2 { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.btn.btn2:hover { filter: brightness(1.1); color: var(--bg); }
+
+/* ---------- cards ---------- */
+.services-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; margin-top: 32px; }
+.services-list > div {
+  display: flex; flex-direction: column; background: var(--surface);
+  border: 1px solid var(--line); border-radius: 4px; padding: 26px;
+}
+.services-list > div > i { font-size: 28px; color: var(--accent); margin-bottom: 18px; }
+.services-list h2 { font-family: var(--f-display); font-weight: 400; font-size: 26px; line-height: 1.15; margin-bottom: 10px; }
+.services-list p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+.card-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+.card-links a {
+  font-family: var(--f-mono); font-size: 12px; color: var(--gold); text-decoration: none;
+  border: 1px solid var(--gold); border-radius: 4px; padding: 8px 10px;
+}
+.card-links a:hover { background: var(--gold); color: var(--bg); }
+
+/* ---------- contact ---------- */
+.contact-left { flex: 1 1 280px; }
+.contact-left p { margin: 18px 0 24px; color: var(--muted); max-width: 26em; }
+.contact-right { flex: 1.6 1 360px; }
+form input, form textarea {
+  width: 100%; border: 1px solid var(--line); border-radius: 4px; outline: none;
+  background: var(--surface); color: var(--ink); font: 16px var(--f-body);
+  padding: 14px; margin-bottom: 12px;
+}
+form input:focus, form textarea:focus { border-color: var(--accent); }
+#msg { color: var(--accent); display: block; margin-top: 12px; min-height: 1.6em; }
+.copyright {
+  margin-top: 48px; padding: 20px 24px; text-align: center; border-top: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: 12px; color: var(--muted);
+}
+.copyright i { color: var(--gold); }
+
+/* ---------- small screens ---------- */
+@media only screen and (max-width: 700px) {
+  .header-text { margin-top: 48vh; }
+  nav .fas { display: block; font-size: 24px; }
+  nav ul {
+    background: var(--surface); position: fixed; top: 0; right: -220px; width: 220px; height: 100vh;
+    padding-top: 60px; z-index: 2; transition: right .3s; border-left: 1px solid var(--line);
+  }
+  nav ul li { display: block; margin: 22px 26px; }
+  nav ul li a { color: var(--ink); }
+  nav ul .fas { position: absolute; top: 22px; left: 26px; color: var(--ink); }
+  #about, #offerings, #projects, #contact { padding-top: 48px; }
+}

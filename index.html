@@ -3,9 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE-edge">
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>julian-smith.org</title>
-        <link rel = "stylesheet" href="style.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Julian Smith</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap">
+        <link rel="stylesheet" href="home.css">
         <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -15,23 +18,20 @@
                     <ul id="sidemenu">
                         <li><a href="#header">Home</a></li>
                         <li><a href="#about">About</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="GroupIncome/index.html">Group Income</a></li>
-                        <li><a href="Humus/index.html">Humus</a></li>
-                        <li><a href="RecipeConsolidator/index.html">Recipe Consolidator</a></li>
+                        <li><a href="#offerings">Offerings</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="cv.html">CV</a></li>
+                        <li><a href="publications.html">Publications</a></li>
                         <li><a href="#contact">Contact</a></li>
-                        <!-- <i class="fa-solid fa-circle-xmark"></i> -->
                         <i class="fas fa-times" onclick="closemenu()"></i>
                     </ul>
-                    <!-- <i class="fa-solid fa-bars"></i> -->
                     <i class="fas fa-bars" onclick="openmenu()"></i>
                 </nav>
                 <div class="header-text">
                     <h1>Hi, I'm <br><span>Julian</span></h1>
                     <p>Inventor<br>Facilitator<br>Cuddler<br>ML Engineer</p>
                 </div>
-                
+
             </div>
         </div>
         <!-- ------------about----------- -->
@@ -39,107 +39,93 @@
             <div class="container">
                 <div class="row">
                     <div class="about-col-1">
-                        <img src="images/IMG_1114.jpg">
+                        <img src="images/CaptainSmith.jpeg" alt="Julian standing by the water">
                     </div>
                     <div class="about-col-2">
                         <h1 class="sub-title">About Me</h1>
-                        <p>a whole bunch of text about me. to write later</p>
-                        <div class="tab-titles">
-                            <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                            <p class="tab-links" onclick="opentab('experience')">Experience</p>
-                            <p class="tab-links" onclick="opentab('education')">Education</p>
-                        </div>
-                        <div class="tab-contents active-tab" id="skills">
-                            <ul>
-                                <li><span>UI/UX</span><br>Design Web/App Interfaces</li>
-                                <li><span>Web Development</span><br>Web App Interfaces</li>
-                                <li><span>App Development</span><br>Building apps</li>
-                            </ul>
-                        </div>
-                        <div class="tab-contents" id="experience">
-                            <ul>
-                                <li><span>2021 - Current</span><br>Design Web/App Interfaces</li>
-                                <li><span>2019 - 2021</span><br>Web App Interfaces</li>
-                                <li><span>2017 - 2019</span><br>Building apps</li>
-                            </ul>
-                        </div>
-                        <div class="tab-contents" id="education">
-                            <ul>
-                                <li><span>2016</span><br>Design Web/App Interfaces</li>
-                                <li><span>2016</span><br>Web App Interfaces</li>
-                                <li><span>2014</span><br>Building apps</li>
-                            </ul>
+                        <p>I'm a physicist turned facilitator. I grew up on Vashon Island, earned a PhD in physics at the University of Oregon studying how neurons use fractal geometry to wire themselves together, and went on to found a company that uses machine learning to tell authentic Jackson Pollock paintings from imitations.</p>
+                        <p>These days most of my work is about connection. I serve as a facilitator within Sacred Garden Community, offer platonic touch as a professional cuddler, and lead workshops on wants, limits, and consent. I also build things that bring people together, including AGNIS, a geodesic dome made from reclaimed materials that works on land and floats on water.</p>
+                        <p>I'm part of the Goodenough Community in Tahuya, Washington, and I'm helping to vision what shared income, shared resources, and mutual aid could look like across our bioregion. The rest of the time I'm probably in the mountains, doing partner acrobatics, or wandering around barefoot.</p>
+                        <div class="about-links">
+                            <a href="cv.html" class="btn btn2">View my CV</a>
+                            <a href="publications.html" class="btn">Publications</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-<!-- -----------Services--------- -->
-        <div id="services">
+<!-- -----------Offerings--------- -->
+        <div id="offerings">
             <div class="container">
-                <h1 class="sub-title">My Services</h1>
+                <h1 class="sub-title">My Offerings</h1>
                 <div class="services-list">
                     <div>
-                        <i class="fa-solid fa-code"></i>
-                        <h2>Web Design</h2>
-                        <p>description for first service</p>
-                        <a href="#">Learn more</a>
+                        <i class="fa-solid fa-spa"></i>
+                        <h2>Ceremony</h2>
+                        <p>I'm a facilitator with Sacred Garden Community, serving within community and guided by care, respect, and trust.</p>
+                        <div class="card-links">
+                            <a href="https://www.sacredgarden.life" target="_blank" rel="noopener">sacredgarden.life ↗</a>
+                        </div>
                     </div>
                     <div>
-                        <i class="fa-solid fa-crop-simple"></i>
-                        <h2>UI/UX Design</h2>
-                        <p>description for first service</p>
-                        <a href="#">Learn more</a>
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                        <h2>Cuddling</h2>
+                        <p>Professional, consent-based platonic touch and presence.</p>
+                        <div class="card-links">
+                            <a href="https://cuddlesmith.com/cuddling" target="_blank" rel="noopener">cuddlesmith.com/cuddling ↗</a>
+                        </div>
                     </div>
                     <div>
-                        <i class="fa-brands fa-app-store"></i>
-                        <h2>App Design</h2>
-                        <p>description for first service</p>
-                        <a href="#">Learn more</a>
+                        <i class="fa-solid fa-people-group"></i>
+                        <h2>Workshops</h2>
+                        <p>Somatically grounded workshops on vulnerability, wants, limits, and consent.</p>
+                        <div class="card-links">
+                            <a href="https://vulnerabilitywhore.com" target="_blank" rel="noopener">vulnerabilitywhore.com ↗</a>
+                        </div>
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-fire"></i>
+                        <h2>AGNIS</h2>
+                        <p>A geodesic venue for gathering, ceremony, and creative expression, on land or floating on water.</p>
+                        <div class="card-links">
+                            <a href="https://cuddlesmith.com/AGNIS" target="_blank" rel="noopener">cuddlesmith.com/AGNIS ↗</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-<!-- -------------portfolio------ -->
-        <div id="portfolio">
+<!-- -------------projects------ -->
+        <div id="projects">
             <div class="container">
-                <h1 class="sub-title">My Work</h1>
-                <div class="work-list">
-                    <div class="work">
-                        <img src="images/IMG_1686.JPG">
-                        <div class="layer">
-                            <h3>Art</h3>
-                            <p>AGNIS — Amphibious Geodesic Nexus and Ignited Space</p>
-                            <a href="AGNIS.html"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <h1 class="sub-title">Ideas &amp; Projects</h1>
+                <div class="services-list">
+                    <div>
+                        <i class="fa-solid fa-seedling"></i>
+                        <h2>Group Income &amp; Humus</h2>
+                        <p>Two takes on one idea: communities pooling what they have so that everyone prospers. Group Income is a design for an income-sharing program; Humus is a model of a regenerative ecosystem. Both are visions, not yet up and running.</p>
+                        <div class="card-links">
+                            <a href="GroupIncome/index.html">Group Income →</a>
+                            <a href="Humus/index.html">Humus →</a>
                         </div>
                     </div>
-                    <div class="work">
-                        <img src="images/IMG_7548.jpeg">
-                        <div class="layer">
-                            <h3>Looking Good</h3>
-                            <p>the app does something</p>
-                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <div>
+                        <i class="fa-solid fa-people-roof"></i>
+                        <h2>Radical Communal Groups</h2>
+                        <p>A Western Washington network for communal living, income sharing, and mutual aid.</p>
+                        <div class="card-links">
+                            <a href="https://radicalcommunalgroups.org" target="_blank" rel="noopener">radicalcommunalgroups.org ↗</a>
                         </div>
                     </div>
-                    <div class="work">
-                        <img src="images/IMG_4120.jpg">
-                        <div class="layer">
-                            <h3>Group Income</h3>
-                            <p>Program documentation and resources</p>
-                            <a href="GroupIncome/index.html"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
-                        </div>
-                    </div>
-                    <div class="work">
-                        <img src="images/IMG_7548.jpeg">
-                        <div class="layer">
-                            <h3>Humus</h3>
-                            <p>Regenerative ecosystem model — SPaM, Plants &amp; Mycelium</p>
-                            <a href="Humus/index.html"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                    <div>
+                        <i class="fa-solid fa-utensils"></i>
+                        <h2>Recipe Consolidator</h2>
+                        <p>A meal-planning tool that merges several recipes into one shopping list. Built for fun.</p>
+                        <div class="card-links">
+                            <a href="RecipeConsolidator/index.html">Try it →</a>
                         </div>
                     </div>
                 </div>
-                <a href="#" class="btn">See More</a>
             </div>
         </div>
 <!-- -----------Contact----------     -->
@@ -148,15 +134,8 @@
                 <div class="row">
                     <div class="contact-left">
                         <h1 class="sub-title">Contact Me</h1>
-                        <p><i class="fa-solid fa-paper-plane"></i> info@vulnerabilitywhore.com</p>
-                        <p><i class="fa-solid fa-phone"></i> 206-414-8134</p>
-                        <div class="social-icons">
-                            <a href="https://facebook.com"><i class="fa-brands fa-facebook"></i></a>
-                            <a href=""><i class="fa-brands fa-twitter-square"></i></a>
-                            <a href=""><i class="fa-brands fa-instagram"></i></a>
-                            <a href=""><i class="fa-brands fa-linkedin"></i></a>
-                        </div>
-                        <a href="images/CV.pdf" download class="btn btn2">Download CV</a>
+                        <p>Send me a note and I'll get back to you. For a specific offering, the site for that offering is the best place to start.</p>
+                        <a href="cv.html" class="btn btn2">View my CV</a>
                     </div>
                     <div class="contact-right">
                         <form name="submit-to-google-sheet">
@@ -173,21 +152,7 @@
                 <p>Copyright Julian. Made with <i class="fa-solid fa-heart"></i></p>
             </div>
         </div>
- 
-    <script>
-        var tablinks = document.getElementsByClassName("tab-links");
-        var tabcontents = document.getElementsByClassName("tab-contents");
-        function opentab(tabname){
-            for(tablink of tablinks){
-                tablink.classList.remove("active-link");
-            }
-            for(tabcontent of tabcontents){
-                tabcontent.classList.remove("active-tab");
-            }
-            event.currentTarget.classList.add("active-link");
-            document.getElementById(tabname).classList.add("active-tab");
-        }
-    </script>
+
     <script>
         var sidemenu =  document.getElementById("sidemenu");
 
@@ -195,24 +160,24 @@
             sidemenu.style.right = "0";
         }
         function closemenu(){
-            sidemenu.style.right = "-200px";
+            sidemenu.style.right = "-220px";
         }
     </script>
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzFFbKJKznMyUa27fUXwRgl9UtIc-Kn8a4pnOMtH6m0KHk6MMPsg5soZQCZxn9rg04/exec'
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzcihZeeABrhymC6GbdR6P9ANYwEo8HdRZHmcmYYLRV_ajQY9LRCiA0KtFOdVO70QU/exec'
         const form = document.forms['submit-to-google-sheet']
         const msg = document.getElementById("msg")
     
         form.addEventListener('submit', e => {
         e.preventDefault()
         fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-            .then(response => {msg.innerHTML = "Message sent succesfully"
+            .then(response => {msg.innerHTML = "Message sent. Thank you!"
                 setTimeout(function(){
                     msg.innerHTML = ""
                 },5000)
                 form.reset()
             })
-            .catch(error => console.error('Error!', error.message))
+            .catch(error => { msg.innerHTML = "Sorry, that didn't send. Please try again later."; console.error('Error!', error.message) })
         })
     </script>
     

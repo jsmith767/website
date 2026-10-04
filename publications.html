@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Julian Smith · Publications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap">
+<style>
+/* Same palette and type as the golden-spiral CV, so the two read as one site. */
+:root {
+  --bg: #eceee8; --surface: #f7f8f4; --ink: #1b231f; --muted: #59635d;
+  --line: #b8bfb6; --accent: #2c6855; --gold: #a9771a;
+  --f-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+    --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1411; --surface: #151c18; --ink: #e2e7e1; --muted: #9ba69f;
+  --line: #34403a; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark;
+}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+main { max-width: 760px; margin: 0 auto; padding-block: 40px 64px; padding-inline: 16px; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-bottom: 28px; font-family: var(--f-mono); font-size: 12px; }
+.crumbs a { color: var(--gold); text-underline-offset: 3px; }
+.crumbs a:hover { color: var(--accent); }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-weight: 300; font-size: clamp(36px, 7vw, 52px); line-height: 1.05; margin: 8px 0 12px; }
+.lede { color: var(--muted); max-width: 36em; margin: 0 0 8px; }
+.filters { display: flex; flex-wrap: wrap; gap: 6px; margin: 24px 0 8px; }
+.filters button {
+  font: 500 13px/1 var(--f-body); color: var(--ink); background: transparent; cursor: pointer;
+  border: 1px solid var(--line); border-radius: 4px; padding: 8px 12px;
+}
+.filters button:hover { border-color: var(--accent); color: var(--accent); }
+.filters button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.year { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; color: var(--gold); padding-top: 28px; margin: 0 0 4px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+ol { list-style: none; margin: 0; padding: 0; }
+li { padding: 14px 0; border-bottom: 1px solid color-mix(in oklab, var(--line) 50%, transparent); }
+.t { font-family: var(--f-display); font-size: 20px; line-height: 1.25; margin: 0 0 4px; }
+.t a { color: inherit; text-decoration: none; }
+.t a:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+.au { font-size: 14px; color: var(--muted); margin: 0 0 4px; }
+.au b { color: var(--ink); font-weight: 500; }
+.meta { font-family: var(--f-mono); font-size: 12px; color: var(--accent); display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
+.tag { border: 1px solid var(--gold); color: var(--gold); border-radius: 3px; padding: 1px 6px; font-size: 11px; }
+.empty { color: var(--muted); padding: 20px 0; }
+</style>
+</head>
+<body>
+
+<main>
+  <nav class="crumbs" aria-label="Site">
+    <a href="index.html">← Home</a>
+    <a href="cv.html">Golden spiral CV</a>
+  </nav>
+  <div class="eyebrow">Julian H. Smith · Physics PhD, University of Oregon</div>
+  <h1>Publications</h1>
+  <p class="lede">Research on fractal geometry: how neurons branch and connect, how people respond to fractal patterns, and how machine learning can recognize an artist's hand.</p>
+  <div class="filters" id="filters" role="group" aria-label="Filter by topic"></div>
+  <div id="list"></div>
+</main>
+
+<script>
+const PM = id => `https://pubmed.ncbi.nlm.nih.gov/${id}/`;
+// [year, title, venue, authors, topic, url, firstAuthor]
+const PUBS = [
+  [2024, "Using machine learning to distinguish between authentic and imitation Jackson Pollock poured paintings: A tile-driven approach to computer vision", "PLOS ONE", "Smith JH, Holt C, Smith NH, Taylor RP", "art", "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0302962", true],
+  [2024, "Evolution of Retinal Neuron Fractality When Interfacing with Carbon Nanotube Electrodes", "Bioengineering", "Dillon AP, Moslehi S, Brouse B, Keremane S, Philliber S, Griffiths W, Rowland C, Smith JH, Taylor RP", "neuro", PM(39199781)],
+  [2024, "Fractal Fluency: Processing of Fractal Stimuli Across Sight, Sound, and Touch", "Advances in Neurobiology", "Taylor RP, Viengkham C, Smith JH, Rowland C, Moslehi S, Stadlober S, Lesjak A, Lesjak M, Spehar B", "design", PM(38468069)],
+  [2024, "Fractal Resonance: Can Fractal Geometry Be Used to Optimize the Connectivity of Neurons to Artificial Implants?", "Advances in Neurobiology", "Rowland C, Moslehi S, Smith JH, Harland B, Dalrymple-Alford J, Taylor RP", "neuro", PM(38468068)],
+  [2024, "Fractal Electronics for Stimulating and Sensing Neural Networks: Enhanced Electrical, Optical, and Cell Interaction Properties", "Advances in Neurobiology", "Moslehi S, Rowland C, Smith JH, Watterson WJ, Griffiths W, Montgomery RD, Philliber S, Marlow CA, Perez MT, Taylor RP", "neuro", PM(38468067)],
+  [2023, "Neuron arbor geometry is sensitive to the limited-range fractal properties of their dendrites", "Frontiers in Network Physiology", "Rowland C, Smith JH, Moslehi S, Harland B, Dalrymple-Alford J, Taylor RP", "neuro", PM(36926542)],
+  [2022, "Comparison of fractal and grid electrodes for studying the effects of spatial confinement on dissociated retinal neuronal and glial behavior", "Scientific Reports", "Moslehi S, Rowland C, Smith JH, Griffiths W, Watterson WJ, Niell CM, Alemán BJ, Perez MT, Taylor RP", "neuro", PM(36266414)],
+  [2022, "Investigating Fractal Analysis as a Diagnostic Tool That Probes the Connectivity of Hippocampal Neurons", "Frontiers in Physiology", "Rowland C, Harland B, Smith JH, Moslehi S, Dalrymple-Alford J, Taylor RP", "neuro", PM(35812343)],
+  [2022, "Controlled assembly of retinal cells on fractal and Euclidean electrodes", "PLOS ONE", "Moslehi S, Rowland C, Smith JH, Watterson WJ, Miller D, Niell CM, Alemán BJ, Perez MT, Taylor RP", "neuro", PM(35385490)],
+  [2021, "How neurons exploit fractal geometry to optimize their network connectivity", "Scientific Reports", "Smith JH, Rowland C, Harland B, Moslehi S, Montgomery RD, Schobert K, Watterson WJ, Dalrymple-Alford J, Taylor RP", "neuro", "https://www.nature.com/articles/s41598-021-81421-2", true],
+  [2021, "Aesthetics and Psychological Effects of Fractal Based Design", "Frontiers in Psychology", "Robles KE, Roberts M, Viengkham C, Smith JH, Rowland C, Moslehi S, Stadlober S, Lesjak A, Lesjak M, Taylor RP, Spehar B, Sereno ME", "design", PM(34484047)],
+  [2020, "How Neurons Exploit Fractal Geometry", "PhD dissertation, University of Oregon", "Smith JH", "neuro", "https://scholarsbank.uoregon.edu/items/c2741fd2-a1fd-48ef-9862-eb4f106fed29", true],
+  [2020, "Relaxing Floors: Fractal Fluency in the Built Environment", "Nonlinear Dynamics, Psychology, and Life Sciences", "Smith JH, Taylor RP, et al.", "design", "", true],
+  [2020, "The Roles of an Aluminum Underlayer in the Biocompatibility and Mechanical Integrity of Vertically Aligned Carbon Nanotubes for Interfacing with Retinal Neurons", "Micromachines", "Watterson WJ, Moslehi S, Rowland C, Zappitelli KM, Smith JH, Miller D, Chouinard JE, Golledge SL, Taylor RP, Perez MT, Alemán BJ", "neuro", PM(32481670)],
+  [2017, "Seeing shapes in seemingly random spatial patterns: Fractal analysis of Rorschach inkblots", "PLOS ONE", "Taylor RP, Martin TP, Montgomery RD, Smith JH, Micolich AP, Boydston C, Scannell BC, Fairbanks MS, Spehar B", "design", PM(28196082)],
+  [2016, "Fractal Electronics as a Generic Interface to Neurons", "The Fractal Geometry of the Brain (Springer)", "Watterson WJ, Smith JH, Taylor RP, et al.", "neuro", "https://link.springer.com/chapter/10.1007/978-1-4939-3995-4_35"],
+  [2013, "Understanding Educational Transformation: Findings from a Survey of Past Participants of the Physics and Astronomy New Faculty Workshop", "Physics Education Research Conference", "Dancy MH, Henderson CR, Smith JH", "early", "https://www.per-central.org/items/detail.cfm?ID=13122"],
+  [2012, "The influence of geometry and topology of quantum graphs on their nonlinear-optical properties", "Physical Review A", "Lytel R, Shafei S, Smith JH, Kuzyk MG", "early", "https://arxiv.org/abs/1207.6336"]
+];
+const TOPICS = [["all", "All"], ["neuro", "Neurons and implants"], ["design", "Perception and design"], ["art", "Art authentication"], ["early", "Earlier work"]];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const filters = document.getElementById("filters"), list = document.getElementById("list");
+let topic = "all";
+
+function draw() {
+  const rows = PUBS.filter(p => topic === "all" || p[4] === topic);
+  let html = "", year = null;
+  rows.forEach(([y, t, v, a, , u, first]) => {
+    if (y !== year) { html += (year === null ? "" : "</ol>") + `<h2 class="year">${y}</h2><ol>`; year = y; }
+    const title = u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)} ↗</a>` : esc(t);
+    html += `<li><p class="t">${title}</p><p class="au">${esc(a).replace("Smith JH", "<b>Smith JH</b>")}</p>` +
+      `<div class="meta"><span>${esc(v)}</span>${first ? '<span class="tag">First author</span>' : ""}</div></li>`;
+  });
+  list.innerHTML = rows.length ? html + "</ol>" : '<p class="empty">Nothing here yet.</p>';
+  filters.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.t === topic ? "true" : "false"));
+}
+filters.innerHTML = TOPICS.map(([k, l]) => `<button type="button" data-t="${k}">${l}</button>`).join("");
+filters.addEventListener("click", e => { const b = e.target.closest("button"); if (b) { topic = b.dataset.t; draw(); } });
+draw();
+</script>
+
+</body>
+</html>
