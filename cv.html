@@ -458,28 +458,9 @@ function apply(animate) {
   if (active && active.scrollIntoView) active.scrollIntoView({ block: "nearest", inline: "nearest" });
 }
 
-// The browser's Back button retraces the zoom. `trail` mirrors the history entries this page has added; going deeper adds one, and stepping out to where you just were goes back instead of adding another.
-let trail = [0], pos = 0;
-const urlFor = i => location.pathname + location.search + (i > 0 && i < CONTENT ? "#" + LEVELS[i].key : "");
-function record(i, was) {
-  try {
-    if (i < was && pos > 0 && trail[pos - 1] === i) { history.back(); return true; }
-    if (i > was) { trail.length = pos + 1; trail.push(i); pos++; history.pushState({ i, n: pos }, "", urlFor(i)); }
-    else { trail[pos] = i; history.replaceState({ i, n: pos }, "", urlFor(i)); }
-  } catch (err) {}
-  return false;
-}
-window.addEventListener("popstate", e => {
-  const st = e.state;
-  let i = st && typeof st.i === "number" ? st.i : Math.max(0, LEVELS.findIndex(L => L.key === location.hash.slice(1)));
-  if (st && typeof st.n === "number") { pos = st.n; trail[pos] = i; }
-  go(i, true);
-});
-
-function go(i, fromHistory) {
+function go(i) {
   i = Math.max(0, Math.min(N - 1, i));
   if (i === focus) return;
-  if (!fromHistory && record(i, focus)) return;
   focus = i;
   apply(true);
 }
@@ -529,8 +510,6 @@ document.title = "Julian Smith · " + LENS.sub;
 const hashKey = (location.hash || "").slice(1);
 const fromHash = LEVELS.findIndex(L => L.key === hashKey);
 if (fromHash > 0) focus = fromHash;
-trail = [focus];
-try { history.replaceState({ i: focus, n: 0 }, "", urlFor(focus)); } catch (err) {}
 
 build();
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { fitText(); });
