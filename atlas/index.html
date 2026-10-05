@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Beyond Power Atlas</title>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
+<style>
+/* Layout: full-bleed zoomable atlas. Header (title, controls, zoom path) floats top; notes panel floats right (bottom sheet on phones); guided-walk card floats bottom; "look along" view replaces the map in place. */
+:root{
+  --bg:#e6e9ec;
+  --surface:rgba(248,249,250,.94);
+  --ink:#19202a;
+  --ink-2:#4a5562;
+  --ink-3:#7b8592;
+  --line:rgba(25,32,42,.13);
+  --chip:#ffffff;
+  --moon:#5f3dc4;
+  --julian:#0b7285;
+  --claude:#c2410c;
+  --display:"Spectral", Georgia, "Times New Roman", serif;
+  --ui:"IBM Plex Sans Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e1216; --surface:rgba(22,27,33,.94); --ink:#e5e9ed; --ink-2:#a3acb7; --ink-3:#717b87;
+    --line:rgba(229,233,237,.13); --chip:#1c2229; --moon:#b197fc; --julian:#66d9e8; --claude:#ffa94d; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e1216; --surface:rgba(22,27,33,.94); --ink:#e5e9ed; --ink-2:#a3acb7; --ink-3:#717b87;
+  --line:rgba(229,233,237,.13); --chip:#1c2229; --moon:#b197fc; --julian:#66d9e8; --claude:#ffa94d; color-scheme:dark;
+}
+html{height:100%;box-sizing:border-box}
+[hidden]{display:none!important}
+*,*::before,*::after{box-sizing:inherit}
+body{height:100%;margin:0;overflow:hidden;background:var(--bg);color:var(--ink);font-family:var(--ui);font-size:14px}
+#app{position:relative;height:100%;overflow:hidden}
+#stage{position:absolute;inset:0}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;outline:none}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lbl{position:absolute;left:0;top:0;text-align:center;color:var(--ink);will-change:transform,opacity;line-height:1.22}
+.lbl .t{font-family:var(--ui);font-weight:500;text-wrap:balance}
+.lbl.c .t{font-family:var(--display);font-weight:600;letter-spacing:-.01em;line-height:1.08}
+.lbl .s{font-family:var(--display);font-style:italic;font-weight:400;color:var(--ink-2);margin-top:.4em;font-size:.6em;line-height:1.3;text-wrap:balance}
+.lbl .ex{font-family:var(--mono);font-size:max(9.5px,.62em);letter-spacing:.08em;text-transform:uppercase;color:var(--moon);margin-bottom:.3em}
+.lbl .d{font-family:var(--display);font-size:.8em;line-height:1.42;color:var(--ink-2);margin-top:.55em;text-wrap:pretty}
+.rim{position:absolute;left:0;top:0;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;background:var(--surface);padding:2px 8px;border-radius:99px;border:1px solid var(--line);max-width:80vw;overflow:hidden;text-overflow:ellipsis}
+
+header{position:absolute;top:0;left:0;right:0;padding:12px 16px 18px;display:flex;flex-direction:column;gap:6px;pointer-events:none;background:linear-gradient(var(--bg) 60%, transparent);z-index:6}
+header > *{pointer-events:auto}
+.titlerow{display:flex;align-items:center;gap:8px 14px;flex-wrap:wrap}
+h1{font-family:var(--display);font-weight:600;font-size:19px;margin:0;letter-spacing:-.01em}
+.controls{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.btn{display:inline-flex;align-items:center;gap:6px;font:500 13px/1 var(--ui);color:var(--ink);background:var(--chip);border:1px solid var(--line);border-radius:99px;padding:7px 12px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn[aria-pressed="true"],.btn[aria-expanded="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.btn.moon{color:var(--moon)}
+.btn .count{font-family:var(--mono);font-size:10.5px;color:var(--ink-3)}
+select.btn{max-width:240px;overflow:hidden;text-overflow:ellipsis;appearance:none;-webkit-appearance:none;padding-right:26px;background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);background-position:calc(100% - 14px) 52%,calc(100% - 10px) 52%;background-size:4px 4px;background-repeat:no-repeat}
+nav#crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:2px;min-width:0}
+nav#crumbs button{font:500 13px/1.2 var(--ui);color:var(--ink-2);background:none;border:0;padding:4px 6px;border-radius:6px;cursor:pointer;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+nav#crumbs button:hover{background:var(--line);color:var(--ink)}
+nav#crumbs button[aria-current]{color:var(--ink);font-weight:600}
+nav#crumbs .sep{color:var(--ink-3);font-size:12px}
+#hint{font-family:var(--mono);font-size:11px;color:var(--ink-3);transition:opacity .4s}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+#layers{position:absolute;z-index:8;width:300px;max-width:calc(100% - 32px);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px 12px;box-shadow:0 10px 30px rgba(0,0,0,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#layers h3{margin:0 0 8px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+#layers .grp{display:flex;flex-direction:column;gap:2px;margin-bottom:12px}
+#layers .grp:last-child{margin-bottom:0}
+.sw-row{display:flex;align-items:flex-start;gap:10px;padding:6px 4px;border-radius:6px;cursor:pointer}
+.sw-row:hover{background:var(--line)}
+.sw-row input{margin:2px 0 0;accent-color:var(--ink);width:15px;height:15px;flex:none}
+.sw-row .sw{width:18px;height:3px;border-radius:2px;margin-top:8px;flex:none}
+.sw-row .sw.dash{background:repeating-linear-gradient(90deg,var(--ink-2) 0 3px,transparent 3px 6px)}
+.sw-row .tx{display:flex;flex-direction:column;gap:1px;min-width:0}
+.sw-row .tx b{font-weight:500;font-size:13.5px}
+.sw-row .tx small{font-family:var(--display);font-size:12.5px;color:var(--ink-2);line-height:1.35}
+.note{font-family:var(--display);font-size:12.5px;color:var(--ink-3);line-height:1.4;margin:6px 4px 0}
+
+#panel{position:absolute;right:16px;top:var(--top,110px);bottom:16px;width:340px;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:4;min-height:0}
+#panel.collapsed{bottom:auto}
+#panel.collapsed .pbody{display:none}
+.phead{display:flex;align-items:center;gap:8px;padding:12px 14px 10px 18px;border-bottom:1px solid var(--line)}
+#panel.collapsed .phead{border-bottom:0}
+.phead .eyebrow{flex:1;min-width:0}
+.pbody{padding:16px 18px 20px;overflow:auto;min-height:0;display:flex;flex-direction:column;gap:14px}
+.eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dot{width:9px;height:9px;border-radius:50%;flex:none;display:inline-block}
+.ptitle{font-family:var(--display);font-weight:600;font-size:22px;line-height:1.15;margin:0;text-wrap:balance}
+.psub{font-family:var(--display);font-style:italic;color:var(--ink-2);margin:-8px 0 0;font-size:15px}
+.ptext{font-family:var(--display);font-size:15.5px;line-height:1.5;margin:0;color:var(--ink)}
+.ptext.small{font-size:14px;color:var(--ink-2)}
+.exflag{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--moon)}
+.sect{display:flex;flex-direction:column;gap:6px}
+.sect h3{margin:4px 0 2px;font:500 10.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+.item{display:flex;gap:9px;align-items:flex-start;text-align:left;background:none;border:1px solid transparent;border-radius:8px;padding:7px 8px;margin:0 -8px;cursor:pointer;color:var(--ink);font:inherit}
+.item:hover{background:var(--line)}
+.item .dot{margin-top:5px}
+.item .it{display:flex;flex-direction:column;gap:2px;min-width:0}
+.item .il{font-weight:500;font-size:14px;line-height:1.3}
+.item .ir{font-family:var(--display);font-size:13.5px;color:var(--ink-2);line-height:1.4}
+.item .ic{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.iconbtn{background:none;border:1px solid var(--line);color:var(--ink-2);border-radius:6px;font:500 12px/1 var(--ui);padding:6px 9px;cursor:pointer;flex:none}
+.iconbtn:hover{color:var(--ink);background:var(--line)}
+.chip{display:inline-flex;align-items:center;gap:7px;font:500 12.5px/1 var(--ui);color:var(--ink);background:var(--chip);border:1px solid var(--line);border-radius:99px;padding:6px 11px 6px 9px;cursor:pointer;white-space:nowrap}
+.chip .sw{width:16px;height:3px;border-radius:2px}
+.chip[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+
+#walk{position:absolute;left:16px;bottom:16px;z-index:5;width:min(520px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px 12px;box-shadow:0 10px 30px rgba(0,0,0,.12);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;flex-direction:column;gap:8px}
+#walk .wtop{display:flex;align-items:center;gap:8px}
+#walk .wtop .eyebrow{flex:1}
+#walk p{margin:0;font-family:var(--display);font-size:16px;line-height:1.45;text-wrap:pretty}
+#walk .wnav{display:flex;align-items:center;gap:8px}
+#walk .wnav .sp{flex:1}
+#walk .bar{height:3px;background:var(--line);border-radius:2px;overflow:hidden}
+#walk .bar i{display:block;height:100%;background:var(--ink-2);transition:width .3s}
+#walk.moonwalk .bar i{background:var(--moon)}
+
+#spectrum{position:absolute;left:0;top:var(--top,110px);bottom:0;right:0;z-index:3;overflow:auto;background:var(--bg);padding:8px 16px 32px}
+#spectrum .sx{max-width:1000px;display:flex;flex-direction:column;gap:6px}
+#spectrum h2{font-family:var(--display);font-weight:600;font-size:24px;margin:0;text-wrap:balance}
+#spectrum .why{font-family:var(--display);font-size:15.5px;color:var(--ink-2);margin:0 0 10px;max-width:62ch;line-height:1.45}
+.poles{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.poles span:last-child{text-align:right}
+.track{position:relative}
+.axis{position:absolute;left:0;right:0;top:0;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--ink-3),var(--line) 50%,var(--ink-3))}
+.tick{position:absolute;width:1px;background:var(--line)}
+.card{position:absolute;display:flex;gap:8px;align-items:flex-start;text-align:left;width:var(--cw);padding:8px 10px;background:var(--chip);border:1px solid var(--line);border-radius:8px;cursor:pointer;color:var(--ink);font:inherit}
+.card:hover{border-color:var(--ink-3)}
+.card .dot{margin-top:4px}
+.card .cl{display:flex;flex-direction:column;gap:2px;min-width:0}
+.card .cl b{font-weight:500;font-size:13px;line-height:1.25}
+.card .cl small{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.card.ex{border-color:color-mix(in srgb, var(--moon) 45%, transparent)}
+.card .cl small.m{color:var(--moon)}
+#walk .spk{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase}
+#walk .spk .dot{width:10px;height:10px}
+#walk.player p{min-height:2.9em}
+#walk .vrow{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;font-size:12.5px;color:var(--ink-2)}
+#walk .vrow label{display:flex;align-items:center;gap:6px}
+#walk .vrow select{font:500 12.5px/1 var(--ui);color:var(--ink);background:var(--chip);border:1px solid var(--line);border-radius:6px;padding:5px 6px;max-width:170px}
+#walk .silent{font-family:var(--display);font-size:13px;color:var(--ink-3);margin:0}
+.btn.listen .pi{width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.convo{max-width:68ch;display:flex;flex-direction:column;gap:14px;padding-bottom:40px}
+.convo h2{font-family:var(--display);font-weight:600;font-size:26px;margin:4px 0 0;text-wrap:balance}
+.convo .cnote{font-family:var(--display);font-size:14px;color:var(--ink-2);line-height:1.45;margin:0;padding:10px 12px;border:1px solid var(--line);border-radius:8px}
+.convo nav{display:flex;flex-wrap:wrap;gap:6px}
+.convo section{display:flex;flex-direction:column;gap:12px;padding-top:18px;border-top:1px solid var(--line);scroll-margin-top:12px}
+.convo h3{font-family:var(--display);font-weight:600;font-size:20px;margin:0;text-wrap:balance}
+.convo h3 .num{font-family:var(--mono);font-size:12px;font-weight:400;color:var(--ink-3);margin-right:8px}
+.convo .onmap{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.convo .onmap span.l{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-right:2px}
+.turn{display:flex;flex-direction:column;gap:6px}
+.turn .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.turn p,.turn ol{margin:0;font-family:var(--display);font-size:16px;line-height:1.55}
+.turn ol{padding-left:1.4em;display:flex;flex-direction:column;gap:4px}
+.turn.j{padding:10px 14px;border-radius:10px;background:var(--chip);border:1px solid var(--line)}
+.turn.j .who{color:var(--ink-2)}
+.convo section.flash{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:var(--line)}to{background:transparent}}
+#tip{position:absolute;z-index:9;max-width:280px;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:var(--display);font-size:14px;line-height:1.42;color:var(--ink);box-shadow:0 6px 24px rgba(0,0,0,.12)}
+#tip b{display:block;font:600 12.5px/1.3 var(--ui);margin-bottom:3px}
+
+@media (max-width:760px){
+  header{padding:10px 16px 14px}
+  h1{font-size:17px}
+  .btn{padding:6px 10px;font-size:12.5px}
+  #panel{left:0;right:0;top:auto;bottom:0;width:auto;max-height:58%;border-radius:14px 14px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom,0px)}
+  #panel.collapsed{bottom:0}
+  #walk{left:16px;right:16px;width:auto}
+  #walk p{font-size:15px}
+  .ptitle{font-size:20px}
+  #spectrum h2{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){ #hint, #walk .bar i{transition:none} }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div id="stage">
+    <canvas id="map" tabindex="0" aria-label="Zoomable concept map. The notes panel and the walk-through can be used by keyboard."></canvas>
+    <div id="labels" aria-hidden="true"></div>
+  </div>
+  <div id="spectrum" hidden></div>
+  <header>
+    <div class="titlerow">
+      <h1>Beyond Power Atlas</h1>
+      <div class="controls">
+        <button class="btn" id="bStart" type="button">Start here <span class="count">15 stops</span></button>
+        <button class="btn moon" id="bMoon" type="button">Bedtime example <span class="count">11 stops</span></button>
+        <button class="btn listen" id="bListen" type="button"><span class="pi" aria-hidden="true"></span>Read along</button>
+        <button class="btn" id="bLayers" type="button" aria-expanded="false" aria-controls="layers">Layers</button>
+        <label class="sr" for="lens" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">View</label>
+        <select class="btn" id="lens"></select>
+      </div>
+    </div>
+    <nav id="crumbs" aria-label="Zoom path"></nav>
+    <div id="hint">Tap a circle to zoom in. Esc or the path above zooms out. <span class="meta" id="readout"></span></div>
+  </header>
+  <div id="layers" hidden role="dialog" aria-label="Layers"></div>
+  <aside id="panel" aria-label="Notes">
+    <div class="phead">
+      <div class="eyebrow" id="peyebrow"></div>
+      <button class="iconbtn" id="ptoggle" aria-expanded="true">Hide</button>
+    </div>
+    <div class="pbody" id="pbody"></div>
+  </aside>
+  <div id="walk" hidden aria-live="polite"></div>
+  <div id="tip" hidden></div>
+</div>
+
+<script type="text/plain" id="convo-src">
+# Conversation: Parenting Frameworks, NVC, and Power
+
+> Note: this is a reconstructed version of the conversation, not a verbatim transcript. The order, the arguments, and who said what are faithful; the exact wording is approximate. Repeated "you stopped at…" re-read requests (voice output kept cutting off) are left out.
+
+### 1. Where it started
+
+**Julian:** Has Jen Lumanlan ever interviewed Yolanda Williams, or the other way around? And has Jen done an episode on conscious parenting?
+
+**Claude:** I couldn't find a record of either, or of a Jen episode framed as "conscious parenting," though I couldn't check her full archive.
+
+### 2. Conscious parenting vs Jen's approach
+
+**Julian:** So how does conscious parenting, the way Yolanda does it, compare to what Jen does?
+
+**Claude:** Conscious parenting, in the Shefali Tsabary lineage, leads with inner work. You heal your own triggers and your own inner child; Tsabary's line is that the most important child is the one inside you. Tactics come second. Yolanda's version is situated: it's about the Black family, the impact of colonization, reclaiming ancestral ways, and raising liberated Black children. She frames conscious parenting as activism against white supremacy.
+
+Jen is research-first and respect-based. Her core principle is that behavior is a child's best attempt to meet a need. She's needs-based and collaborative, heavily NVC-influenced, and her book is *Parenting Beyond Power*. Where Yolanda adds the societal layer, Jen is more focused on the family dynamic itself.
+
+**Julian:** I don't think that's right. Jen talks about white supremacy, patriarchy, and capitalism all the time. Those are some of her biggest themes.
+
+**Claude:** You're right, I had that wrong. Both of them carry a structural critique. The real difference is how it's situated. Yolanda's is particular: rooted in a specific community and history, speaking from inside it. Jen's is universal and analytical, addressed to a broad and often white audience.
+
+**Julian:** You also made it sound like conscious parenting doesn't have concrete tools. Is that fair?
+
+**Claude:** Let me check rather than assume. *(searched)* Partly fair, mostly not. The concreteness is there, but it lives in the parent's internal practice: pausing and naming what you feel, active listening, breathing, emotional attunement. And Yolanda is a certified Positive Discipline coach, so PD's practical tools fold in. A better way to say it: the detail lives in a different layer. It isn't missing.
+
+### 3. Positive Discipline
+
+**Julian:** Tell me about Positive Discipline. Where does it come from, and has it changed? It feels different now from how it started.
+
+**Claude:** It goes back to Alfred Adler, who brought parenting education to the US in the 1920s. Rudolf Dreikurs carried the techniques forward from the late 1930s, and Jane Nelsen built the modern brand, starting with her 1981 book.
+
+Your sense of a shift is right. In the Dreikurs era, the signature tool was "logical consequences." The modern version is trauma-informed and brain-science-informed. Nelsen herself warns that a lot of what's called positive discipline online misuses the term. Punishment, rewards, praise, and punitive time-outs are all behaviorism. They build an external locus of control. The goal is an internal one: kids who behave well even when no one is watching. So it has moved from consequence-forward to connection-forward and solution-focused. "Mistakes are opportunities." "Kids do better when they feel better."
+
+**Julian:** How does that compare with Jen?
+
+**Claude:** A lot is shared: both reject punishment and rewards, both want intrinsic motivation, both center connection. They fork in two places.
+
+First, authority and structure. PD keeps "kind AND firm": the parent is still a limit-setting guide, with routines and family meetings. Jen is more suspicious of parental power itself; that's the "beyond power."
+
+Second, consequences. PD keeps a softened version of logical consequences. Jen would say even a "logical" consequence is disguised punishment if the child didn't freely agree to it.
+
+**Julian:** Give me that throughline again in one line.
+
+**Claude:** PD keeps more scaffolding and a residual role for consequences and firmness. Jen pushes harder on dismantling the power gap entirely.
+
+### 4. The bedtime hard-case
+
+**Julian:** Where does that actually bite? Give me a concrete tricky situation.
+
+**Claude:** Bedtime. A 6-year-old won't go to sleep. It's 9pm, there's school tomorrow, and you're exhausted. The PD move: a routine chart the kid helped make, you stay kind and firm, and you follow through. The firmness is the point. Jen's move: don't hold the limit just because you're the parent. Get curious about the need. Is it autonomy? Connection? Is he just wired? Then negotiate.
+
+**Julian:** But is "he has to sleep by 9" even a real constraint? Or is it a prediction, maybe our own anxiety we inherited? Couldn't he learn to regulate his own sleep if he felt the consequences?
+
+**Claude:** That's exactly the real Jen move, and it's a good push. I think it runs into two honest limits.
+
+One is developmental. A 6-year-old has limited capacity to connect "I stayed up late" to "I feel awful today" and then adjust ahead of time. For a 14-year-old, that's a legitimate lesson. For a 6-year-old, mostly not yet.
+
+The other is externalities. The consequences don't only land on him. They land on the household, his teacher, his classmates. So it isn't a clean closed-loop lesson.
+
+So I'd reframe it: not "hard constraint vs let him learn." The constraint is real, but it's developmental and temporary. You hold more now, and you hand over more as his capacity grows.
+
+**Julian:** Then how do you know when to hand it over?
+
+**Claude:** That's the live edge, and I don't think it has a clean answer. You often can't see readiness until you let go, and letting go to test it has real costs. Jen would probably dissolve the question: readiness is continuous, you stay in relationship while you hand things over, and adults tend to underestimate kids. That's fair, but it assumes a regulated, well-resourced adult. That's a real-world constraint she tends to underweight.
+
+### 5. When "beyond power" goes permissive
+
+**Julian:** There's a mom in my community who loves *Parenting Beyond Power*. Her kid is around six. She asked him to help before they left, and he just said "nope" and went off to play. I get the feeling the dad isn't holding any counterweight, and the parents' own needs aren't really in the picture.
+
+**Claude:** What you're describing is a failure state of beyond-power, not what it's meant to produce. Jen is explicit that both sets of needs count, the parent's included.
+
+The frameworks fail differently. PD has guardrails built in: "kind AND firm" keeps "firm" in the room. Conscious parenting is more exposed, because if all the work points inward, limit-setting can quietly evaporate. Jen is well protected in theory but the most misread in practice. "Honor the child's need" is the vivid, quotable half. "Your needs count too" is the half people forget. So I'd call it a framework half-absorbed, not a flawed framework.
+
+### 6. Praise and power
+
+**Julian:** If praise and rewards are just the other side of the punishment coin, how far do I take that? Especially with friends, where the power difference is way smaller. My body feels kind of funny when I say "good job."
+
+**Claude:** Praise, reward, and punishment are the same move: a more powerful person shaping someone's behavior through external consequences. "Good job" quietly trains the other person to look to you to know whether they're okay.
+
+With a friend, the power gap changes the stakes, not the mechanism. A kid has no exit; a friend has plenty of other sources. But either way you're relating to the person as something to shape.
+
+So take the awareness all the way, and calibrate how hard you correct to the size of the power gap. The tool is to shift from evaluation to expression. Instead of "good job on the presentation," which is a verdict, try "watching you up there, I felt moved; it reminded me why I love this work." Take the evaluation out of the warmth, not the warmth. That funny feeling in your body is the signal.
+
+**Julian:** And if a friend says "good job" to me, I've been saying something like "that's not really for me."
+
+**Claude:** You could make it more precise: "I appreciate the warmth, and honestly 'good job' makes me feel a bit graded. I'd love to just hear what it was like for you." That names the mechanism, keeps the warmth, and models what you'd like instead.
+
+### 7. NVC, race, and power
+
+**Julian:** As a white person, I wonder how NVC language lands on Black and brown people. How do I keep it from becoming another power-over thing?
+
+**Claude:** I want to flag that I'm a language model reasoning about this, not speaking from lived experience. This is closer to Yolanda's lane than mine. With that said:
+
+People joke that "NVC traumatized me." The deeper version is tone-policing. Asking an angry person to rephrase into feelings and needs says the anger is the problem.
+
+NVC presents itself as universal and neutral, but its calm, deconstruct-your-anger style is culturally specific: white, middle-class, conflict-averse. It sits close to what gets called "white supremacy culture": perfectionism, privileging the written word, a narrow "professional" range of emotion. In much Black tradition, anger is legitimate, moral, and clarifying. Asking someone to translate it into palatable needs-language can repeat the old pattern of making one's pain comfortable for white people.
+
+Four things I'd hold onto:
+1. Offer it, never prescribe it. Use it on yourself.
+2. Don't police the form of someone's expression, especially across race. Receive the anger.
+3. Hold the irony: a framework about dismantling power-over is most insidious when it's sure of its own benevolence.
+4. Situated tools, like Yolanda's, travel better than universalist ones, like Jen's. The universalist version risks a kind of soft colonization.
+
+**Julian:** That creates friction for me as a physicist. I like universal principles.
+
+**Claude:** I don't think you have to give that up. The universal principle survives: relate to people as subjects, not objects. What isn't universal is NVC's specific syntax, observation, feeling, need, request. That's a coordinate frame, not the invariant law. Keep the principle universal and hold the notation loosely.
+
+### 8. "We're all training each other"
+
+**Julian:** Someone in my community says, "We're all trainable. Let's not pretend we're not training each other." Is that right, or am I being nitpicky by pushing back?
+
+**Claude:** You're not being nitpicky. There's a true part: there's no neutral, influence-free way to be around people, and pretending you don't influence others is its own kind of dishonesty. It punctures a certain precious NVC posture.
+
+But "training" smuggles in intent and asymmetry. It's dog-and-clicker language: something done *to* someone, toward *your* goal. That's different from the mutual, mostly unconscious influence we all have on each other.
+
+So agree that "we always influence," and decline "therefore training is fine." The leap between those two is exactly the shift from subject to object. The honest move is to admit you have power and choose not to wield it instrumentally, not to admit it and then shrug and use it.
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(() => {
+/* ---------------- Content ----------------
+   Bedtime pieces (ex:true) live inside the clusters they illustrate. */
+const TREE = {id:"root", label:"The whole map", text:"", children:[
+ {id:"J", label:"Jen Lumanlan", sub:"Your Parenting Mojo · Parenting Beyond Power", gist:"A child's behavior is an attempt to meet a need. Find it, then solve it together.", hue:196,
+  text:"Research-first, needs-based parenting with a critique of larger systems built in. The primary resource for this project.", children:[
+  {id:"J1", label:"Research-first, respect-based", text:"A respect-based approach built on reading the research.", children:[
+   {id:"J1a", label:"From research to tools", tags:"research universal", text:"Reviews the academic literature and translates it into practical tools parents can use."},
+   {id:"J1b", label:"Behavior is an attempt to meet a need", tags:"needs connection subject", text:"Core principle: a child's behavior is their best attempt to meet a need."},
+   {id:"J0", label:"Has Jen ever interviewed Yolanda?", tags:"situated universal", text:"Where the conversation started. Searches found no clear record of either interviewing the other, and no Jen episode framed around \u201cconscious parenting\u201d. Full episode lists weren't checked, so this isn't definitive."},
+   {id:"J1c", label:"Parenting Beyond Power", tags:"power systemic", text:"The book: Parenting Beyond Power, on transforming your family and, through it, the world."}
+  ]},
+  {id:"J2", label:"Needs-based and collaborative", text:"Find the need, then solve it together.", children:[
+   {id:"J2a", label:"Diagnose, then solve together", tags:"needs power", text:"Find the unmet need under the behavior, then solve it collaboratively."},
+   {id:"J2b", label:"Rooted in NVC", tags:"nvc needs universal", text:"Heavily influenced by Nonviolent Communication (Marshall Rosenberg)."},
+   {id:"B1b", ex:true, label:"Get curious, then negotiate", tags:"needs power handover", text:"Resist holding the limit just because you're the parent. Get curious about the need (autonomy? connection? too wired?) and negotiate."},
+   {id:"B5a", ex:true, label:"You can't see readiness until you let go", tags:"handover development", text:"How do you know when to hand over more? Readiness isn't visible until you let go, and testing it has real costs."},
+   {id:"B5b", ex:true, label:"Readiness is continuous", tags:"handover connection subject", text:"Jen would likely dissolve the problem: readiness is continuous. Stay in relationship while handing over, and don't underestimate kids."}
+  ]},
+  {id:"J3", label:"Systemic critique, built in", text:"The critique of larger systems is present, not absent.", children:[
+   {id:"J3a", label:"The named forces", tags:"systemic race power", text:"White supremacy, patriarchy and capitalism, named as forces that shape parenting."},
+   {id:"J3c", label:"Julian's correction", tags:"systemic race", text:"Claude first implied Jen had no systemic layer. Julian pointed out that her big themes include white supremacy, patriarchy and capitalism, and Claude agreed."},
+   {id:"J3b", label:"Addressed to everyone", tags:"universal race", text:"Jen's structural critique is universal and analytical, addressed to a broad, often white, research-podcast audience rather than rooted in one community."}
+  ]}
+ ]},
+ {id:"Y", label:"Yolanda Williams", sub:"Parenting Decolonized · conscious parenting", gist:"Heal yourself first, and parent from a particular history, not a generic one.", hue:36,
+  text:"Conscious parenting that starts with the parent's inner work, rooted in the Black family and framed as activism.", children:[
+  {id:"Y1", label:"Conscious parenting core", text:"The work starts inside the parent.", children:[
+   {id:"Y1a", label:"Inner work first", tags:"inner locus", text:"Heal your own triggers and inner child, and put self-work ahead of tactics. Shefali Tsabary: the most important child is the one inside you."},
+   {id:"Y1b", label:"The practice is internal", tags:"inner connection subject", text:"The concrete tools are internal ones: pausing and naming, active listening, breathing, emotional attunement. The detail lives in a different layer; it isn't missing."},
+   {id:"Y1d", label:"Julian's correction", tags:"inner", text:"Claude first implied conscious parenting lacked concrete tools. After Julian pushed back and Claude searched, Claude conceded in part."},
+   {id:"Y1c", label:"Positive Discipline folded in", tags:"structure locus", text:"Yolanda is a certified Positive Discipline coach and folds its tools into her approach."},
+   {id:"B2a", ex:true, label:"Real limit, or inherited worry?", tags:"power inner", text:"Is “asleep by 9” a fixed constraint, or an inherited prediction carrying your own anxiety?"},
+   {id:"B5c", ex:true, label:"That assumes a resourced parent", tags:"inner systemic", text:"\u201cStay in relationship while you hand over\u201d presumes a regulated, resourced adult, a real-world constraint Jen underweights."}
+  ]},
+  {id:"Y2", label:"Rooted in a particular history", text:"Written for a particular people and history.", children:[
+   {id:"Y2a", label:"The Black family", tags:"situated race", text:"Specifically the Black family: colonization's impact, reclaiming ancestral ways, raising liberated Black children."},
+   {id:"Y2b", label:"Parenting as activism", tags:"race systemic situated anger", text:"Conscious parenting as activism against white supremacy. Where Jen's critique is universal, Yolanda's is situated."}
+  ]},
+  {id:"Y3", label:"Where it can slip", text:"Where this approach is most exposed.", children:[
+   {id:"Y3a", label:"Drift toward permissiveness", tags:"permissive inner structure", text:"Most exposed to drifting into permissiveness. If all the work points inward at your own regulation, limit-setting can quietly evaporate."}
+  ]}
+ ]},
+ {id:"P", label:"Positive Discipline", sub:"Adler, Dreikurs, Nelsen", gist:"Kind and firm, aiming for kids who behave well when no one's looking.", hue:138,
+  text:"A century-old lineage that started with logical consequences and has moved toward connection and solutions.", children:[
+  {id:"P1", label:"History", text:"Where it came from.", children:[
+   {id:"P1a", label:"Adler, 1920s", tags:"history", text:"Alfred Adler introduced parenting education to US audiences in the 1920s."},
+   {id:"P1b", label:"Dreikurs, late 1930s", tags:"history consequences", text:"Rudolf Dreikurs brought the techniques to the US in the late 1930s."},
+   {id:"P1c", label:"Jane Nelsen, 1981", tags:"history structure", text:"Jane Nelsen built the modern Positive Discipline brand on that foundation. The original book came out in 1981."}
+  ]},
+  {id:"P2", label:"Then versus now", text:"How the approach has shifted.", children:[
+   {id:"P2a", label:"The logical-consequences era", tags:"consequences history", text:"In the Dreikurs era, logical consequences were the signature tool."},
+   {id:"P2b", label:"Trauma- and brain-informed", tags:"research universal", text:"Modern PD is trauma-informed and brain-science-informed. Nelsen warns that much online “positive discipline” misuses the term."},
+   {id:"P2c", label:"Behaving well when no one's looking", tags:"locus praise consequences", text:"Punishment, rewards, praise and time-outs are behaviorism: control from outside the child. The goal is an internal compass, behaving well even when no one is looking."},
+   {id:"P2d", label:"From consequences to connection", tags:"connection consequences", text:"From consequence-first to connection-first and solution-focused. Mistakes are opportunities. Kids do better when they feel better."},
+   {id:"B2b", ex:true, label:"Let him learn from it?", tags:"consequences handover", text:"Julian's pushback: could he learn to manage his own sleep through natural consequences? Claude agreed this is the real Jen move."}
+  ]},
+  {id:"P3", label:"PD versus Jen", text:"Shared ground and two forks.", children:[
+   {id:"P3a", label:"Shared ground", tags:"locus connection needs", text:"Both reject punishment and rewards, want intrinsic motivation, and center connection."},
+   {id:"P3b", label:"Fork 1: who holds authority", tags:"power structure", text:"PD keeps kind AND firm: the parent as limit-setting guide, plus family meetings. Jen is more suspicious of parental power itself."},
+   {id:"P3c", label:"Fork 2: consequences", tags:"consequences power", text:"PD keeps a softened logical consequence. Jen sees even a logical consequence as disguised punishment if it wasn't freely agreed."},
+   {id:"P3d", label:"The throughline", tags:"structure power", text:"PD keeps more scaffolding, plus a residual role for consequences and firmness. Jen pushes harder on dismantling the power gap."},
+   {id:"B1a", ex:true, label:"Routine chart, kind and firm", tags:"structure", text:"A routine chart the kid helped make. Kind and firm. Follow through. The firmness is the point."}
+  ]}
+ ]},
+ {id:"A", label:"Praise and power", sub:"friend versus child, and the permissiveness trap", gist:"“Good job” is a gentle form of control. Keep the warmth, drop the verdict.", hue:328,
+  text:"Praise as the other face of punishment, how far to take that idea, what to say instead, and how beyond-power parenting can slide into permissiveness.", children:[
+  {id:"N1", label:"Praise and punishment are one coin", text:"Same mechanism, opposite sign.", children:[
+   {id:"N1a", label:"One mechanism", tags:"power locus praise consequences", text:"Praise, reward and punishment all have a powerful person shaping another's behavior through outside consequences."},
+   {id:"N1c", label:"The body notices", tags:"praise locus", text:"Julian noticed his body feels funny when he says \u201cgood job\u201d. That feeling is the signal."},
+   {id:"N1b", label:"“Good job” teaches kids to look to you", tags:"locus praise", text:"“Good job” trains the other person to look to you for whether they're okay. Control moves outside them."}
+  ]},
+  {id:"N2", label:"How far to take it", text:"Does the critique of praise apply to friends too, and how much should a child hold?", children:[
+   {id:"N2a", label:"Stakes change, mechanism doesn't", tags:"power praise development", text:"The power gap changes the stakes (a kid has no exit; a friend has other sources) but not the mechanism: relating to a person as an object to shape."},
+   {id:"N2b", label:"Full awareness, calibrated correction", tags:"power praise", text:"Take the awareness all the way. Match how hard you correct to the size of the power gap."},
+   {id:"B3a", ex:true, label:"Too young to connect the dots", tags:"development", text:"A 6-year-old can't easily link a late night to a bad next day to a change in behavior. Fair to expect at 14, not at 6."},
+   {id:"B4", ex:true, label:"Hold more now, hand over later", tags:"development handover structure", text:"Not “hard constraint versus let him learn”. The limit is real but developmental and temporary: you hold more now and hand over more as capacity grows."}
+  ]},
+  {id:"N3", label:"From verdict to expression", text:"Keep the warmth, drop the evaluation.", children:[
+   {id:"N3a", label:"“That moved me”", tags:"expression praise", text:"Not \u201cgood job on the presentation\u201d (a verdict) but \u201cwatching you up there, I felt moved; it reminded me why I love this work\u201d. Honest self-expression, with no verdict to perform for."},
+   {id:"N3b", label:"Warmth without the verdict", tags:"expression connection", text:"Appreciation without judgment. Remove the evaluation from the warmth, not the warmth."},
+   {id:"N3c", label:"Saying it back to a friend", tags:"expression praise", text:"A sharper way to tell a friend: \u201cI appreciate the warmth, and honestly 'good job' makes me feel a bit graded. I'd love to just hear what it was like for you.\u201d"}
+  ]},
+  {id:"N4", label:"The permissiveness trap", text:"What it looks like when beyond-power goes wrong.", children:[
+   {id:"N4e", label:"The \u201cnope\u201d in the community", tags:"permissive needs", text:"A mom in Julian's community loves Parenting Beyond Power. Asked to help before leaving, her roughly 6-year-old said \u201cnope\u201d and went off to play. Julian suspected the dad wasn't holding a counterweight and the parents' own needs were under-prioritized."},
+   {id:"N4a", label:"Failure, not the goal", tags:"permissive needs", text:"A kid who says nope and runs off is beyond-power failing, not succeeding. Jen says both people's needs count."},
+   {id:"N4b", label:"Who has guardrails", text:"How exposed each approach is to permissiveness.", children:[
+    {id:"N4b1", label:"PD: guarded", tags:"permissive structure", text:"Positive Discipline has guardrails. “Kind AND firm” keeps firm in the room."},
+    {id:"N4b2", label:"Conscious parenting: exposed", tags:"permissive inner", text:"Conscious parenting is more exposed, because the work points inward."},
+    {id:"N4b3", label:"Jen: protected but misread", tags:"permissive needs power", text:"Jen is well-protected in theory but the most misread in practice. \u201cHonor the child's need\u201d is the vivid, quotable half; \u201cyour needs count too\u201d is the forgettable half."}
+   ]},
+   {id:"N4c", label:"Half the framework", tags:"permissive power structure", text:"Diagnosis: a framework half-absorbed, not a flawed framework. One parent takes anti-power to heart, the both-needs-count half falls out, and nothing balances it."},
+   {id:"B3b", ex:true, label:"It lands on others too", tags:"consequences systemic needs", text:"The consequences of a late night land on the household, the teacher and his friends. It isn't a lesson he alone absorbs."}
+  ]}
+ ]},
+ {id:"V", label:"NVC, race and influence", sub:"the most important turn", gist:"Even a gentle tool can become power-over, and no one's influence is neutral.", hue:8,
+  text:"Where a framework against power-over can turn into power-over, and whether we're all just training each other.", children:[
+  {id:"N5", label:"NVC's hard edge", sub:"race and power", text:"How “nonviolent” communication can do harm.", children:[
+   {id:"N5e", label:"Whose lane this is", tags:"race situated", text:"Julian asked, as a white person, how NVC language might land on Black and brown people. Claude said it was reasoning as a language model, not from lived experience, and pointed to Yolanda's work."},
+   {id:"N5a", label:"A tone-policing tool", tags:"nvc anger power", text:"Surface joke: the word police. Deeper: tone policing. “Rephrase that as a feeling and a need” tells an angry person their anger is the problem."},
+   {id:"N5b", label:"Not neutral", tags:"nvc universal race", text:"NVC presents as universal and neutral but isn't. Its calm, take-apart-your-anger style matches white middle-class, conflict-averse norms: perfectionism, worship of the written word, a narrow professional range of emotion."},
+   {id:"N5c", label:"Anger as legitimate", tags:"anger race situated", text:"In much Black tradition, anger is legitimate, moral and clarifying. Translating it into palatable needs-language can repeat the work of making one's pain comfortable for white people."},
+   {id:"N5d", label:"Keeping NVC from becoming power-over", text:"Four ways to hold the tool.", children:[
+    {id:"N5d1", label:"Offer, never prescribe", tags:"nvc power subject", text:"Offer it, never prescribe it. Use it on yourself."},
+    {id:"N5d2", label:"Don't police form", tags:"anger race", text:"Don't police how someone says it, especially across race. Receive the anger."},
+    {id:"N5d3", label:"Hold the irony", tags:"power nvc", text:"A framework about dismantling power-over becomes insidious power-over when it's sure it's benevolent."},
+    {id:"N5d4", label:"Rooted tools travel better", tags:"situated universal", text:"Tools rooted in a community (Yolanda) travel better than universal ones (Jen). The universal version risks a soft colonization."}
+   ]}
+  ]},
+  {id:"N7", label:"The physicist's friction", sub:"one equation, many coordinate frames", text:"Julian is a physicist and likes universal principles. Does the critique of NVC leave any?", children:[
+   {id:"N7a", label:"A taste for universals", tags:"universal", text:"Julian, a physicist, likes universal principles, so \u201cthis tool isn't universal\u201d creates friction."},
+   {id:"N7b", label:"The principle survives", tags:"subject universal", text:"The universal principle survives: relate to people as subjects, not objects."},
+   {id:"N7c", label:"The syntax is a coordinate frame", tags:"nvc situated subject", text:"What isn't universal is NVC's observation, feeling, need, request syntax. That's a coordinate frame, not the invariant law. Keep the principle universal and hold the notation loosely."}
+  ]},
+  {id:"N6", label:"\u201cWe're all trainable\u201d", sub:"let's not pretend we're not training each other", text:"Influence is unavoidable. Does that make training fine?", children:[
+   {id:"N6a", label:"The true part", tags:"influence", text:"Someone in Julian's community says we're all trainable, so let's not pretend we're not training each other. The true part: there's no neutral, influence-free way to be around people, and pretending otherwise is its own dishonesty."},
+   {id:"N6b", label:"The real friction", tags:"influence power locus", text:"“Training” smuggles in intent and imbalance: behaviorist, dog-and-clicker, done to someone toward your goal. That's different from mutual, mostly-unconscious influence."},
+   {id:"N6c", label:"The resolution", tags:"influence subject", text:"Agree that we always influence, AND decline “therefore training is fine”. The leap between the two turns a person (a subject) into a thing to shape (an object)."},
+   {id:"N6d", label:"The honest move", tags:"influence power", text:"Admit you have power, and choose not to use it as a tool on people."}
+  ]}
+ ]}
+]};
+
+const THREADS = [
+ {id:"locus", label:"Who decides you're okay?", formal:"External vs internal locus of control", color:"#e8590c",
+  text:"Does a child learn they're okay from your verdict, or from inside themselves? Positive Discipline, the praise critique and conscious parenting all try to move the answer inside.",
+  members:["P2c","P3a","N1b","N1a","Y1a"]},
+ {id:"situated", label:"Rooted or universal?", formal:"Situated vs universal", color:"#9c36b5",
+  text:"A tool built for a particular people and history, or one offered to everyone as neutral. Yolanda's rooted work, Jen's universal voice and the critique of NVC all sit on this line.",
+  members:["Y2a","N5d4","N5b","J3b","J2b"]},
+ {id:"power", label:"Doing to, or doing with?", formal:"Power-over vs power-with", color:"#c92a2a",
+  text:"Doing things to someone versus with them. The bedtime case tests it, NVC can betray it, and the training exchange names it.",
+  members:["B1b","B2a","P3b","J1c","N1a","N6d","N5d3"]},
+ {id:"equation", label:"Subjects, not objects", formal:"The physicist's “one equation”", color:"ink",
+  text:"Keep the one universal principle (relate to people as subjects, not objects) and hold the particular NVC phrasing loosely. The phrasing is a coordinate frame, not the law.",
+  members:["N7b","N6c","N5d1","J1b","Y1b","B5b","N7c"]}
+];
+
+// Hand-placed links between ideas that are close in a way the layout can't show.
+const ECHOES = [
+ ["P2c","N1a","The same claim from two sides: praise and punishment are one behaviorist mechanism."],
+ ["P3c","B2b","Is a natural consequence at bedtime a logical consequence in disguise?"],
+ ["Y3a","N4b2","The same weak spot, named in two places."],
+ ["J3b","N5b","Jen's universal voice is the very thing NVC's critics name."],
+ ["B5c","B5b","Jen's answer needs the regulated parent that Yolanda's inner work builds."],
+ ["B1a","N4b1","The routine chart is the guardrail in action."],
+ ["J1b","B1b","The core principle, applied at 9pm."],
+ ["N6d","J1c","Beyond power, restated: admit you have it, then don't wield it."],
+ ["Y2b","N5c","Anger as fuel for activism, not a problem to rephrase."],
+ ["J2b","N5a","The tool Jen builds on is the tool that can police tone."],
+ ["P3b","N4c","Without PD's firmness, half the framework has no counterweight."],
+ ["Y1c","P1c","Yolanda's coaching certification runs straight back to Nelsen."],
+ ["N3b","P2d","Kids do better when they feel better: warmth stays, the verdict goes."],
+ ["B3b","N4a","Both sets of needs count, including the household's."],
+ ["N4e","N4c","The community example is the half-absorbed framework in action."],
+ ["N1c","N3a","The funny feeling is what the verdict-to-expression swap answers."],
+ ["N7c","N5b","Neutral-seeming syntax is exactly what the critique of NVC names."],
+ ["J3c","Y1d","Two corrections, one pattern: each framework keeps its detail in a layer that's easy to miss."],
+ ["J0","N5d4","The opening question was already about rooted versus universal voices."]
+];
+
+const WALKS = {
+ start: {label:"Start here", steps:[
+  ["root","This map holds five ways of thinking about parenting without power-over, pulled from one long conversation. Bigger circles are bigger subjects, and circles near each other share ideas."],
+  ["J","Jen Lumanlan's Parenting Beyond Power is the anchor. Her approach is research-first and built on one idea."],
+  ["J1b","A child's behavior is their best attempt to meet a need. Instead of stopping the behavior, you look for the need and solve for it together."],
+  ["P","Positive Discipline shares a lot with Jen: no punishment, no rewards, lots of connection. But it keeps the parent in charge of limits."],
+  ["P3b","That's the main fork. PD says be kind and firm. Jen is more suspicious of parental power itself."],
+  ["A","Praise turns out to be part of the same question."],
+  ["N1a","Praise, rewards and punishment work the same way: someone with power shaping someone else's behavior from the outside."],
+  ["N3a","The alternative isn't coldness. Swap the verdict (“good job”) for honest expression (“that moved me”)."],
+  ["N4a","Beyond-power can fail, too. A kid who says nope and runs off isn't the goal. Both people's needs count."],
+  ["V","Then the most important turn: even a gentle tool can become power-over."],
+  ["N5a","Asking an angry person to rephrase as a feeling and a need can tell them their anger is the problem. That lands hardest across race."],
+  ["Y","Yolanda Williams offers a counterweight: inner work first, and parenting rooted in a particular history rather than a generic one."],
+  ["N6d","Where it lands: we always influence each other. The honest move is to admit you have power and choose not to use it as a tool on people."],
+  ["N7c","And for the physicist: the universal law is to relate to people as subjects, not objects. NVC's phrasing is just one coordinate frame for it."],
+  ["root","That's the main line. Open Layers to see the threads between clusters, use the view menu to line ideas up along one question, or follow the bedtime example."]
+ ]},
+ moon: {label:"Bedtime example", steps:[
+  ["root","A 6-year-old won't go to bed. It's 9pm, there's school tomorrow, and you're exhausted. This walk follows that one moment through the map."],
+  ["B1a","Positive Discipline: use the routine chart your kid helped make, stay kind and firm, and follow through. The firmness is the point."],
+  ["B1b","Jen: don't hold the limit just because you're the parent. Get curious about what he needs (autonomy? connection? too wired?) and negotiate."],
+  ["B2a","Is “asleep by 9” a real constraint, or an inherited rule carrying your own anxiety? That's inner-work territory."],
+  ["B2b","Could he learn to manage sleep himself through natural consequences?"],
+  ["B3a","Probably not yet. At 6, connecting a late night to a rough tomorrow and changing course is hard. At 14 it's a fair ask."],
+  ["B3b","And the consequences don't land only on him. The household, his teacher and his friends absorb them too."],
+  ["B4","So the limit is real, but temporary. You hold more now and hand over more as he grows."],
+  ["B5a","The hard part: you can't see readiness until you let go, and testing it has costs."],
+  ["B5b","Jen would say readiness is continuous. Stay connected while you hand things over, and don't underestimate him."],
+  ["B5c","That answer assumes a parent who is regulated and resourced, which brings it back to inner work."]
+ ]}
+};
+
+// "Look along": hand-placed scores from -1 (left pole) to +1 (right pole).
+const AXES = [
+ {id:"power", label:"Doing to or doing with", poles:["Doing to", "Doing with"],
+  why:"Where each idea sits between shaping someone from above and working it out together.",
+  scores:{N1a:-.85, N6b:-.7, P2a:-.6, N5a:-.5, N5d3:-.3, P3b:-.18, B1a:-.08, P3c:0, B4:.12, N2b:.22, N4a:.38, N6d:.55, J1b:.62, N3a:.66, N5d1:.72, B1b:.78, J2a:.86}},
+ {id:"situated", label:"Rooted or universal", poles:["Rooted in a people", "Offered to everyone"],
+  why:"Whether a tool is built for a particular community and history, or presented as neutral for all.",
+  scores:{Y2a:-.9, Y2b:-.72, N5c:-.6, N5d4:-.48, N5d2:-.3, J3a:.05, Y1a:.2, P2b:.48, J1a:.6, J2b:.72, J3b:.8, N5b:.92}},
+ {id:"locus", label:"Who decides you're okay", poles:["Someone outside", "The child, inside"],
+  why:"Does a child learn they're okay from someone else's verdict, or from their own sense of it?",
+  scores:{N1b:-.88, N1a:-.72, N6b:-.6, P2a:-.48, B1a:-.12, Y1a:.32, P3a:.45, N3a:.56, N3b:.64, B2b:.74, P2c:.88}},
+ {id:"handover", label:"Who holds the limit", poles:["The adult holds it", "The child holds it"],
+  why:"The bedtime question, generalized: where should a limit sit, and when does it move?",
+  scores:{P3b:-.62, B1a:-.55, B3a:-.42, B3b:-.32, B4:-.14, B5c:-.02, B5a:.08, B2a:.26, B1b:.48, B5b:.58, B2b:.76, N4a:.94}}
+];
+const AXIS_NOTES = {N4a:"the failure state, at the far end", B5c:"the condition the handover depends on"};
+
+/* ---------------- Build tree ---------------- */
+const byId = new Map(); const nodes = [];
+(function walk(n, parent, depth){
+  n.parent = parent; n.depth = depth; byId.set(n.id, n);
+  if (depth === 1) n.cluster = n; else if (depth > 1) n.cluster = parent.cluster;
+  if (depth >= 1) n.hue = n.cluster.hue;
+  (n.children || []).forEach(c => walk(c, n, depth + 1));
+})(TREE, null, 0);
+const root = TREE;
+{ const q = [root]; while (q.length){ const n = q.shift(); nodes.push(n); (n.children||[]).forEach(c => q.push(c)); } }
+const MAXDEPTH = d3.max(nodes, n => n.depth);
+const isAnc = (a, b) => { for (let x = b; x; x = x.parent) if (x === a) return true; return false; }; // a is b or contains b
+
+(function vec(n){
+  const m = new Map();
+  (n.tags || "").split(" ").filter(Boolean).forEach(t => m.set(t, (m.get(t)||0) + 1));
+  (n.children || []).forEach(c => { vec(c); for (const [k,x] of c.vec) m.set(k, (m.get(k)||0) + x*0.6); });
+  n.vec = m; n.norm = Math.sqrt([...m.values()].reduce((s,x) => s + x*x, 0)) || 1;
+})(root);
+function sim(a, b){ let d = 0; for (const [k,x] of a.vec){ const y = b.vec.get(k); if (y) d += x*y; } return d / (a.norm*b.norm); }
+
+const PAIRS = ECHOES.map(e => [byId.get(e[0]), byId.get(e[1])]);
+THREADS.forEach(t => { for (let i = 1; i < t.members.length; i++) PAIRS.push([byId.get(t.members[i-1]), byId.get(t.members[i])]); });
+function linkW(c, m){ let w = 0; for (const [a,b] of PAIRS){ if ((isAnc(c,a) && isAnc(m,b)) || (isAnc(c,b) && isAnc(m,a))) w++; } return w; }
+
+/* ---------------- Layout: nested circles placed by conceptual closeness ---------------- */
+const padFor = n => Math.max(2, d3.mean(n.children, c => c.r) * (n === root ? 0.16 : 0.12));
+(function measure(n){
+  if (!n.children){ n.r = 18 * Math.sqrt(1 + n.text.length / 140); return; }
+  n.children.forEach(measure);
+  const pad = padFor(n);
+  const cs = n.children.map(c => ({r: c.r + pad}));
+  d3.packSiblings(cs);
+  n.r = d3.packEnclose(cs).r * (n.children.length > 1 ? 1.17 : 1.25) + pad;
+  n.maxChildR = d3.max(n.children, c => c.r);
+})(root);
+
+const ROOT_ANGLES = {J:-90, P:-18, A:54, V:126, Y:198};
+function layoutChildren(n, placed){
+  const kids = n.children, R = n.r, pad = padFor(n);
+  if (kids.length === 1){ kids[0].x = n.x; kids[0].y = n.y; return; }
+  const A = kids.map(c => {
+    let ax = 0, ay = 0;
+    for (const m of placed){
+      if (isAnc(m, n)) continue;
+      const w = Math.pow(Math.max(0, sim(c, m)), 2) + 1.4 * linkW(c, m);
+      if (w <= 0) continue;
+      const dx = m.x - n.x, dy = m.y - n.y, d = Math.hypot(dx, dy) || 1;
+      ax += w*dx/d; ay += w*dy/d;
+    }
+    return [ax, ay];
+  });
+  const mx = d3.mean(A, a => a[0]), my = d3.mean(A, a => a[1]);
+  A.forEach(a => { a[0] -= mx; a[1] -= my; });
+  const mags = A.map(a => Math.hypot(a[0], a[1])); const maxMag = d3.max(mags) || 1;
+  const S = mags.map(m => m / maxMag);
+  const TG = kids.map((c, i) => { const m = mags[i] || 1, reach = (R - c.r - pad) * 0.8; return [n.x + A[i][0]/m*reach, n.y + A[i][1]/m*reach]; });
+  kids.forEach((c, i) => {
+    let ang;
+    if (n === root) ang = ROOT_ANGLES[c.id] * Math.PI/180;
+    else if (S[i] > 0.15) ang = Math.atan2(A[i][1], A[i][0]);
+    else ang = i * 2.39996 + 0.7;
+    const rr = (R - c.r) * 0.55;
+    c.x = n.x + Math.cos(ang)*rr; c.y = n.y + Math.sin(ang)*rr;
+  });
+  const IT = 600;
+  for (let it = 0; it < IT; it++){
+    const al = 1 - it/IT;
+    for (let i = 0; i < kids.length; i++) for (let j = i+1; j < kids.length; j++){
+      const a = kids[i], b = kids[j];
+      const s = sim(a, b) + 0.8*linkW(a, b);
+      if (s <= 0) continue;
+      const f = 0.012 * al * s * s, dx = b.x - a.x, dy = b.y - a.y;
+      a.x += dx*f; a.y += dy*f; b.x -= dx*f; b.y -= dy*f;
+    }
+    kids.forEach((c, i) => {
+      if (S[i] > 0){ c.x += (TG[i][0]-c.x)*0.02*al*S[i]; c.y += (TG[i][1]-c.y)*0.02*al*S[i]; }
+      c.x += (n.x - c.x)*0.006; c.y += (n.y - c.y)*0.006;
+    });
+    for (let pass = 0; pass < 2; pass++){
+      for (let i = 0; i < kids.length; i++) for (let j = i+1; j < kids.length; j++){
+        const a = kids[i], b = kids[j];
+        let dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+        const min = a.r + b.r + pad;
+        if (d < min){
+          if (d < 1e-6){ dx = 1e-3*(j-i); dy = 1e-3; d = Math.hypot(dx, dy); }
+          const p = (min - d) / 2 / d;
+          a.x -= dx*p; a.y -= dy*p; b.x += dx*p; b.y += dy*p;
+        }
+      }
+      kids.forEach(c => {
+        const dx = c.x - n.x, dy = c.y - n.y, d = Math.hypot(dx, dy), max = R - c.r - pad*0.6;
+        if (d > max){ c.x = n.x + dx/d*max; c.y = n.y + dy/d*max; }
+      });
+    }
+  }
+}
+root.x = 0; root.y = 0;
+{ const placed = [root], q = [root];
+  while (q.length){ const n = q.shift(); if (!n.children) continue; layoutChildren(n, placed); n.children.forEach(c => { placed.push(c); q.push(c); }); } }
+{ const e = d3.packEnclose(root.children.map(c => ({x:c.x, y:c.y, r:c.r}))); nodes.forEach(n => { n.x -= e.x; n.y -= e.y; }); root.x = 0; root.y = 0; root.r = e.r * 1.04; }
+
+/* ---------------- DOM ---------------- */
+const stage = document.getElementById("stage"), canvas = document.getElementById("map");
+const ctx = canvas.getContext("2d"), labels = document.getElementById("labels");
+const header = document.querySelector("header"), crumbs = document.getElementById("crumbs"), hint = document.getElementById("hint"), readout = document.getElementById("readout");
+const panel = document.getElementById("panel"), pbody = document.getElementById("pbody"), peyebrow = document.getElementById("peyebrow"), ptoggle = document.getElementById("ptoggle");
+const walkEl = document.getElementById("walk"), layersEl = document.getElementById("layers"), spec = document.getElementById("spectrum"), lensSel = document.getElementById("lens");
+const bStart = document.getElementById("bStart"), bMoon = document.getElementById("bMoon"), bLayers = document.getElementById("bLayers"), tip = document.getElementById("tip");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isMobile = () => window.innerWidth <= 760;
+const ss = (a, b, x) => { const t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t*t*(3 - 2*t); };
+
+function h(tag, attrs, ...kids){
+  const el = document.createElement(tag);
+  for (const k in (attrs||{})){ const v = attrs[k]; if (v == null) continue; if (k === "class") el.className = v; else if (k === "style") el.style.cssText = v; else if (k.startsWith("on")) el.addEventListener(k.slice(2), v); else el.setAttribute(k, v); }
+  kids.flat().forEach(c => { if (c == null || c === false) return; el.append(c.nodeType ? c : document.createTextNode(c)); });
+  return el;
+}
+
+nodes.forEach(n => {
+  if (n === root) return;
+  const el = h("div", {class: "lbl" + (n.depth === 1 ? " c" : "")});
+  if (n.ex) el.append(h("div", {class:"ex"}, "Bedtime example"));
+  el.append(h("div", {class:"t"}, n.label));
+  if (n.gist && n.depth === 1){ n.gEl = h("div", {class:"s"}, n.gist); el.append(n.gEl); }
+  if (!n.children){ n.dEl = h("div", {class:"d"}, n.text); el.append(n.dEl); }
+  el.hidden = true; labels.append(el); n.el = el; n.shown = false;
+  if (n.children){ n.rim = h("div", {class:"rim"}, n.label); n.rim.hidden = true; labels.append(n.rim); n.rimShown = false; }
+});
+
+/* ---------------- Theme ---------------- */
+let dark = false;
+const THEME = {};
+function readTheme(){
+  const t = document.documentElement.getAttribute("data-theme");
+  dark = t === "dark" || (t !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const cs = getComputedStyle(document.documentElement);
+  THEME.ink = cs.getPropertyValue("--ink").trim(); THEME.ink2 = cs.getPropertyValue("--ink-2").trim();
+  THEME.line = cs.getPropertyValue("--line").trim(); THEME.moon = cs.getPropertyValue("--moon").trim();
+  THEME.julian = cs.getPropertyValue("--julian").trim(); THEME.bg = cs.getPropertyValue("--bg").trim(); THEME.claude = cs.getPropertyValue("--claude").trim();
+  schedule();
+}
+const LIGHT = {L:[0, 89, 81, 95, 87], S:[0, 40, 40, 36, 34]};
+const DARK  = {L:[0, 17, 24, 13, 20], S:[0, 26, 28, 24, 24]};
+const fillOf = n => { const P = dark ? DARK : LIGHT, d = Math.min(n.depth, 4); return `hsl(${n.hue} ${P.S[d]}% ${P.L[d]}%)`; };
+const strokeOf = n => dark ? `hsl(${n.hue} 40% 58% / .55)` : `hsl(${n.hue} 38% 48% / .5)`;
+const dotOf = n => `hsl(${n.hue} 55% ${dark ? 62 : 46}%)`;
+const threadColor = t => t.color === "ink" ? THEME.ink : t.color;
+new MutationObserver(readTheme).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readTheme);
+
+/* ---------------- State ---------------- */
+let T = d3.zoomIdentity, focus = root, hover = null, flying = false, raf = 0, k0 = 1, W = 0, H = 0, dpr = 1;
+let panelCollapsed = false, soloThread = null, panelMode = "node", interacted = false, lens = "map";
+const layer = {echoes:false, threads:Object.fromEntries(THREADS.map(t => [t.id, false]))};
+let walk = null; // {key, i}
+
+/* ---------------- View + zoom ---------------- */
+function view(){
+  const top = header.offsetHeight;
+  let right = 0, bottom = 20;
+  const card = !walkEl.hidden;
+  if (isMobile()) bottom = panel.querySelector(".phead").offsetHeight + (card ? walkEl.offsetHeight + 12 : 0) + 20;
+  else { if (!panelCollapsed) right = panel.offsetWidth + 32; bottom = (card ? walkEl.offsetHeight + 24 : 0) + 20; }
+  const w = Math.max(120, W - right - 16), hh = Math.max(120, H - top - bottom);
+  return {cx: 8 + w/2, cy: top + hh/2, w, h: hh};
+}
+function fitTransform(n){
+  const v = view(), vmin = Math.min(v.w, v.h);
+  const k = (n.children ? 0.47 : 0.42) * vmin / n.r;
+  return d3.zoomIdentity.translate(v.cx, v.cy).scale(k).translate(-n.x, -n.y);
+}
+const zoom = d3.zoom().scaleExtent([0.05, 200])
+  .on("start", e => { if (e.sourceEvent) interacted = true; })
+  .on("zoom", e => { T = e.transform; schedule(); if (!flying) autoFocus(); });
+const csel = d3.select(canvas).call(zoom).on("dblclick.zoom", null);
+
+function zoomTo(n, dur, keepPanel){
+  if (dur == null) dur = 950;
+  setFocus(n, !keepPanel);
+  const t = fitTransform(n);
+  if (reduceMotion || dur === 0){ csel.interrupt(); csel.call(zoom.transform, t); return; }
+  flying = true;
+  csel.transition().duration(dur).ease(d3.easeCubicInOut).call(zoom.transform, t)
+    .on("end", () => { flying = false; }).on("interrupt", () => { flying = false; });
+}
+function autoFocus(){
+  const v = view(), vmin = Math.min(v.w, v.h), [wx, wy] = T.invert([v.cx, v.cy]);
+  let n = root, moved = true;
+  while (moved && n.children){
+    moved = false;
+    for (const c of n.children){ if (Math.hypot(c.x - wx, c.y - wy) < c.r && c.r*T.k >= 0.3*vmin){ n = c; moved = true; break; } }
+  }
+  if (n !== focus) setFocus(n, false);
+}
+function layoutChrome(){
+  const top = header.offsetHeight;
+  document.documentElement.style.setProperty("--top", (top + (isMobile() ? 0 : 4)) + "px");
+  if (isMobile()) walkEl.style.bottom = (panel.offsetHeight + 10) + "px"; else walkEl.style.bottom = "";
+  spec.style.paddingRight = (!isMobile() && !panelCollapsed) ? (panel.offsetWidth + 40) + "px" : "16px";
+  if (isMobile()) spec.style.bottom = panel.offsetHeight + "px"; else spec.style.bottom = "0px";
+}
+function resize(){
+  dpr = window.devicePixelRatio || 1; W = stage.clientWidth; H = stage.clientHeight;
+  canvas.width = Math.round(W*dpr); canvas.height = Math.round(H*dpr);
+  layoutChrome();
+  const v = view(); k0 = 0.47*Math.min(v.w, v.h)/root.r;
+  csel.interrupt(); csel.call(zoom.transform, fitTransform(focus));
+  if (lens !== "map" && lens !== "convo") renderSpectrum();
+}
+
+/* ---------------- Render ---------------- */
+function schedule(){ if (!raf) raf = requestAnimationFrame(render); }
+function endpoint(n){ let x = n; while (x && x !== root && !(x.a > 0.35)) x = x.parent; return x === root ? null : x; }
+const walkIds = () => walk ? new Set(WALKS[walk.key].steps.map(s => s[0]).filter(id => id !== "root")) : null;
+function render(){
+  raf = 0;
+  const v = view(), vmin = Math.min(v.w, v.h);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  for (const n of nodes){
+    n.sx = n.x*T.k + T.x; n.sy = n.y*T.k + T.y; n.sr = n.r*T.k;
+    n.on = n.sx + n.sr > 0 && n.sx - n.sr < W && n.sy + n.sr > 0 && n.sy - n.sr < H;
+    if (n === root) n.a = 1;
+    else { const p = n.parent; n.a = (p === root ? 1 : ss(0.08*vmin, 0.16*vmin, p.sr)) * p.a * ss(2, 6, n.sr); }
+  }
+  ctx.beginPath(); ctx.arc(root.sx, root.sy, root.sr, 0, Math.PI*2);
+  ctx.strokeStyle = THEME.line; ctx.lineWidth = 1; ctx.setLineDash([2, 5]); ctx.stroke(); ctx.setLineDash([]);
+  const diag = Math.hypot(W, H), moon = walk && walk.key === "moon";
+  for (const n of nodes){
+    if (n === root || !n.on || n.a < 0.01) continue;
+    ctx.globalAlpha = n.a;
+    ctx.fillStyle = fillOf(n);
+    if (Math.hypot(n.sx - W/2, n.sy - H/2) + diag/2 < n.sr){ ctx.fillRect(0, 0, W, H); continue; }
+    ctx.beginPath(); ctx.arc(n.sx, n.sy, n.sr, 0, Math.PI*2); ctx.fill();
+    const hl = hover && n === hover;
+    if (n.ex){ ctx.strokeStyle = THEME.moon; ctx.lineWidth = moon ? 2 : 1.2; ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]); }
+    else { ctx.strokeStyle = hl ? dotOf(n) : strokeOf(n); ctx.lineWidth = hl ? 2 : 1; ctx.stroke(); }
+  }
+  ctx.globalAlpha = 1;
+  drawLinks();
+  if (walk) drawWalkPath();
+  if (PL) drawDot();
+  updateLabels(v, vmin);
+  readout.textContent = `· ×${(T.k/k0).toFixed(1)}`;
+}
+function edgePoint(n, tx, ty){
+  if (n.sr < 22) return [n.sx, n.sy];
+  const dx = tx - n.sx, dy = ty - n.sy, d = Math.hypot(dx, dy) || 1;
+  return [n.sx + dx/d*n.sr, n.sy + dy/d*n.sr];
+}
+function curve(a, b, color, alpha, width, dash, bow){
+  const [x1, y1] = edgePoint(a, b.sx, b.sy), [x2, y2] = edgePoint(b, a.sx, a.sy);
+  const mx = (x1 + x2)/2, my = (y1 + y2)/2, dx = x2 - x1, dy = y2 - y1;
+  const cx = mx - dy*bow, cy = my + dx*bow;
+  ctx.globalAlpha = alpha; ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = width; ctx.setLineDash(dash || []);
+  ctx.beginPath(); ctx.moveTo(x1, y1); ctx.quadraticCurveTo(cx, cy, x2, y2); ctx.stroke(); ctx.setLineDash([]);
+  ctx.beginPath(); ctx.arc(x1, y1, width + 1.5, 0, Math.PI*2); ctx.arc(x2, y2, width + 1.5, 0, Math.PI*2); ctx.fill();
+}
+// A line shows when its layer is on, or when it touches what you're pointing at or standing on.
+const touches = (n, a, b) => n && n !== root && (isAnc(n, a) || isAnc(n, b));
+const ctxOn = (A, B) => touches(hover, A, B) || (focus.depth >= 2 && touches(focus, A, B));
+function drawLinks(){
+  ECHOES.forEach((e, i) => {
+    const A = byId.get(e[0]), B = byId.get(e[1]);
+    const on = layer.echoes || ctxOn(A, B);
+    if (!on || soloThread) return;
+    const a = endpoint(A), b = endpoint(B);
+    if (!a || !b || isAnc(a, b) || isAnc(b, a)) return;
+    let al = 0.5, w = 1.2;
+    if (ctxOn(A, B)){ al = 0.9; w = 1.7; } else if (hover && hover !== root) al = 0.18;
+    curve(a, b, THEME.ink2, al, w, [4, 4], i % 2 ? 0.18 : -0.18);
+  });
+  THREADS.forEach((t, ti) => {
+    const seen = new Set();
+    for (let i = 1; i < t.members.length; i++){
+      const A = byId.get(t.members[i-1]), B = byId.get(t.members[i]);
+      const solo = soloThread === t;
+      if (soloThread && !solo) continue;
+      if (!solo && !layer.threads[t.id] && !ctxOn(A, B)) continue;
+      const a = endpoint(A), b = endpoint(B);
+      if (!a || !b || isAnc(a, b) || isAnc(b, a)) continue;
+      const key = a.id < b.id ? a.id + b.id : b.id + a.id; if (seen.has(key)) continue; seen.add(key);
+      let al = 0.65, w = 1.7;
+      if (solo){ al = 0.95; w = 2.6; }
+      else if (ctxOn(A, B)){ al = 0.95; w = 2.2; }
+      else if (hover && hover !== root) al = 0.2;
+      curve(a, b, threadColor(t), al, w, null, 0.12 + ti*0.05);
+    }
+  });
+  ctx.globalAlpha = 1;
+}
+function drawWalkPath(){
+  const steps = WALKS[walk.key].steps.map(s => s[0]).filter(id => id !== "root").map(id => byId.get(id));
+  const color = walk.key === "moon" ? THEME.moon : THEME.ink2;
+  for (let i = 1; i < steps.length; i++){
+    const a = endpoint(steps[i-1]), b = endpoint(steps[i]);
+    if (!a || !b || a === b || isAnc(a, b) || isAnc(b, a)) continue;
+    const cur = WALKS[walk.key].steps[walk.i][0];
+    const near = steps[i].id === cur || steps[i-1].id === cur;
+    curve(a, b, color, near ? 0.9 : 0.35, near ? 2.2 : 1.4, [1, 5], 0.08);
+  }
+  ctx.globalAlpha = 1;
+}
+function show(el, on, flag, n){ if (n[flag] !== on){ el.hidden = !on; n[flag] = on; } }
+function updateLabels(v, vmin){
+  const headerB = header.offsetHeight - 6;
+  for (const n of nodes){
+    if (n === root) continue;
+    let a = 0;
+    if (n.on && n.a > 0.3){
+      // one legible layer at a time: a node's children take over its label as it fills the view
+      const inA = n.depth === 1 ? 1 : ss(0.3*vmin, 0.4*vmin, n.parent.sr) * ss(26, 44, n.sr);
+      const outA = n.children ? 1 - ss(0.3*vmin, 0.4*vmin, n.sr) : 1;
+      a = inA * outA * Math.min(1, (n.a - 0.3)/0.4);
+    }
+    if (a > 0.02 && n.sy > headerB - n.sr*0.2){
+      show(n.el, true, "shown", n);
+      const fs = n.depth === 1 ? Math.min(30, Math.max(13.5, n.sr*0.11)) : Math.min(19, Math.max(12.5, n.sr*0.1));
+      const w = Math.min(n.sr*1.5, n.children ? 300 : 360);
+      n.el.style.width = w + "px"; n.el.style.fontSize = fs + "px"; n.el.style.opacity = a;
+      n.el.style.transform = `translate(${n.sx - w/2}px, ${n.sy}px) translateY(-50%)`;
+      if (n.gEl) n.gEl.style.opacity = ss(78, 110, n.sr);
+      if (n.dEl){ const da = ss(Math.min(150, 0.3*vmin), Math.min(200, 0.37*vmin), n.sr); n.dEl.style.display = da > 0.02 ? "" : "none"; n.dEl.style.opacity = da; n.dEl.style.fontSize = Math.min(17, Math.max(13, n.sr*0.06))/fs + "em"; }
+    } else show(n.el, false, "shown", n);
+    if (n.rim){
+      let ra = 0; const ry = n.sy - n.sr + 10;
+      if (n.on && n.a > 0.5) ra = ss(0.3*vmin, 0.4*vmin, n.sr) * (ry > headerB ? 1 : 0) * (n.sr < 4*Math.max(W, H) ? 1 : 0);
+      if (ra > 0.02){ show(n.rim, true, "rimShown", n); n.rim.style.opacity = ra; n.rim.style.transform = `translate(${n.sx}px, ${ry}px) translateX(-50%)`; }
+      else show(n.rim, false, "rimShown", n);
+    }
+  }
+  hint.style.opacity = focus === root ? 1 : 0.0;
+}
+
+/* ---------------- Hit testing ---------------- */
+function nodeAt(x, y, minA){
+  let best = null;
+  for (const n of nodes){ if (n === root || n.a < minA || !n.on) continue; if (Math.hypot(x - n.sx, y - n.sy) <= n.sr && (!best || n.depth > best.depth)) best = n; }
+  return best;
+}
+canvas.addEventListener("click", e => {
+  interacted = true; closeLayers();
+  const r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const inFocus = focus === root || Math.hypot(x - focus.sx, y - focus.sy) <= focus.sr;
+  if (inFocus){
+    const kid = (focus.children || []).find(c => Math.hypot(x - c.sx, y - c.sy) <= c.sr);
+    if (kid) zoomTo(kid);
+    return;
+  }
+  const hit = nodeAt(x, y, 0.4);
+  zoomTo(hit && !isAnc(hit, focus) ? hit : (focus.parent || root));
+});
+canvas.addEventListener("pointermove", e => {
+  if (e.pointerType !== "mouse") return;
+  const r = canvas.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+  const n = nodeAt(x, y, 0.5);
+  if (n !== hover){ hover = n; schedule(); }
+  canvas.style.cursor = n ? "pointer" : "default";
+  if (n && !n.children && n.shown && (!n.dEl || n.dEl.style.display === "none")) showTip(n, x, y);
+  else tip.hidden = true;
+});
+canvas.addEventListener("pointerleave", () => { hover = null; tip.hidden = true; schedule(); });
+function showTip(n, x, y){
+  tip.replaceChildren(h("b", null, n.label), n.text); tip.hidden = false;
+  const tw = tip.offsetWidth, th = tip.offsetHeight;
+  let tx = x + 16, ty = y + 16; if (tx + tw > W - 8) tx = x - tw - 16; if (ty + th > H - 8) ty = y - th - 16;
+  tip.style.left = Math.max(8, tx) + "px"; tip.style.top = Math.max(8, ty) + "px";
+}
+window.addEventListener("keydown", e => {
+  if (e.key === "Escape"){
+    if (!layersEl.hidden){ closeLayers(); return; }
+    if (PL){ stopPlayer(); return; }
+    if (lens !== "map"){ setLens("map"); return; }
+    if (soloThread){ selectThread(null); return; }
+    if (focus !== root) zoomTo(focus.parent);
+  }
+  if (walk && (e.key === "ArrowRight" || e.key === "ArrowLeft") && document.activeElement?.tagName !== "SELECT"){ stepWalk(e.key === "ArrowRight" ? 1 : -1); }
+});
+
+/* ---------------- Breadcrumb + panel ---------------- */
+function path(n){ const p = []; for (let x = n; x; x = x.parent) p.unshift(x); return p; }
+function setFocus(n, explicit){
+  focus = n; renderCrumbs();
+  if (explicit || panelMode === "node") renderNodePanel(n);
+  schedule();
+}
+function renderCrumbs(){
+  const p = path(focus); crumbs.replaceChildren();
+  p.forEach((n, i) => {
+    if (i) crumbs.append(h("span", {class:"sep", "aria-hidden":"true"}, "›"));
+    const b = h("button", {type:"button", title:n.label, onclick:() => { setLens("map"); zoomTo(n); }}, n === root ? "Map" : n.label);
+    if (n === focus) b.setAttribute("aria-current", "location");
+    crumbs.append(b);
+  });
+}
+const clusterOf = n => n.cluster || n;
+function navItem(n, reason, via, here){
+  return h("button", {type:"button", class:"item", onclick:() => { panelMode = "node"; setLens("map"); zoomTo(n, 1400); }},
+    h("span", {class:"dot", style:`background:${dotOf(n)}`}),
+    h("span", {class:"it"},
+      (here || n.depth === 1) && !via && !n.ex ? null : h("span", {class:"ic"}, [here ? null : clusterOf(n).label, n.ex ? "bedtime example" : null, via ? `from “${via}”` : null].filter(Boolean).join(" · ")),
+      h("span", {class:"il"}, n.label),
+      reason ? h("span", {class:"ir"}, reason) : null));
+}
+function renderNodePanel(n){
+  panelMode = "node";
+  const body = [];
+  if (n === root){
+    peyebrow.replaceChildren("Oct 4, 2026");
+    body.push(h("h2", {class:"ptitle"}, "Parenting without power-over"));
+    body.push(h("p", {class:"ptext"}, "Five ways of thinking about it, from a voice conversation between Julian and Claude that began with one question: has Jen Lumanlan ever interviewed Yolanda Williams?"));
+    body.push(h("p", {class:"ptext"}, " Bigger circles are bigger subjects, and circles near each other share ideas. Tap any circle to look inside."));
+    body.push(h("div", {class:"row"},
+      h("button", {type:"button", class:"btn", onclick:() => startWalk("start")}, "Start here"),
+      h("button", {type:"button", class:"btn moon", onclick:() => startWalk("moon")}, "Bedtime example"),
+      h("button", {type:"button", class:"btn", onclick:() => setLens("convo")}, "Read the conversation"),
+      h("button", {type:"button", class:"btn listen", onclick:() => startPlayer(0)}, h("span", {class:"pi", "aria-hidden":"true"}), "Read along")));
+    body.push(h("div", {class:"sect"}, h("h3", null, "The five clusters"), root.children.map(c => navItem(c, c.gist))));
+    body.push(h("p", {class:"ptext small"}, "Bedtime pieces, outlined in dashes, sit inside the clusters they illustrate. Connections between clusters are hidden until you turn them on in Layers, or until you point at or zoom into an idea that has one."));
+  } else {
+    peyebrow.replaceChildren(h("span", {class:"dot", style:`background:${dotOf(n)}`}), n.depth === 1 ? "Cluster" : clusterOf(n).label);
+    if (n.ex) body.push(h("div", {class:"exflag"}, "Bedtime example"));
+    body.push(h("h2", {class:"ptitle"}, n.label));
+    if (n.sub) body.push(h("p", {class:"psub"}, n.sub));
+    if (n.gist) body.push(h("p", {class:"ptext"}, h("b", {style:"font-weight:500"}, n.gist)));
+    if (n.text) body.push(h("p", {class:n.gist ? "ptext small" : "ptext"}, n.text));
+    if (n.children) body.push(h("div", {class:"sect"}, h("h3", null, "Inside"), n.children.map(c => navItem(c, c.text, null, true))));
+    const secs = sectionsFor(n);
+    if (secs.length) body.push(h("div", {class:"sect"}, h("h3", null, "In the conversation"),
+      secs.map(sc => h("button", {type:"button", class:"item", onclick:() => setLens("convo", sc.num)},
+        h("span", {class:"dot", style:"background:var(--ink-3)"}), h("span", {class:"it"}, h("span", {class:"il"}, `${sc.num}. ${sc.title}`), h("span", {class:"ir"}, "Read this part"))))));
+    const ths = THREADS.filter(t => t.members.some(id => isAnc(n, byId.get(id))));
+    if (ths.length) body.push(h("div", {class:"sect"}, h("h3", null, n.children ? "Threads passing through" : "On the thread"),
+      h("div", {class:"row"}, ths.map(t => threadChip(t)))));
+    const ech = [];
+    ECHOES.forEach(e => {
+      const A = byId.get(e[0]), B = byId.get(e[1]);
+      if (isAnc(n, A) && !isAnc(n, B)) ech.push([B, e[2], A]);
+      else if (isAnc(n, B) && !isAnc(n, A)) ech.push([A, e[2], B]);
+    });
+    if (ech.length) body.push(h("div", {class:"sect"}, h("h3", null, "Also close to"),
+      ech.slice(0, 7).map(([o, why, src]) => navItem(o, why, src !== n ? src.label : null))));
+  }
+  pbody.replaceChildren(...body); pbody.scrollTop = 0;
+}
+function renderThreadPanel(t){
+  panelMode = "thread";
+  peyebrow.replaceChildren(h("span", {class:"dot", style:`background:${threadColor(t)}`}), "Thread · " + t.formal);
+  pbody.replaceChildren(
+    h("h2", {class:"ptitle"}, t.label),
+    h("p", {class:"ptext"}, t.text),
+    h("div", {class:"sect"}, h("h3", null, "Passes through"), t.members.map(id => navItem(byId.get(id), null))),
+    h("button", {type:"button", class:"iconbtn", style:"align-self:flex-start", onclick:() => selectThread(null)}, "Done"));
+  pbody.scrollTop = 0;
+  if (panelCollapsed) togglePanel(false);
+}
+function threadChip(t){
+  return h("button", {type:"button", class:"chip", "aria-pressed": String(soloThread === t), onclick:() => selectThread(soloThread === t ? null : t)},
+    h("span", {class:"sw", style:`background:${threadColor(t)}`}), t.label);
+}
+function selectThread(t){
+  soloThread = t;
+  if (t){ setLens("map"); renderThreadPanel(t); if (focus !== root) zoomTo(root, 900, true); }
+  else renderNodePanel(focus);
+  schedule();
+}
+function togglePanel(force){
+  panelCollapsed = force != null ? force : !panelCollapsed;
+  panel.classList.toggle("collapsed", panelCollapsed);
+  ptoggle.textContent = panelCollapsed ? (isMobile() ? "More" : "Notes") : "Hide";
+  ptoggle.setAttribute("aria-expanded", String(!panelCollapsed));
+  layoutChrome();
+  if (lens !== "map" && lens !== "convo") renderSpectrum();
+  else if (lens === "map" && !isMobile()) zoomTo(focus, 500, true);
+}
+ptoggle.addEventListener("click", () => togglePanel());
+
+/* ---------------- Layers ---------------- */
+function renderLayers(){
+  const row = (checked, onchange, sw, title, small, id) => h("label", {class:"sw-row", for:id},
+    h("input", {type:"checkbox", id, ...(checked ? {checked:""} : {}), onchange}), sw, h("span", {class:"tx"}, h("b", null, title), small ? h("small", null, small) : null));
+  layersEl.replaceChildren(
+    h("div", {class:"grp"}, h("h3", null, "Threads between clusters"),
+      THREADS.map(t => row(layer.threads[t.id], e => { layer.threads[t.id] = e.target.checked; soloThread = null; if (panelMode === "thread") renderNodePanel(focus); schedule(); },
+        h("span", {class:"sw", style:`background:${threadColor(t)}`}), t.label, t.formal, "ly-" + t.id))),
+    h("div", {class:"grp"}, h("h3", null, "Pairs"),
+      row(layer.echoes, e => { layer.echoes = e.target.checked; schedule(); }, h("span", {class:"sw dash"}), "Echoes", "Two specific ideas in different places that rhyme", "ly-echoes")),
+    h("p", {class:"note"}, "Even with these off, an idea's own connections appear when you point at it or zoom into it."));
+}
+function openLayers(){
+  renderLayers(); layersEl.hidden = false; bLayers.setAttribute("aria-expanded", "true");
+  const r = bLayers.getBoundingClientRect(), ar = document.getElementById("app").getBoundingClientRect();
+  layersEl.style.top = (r.bottom - ar.top + 8) + "px";
+  layersEl.style.left = Math.max(16, Math.min(r.left - ar.left, ar.width - layersEl.offsetWidth - 16)) + "px";
+}
+function closeLayers(){ layersEl.hidden = true; bLayers.setAttribute("aria-expanded", "false"); }
+bLayers.addEventListener("click", () => layersEl.hidden ? openLayers() : closeLayers());
+document.addEventListener("pointerdown", e => { if (!layersEl.hidden && !layersEl.contains(e.target) && e.target !== bLayers) closeLayers(); });
+
+/* ---------------- Guided walks ---------------- */
+function startWalk(key){ if (PL) stopPlayer(); closeLayers(); setLens("map"); soloThread = null; walk = {key, i:0}; renderWalk(); goStep(); }
+function stepWalk(d){ const n = WALKS[walk.key].steps.length; walk.i = Math.max(0, Math.min(n - 1, walk.i + d)); renderWalk(); goStep(); }
+function endWalk(){ walk = null; walkEl.hidden = true; bStart.setAttribute("aria-pressed", "false"); bMoon.setAttribute("aria-pressed", "false"); layoutChrome(); schedule(); }
+function goStep(){ const id = WALKS[walk.key].steps[walk.i][0]; zoomTo(byId.get(id), 1300); }
+function renderWalk(){
+  const W_ = WALKS[walk.key], n = W_.steps.length, [id, text] = W_.steps[walk.i], node = byId.get(id);
+  bStart.setAttribute("aria-pressed", String(walk.key === "start")); bMoon.setAttribute("aria-pressed", String(walk.key === "moon"));
+  walkEl.className = walk.key === "moon" ? "moonwalk" : "";
+  walkEl.replaceChildren(
+    h("div", {class:"wtop"},
+      h("div", {class:"eyebrow"}, `${W_.label} · ${walk.i + 1} of ${n}` + (node !== root ? ` · ${node.label}` : "")),
+      h("button", {type:"button", class:"iconbtn", onclick:endWalk, "aria-label":"Close walk-through"}, "Close")),
+    h("div", {class:"bar"}, h("i", {style:`width:${(walk.i + 1)/n*100}%`})),
+    h("p", null, text),
+    h("div", {class:"wnav"},
+      h("button", {type:"button", class:"btn", onclick:() => stepWalk(-1), ...(walk.i === 0 ? {disabled:""} : {})}, "Back"),
+      h("span", {class:"sp"}),
+      walk.i < n - 1 ? h("button", {type:"button", class:"btn", style:"border-color:var(--ink)", onclick:() => stepWalk(1)}, "Next") : h("button", {type:"button", class:"btn", onclick:endWalk}, "Finish")));
+  walkEl.hidden = false; layoutChrome();
+}
+bStart.addEventListener("click", () => walk && walk.key === "start" ? endWalk() : startWalk("start"));
+bMoon.addEventListener("click", () => walk && walk.key === "moon" ? endWalk() : startWalk("moon"));
+
+/* ---------------- Look along a dimension ---------------- */
+lensSel.append(h("option", {value:"map"}, "View: map"), h("option", {value:"convo"}, "Read the conversation"), ...AXES.map(a => h("option", {value:a.id}, "Line up: " + a.label)));
+lensSel.addEventListener("change", () => setLens(lensSel.value));
+function setLens(id, section){
+  if (id !== "map" && walk) endWalk();
+  lens = id; lensSel.value = id; spec.hidden = id === "map"; tip.hidden = true;
+  if (id === "convo") renderConvo(section);
+  else if (id !== "map") renderSpectrum();
+}
+function renderSpectrum(){
+  const ax = AXES.find(a => a.id === lens); if (!ax) return;
+  const items = Object.entries(ax.scores).map(([id, s]) => ({n: byId.get(id), s})).sort((a, b) => a.s - b.s);
+  const track = h("div", {class:"track"});
+  const sx = h("div", {class:"sx"},
+    h("h2", null, ax.label), h("p", {class:"why"}, ax.why),
+    h("div", {class:"poles"}, h("span", null, "← " + ax.poles[0]), h("span", null, ax.poles[1] + " →")), track);
+  spec.replaceChildren(sx);
+  const Aw = sx.clientWidth;
+  const vertical = Aw < 620;
+  const card = it => h("button", {type:"button", class:"card" + (it.n.ex ? " ex" : ""), onclick:() => { setLens("map"); zoomTo(it.n, 1300); },
+      onmouseenter:() => { if (!isMobile()) renderNodePanel(it.n); }},
+    h("span", {class:"dot", style:`background:${dotOf(it.n)}`}),
+    h("span", {class:"cl"}, h("b", null, it.n.label),
+      h("small", {class: it.n.ex ? "m" : null}, it.n.ex ? "bedtime example" : clusterOf(it.n).label),
+      AXIS_NOTES[it.n.id] ? h("small", null, AXIS_NOTES[it.n.id]) : null));
+  if (!vertical){
+    const cw = Math.min(190, Math.max(150, Aw/6)); track.style.setProperty("--cw", cw + "px");
+    const L = Aw - cw, rows = [];
+    let maxY = 0;
+    track.append(h("div", {class:"axis", style:"top:10px"}));
+    items.forEach(it => {
+      const x = (it.s + 1)/2 * L;
+      let r = rows.findIndex(end => end + 8 <= x); if (r < 0){ r = rows.length; rows.push(-1e9); }
+      rows[r] = x + cw;
+      const y = 34 + r*70;
+      const c = card(it); c.style.left = x + "px"; c.style.top = y + "px"; track.append(c);
+      track.append(h("div", {class:"tick", style:`left:${x + cw/2}px;top:14px;height:${y - 14}px`}));
+      maxY = Math.max(maxY, y + 64);
+    });
+    track.style.height = maxY + "px";
+  } else {
+    const cw = Aw - 28; track.style.setProperty("--cw", cw + "px");
+    const L = items.length * 48; let prev = -1e9, maxY = 0;
+    track.append(h("div", {class:"axis", style:`top:0;left:4px;right:auto;width:4px;height:${L + 40}px;background:linear-gradient(var(--ink-3),var(--line) 50%,var(--ink-3))`}));
+    items.forEach(it => {
+      const want = (it.s + 1)/2 * L, y = Math.max(want, prev + 8);
+      const c = card(it); c.style.left = "22px"; c.style.top = y + "px"; track.append(c);
+      prev = y + c.offsetHeight; maxY = Math.max(maxY, prev);
+    });
+    track.style.height = Math.max(maxY, L + 40) + "px";
+    sx.querySelector(".poles").replaceChildren(h("span", null, "↑ " + ax.poles[0] + " · ↓ " + ax.poles[1]));
+  }
+}
+
+/* ---------------- The conversation itself ---------------- */
+const CONVO_NODES = {1:["J0"], 2:["Y","J3c","Y1d","Y1b","J1b"], 3:["P","P2c","P3b","P3c","P3d"], 4:["B1a","B1b","B2a","B2b","B3a","B4","B5a","B5b","B5c"],
+  5:["N4e","N4a","N4b","N4c"], 6:["N1a","N1c","N2a","N3a","N3c"], 7:["N5e","N5a","N5b","N5d","N7"], 8:["N6"]};
+const CONVO = (() => {
+  const src = document.getElementById("convo-src").textContent.split("\n");
+  const out = {title:"", note:"", sections:[]}; let sec = null, turn = null, list = null;
+  for (const raw of src){
+    const line = raw.trim();
+    if (!line){ list = null; continue; }
+    let m;
+    if ((m = line.match(/^# (.*)/))){ out.title = m[1]; continue; }
+    if ((m = line.match(/^> (.*)/))){ out.note = m[1].replace(/^Note:\s*/, ""); out.note = out.note.charAt(0).toUpperCase() + out.note.slice(1); continue; }
+    if ((m = line.match(/^### (\d+)\. (.*)/))){ sec = {num:+m[1], title:m[2], turns:[]}; out.sections.push(sec); turn = null; continue; }
+    if (!sec) continue;
+    if ((m = line.match(/^\*\*(Julian|Claude):\*\*\s*(.*)/))){ turn = {who:m[1], blocks:[{p:m[2]}]}; sec.turns.push(turn); list = null; continue; }
+    if (!turn) continue;
+    if ((m = line.match(/^\d+\.\s+(.*)/))){ if (!list){ list = {ol:[]}; turn.blocks.push(list); } list.ol.push(m[1]); continue; }
+    turn.blocks.push({p:line});
+  }
+  return out;
+})();
+function inline(text){
+  const frag = []; const re = /\*\*([^*]+)\*\*|\*([^*]+)\*/g; let last = 0, m;
+  while ((m = re.exec(text))){ if (m.index > last) frag.push(text.slice(last, m.index)); frag.push(m[1] ? h("b", null, m[1]) : h("em", null, m[2])); last = re.lastIndex; }
+  if (last < text.length) frag.push(text.slice(last));
+  return frag;
+}
+function sectionsFor(n){
+  return CONVO.sections.filter(sc => (CONVO_NODES[sc.num] || []).some(id => { const m = byId.get(id); return m && (isAnc(m, n) || isAnc(n, m)); })).slice(0, 3);
+}
+function renderConvo(section){
+  const wrap = h("div", {class:"convo"},
+    h("div", {class:"eyebrow"}, "Julian and Claude · a voice conversation"),
+    h("h2", null, "The conversation"),
+    h("div", null, h("button", {type:"button", class:"btn listen", onclick:() => startPlayer(0)}, h("span", {class:"pi", "aria-hidden":"true"}), "Read along, with the map following")),
+    CONVO.note ? h("p", {class:"cnote"}, CONVO.note) : null,
+    h("nav", {"aria-label":"Sections"}, CONVO.sections.map(sc => h("button", {type:"button", class:"chip", onclick:() => jump(sc.num)}, `${sc.num}. ${sc.title}`))),
+    CONVO.sections.map(sc => h("section", {id:"conv-" + sc.num},
+      h("h3", null, h("span", {class:"num"}, String(sc.num).padStart(2, "0")), sc.title),
+      h("div", null, h("button", {type:"button", class:"iconbtn", onclick:() => startPlayer(sectionStart(sc.num))}, "Read along from here")),
+      (CONVO_NODES[sc.num] || []).length ? h("div", {class:"onmap"}, h("span", {class:"l"}, "On the map"),
+        CONVO_NODES[sc.num].map(id => { const n = byId.get(id); return h("button", {type:"button", class:"chip", onclick:() => { setLens("map"); zoomTo(n, 1300); }},
+          h("span", {class:"dot", style:`background:${dotOf(n)}`}), n.label); })) : h("div", {class:"onmap"}, h("span", {class:"l"}, "This is how the map was made")),
+      sc.turns.map(t => h("div", {class:"turn" + (t.who === "Julian" ? " j" : "")}, h("div", {class:"who"}, t.who),
+        t.blocks.map(b => b.ol ? h("ol", null, b.ol.map(li => h("li", null, inline(li)))) : h("p", null, inline(b.p))))))));
+  spec.replaceChildren(wrap);
+  function jump(num){ const el = document.getElementById("conv-" + num); if (!el) return; el.scrollIntoView({behavior: reduceMotion ? "auto" : "smooth", block:"start"}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+  if (section) requestAnimationFrame(() => jump(section)); else spec.scrollTop = 0;
+}
+
+/* ---------------- Listen: two voices, with a dot that follows on the map ---------------- */
+// Where on the map each paragraph lives. An array spreads that paragraph's sentences across several spots.
+const PLAY_MAP = {
+ 1:["J0"],
+ 2:["Y", ["Y1a","Y2a","Y2b"], ["J1b","J2b","J1c"], "J3a", ["J3c","J3b"], "Y1d", ["Y1b","Y1c"]],
+ 3:["P1", ["P1a","P1b","P1c"], ["P2a","P2b","P2c","P2d"], "P3", "P3a", "P3b", "P3c", "P3", "P3d"],
+ 4:["B1a", ["B1a","B1b"], "B2a", "B2b", "B3a", "B3b", "B4", "B5a", ["B5a","B5b","B5c"]],
+ 5:["N4e", "N4a", ["N4b1","N4b2","N4b3","N4c"]],
+ 6:[["N1a","N2a","N1c"], ["N1a","N1b"], "N2a", ["N2b","N3a","N3b","N1c"], "N3c", "N3c"],
+ 7:["N5e", "N5e", "N5a", ["N5b","N5c"], "N5d", ["N5d1","N5d2","N5d3","N5d4"], "N7a", ["N7b","N7c"]],
+ 8:["N6", "N6a", "N6b", ["N6c","N6d"]]
+};
+const cleanText = t => t.replace(/\*\([^)]*\)\*/g, "").replace(/\*+/g, "").replace(/\s+/g, " ").trim();
+const splitSentences = t => t.split(/(?<=[.!?:]["”']?)\s+(?=["“(]?[A-Z0-9])/).map(x => x.trim()).filter(Boolean);
+const QUEUE = (() => {
+  const q = [];
+  CONVO.sections.forEach(sc => {
+    const map = PLAY_MAP[sc.num] || ["root"]; let bi = 0;
+    sc.turns.forEach(t => t.blocks.forEach(b => {
+      const target = map[Math.min(bi, map.length - 1)];
+      const ids = Array.isArray(target) ? target : [target];
+      const sents = b.ol ? b.ol.map((li, i) => `${i + 1}. ${cleanText(li)}`) : splitSentences(cleanText(b.p));
+      sents.forEach((text, si) => q.push({who:t.who, text, sec:sc, block:sc.num*100 + bi, local:q.filter(x => x.sec === sc).length,
+        node: byId.get(ids[Math.min(ids.length - 1, Math.floor(si * ids.length / sents.length))]) || root}));
+      bi++;
+    }));
+  });
+  return q;
+})();
+const sectionStart = num => Math.max(0, QUEUE.findIndex(it => it.sec.num === num));
+// Sentence start/end times (seconds) inside audio/s<section>.mp3, in the same order as QUEUE.
+const AUDIO_TIMES = /*AUDIO_TIMES*/{"1":[[0.0,5.312],[5.532,8.753],[9.503,16.607]],"2":[[0.0,5.376],[6.126,10.713],[10.933,18.207],[18.427,19.75],[19.97,29.719],[29.939,33.907],[34.407,36.818],[37.038,41.347],[41.567,47.711],[47.931,53.478],[54.228,55.849],[56.069,61.296],[61.516,63.543],[64.293,65.829],[66.049,68.31],[68.53,70.791],[71.011,76.857],[77.077,82.133],[82.883,87.811],[88.031,89.161],[89.911,91.597],[91.817,93.459],[93.679,103.066],[103.286,109.281],[109.501,112.999],[113.219,114.307]],"3":[[0.0,2.24],[2.46,4.956],[5.176,7.672],[8.422,14.395],[14.615,24.663],[25.163,26.87],[27.09,31.293],[31.513,35.331],[35.551,41.354],[41.574,46.225],[46.445,48.77],[48.99,53.726],[53.946,58.703],[58.923,60.545],[60.765,62.535],[63.285,65.141],[65.891,73.017],[73.237,74.837],[75.337,77.214],[77.434,84.069],[84.289,88.747],[89.247,90.677],[90.897,94.545],[94.765,101.207],[101.957,104.475],[105.225,110.046],[110.266,113.722]],"4":[[0.0,1.835],[2.055,4.423],[5.173,6.047],[6.267,8.145],[8.365,11.842],[12.062,17.907],[18.127,19.642],[19.862,23.275],[23.495,25.053],[25.273,26.403],[26.623,27.477],[27.697,28.891],[29.111,30.306],[31.056,34.789],[35.009,39.063],[39.283,43.613],[44.363,47.371],[47.591,49.789],[50.289,51.782],[52.002,59.554],[59.774,62.59],[62.81,65.05],[65.55,67.214],[67.434,69.887],[70.107,73.286],[73.506,75.639],[76.139,79.915],[80.135,83.698],[83.918,87.587],[88.337,90.791],[91.541,94.634],[94.854,99.91],[100.13,109.879],[110.099,113.705],[113.925,116.783]],"5":[[0.0,3.861],[4.081,5.724],[5.944,11.128],[11.348,18.004],[18.754,23.405],[23.625,27.571],[28.071,29.714],[29.934,34.265],[34.485,40.97],[41.19,45.115],[45.335,48.429],[48.649,51.337],[51.557,55.077]],"6":[[0.0,5.845],[6.065,9.863],[10.083,13.304],[14.054,22.353],[22.573,27.351],[27.851,31.691],[31.911,35.495],[35.715,39.257],[39.757,45.154],[45.374,48.489],[48.709,57.626],[57.846,61.003],[61.223,63.698],[64.448,70.272],[71.022,72.665],[72.885,77.215],[77.435,79.611],[79.831,84.183]],"7":[[0.0,5.589],[5.809,9.244],[9.994,15.498],[15.718,18.193],[18.413,19.373],[19.873,22.561],[22.781,24.786],[25.006,30.489],[30.989,41.101],[41.321,50.131],[50.351,54.703],[54.923,63.073],[63.573,65.258],[65.758,68.958],[69.178,74.789],[75.009,82.39],[82.61,92.573],[93.323,96.011],[96.231,98.364],[99.114,100.821],[101.041,105.862],[106.082,112.269],[112.489,115.177],[115.397,118.874]],"8":[[0.0,3.264],[3.484,6.449],[6.669,10.424],[11.174,12.561],[12.781,21.869],[22.089,24.99],[25.49,28.135],[28.355,32.238],[32.458,37.343],[37.843,42.281],[42.501,46.703],[46.923,54.561]]}/*END*/;
+const AUDIO_OK = CONVO.sections.every(sc => (AUDIO_TIMES[sc.num] || []).length === QUEUE.filter(it => it.sec === sc).length);
+// Read-along pace: about 220 words a minute, with a beat when the speaker or paragraph changes.
+function readMs(i){
+  const it = QUEUE[i], nx = QUEUE[i + 1], words = it.text.split(/\s+/).length;
+  const beat = nx && nx.who !== it.who ? 700 : (nx && nx.block !== it.block ? 350 : 0);
+  return Math.max(1500, words * 60000 / 220) + beat;
+}
+const READ_AT = []; { let c = 0; QUEUE.forEach((_, i) => { READ_AT.push(c); c += readMs(i) / 1000; }); READ_AT.total = c; }
+const SEC_AT = {}; { let c = 0; CONVO.sections.forEach(sc => { SEC_AT[sc.num] = c; const t = AUDIO_TIMES[sc.num]; if (t && t.length) c += t[t.length - 1][1] + 0.4; }); SEC_AT.total = c; }
+const fmtTime = x => { x = Math.max(0, Math.round(x)); return Math.floor(x / 60) + ":" + String(x % 60).padStart(2, "0"); };
+function timeLabel(){
+  if (!PL) return "";
+  let at, total;
+  if (PL.mode === "audio" && AUDIO_OK){
+    total = SEC_AT.total;
+    at = PL.audio && PL.audioSec ? SEC_AT[PL.audioSec] + PL.audio.currentTime : SEC_AT[QUEUE[PL.i].sec.num] + AUDIO_TIMES[QUEUE[PL.i].sec.num][QUEUE[PL.i].local][0];
+  } else {
+    total = READ_AT.total;
+    const within = PL.playing && PL.itemStart ? Math.min(readMs(PL.i), (performance.now() - PL.itemStart) * PL.rate) / 1000 : 0;
+    at = READ_AT[PL.i] + within;
+  }
+  return `${fmtTime(at / PL.rate)} / ${fmtTime(total / PL.rate)}`;
+}
+const TTS = "speechSynthesis" in window && typeof SpeechSynthesisUtterance === "function";
+let PL = null; // {i, playing, token, rate, voices, silent, dot}
+let dotAnim = 0;
+function englishVoices(){ if (!TTS) return []; const all = speechSynthesis.getVoices(); const en = all.filter(v => /^en/i.test(v.lang)); return en.length ? en : all; }
+function pickVoices(){
+  const vs = englishVoices(); if (!vs.length) return {Julian:null, Claude:null};
+  const score = v => (/natural|neural|premium|enhanced|google/i.test(v.name) ? 2 : 0) + (v.localService ? 1 : 0) + (/en[-_]US/i.test(v.lang) ? 1 : 0);
+  const sorted = [...vs].sort((a, b) => score(b) - score(a));
+  const j = sorted[0], c = sorted.find(v => v.name !== j.name) || j;
+  return {Julian:j, Claude:c};
+}
+if (TTS) speechSynthesis.addEventListener?.("voiceschanged", () => { if (PL && !PL.voices.Julian){ PL.voices = pickVoices(); renderPlayer(); } });
+function startPlayer(i){
+  if (walk) endWalk();
+  setLens("map"); closeLayers(); soloThread = null;
+  if (PL) haltSpeech();
+  const start = QUEUE[i].node;
+  PL = {i, playing:true, token:0, rate:1, voices:pickVoices(), silent:!TTS, showVoices:false, dot:{x:start.x, y:start.y, fx:start.x, fy:start.y, t0:0}, cam:null, mode:"read", audio:null, audioSec:0};
+  bListen.setAttribute("aria-pressed", "true");
+  speakCurrent();
+  if (!dotAnim) dotLoop();
+}
+function haltSpeech(){ if (!PL) return; PL.token++; clearTimeout(PL.timer); clearTimeout(PL.watch); if (PL.audio) PL.audio.pause(); if (TTS) try { speechSynthesis.cancel(); } catch(e){} }
+function stopPlayer(){ haltSpeech(); PL = null; walkEl.hidden = true; bListen.setAttribute("aria-pressed", "false"); layoutChrome(); schedule(); }
+function setSound(on){
+  if (!PL) return; haltSpeech();
+  PL.mode = on ? "audio" : "read";
+  if (!on && PL.audio){ PL.audio.pause(); }
+  if (on) PL.audioSec = 0; // forces a fresh load and seek at the current sentence
+  if (PL.playing) speakCurrent(); else renderPlayer();
+}
+function togglePlay(){
+  if (!PL) return;
+  if (PL.mode === "audio" && PL.audio && PL.audioSec === QUEUE[PL.i].sec.num){
+    if (PL.playing){ PL.playing = false; PL.audio.pause(); } else { PL.playing = true; PL.audio.play().catch(() => { PL.playing = false; renderPlayer(); }); }
+    renderPlayer(); return;
+  }
+  if (PL.playing){ PL.playing = false; haltSpeech(); renderPlayer(); } else { PL.playing = true; speakCurrent(); }
+}
+function skipBlock(d){
+  if (!PL) return; haltSpeech();
+  const cur = QUEUE[PL.i].block; let i = PL.i;
+  if (d > 0){ while (i < QUEUE.length && QUEUE[i].block === cur) i++; }
+  else { while (i > 0 && QUEUE[i].block === cur) i--; const prev = QUEUE[i].block; while (i > 0 && QUEUE[i-1].block === prev) i--; if (QUEUE[PL.i].block === QUEUE[0].block) i = 0; }
+  if (i >= QUEUE.length) { finishPlayer(); return; }
+  PL.i = i; if (PL.playing) speakCurrent(); else if (PL.mode === "audio") playAudioAt(i); else { followMap(); renderPlayer(); }
+}
+function finishPlayer(){ PL.playing = false; if (PL.audio) PL.audio.pause(); PL.i = QUEUE.length - 1; renderPlayer(); }
+function advance(tok){ if (!PL || tok !== PL.token || !PL.playing) return; if (PL.i + 1 >= QUEUE.length){ finishPlayer(); return; } PL.i++; speakCurrent(); }
+function followMap(){
+  const it = QUEUE[PL.i], n = it.node;
+  const target = n === root ? root : (n.children ? n : n.parent);
+  const d = PL.dot; d.fx = d.x; d.fy = d.y; d.tx = n.x; d.ty = n.y; d.t0 = performance.now();
+  if (PL.cam !== target){ PL.cam = target; zoomTo(target, 1300, true); }
+  if (PL.panelNode !== n){ PL.panelNode = n; renderNodePanel(n); }
+  hover = n === root ? null : n;
+}
+function speakCurrent(){
+  if (!PL) return;
+  if (PL.mode === "audio"){ playAudioAt(PL.i); return; }
+  const tok = ++PL.token; clearTimeout(PL.timer); clearTimeout(PL.watch);
+  const it = QUEUE[PL.i];
+  followMap(); renderPlayer();
+  const words = it.text.split(/\s+/).length;
+  const silentWait = () => { PL.itemStart = performance.now(); PL.timer = setTimeout(() => advance(tok), readMs(PL.i) / PL.rate); };
+  if (PL.mode === "read" || PL.silent || !TTS){ silentWait(); return; }
+  try { speechSynthesis.cancel(); } catch(e){}
+  const u = new SpeechSynthesisUtterance(it.text);
+  const v = PL.voices[it.who]; if (v) u.voice = v;
+  const same = !v || PL.voices.Julian === PL.voices.Claude;
+  u.pitch = it.who === "Julian" ? (same ? 0.8 : 1) : (same ? 1.2 : 1);
+  u.rate = PL.rate;
+  let started = false;
+  u.onstart = () => { started = true; };
+  u.onend = () => advance(tok);
+  u.onerror = e => { if (e.error === "interrupted" || e.error === "canceled") return; if (tok === PL?.token){ PL.silent = true; renderPlayer(); silentWait(); } };
+  speechSynthesis.speak(u);
+  // If the browser never starts speaking, keep the walk going as a silent read-along.
+  PL.watch = setTimeout(() => { if (!started && PL && tok === PL.token && PL.playing){ try { speechSynthesis.cancel(); } catch(e){} PL.silent = true; renderPlayer(); silentWait(); } }, 4000);
+}
+function renderPlayer(){
+  if (!PL) return;
+  const it = QUEUE[PL.i], n = QUEUE.length, done = !PL.playing && PL.i === n - 1;
+  const color = it.who === "Julian" ? "var(--julian)" : "var(--claude)";
+  const vs = englishVoices();
+  const voiceSel = who => h("select", {id:"v-" + who, onchange:e => { PL.voices[who] = vs.find(v => v.name === e.target.value) || null; if (PL.playing) speakCurrent(); }},
+    vs.map(v => h("option", {value:v.name, ...(PL.voices[who] && PL.voices[who].name === v.name ? {selected:""} : {})}, v.name.replace(/\s*\(.*\)$/, ""))));
+  walkEl.className = "player";
+  walkEl.replaceChildren(...[
+    h("div", {class:"wtop"},
+      h("div", {class:"eyebrow"}, `${PL.mode === "audio" ? "Listening" : "Reading along"} · ${it.sec.num} of ${CONVO.sections.length} · ${it.sec.title}`),
+      h("span", {class:"meta", id:"ptime"}, timeLabel()),
+      h("button", {type:"button", class:"iconbtn", onclick:stopPlayer, "aria-label":"Stop listening"}, "Close")),
+    h("div", {class:"bar"}, h("i", {style:`width:${(PL.i + 1)/n*100}%;background:${color}`})),
+    h("div", {class:"spk", style:`color:${color}`}, h("span", {class:"dot", style:`background:${color}`}), it.who, it.node !== root ? h("span", {style:"color:var(--ink-3)"}, "· " + it.node.label) : null),
+    h("p", null, it.text),
+    PL.silent && PL.mode === "tts" ? h("p", {class:"silent"}, TTS ? "Voices aren't available in this browser right now, so this is reading along silently." : "This browser can't speak, so this is reading along silently.") : null,
+    h("div", {class:"wnav"},
+      h("button", {type:"button", class:"btn", onclick:() => skipBlock(-1)}, "Back"),
+      h("button", {type:"button", class:"btn", style:"border-color:var(--ink)", onclick: done ? () => startPlayer(0) : togglePlay}, done ? "Play again" : (PL.playing ? "Pause" : "Play")),
+      h("button", {type:"button", class:"btn", onclick:() => skipBlock(1)}, "Skip"),
+      h("span", {class:"sp"}),
+      AUDIO_OK ? h("button", {type:"button", class:"iconbtn", "aria-pressed":String(PL.mode === "audio"), onclick:() => setSound(PL.mode !== "audio")}, PL.mode === "audio" ? "Sound on" : "Sound off") : null,
+      h("button", {type:"button", class:"iconbtn", "aria-expanded":String(PL.showVoices), onclick:() => { PL.showVoices = !PL.showVoices; renderPlayer(); }}, "Speed")),
+    PL.showVoices && PL.mode !== "tts" ? h("div", {class:"vrow"},
+      h("label", {for:"v-rate"}, "Speed", h("select", {id:"v-rate", onchange:e => { PL.rate = +e.target.value; if (PL.audio) PL.audio.playbackRate = PL.rate; }},
+        [0.85, 1, 1.15, 1.3, 1.5].map(r => h("option", {value:r, ...(r === PL.rate ? {selected:""} : {})}, r + "×")))),
+      PL.mode === "audio" ? h("span", null, "Voices generated ahead of time with the open Kokoro speech model.") : h("span", null, "Turn sound on to hear it read aloud.")) : null,
+    PL.showVoices && PL.mode === "tts" && TTS ? h("div", {class:"vrow"},
+      h("label", {for:"v-Julian"}, h("span", {class:"dot", style:"background:var(--julian)"}), "Julian", voiceSel("Julian")),
+      h("label", {for:"v-Claude"}, h("span", {class:"dot", style:"background:var(--claude)"}), "Claude", voiceSel("Claude")),
+      h("label", {for:"v-rate"}, "Speed", h("select", {id:"v-rate", onchange:e => { PL.rate = +e.target.value; if (PL.playing) speakCurrent(); }},
+        [0.85, 1, 1.15, 1.3, 1.5].map(r => h("option", {value:r, ...(r === PL.rate ? {selected:""} : {})}, r + "×"))))) : null].filter(Boolean));
+  const wasHidden = walkEl.hidden; walkEl.hidden = false;
+  if (wasHidden) layoutChrome();
+}
+function drawDot(){
+  const d = PL.dot, now = performance.now();
+  const t = d.tx == null ? 1 : Math.min(1, (now - d.t0) / (reduceMotion ? 1 : 900)), e = t < .5 ? 2*t*t : 1 - Math.pow(-2*t + 2, 2)/2;
+  if (d.tx != null){ d.x = d.fx + (d.tx - d.fx)*e; d.y = d.fy + (d.ty - d.fy)*e; }
+  // sit just above the circle's label so the text stays readable
+  const n = QUEUE[PL.i].node, lift = n === root ? 0 : Math.min(n.r*T.k*0.55, 46);
+  const sx = d.x*T.k + T.x, sy = d.y*T.k + T.y - lift;
+  const color = QUEUE[PL.i].who === "Julian" ? THEME.julian : THEME.claude;
+  const pulse = PL.playing && !reduceMotion ? (Math.sin(now/260) + 1)/2 : 0.5;
+  ctx.globalAlpha = 0.25 + 0.2*pulse; ctx.fillStyle = color;
+  ctx.beginPath(); ctx.arc(sx, sy, 12 + 6*pulse, 0, Math.PI*2); ctx.fill();
+  ctx.globalAlpha = 1; ctx.beginPath(); ctx.arc(sx, sy, 6.5, 0, Math.PI*2); ctx.fill();
+  ctx.strokeStyle = THEME.bg; ctx.lineWidth = 2; ctx.stroke();
+}
+function playAudioAt(i){
+  const it = QUEUE[i], n = it.sec.num, times = AUDIO_TIMES[n];
+  PL.i = i; followMap(); renderPlayer();
+  if (!PL.audio){
+    PL.audio = new Audio(); PL.audio.preload = "auto";
+    PL.audio.addEventListener("ended", () => {
+      if (!PL || !PL.playing) return;
+      const next = PL.audioSec + 1;
+      if (AUDIO_TIMES[next]) playAudioAt(sectionStart(next)); else finishPlayer();
+    });
+    PL.audio.addEventListener("error", () => { if (!PL) return; PL.mode = "tts"; PL.audio = null; if (PL.playing) speakCurrent(); else renderPlayer(); });
+  }
+  const a = PL.audio, seek = () => { try { a.currentTime = times[it.local][0]; } catch(e){} };
+  if (PL.audioSec !== n){ PL.audioSec = n; a.src = `audio/s${n}.mp3`; a.addEventListener("loadedmetadata", seek, {once:true}); }
+  else seek();
+  a.playbackRate = PL.rate;
+  if (PL.playing) a.play().catch(() => { if (PL){ PL.playing = false; renderPlayer(); } });
+}
+function audioTick(){
+  if (!PL || PL.mode !== "audio" || !PL.audio || !PL.playing || PL.audio.paused) return;
+  const n = PL.audioSec, times = AUDIO_TIMES[n], t = PL.audio.currentTime + 0.05;
+  let j = 0; while (j + 1 < times.length && times[j + 1][0] <= t) j++;
+  const gi = sectionStart(n) + j;
+  if (gi !== PL.i){ PL.i = gi; followMap(); renderPlayer(); }
+}
+function dotLoop(){
+  if (!PL){ dotAnim = 0; return; }
+  audioTick(); schedule();
+  const el = document.getElementById("ptime"); if (el){ const t = timeLabel(); if (el.textContent !== t) el.textContent = t; }
+  dotAnim = requestAnimationFrame(dotLoop);
+}
+const bListen = document.getElementById("bListen");
+bListen.addEventListener("click", () => PL ? stopPlayer() : startPlayer(0));
+
+/* ---------------- Boot ---------------- */
+readTheme(); renderCrumbs(); renderNodePanel(root);
+if (isMobile()) togglePanel(true);
+resize();
+window.addEventListener("resize", () => resize());
+})();
+</script>
+
+</body></html>
