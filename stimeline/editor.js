@@ -23,7 +23,7 @@
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
-  const blank = () => ({ index: null, type: 'partner', date: today(), estimated: false, undated: false, text: '', auto: true, tests: {}, vaccine: '', who: [], extra: 0, boxes: [{ rows: [[]], text: '' }] });
+  const blank = () => ({ index: null, type: 'partner', date: today(), estimated: false, undated: false, text: '', auto: true, tests: {}, vaccine: '', context: '', who: [], extra: 0, boxes: [{ rows: [[]], text: '' }] });
   let f = blank(), cur = { b: 0, r: 0, who: 'me' }, msg = '', adding = false;
   const resetForm = () => { f = blank(); cur = { b: 0, r: 0, who: 'me' }; adding = false; };
 
@@ -44,7 +44,7 @@
       index: i, date: e.date, estimated: !!e.estimated, undated: !!e.undated,
       type: e.info != null ? 'info' : left ? (e.icons.length > 1 ? 'both' : e.icons[0]) : 'partner',
       text: e.info || (left ? UI.leftText(e) : ''), auto: left && !e.text,
-      tests: Object.assign({}, e.tests), vaccine: e.vaccine || '',
+      tests: Object.assign({}, e.tests), vaccine: e.vaccine || '', context: e.context || '',
       who: (e.who || []).slice(), extra: e.extra || 0,
       boxes: boxes.length ? boxes : [{ rows: [[]], text: '' }]
     };
@@ -59,6 +59,7 @@
       Object.assign(e, leftPart());
       const wording = f.type === 'vaccine' ? '' : f.text.trim();
       if (wording && wording !== UI.autoText(e)) e.text = wording;
+      if (e.tests && f.context.trim()) e.context = f.context.trim();
     } else {
       e.who = f.who.slice();
       if (f.extra > 0) e.extra = f.extra;
@@ -127,7 +128,10 @@
   const vaccineSection = () => `<div class="fld"><h3>Which vaccine</h3><input type="text" data-f="vaccine" value="${esc(f.vaccine)}" placeholder="e.g. Gardasil 9 Round 1"></div>`;
   const wordingSection = () => `<div class="fld"><h3>How it reads on the timeline</h3>` +
     `<div class="hint">Written for you from the choices above. Change it if you want different wording.</div>` +
-    `<textarea data-f="text" rows="2">${esc(f.text)}</textarea></div>`;
+    `<textarea data-f="text" rows="2">${esc(f.text)}</textarea></div>` +
+    `<div class="fld"><h3>Context for At a Glance (optional)</h3>` +
+    `<div class="hint">A short line shown beside this result in the summary, such as what kind of test it was or why a result isn't what it seems.</div>` +
+    `<input type="text" data-f="context" value="${esc(f.context)}" style="max-width:none"></div>`;
 
   function partnerSection() {
     const ids = Object.keys(D.partners);

@@ -9,6 +9,7 @@
 // Tests are stored as facts so they can be checked later: tests: { G: 'neg', HSV1: 'pos' }
 //   keys: G, C, S, HIV, HepB, HepC, HSV1, HSV2      values: 'neg' or 'pos'
 // The sentence on the timeline is written from them automatically. `text` replaces that sentence.
+// `context` is a short line shown beside that result in At a Glance.
 //
 // Act rows are written as "who:part" tokens, left to right, e.g. "me:penis+condom blue:vagina".
 //   parts: penis, vagina, mouth, hand     modifiers: +condom (penis), +hand (mouth)
@@ -59,6 +60,7 @@ const STIMELINE = {
 
   events: [
     { date: '2005-04-01', estimated: true, undated: true, icons: ['test'], tests: { HSV1: 'pos', HSV2: 'neg' },
+      context: 'Antibody test. I have never had a sore and have no reason to believe I have genital HSV-1/2. My mom had oral HSV-1.',
       text: "Antibody test shows positive for HSV-1 and negative for HSV-2. Tested because of scare during high school. It is abundantly clear to me after talking to several physicians that the likelihood that I had genital HSV is wildly small. A parent has oral HSV-1. I've never had a sore anywhere." },
     { date: '2005-04-15', estimated: true, undated: true, who: ['unnamed'], boxes: [{ text: 'First Oral Sex' }] },
 

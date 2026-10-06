@@ -80,6 +80,8 @@
         if (Object.keys(tests).length) o.tests = tests;
         if (vaccine) o.vaccine = vaccine;
         if (text.trim()) o.text = text;
+        const context = str(e.context, 400).trim();
+        if (context && o.tests) o.context = context;
         if (!icons.length) { if (o.tests || !o.vaccine) icons.push('test'); if (o.vaccine) icons.push('vaccine'); }
         o.icons = icons;
         if (!leftText(o)) return;
@@ -208,6 +210,18 @@
     const months = Math.round(days / 30.44);
     return months < 24 ? `about ${months} months ago` : `about ${Math.round(months / 12)} years ago`;
   }
+  const gdot = who => `<i class="gdot" style="background:${colorOf(who)}"></i>`;
+  // a pictogram row put into words: "my penis (no condom) with ● mouth"
+  function sayRow(row) {
+    return row.trim().split(/\s+/).map(tok => {
+      const [who, rest] = tok.split(':');
+      const [part, ...mods] = rest.split('+');
+      let word = part;
+      if (part === 'penis') word += mods.includes('condom') ? ' (condom)' : ' (no condom)';
+      if (part === 'mouth' && mods.includes('hand')) word = 'mouth and hand';
+      return (who === 'me' ? 'my ' : gdot(who) + ' ') + esc(word);
+    }).join(' with ');
+  }
   function renderGlance() {
     const sec = document.getElementById('glance');
     if (!sec) return;
@@ -218,6 +232,7 @@
     if (sec.hidden) return;
     const guess = e => e.estimated || e.undated;
     const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+    const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
     const latest = {}, positive = {};
     tests.forEach(e => TESTS.forEach(([k]) => { if (e.tests[k]) { latest[k] = e; if (e.tests[k] === 'pos') positive[k] = e; } }));
     const groups = [];
@@ -230,26 +245,42 @@
     });
     groups.sort((a, b) => b.e.t - a.e.t);
     const full = k => TESTS.find(x => x[0] === k)[2];
+    const last = tests[tests.length - 1];
     let html = '';
-    if (tests.length) {
-      const last = tests[tests.length - 1], ago = guess(last) ? '' : sayAgo(last.t);
+    if (last) {
+      const ago = guess(last) ? '' : sayAgo(last.t);
       html += `<li>Most recent test: ${esc(sayDate(last))}${ago ? ` (${ago})` : ''}</li>`;
     }
     if (groups.length) {
       html += '<li>Latest result for each infection:<ul>' + groups.map(g => {
         const names = v => g.keys.filter(k => g.e.tests[k] === v).map(full);
         const pos = names('pos'), neg = names('neg');
-        const since = meetings.filter(m => m.t > g.e.t);
-        const unsure = guess(g.e) || since.some(guess);
-        const after = since.length
-          ? `${since.length} partner ${since.length > 1 ? 'entries' : 'entry'} on the timeline since${unsure ? ' (some dates are best guesses)' : ''}.`
-          : 'No partner entries on the timeline since.';
         const result = [pos.length ? 'Positive for ' + listOf(pos) : '', neg.length ? 'Negative for ' + listOf(neg) : ''].filter(Boolean).join('. ');
-        return `<li><b>${esc(cap(sayDate(g.e)))}:</b> ${esc(result)}. ${after}</li>`;
+        return `<li><b>${esc(cap(sayDate(g.e)))}:</b> ${esc(result)}.${g.e !== last ? ' Not retested since.' : ''}` +
+          (g.e.context ? ` <span class="ctx">${esc(g.e.context)}</span>` : '') + `</li>`;
       }).join('') + '</ul></li>';
     }
     const cleared = TESTS.filter(([k]) => positive[k] && latest[k].tests[k] === 'neg');
     if (cleared.length) html += `<li>Earlier positive result, since negative: ${cleared.map(([k]) => `${esc(full(k))} (${esc(sayDate(positive[k]))})`).join(', ')}</li>`;
+    if (last) {
+      const since = meetings.filter(m => m.t > last.t);
+      if (!since.length) html += '<li>Since the most recent test: no partner entries on the timeline.</li>';
+      else {
+        const seenBefore = new Set();
+        meetings.filter(m => m.t <= last.t).forEach(m => m.who.forEach(id => seenBefore.add(id)));
+        const people = new Set(), fresh = new Set();
+        let extra = 0;
+        since.forEach(m => { m.who.forEach(id => { people.add(id); if (!seenBefore.has(id)) fresh.add(id); }); extra += m.extra || 0; });
+        html += `<li>Since the most recent test: ${plural(since.length, 'partner entry', 'partner entries')} involving ${plural(people.size, 'partner', 'partners')}` +
+          (fresh.size ? `, ${fresh.size} of them new` : '') + (extra ? `, plus ${extra} more not shown individually` : '') + '.<ul>' +
+          since.slice().reverse().map(m => {
+            const rows = [], notes = [];
+            (m.boxes || []).forEach(b => { (b.rows || []).forEach(r => rows.push(sayRow(r))); if (b.text) notes.push(rich(b.text)); });
+            return `<li><b>${esc(cap(sayDate(m)))}</b> ${m.who.map(gdot).join('')}` +
+              (rows.length ? ' ' + cap(rows.join('; ')) + '.' : '') + (notes.length ? ' ' + notes.join(' ') : '') + '</li>';
+          }).join('') + '</ul></li>';
+      }
+    }
     if (vaccines.length) html += `<li>Vaccines on record: ${vaccines.map(v => esc(v.vaccine)).join('; ')}</li>`;
     sec.querySelector('ul').innerHTML = html;
   }
