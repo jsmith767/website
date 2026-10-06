@@ -1,7 +1,8 @@
 // Everything the timeline shows lives in this file. timeline.js draws whatever is here.
 //
-// Dates only need to be accurate enough to put things in the right order and roughly
-// the right place. `undated: true` means "use the date for ordering only" (no year marker).
+// Test dates from 2017 on are the real lab dates, except the mid-2022 test, which is an
+// estimate. Partner and vaccine dates are estimates read off the original drawing.
+// Dates may be a day (2024-09-30), a month (2024-09) or a year (2024). `undated: true` means "use the date for ordering only" (no year marker).
 //
 // Act rows are written as "who:part" tokens, left to right, e.g. "me:penis+condom blue:vagina".
 //   parts: penis, vagina, mouth, hand     modifiers: +condom (penis), +hand (mouth)
@@ -39,10 +40,12 @@ const STIMELINE = {
     { date: '2007-06-01', undated: true, icons: ['vaccine'], text: 'Hep B' },
     { date: '2007-06-15', undated: true, who: ['unnamed'], boxes: [{ text: 'First PIV' }] },
 
+    { date: '2017-04-26', icons: ['test'], text: 'Negative for G and C' },
+
     { date: '2021-10-01', undated: true,
       info: 'Gardasil (original) only protects against types of HPV: 16, 18 and two wart types. Gardasil 9 protects against nine HPV types (6, 11, 16, 18, 31, 33, 45, 52, and 58).' },
 
-    { date: '2022-02-18', icons: ['test', 'vaccine'],
+    { date: '2022-02-01', icons: ['test', 'vaccine'],
       text: 'T: Negative for G, C, HIV, S, and Hep C. Hep B consistent with vaccine\nV: Gardasil 9 Round 1' },
     { date: '2022-02-19', who: ['navy'], boxes: [{
       text: "Has HSV-1 that expresses around the anus. She is on daily viral suppressants and has not had sores since on the suppressants (December 2020). We used condoms for vaginal penetration and were unprotected for oral sex. We didn't do any anal play of any kind." }] },
@@ -59,20 +62,20 @@ const STIMELINE = {
     { date: '2023-02-23', who: ['dkgreen'], boxes: [{
       rows: ['me:hand dkgreen:vagina', 'me:penis dkgreen:hand'], text: '{nosti}' }] },
     { date: '2023-04-21', who: ['dkgreen'] },
-    { date: '2023-07-19', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
+    { date: '2023-08-09', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
     { date: '2023-07-21', who: ['orange'], boxes: [{
       text: 'Stopped PIV and oral sex. Still occasionally hand to genital touching' }] },
     { date: '2023-09-14', who: ['orange'] },
     { date: '2023-10-14', who: ['lpurple'], boxes: [{
       text: "Barriered PIV sex. Oral sex and genital to genital touching without barriers. History of Chlamydia (2020) and low risk strain of HPV/genital warts (2021) both of which were treated and haven't shown up again." }] },
-    { date: '2023-10-22', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
+    { date: '2023-12-11', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
 
     { date: '2024-01-03', who: ['lpurple'], boxes: [{ text: 'Introduced barriered PIV sex' }] },
     { date: '2024-01-31', who: ['red', 'lpurple', 'lime'], extra: 1, boxes: [
       { text: 'PIV sex with condom. No known STIs. Tested regularly' },
       { text: 'Same as previously written' },
       { text: 'PIV sex with condom. No known STIs. Tested regularly' }] },
-    { date: '2024-03-28', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
+    { date: '2024-03-04', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
     { date: '2024-04-06', who: ['red'], boxes: [{
       text: 'Introduced unbarriered PIV. Has several other partners and uses barriers for PIV with all. Unbarriered oral with other partners.' }] },
     { date: '2024-06-05', who: ['red', 'cyan', 'mint', 'lime'], extra: 4, boxes: [
@@ -87,6 +90,11 @@ const STIMELINE = {
       { rows: ['me:penis+condom blue:vagina', 'me:penis blue:mouth', 'me:penis blue:mouth+hand gold:penis', 'me:penis gold:mouth'] },
       { rows: ['lime:vagina teal:penis+condom red:vagina me:penis'], text: 'Same Condom' },
       { text: 'Play Party. Extra room for indirect contact. Everyone {nosti}{tested}' }] },
-    { date: '2024-09-30', icons: ['test'], text: 'Negative for G, C, S, and HIV 9/30/2024' }
+    { date: '2024-09-30', icons: ['test'], text: 'Negative for G, C, S, and HIV 9/30/2024' },
+
+    { date: '2025-02-06', icons: ['test'], text: 'Negative for G, C, S, and HIV' },
+    { date: '2025-09-18', icons: ['test'], text: 'Negative for G and C' },
+    { date: '2025-09-25', icons: ['test'], text: 'Negative for G, C, S, HIV, Hep B, and Hep C' },
+    { date: '2025-12-15', icons: ['test'], text: 'Negative for G, C, S, HIV, Hep B, and Hep C' }
   ]
 };
