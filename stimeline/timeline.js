@@ -71,22 +71,25 @@
   // ---------- legend ----------
   function legend() {
     const svg = (inner, vb) => `<svg class="pic" viewBox="${vb}">${inner}</svg>`;
-    const rows = [
-      [svg(tubeShapes('#fff'), '-13 -19 26 40'), 'Testing (T)'],
-      [svg(syringeShapes(), '-14 -20 28 42'), 'Vaccine (V)'],
-      [svg(person(20, 22, 34, '#000'), '0 0 40 42'), '"Sexual Partner"'],
-      [`<svg class="pic" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="${D.me.color}"/></svg>`, 'My Color'],
-      ['<b>G</b>', 'Gonorrhea'], ['<b>C</b>', 'Chlamydia'], ['<b>S</b>', 'Syphilis'],
-      [pict('penis', 'outline', ['condom']), 'Penis w/ Condom'],
-      [pict('penis', 'outline'), 'Penis w/out Condom'],
-      [pict('mouth', 'outline'), 'Mouth'],
-      [pict('vagina', 'outline'), 'Vagina'],
-      [pict('hand', 'outline'), 'Hand'],
-      [TESTED, 'Regularly Tested'],
-      [NOSTI, 'No Known STIs']
+    const groups = [
+      ['main', [
+        [svg(tubeShapes('#fff'), '-13 -19 26 40'), 'Testing (T)'],
+        [svg(syringeShapes(), '-14 -20 28 42'), 'Vaccine (V)'],
+        [svg(person(20, 22, 34, '#000'), '0 0 40 42'), '"Sexual Partner"'],
+        [`<svg class="pic" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="${D.me.color}"/></svg>`, 'My Color']]],
+      ['abbr', [['G', 'Gonorrhea'], ['C', 'Chlamydia'], ['S', 'Syphilis']]],
+      ['acts', [
+        [pict('penis', 'outline', ['condom']), 'Penis w/ Condom'],
+        [pict('penis', 'outline'), 'Penis w/out Condom'],
+        [pict('mouth', 'outline'), 'Mouth'],
+        [pict('vagina', 'outline'), 'Vagina'],
+        [pict('hand', 'outline'), 'Hand'],
+        [TESTED, 'Regularly Tested'],
+        [NOSTI, 'No Known STIs']]]
     ];
-    document.getElementById('legend').innerHTML = rows.map(r =>
-      `<div class="lg"><span class="sym">${r[0]}</span><span>= ${esc(r[1])}</span></div>`).join('');
+    document.getElementById('legend').innerHTML = groups.map(([cls, rows]) =>
+      `<div class="lgroup ${cls}">` + rows.map(r =>
+        `<div class="lg"><span class="sym">${r[0]}</span><span>= ${esc(r[1])}</span></div>`).join('') + '</div>').join('');
   }
 
   // ---------- timeline ----------
