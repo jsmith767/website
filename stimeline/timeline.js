@@ -103,7 +103,7 @@
     const iconH = Math.max(P.s, 38);
 
     root.innerHTML = '';
-    const events = D.events.map(e => Object.assign({ t: time(e.date) }, e)).sort((a, b) => a.t - b.t);
+    const events = D.events.map((e, i) => Object.assign({ t: time(e.date), _i: i }, e)).sort((a, b) => a.t - b.t);
     const pe = events.filter(e => e.who);
 
     // relationship lines get a lane each so they never run through one another
@@ -144,6 +144,7 @@
         el.style.maxWidth = P.leftW + 'px';
         e.boxRight = axisX - 16 - e.iconsW - 10;
         el.style.right = (W - e.boxRight) + 'px';
+        el.dataset.i = e._i;
         root.appendChild(el);
         e.el = el;
       } else {
@@ -157,6 +158,7 @@
           if (e.info) el.firstChild.className = 'box info';
           el.style.left = e.chainX + 'px';
           el.style.maxWidth = (W - e.chainX) + 'px';
+          el.dataset.i = e._i;
           root.appendChild(el);
           const kids = [...el.children];
           kids.forEach((k, i) => {
@@ -289,5 +291,6 @@
   if (window.ResizeObserver) new ResizeObserver(() => { clearTimeout(timer); timer = setTimeout(redraw, 80); }).observe(root);
   else window.addEventListener('resize', redraw);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (root.clientWidth) render(); });
-  window.STIMELINE_RENDER = render;
+  window.STIMELINE_RENDER = () => { if (root.clientWidth) render(); };
+  window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED };
 })();
