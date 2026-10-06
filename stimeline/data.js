@@ -119,8 +119,10 @@ const STIMELINE = {
 
     { date: '2025-02-06', icons: ['test'], tests: { G: 'neg', C: 'neg', S: 'neg', HIV: 'neg' } },
     { date: '2025-09-18', icons: ['test'], tests: { G: 'neg', C: 'neg' } },
-    { date: '2025-09-25', icons: ['test'], tests: { G: 'neg', C: 'neg', S: 'neg', HIV: 'neg', HepB: 'neg', HepC: 'neg' } },
-    { date: '2025-12-15', icons: ['test'], tests: { G: 'neg', C: 'neg', S: 'neg', HIV: 'neg', HepB: 'neg', HepC: 'neg' } },
+    { date: '2025-09-25', icons: ['test'], tests: { G: 'neg', C: 'neg', S: 'neg', HIV: 'neg', HepB: 'neg', HepC: 'neg' },
+      text: 'Negative for G, C, S, HIV, and Hep C. Hep B consistent with vaccine' },
+    { date: '2025-12-15', icons: ['test'], tests: { G: 'neg', C: 'neg', S: 'neg', HIV: 'neg', HepB: 'neg', HepC: 'neg' },
+      text: 'Negative for G, C, S, HIV, and Hep C. Hep B consistent with vaccine' },
 
     { date: '2026-07', who: ['red', 'brown', 'grey'], boxes: [
       { rows: ['me:penis brown:mouth', 'me:penis grey:mouth'] },
