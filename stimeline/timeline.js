@@ -55,6 +55,7 @@
       if (!e || !/^(19|20)\d{2}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/.test(e.date)) return;
       const o = { date: e.date };
       if (e.undated) o.undated = true;
+      if (e.estimated) o.estimated = true;
       if (typeof e.info === 'string') {
         if (!e.info.trim()) return;
         o.info = str(e.info);

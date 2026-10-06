@@ -23,7 +23,7 @@
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   const today = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
-  const blank = () => ({ index: null, type: 'partner', date: today(), undated: false, text: '', auto: true, tests: {}, vaccine: '', who: [], extra: 0, boxes: [{ rows: [[]], text: '' }] });
+  const blank = () => ({ index: null, type: 'partner', date: today(), estimated: false, undated: false, text: '', auto: true, tests: {}, vaccine: '', who: [], extra: 0, boxes: [{ rows: [[]], text: '' }] });
   let f = blank(), cur = { b: 0, r: 0, who: 'me' }, msg = '', adding = false;
   const resetForm = () => { f = blank(); cur = { b: 0, r: 0, who: 'me' }; adding = false; };
 
@@ -41,7 +41,7 @@
     boxes.forEach(b => { if (!b.rows.length) b.rows.push([]); });
     const left = !!e.icons;
     return {
-      index: i, date: e.date, undated: !!e.undated,
+      index: i, date: e.date, estimated: !!e.estimated, undated: !!e.undated,
       type: e.info != null ? 'info' : left ? (e.icons.length > 1 ? 'both' : e.icons[0]) : 'partner',
       text: e.info || (left ? UI.leftText(e) : ''), auto: left && !e.text,
       tests: Object.assign({}, e.tests), vaccine: e.vaccine || '',
@@ -51,6 +51,7 @@
   }
   function toEvent() {
     const e = { date: f.date };
+    if (f.estimated) e.estimated = true;
     if (f.undated) e.undated = true;
     if (f.type === 'info') e.info = f.text.trim();
     else if (f.type !== 'partner') {
@@ -107,7 +108,8 @@
       : p === 'month' ? `<select data-d="m" aria-label="Month">${MONTHS.map((n, i) => `<option value="${String(i + 1).padStart(2, '0')}"${+m === i + 1 ? ' selected' : ''}>${n}</option>`).join('')}</select>${year}`
       : year;
     return `<div class="fld"><h3>When</h3><div class="chips">${chips}</div><div class="inl">${input}` +
-      `<label class="inl soft"><input type="checkbox" data-f="undated"${f.undated ? ' checked' : ''}> rough guess (don't show the year on the line)</label></div></div>`;
+      `</div><div><label class="inl soft"><input type="checkbox" data-f="estimated"${f.estimated ? ' checked' : ''}> this date is a best guess</label>` +
+      `<label class="inl soft"><input type="checkbox" data-f="undated"${f.undated ? ' checked' : ''}> don't mark the year on the line</label></div></div>`;
   }
 
   function testSection() {
@@ -175,7 +177,7 @@
       const what = e.who ? e.who.map(id => dot(UI.colorOf(id))).join('') + (e.extra ? ` +${e.extra}` : '') + ' ' + esc(((e.boxes || []).find(b => b.text) || {}).text || '').replace(/\{\w+\}/g, '').slice(0, 60)
         : esc((e.info || UI.leftText(e)).slice(0, 70));
       const kind = e.info != null ? 'Note' : e.icons ? e.icons.map(k => k === 'test' ? 'Test' : 'Vaccine').join(' + ') : 'Partner';
-      return `<tr><td>${esc(e.date)}${e.undated ? ' ~' : ''}</td><td>${kind}</td><td>${what}</td><td><button type="button" class="ghost" data-act="edit" data-i="${i}">Edit</button></td></tr>`;
+      return `<tr><td>${e.estimated ? '≈ ' : ''}${esc(e.date)}</td><td>${kind}</td><td>${what}</td><td><button type="button" class="ghost" data-act="edit" data-i="${i}">Edit</button></td></tr>`;
     }).join('');
     return `<details class="list"><summary>All entries (${D.events.length})</summary><table>${rows}</table></details>`;
   }
