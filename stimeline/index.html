@@ -29,11 +29,35 @@
       font-size: 14px;
     }
     #editlink:hover { background: #000; color: #fff; }
-    h2 { font-size: 24px; margin: 20px 0 10px; }
-    main > section > ul { padding-left: 20px; margin: 0; }
-    main > section li { margin-top: 10px; }
-    main > section li ul { list-style-type: circle; padding-left: 20px; margin-top: 5px; }
-    main > section li li { margin-top: 4px; }
+    details.sec { border-bottom: 1px solid #ccc; padding: 12px 0; }
+    details.sec:last-of-type { border-bottom: 0; }
+    details.sec > summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-radius: 4px;
+    }
+    details.sec > summary::-webkit-details-marker { display: none; }
+    details.sec > summary::before {
+      content: "";
+      flex: none;
+      width: 9px;
+      height: 9px;
+      margin: 0 2px 0 4px;
+      border-right: 3px solid #000;
+      border-bottom: 3px solid #000;
+      transform: rotate(-45deg);
+      transition: transform .15s;
+    }
+    details.sec[open] > summary::before { transform: rotate(45deg) translate(-2px, -2px); }
+    details.sec > summary:hover h2 { text-decoration: underline; }
+    h2 { font-size: 24px; margin: 0; }
+    .sec > ul { padding-left: 46px; margin: 4px 0 0; }
+    .sec li { margin-top: 10px; }
+    .sec li ul { list-style-type: circle; padding-left: 20px; margin-top: 5px; }
+    .sec li li { margin-top: 4px; }
 
     #legend {
       display: flex;
@@ -107,8 +131,8 @@
 <body>
   <main>
     <a id="editlink" href="?edit">Edit</a>
-    <section id="boundaries">
-      <h2>Boundaries</h2>
+    <details class="sec" id="boundaries">
+      <summary><h2>Boundaries</h2></summary>
       <ul>
         <li>My sexual partners communicate in a way to protect my sexual health.
           <ul>
@@ -117,9 +141,9 @@
           </ul>
         </li>
       </ul>
-    </section>
-    <section id="summary">
-      <h2>Sexual Health Summary</h2>
+    </details>
+    <details class="sec" id="summary">
+      <summary><h2>Sexual Health Summary</h2></summary>
       <ul>
         <li>To the best of my knowledge (see timeline for more details):
           <ul>
@@ -130,19 +154,19 @@
           </ul>
         </li>
       </ul>
-    </section>
-    <section id="timeline">
-      <h2>Timeline</h2>
+    </details>
+    <details class="sec" id="timeline" open>
+      <summary><h2>Timeline</h2></summary>
       <ul>
         <li>Hand to genital activity is not shown except in cases where there is a reasonable risk of the hand being a vector between other areas (e.g. genital-hand-genital, genital-hand-mouth, etc)</li>
       </ul>
-    </section>
     <div id="legend"></div>
     <div id="editor"></div>
     <div id="tl"></div>
+    </details>
   </main>
-  <script src="data.js?v=20261005232303"></script>
-  <script src="timeline.js?v=20261005232303"></script>
-  <script src="editor.js?v=20261005232303"></script>
+  <script src="data.js?v=20261005232506"></script>
+  <script src="timeline.js?v=20261005232506"></script>
+  <script src="editor.js?v=20261005232506"></script>
 </body>
 </html>
