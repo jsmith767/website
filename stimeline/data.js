@@ -34,7 +34,8 @@ const STIMELINE = {
   // track: draw a dotted line between this partner's appearances. ongoing: line runs to the top.
   // note: for an ongoing partner, a short line shown in At a Glance.
   partners: {
-    unnamed: { color: '#000000' },
+    olive:   { color: '#8a8f1e' },
+    tan:     { color: '#d2b48c' },
     navy:    { color: '#0a0ab4', track: true },
     pink:    { color: '#f01cb0' },
     yellow:  { color: '#eef000' },
@@ -60,10 +61,10 @@ const STIMELINE = {
     { date: '2005-04-01', estimated: true, undated: true, icons: ['test'], tests: { HSV1: 'pos', HSV2: 'neg' },
       context: 'Antibody test. I have never had a sore and have no reason to believe I have genital HSV-1/2. My mom had oral HSV-1.',
       text: "Antibody test shows positive for HSV-1 and negative for HSV-2. Tested because of scare during high school. It is abundantly clear to me after talking to several physicians that the likelihood that I had genital HSV is wildly small. A parent has oral HSV-1. I've never had a sore anywhere." },
-    { date: '2005-04-15', estimated: true, undated: true, who: ['unnamed'], boxes: [{ text: 'First Oral Sex' }] },
+    { date: '2005-04-15', estimated: true, undated: true, who: ['olive'], boxes: [{ text: 'First Oral Sex' }] },
 
     { date: '2007-06-01', estimated: true, undated: true, icons: ['vaccine'], vaccine: 'Hep B' },
-    { date: '2007-06-15', estimated: true, undated: true, who: ['unnamed'], boxes: [{ text: 'First PIV' }] },
+    { date: '2007-06-15', estimated: true, undated: true, who: ['tan'], boxes: [{ text: 'First PIV' }] },
 
     { date: '2017-04-26', icons: ['test'], tests: { G: 'neg', C: 'neg' } },
 
