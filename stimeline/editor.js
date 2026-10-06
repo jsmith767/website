@@ -216,6 +216,9 @@
     host.scrollIntoView({ behavior: 'smooth' });
   });
 
+  const link = document.getElementById('editlink');
+  if (link) { link.textContent = 'Done editing'; link.href = location.pathname; }
+
   const css = document.createElement('style');
   css.textContent = `
     #editor { border: 2px solid #000; padding: 12px 14px; margin: 14px 0; font-size: 14px; background: #fafafa; }

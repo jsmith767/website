@@ -17,6 +17,18 @@
       line-height: 1.4;
     }
     main { max-width: 1020px; margin: 0 auto; padding: 16px; }
+    #editlink {
+      float: right;
+      margin-top: 4px;
+      padding: 5px 14px;
+      border: 1.5px solid #000;
+      border-radius: 4px;
+      color: #000;
+      background: #fff;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    #editlink:hover { background: #000; color: #fff; }
     h2 { font-size: 24px; margin: 20px 0 10px; }
     main > section > ul { padding-left: 20px; margin: 0; }
     main > section li { margin-top: 10px; }
@@ -94,6 +106,7 @@
 </head>
 <body>
   <main>
+    <a id="editlink" href="?edit">Edit</a>
     <section id="boundaries">
       <h2>Boundaries</h2>
       <ul>
