@@ -5,7 +5,9 @@
   const root = document.getElementById('tl');
 
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const time = d => Date.parse(d + 'T00:00:00Z');
+  // dates may be a full day (2024-09-30), a month (2024-09) or just a year (2024);
+  // a month is placed at its middle and a year at its middle
+  const time = d => { const [y, m, day] = String(d).split('-'); return Date.UTC(+y, m ? m - 1 : 6, day ? +day : m ? 15 : 1); };
   const colorOf = who => who === 'me' ? D.me.color : (D.partners[who] || { color: '#888' }).color;
 
   // ---------- pictograms ----------

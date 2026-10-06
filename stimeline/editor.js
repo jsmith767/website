@@ -52,7 +52,7 @@
     return e;
   }
   function problem() {
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(f.date)) return 'Pick a date.';
+    if (!/^(19|20)\d{2}(-\d{2}){0,2}$/.test(f.date)) return 'Pick a date.';
     if (f.type === 'partner' && !f.who.length) return 'Choose at least one partner.';
     if (f.type !== 'partner' && !f.text.trim()) return 'Write what this entry should say.';
     return '';
@@ -117,6 +117,23 @@
     return `<details class="list"><summary>All entries (${D.events.length})</summary><table>${rows}</table></details>`;
   }
 
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const precision = () => f.date.length >= 10 ? 'day' : f.date.length >= 7 ? 'month' : 'year';
+  function setPrecision(p) {
+    const [y, m, d] = (f.date || today()).split('-');
+    f.date = p === 'year' ? y : p === 'month' ? `${y}-${m || '01'}` : `${y}-${m || '01'}-${d || '01'}`;
+  }
+  function dateField() {
+    const p = precision(), [y, m] = f.date.split('-');
+    const chips = [['day', 'Exact day'], ['month', 'Month and year'], ['year', 'Year only']].map(([k, label]) =>
+      `<button type="button" class="chip${p === k ? ' on' : ''}" data-act="prec" data-p="${k}">${label}</button>`).join('');
+    const year = `<input type="number" min="1900" max="2100" data-d="y" value="${esc(y)}" style="width:5.5em" aria-label="Year">`;
+    const input = p === 'day' ? `<input type="date" data-f="date" value="${esc(f.date)}">`
+      : p === 'month' ? `<select data-d="m" aria-label="Month">${MONTHS.map((n, i) => `<option value="${String(i + 1).padStart(2, '0')}"${+m === i + 1 ? ' selected' : ''}>${n}</option>`).join('')}</select>${year}`
+      : year;
+    return `<b>When</b><div class="chips">${chips}</div><span class="inl">${input}</span>`;
+  }
+
   function draw() {
     const types = TYPES.map(([t, label]) => `<button type="button" class="chip${f.type === t ? ' on' : ''}" data-act="type" data-t="${t}">${label}</button>`).join('');
     const body = f.type === 'partner' ? partnerSection()
@@ -125,7 +142,7 @@
     const dirty = JSON.stringify(D) !== published;
     host.innerHTML = `<h2>${f.index == null ? 'Add to the timeline' : 'Edit entry'}</h2>` +
       `<div class="fld"><div class="chips">${types}</div></div>` +
-      `<div class="fld"><label class="inl"><b>Date</b> <input type="date" data-f="date" value="${esc(f.date)}"></label>` +
+      `<div class="fld">${dateField()}` +
       `<label class="inl"><input type="checkbox" data-f="undated"${f.undated ? ' checked' : ''}> date is a rough guess (no year marker)</label></div>` +
       body +
       `<div class="actions"><button type="button" class="primary" data-act="save">${f.index == null ? 'Add entry' : 'Save changes'}</button>` +
@@ -141,6 +158,11 @@
     const t = ev.target;
     if (t.dataset.f) f[t.dataset.f] = t.type === 'checkbox' ? t.checked : t.type === 'number' ? Math.max(0, parseInt(t.value, 10) || 0) : t.value;
     else if (t.dataset.bt != null) f.boxes[+t.dataset.bt].text = t.value;
+    else if (t.dataset.d) {
+      const parts = f.date.split('-');
+      if (t.dataset.d === 'y') parts[0] = t.value; else parts[1] = t.value;
+      f.date = parts.join('-');
+    }
   });
   host.addEventListener('change', ev => {
     const t = ev.target, id = t.dataset.id;
@@ -153,6 +175,7 @@
     const a = t.dataset.act, b = +t.dataset.b, r = +t.dataset.r, id = t.dataset.id;
     msg = '';
     if (a === 'type') f.type = t.dataset.t;
+    else if (a === 'prec') setPrecision(t.dataset.p);
     else if (a === 'who') {
       f.who = f.who.includes(id) ? f.who.filter(x => x !== id) : f.who.concat(id);
       if (f.who.includes(id)) cur.who = id; else if (cur.who === id) cur.who = 'me';
@@ -231,7 +254,7 @@
     #editor .chip.on { background: #000; color: #fff; }
     #editor .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid #000; flex: none; }
     #editor .chip.on .dot { border-color: #fff; }
-    #editor textarea, #editor input[type=date], #editor input[type=number], #editor .newp input:not([type=color]) { font: inherit; padding: 5px 6px; border: 1.5px solid #000; border-radius: 4px; }
+    #editor textarea, #editor select, #editor input[type=date], #editor input[type=number], #editor .newp input:not([type=color]) { font: inherit; padding: 5px 6px; border: 1.5px solid #000; border-radius: 4px; }
     #editor textarea { display: block; width: 100%; margin-top: 6px; }
     #editor .inl { display: inline-flex; align-items: center; gap: 6px; margin: 4px 14px 4px 0; }
     #editor .hint { font-size: 12px; color: #444; margin: 4px 0; }
