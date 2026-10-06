@@ -25,12 +25,8 @@ const STIMELINE = {
       'My sexual partners communicate in a way to protect my sexual health.\n' +
       '  They disclose their relevant STI status.\n' +
       '  They disclose any activity that has the potential to change their STI status (e.g., sex with a new partner).',
-    summary:
-      'To the best of my knowledge (see timeline for more details):\n' +
-      '  I am negative for Gonorrhea, Chlamydia, Syphilis, Hep C and HIV\n' +
-      '  I am vaccinated against Hep B and HPV (Gardasil 9)\n' +
-      '  I have some risk, but my analysis is the risk is low, of harboring a high risk strain of HPV.\n' +
-      '  I have tested positive for the antibodies of HSV-1 (negative for HSV-2). I have never had a sore and have no reason to believe I have genital HSV-1/2. My mom had oral HSV-1',
+    // shown under At a Glance as "Additional notes"
+    summary: 'I have some risk, but my analysis is the risk is low, of harboring a high risk strain of HPV.',
     note: 'Hand to genital activity is not shown except in cases where there is a reasonable risk of the hand being a vector between other areas (e.g. genital-hand-genital, genital-hand-mouth, etc)\n' +
       'Most test dates are exact. Dates of partner interactions and vaccines before 2026 are approximate.'
   },

@@ -192,8 +192,10 @@
       });
       if (open) html += '</ul></li>';
       ul.innerHTML = html;
-      const sec = ul.closest('details');
-      if (sec && sec.id !== 'timeline') sec.hidden = !html; else ul.hidden = !html;
+      const sec = ul.closest('details'), wrap = ul.closest('.notes');
+      if (wrap) wrap.hidden = !html;
+      else if (sec && sec.id !== 'timeline') sec.hidden = !html;
+      else ul.hidden = !html;
     });
   }
 
@@ -224,15 +226,12 @@
       return (who === 'me' ? 'my ' : gdot(who) + ' ') + esc(word);
     }).join(' with ');
   }
-  function renderGlance() {
-    const sec = document.getElementById('glance');
-    if (!sec) return;
-    const evs = D.events.map(e => Object.assign({ t: time(e.date) }, e)).sort((a, b) => a.t - b.t);
+  function glanceHTML(list) {
+    const evs = (list || D.events).map(e => Object.assign({ t: time(e.date) }, e)).sort((a, b) => a.t - b.t);
     const tests = evs.filter(e => e.tests && Object.keys(e.tests).length);
     const meetings = evs.filter(e => e.who), vaccines = evs.filter(e => e.vaccine);
     const ongoing = Object.keys(D.partners).filter(id => D.partners[id].ongoing);
-    sec.hidden = !tests.length && !vaccines.length && !ongoing.length;
-    if (sec.hidden) return;
+    if (!tests.length && !vaccines.length && !ongoing.length) return '';
     const guess = e => e.estimated || e.undated;
     const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
     const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
@@ -289,7 +288,15 @@
       }
     }
     if (vaccines.length) html += `<li>Vaccines on record: ${vaccines.map(v => esc(v.vaccine)).join('; ')}</li>`;
-    sec.querySelector('ul').innerHTML = html;
+    return html;
+  }
+  function renderGlance() {
+    const sec = document.getElementById('glance');
+    if (!sec) return;
+    const html = glanceHTML(), auto = sec.querySelector('.autopart');
+    auto.hidden = !html;
+    auto.querySelector('ul').innerHTML = html;
+    sec.hidden = !html && !(D.about && D.about.summary && D.about.summary.trim());
   }
 
   // ---------- timeline ----------
@@ -502,5 +509,5 @@
   else window.addEventListener('resize', redraw);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (root.clientWidth) render(); });
   window.STIMELINE_RENDER = () => { legend(); renderAbout(); renderGlance(); if (root.clientWidth) render(); };
-  window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED, TESTS, autoText, leftText, normalize };
+  window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED, TESTS, autoText, leftText, normalize, glanceHTML };
 })();

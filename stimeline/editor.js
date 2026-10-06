@@ -215,10 +215,9 @@
       `<button type="button" data-act="blank">Start a blank timeline</button>` +
       `<button type="button" data-act="reset" id="ed-reset">Undo all my changes</button>` +
       `<input type="file" id="ed-file" accept=".json,application/json" hidden></div></div>` +
-      `<details class="aboutme"><summary>Boundaries, summary and my color</summary>` +
+      `<details class="aboutme"><summary>Boundaries, ongoing partners and my color</summary>` +
       `<div class="hint">One point per line. Start a line with two spaces to tuck it under the line above. Leave a box empty to hide that section.</div>` +
       area('boundaries', 'Boundaries', 4, 'What you ask of partners') +
-      area('summary', 'Sexual Health Summary', 6, 'Your current status in your own words') +
       area('note', 'Note above the timeline', 2, 'Anything a reader should know before reading it') +
       (ongoing.length ? `<div class="about"><span>Ongoing partners in At a Glance</span>` +
         `<div class="hint">One short line each, for example what you do together and their testing habits.</div>` +
@@ -236,6 +235,19 @@
     document.getElementById('ed-reset').disabled = !dirty;
   }
 
+  // At a Glance as it will read, counting the entry in the form if it is complete
+  function previewSection() {
+    const ready = !problem(), list = D.events.slice();
+    if (ready) { const e = toEvent(); if (f.index == null) list.push(e); else list[f.index] = e; }
+    const html = UI.glanceHTML(list);
+    return `<div class="preview"><h3>How At a Glance will read</h3>` +
+      `<div class="hint">Worked out from the timeline${ready ? ', including the entry above' : ''}. It updates as you add things.</div>` +
+      `<div class="sec"><ul>${html || '<li>Nothing to summarise yet. Add a test, a vaccine or an ongoing partner.</li>'}</ul></div>` +
+      `<label class="about"><span>Additional notes</span>` +
+      `<div class="hint">Anything the automatic part can't know, in your own words. One point per line. Shown under it on the page.</div>` +
+      `<textarea data-about-f="summary" rows="3" placeholder="e.g. context for a result, or a risk you want a partner to know about">${esc((D.about || {}).summary || '')}</textarea></label></div>`;
+  }
+
   function draw() {
     const types = TYPES.map(([t, label]) => `<button type="button" class="chip${f.type === t ? ' on' : ''}" data-act="type" data-t="${t}">${label}</button>`).join('');
     const body = f.type === 'partner' ? partnerSection()
@@ -248,7 +260,7 @@
       `<div class="fld"><div class="chips">${types}</div></div>` + dateField() + body +
       `<div class="actions"><button type="button" class="primary big" data-act="save">${f.index == null ? 'Add to timeline' : 'Save changes'}</button>` +
       (f.index != null ? `<button type="button" data-act="cancel">Cancel</button><button type="button" class="danger" data-act="delete">Delete entry</button>` : '') +
-      `<span class="msg" role="status">${esc(msg)}</span></div>` + entryList();
+      `<span class="msg" role="status">${esc(msg)}</span></div>` + previewSection() + entryList();
   }
 
   // ---------- events ----------
@@ -452,6 +464,9 @@
     #editor .big { padding: 10px 20px; font-size: 16px; }
     #editor .danger { color: #b00000; border-color: #b00000; }
     #editor .msg { font-size: 14px; color: var(--ink); font-weight: bold; }
+    #editor .preview { margin-top: 20px; padding: 12px; background: #f3eef9; border-radius: 8px; }
+    #editor .preview .sec { background: #fff; border: 1.5px solid #000; border-radius: 6px; padding: 6px 10px 12px 0; font-size: 14px; }
+    #editor .preview .sec > ul { padding-left: 30px; }
     #editor .aboutme { margin-top: 10px; }
     #editor .aboutme summary, #editor .list summary { cursor: pointer; font-weight: bold; padding: 4px 0; }
     #editor .about { display: block; margin: 10px 0; }
