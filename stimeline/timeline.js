@@ -193,6 +193,67 @@
     });
   }
 
+  // ---------- at a glance: worked out from the entries, never typed ----------
+  const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function sayDate(e) {
+    const [y, m, d] = e.date.split('-');
+    if (e.undated || !m) return (e.undated || e.estimated ? 'around ' : '') + y;
+    if (e.estimated || !d) return (e.estimated ? 'around ' : '') + MON[m - 1] + ' ' + y;
+    return MON[m - 1] + ' ' + (+d) + ', ' + y;
+  }
+  function sayAgo(t) {
+    const days = (Date.now() - t) / DAY;
+    if (days < 0) return '';
+    if (days < 45) return days < 1.5 ? 'today' : Math.round(days) + ' days ago';
+    const months = Math.round(days / 30.44);
+    return months < 24 ? `about ${months} months ago` : `about ${Math.round(months / 12)} years ago`;
+  }
+  function renderGlance() {
+    const sec = document.getElementById('glance');
+    if (!sec) return;
+    const evs = D.events.map(e => Object.assign({ t: time(e.date) }, e)).sort((a, b) => a.t - b.t);
+    const tests = evs.filter(e => e.tests && Object.keys(e.tests).length);
+    const meetings = evs.filter(e => e.who), vaccines = evs.filter(e => e.vaccine);
+    sec.hidden = !tests.length && !vaccines.length;
+    if (sec.hidden) return;
+    const guess = e => e.estimated || e.undated;
+    const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
+    const latest = {}, positive = {};
+    tests.forEach(e => TESTS.forEach(([k]) => { if (e.tests[k]) { latest[k] = e; if (e.tests[k] === 'pos') positive[k] = e; } }));
+    const groups = [];
+    TESTS.forEach(([k]) => {
+      const e = latest[k];
+      if (!e) return;
+      let g = groups.find(x => x.e === e);
+      if (!g) groups.push(g = { e, keys: [] });
+      g.keys.push(k);
+    });
+    groups.sort((a, b) => b.e.t - a.e.t);
+    const full = k => TESTS.find(x => x[0] === k)[2];
+    let html = '';
+    if (tests.length) {
+      const last = tests[tests.length - 1], ago = guess(last) ? '' : sayAgo(last.t);
+      html += `<li>Most recent test: ${esc(sayDate(last))}${ago ? ` (${ago})` : ''}</li>`;
+    }
+    if (groups.length) {
+      html += '<li>Latest result for each infection:<ul>' + groups.map(g => {
+        const names = v => g.keys.filter(k => g.e.tests[k] === v).map(full);
+        const pos = names('pos'), neg = names('neg');
+        const since = meetings.filter(m => m.t > g.e.t);
+        const unsure = guess(g.e) || since.some(guess);
+        const after = since.length
+          ? `${since.length} partner ${since.length > 1 ? 'entries' : 'entry'} on the timeline since${unsure ? ' (some dates are best guesses)' : ''}.`
+          : 'No partner entries on the timeline since.';
+        const result = [pos.length ? 'Positive for ' + listOf(pos) : '', neg.length ? 'Negative for ' + listOf(neg) : ''].filter(Boolean).join('. ');
+        return `<li><b>${esc(cap(sayDate(g.e)))}:</b> ${esc(result)}. ${after}</li>`;
+      }).join('') + '</ul></li>';
+    }
+    const cleared = TESTS.filter(([k]) => positive[k] && latest[k].tests[k] === 'neg');
+    if (cleared.length) html += `<li>Earlier positive result, since negative: ${cleared.map(([k]) => `${esc(full(k))} (${esc(sayDate(positive[k]))})`).join(', ')}</li>`;
+    if (vaccines.length) html += `<li>Vaccines on record: ${vaccines.map(v => esc(v.vaccine)).join('; ')}</li>`;
+    sec.querySelector('ul').innerHTML = html;
+  }
+
   // ---------- timeline ----------
   function render() {
     const W = root.clientWidth;
@@ -389,6 +450,7 @@
 
   legend();
   renderAbout();
+  renderGlance();
   // redraw whenever the available width changes (including the first time it becomes known)
   let lastW = -1, timer;
   const redraw = () => {
@@ -401,6 +463,6 @@
   if (window.ResizeObserver) new ResizeObserver(() => { clearTimeout(timer); timer = setTimeout(redraw, 80); }).observe(root);
   else window.addEventListener('resize', redraw);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (root.clientWidth) render(); });
-  window.STIMELINE_RENDER = () => { legend(); renderAbout(); if (root.clientWidth) render(); };
+  window.STIMELINE_RENDER = () => { legend(); renderAbout(); renderGlance(); if (root.clientWidth) render(); };
   window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED, TESTS, autoText, leftText, normalize };
 })();
