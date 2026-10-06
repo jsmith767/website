@@ -8,6 +8,86 @@
   // dates may be a full day (2024-09-30), a month (2024-09) or just a year (2024);
   // a month is placed at its middle and a year at its middle
   const time = d => { const [y, m, day] = String(d).split('-'); return Date.UTC(+y, m ? m - 1 : 6, day ? +day : m ? 15 : 1); };
+  // ---------- tests as facts ----------
+  const TESTS = [['G', 'G', 'Gonorrhea'], ['C', 'C', 'Chlamydia'], ['S', 'S', 'Syphilis'], ['HIV', 'HIV', 'HIV'],
+    ['HepB', 'Hep B', 'Hep B'], ['HepC', 'Hep C', 'Hep C'], ['HSV1', 'HSV-1', 'HSV-1'], ['HSV2', 'HSV-2', 'HSV-2']];
+  const listOf = a => a.length < 3 ? a.join(' and ') : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1];
+  function testSentence(t) {
+    if (!t) return '';
+    const pick = v => TESTS.filter(x => t[x[0]] === v).map(x => x[1]);
+    const pos = pick('pos'), neg = pick('neg');
+    return [pos.length ? 'Positive for ' + listOf(pos) : '', neg.length ? 'Negative for ' + listOf(neg) : ''].filter(Boolean).join('. ');
+  }
+  // the sentence a test or vaccine entry shows when it has no wording of its own
+  function autoText(e) {
+    const s = testSentence(e.tests);
+    return s && e.vaccine ? `T: ${s}\nV: ${e.vaccine}` : s || e.vaccine || '';
+  }
+  const leftText = e => e.text ? e.text : autoText(e);
+
+  // Rebuilds a timeline from untrusted input (a file someone opened, or a saved draft),
+  // keeping only what the page knows how to draw.
+  const PARTS = { penis: ['condom'], vagina: [], mouth: ['hand'], hand: [] };
+  function normalize(raw) {
+    raw = raw && typeof raw === 'object' ? raw : {};
+    const str = (v, n) => typeof v === 'string' ? v.slice(0, n || 4000) : '';
+    const col = (v, d) => /^#[0-9a-f]{6}$/i.test(v) ? v : d;
+    const out = { me: { color: col(raw.me && raw.me.color, '#4b0a82') }, about: {}, partners: {}, events: [] };
+    ['boundaries', 'summary', 'note'].forEach(k => { const v = str(raw.about && raw.about[k], 6000); if (v.trim()) out.about[k] = v; });
+    Object.keys(raw.partners && typeof raw.partners === 'object' ? raw.partners : {}).slice(0, 200).forEach(id => {
+      const p = raw.partners[id];
+      if (!/^[a-z0-9_-]{1,30}$/.test(id) || id === 'me' || !p) return;
+      const q = { color: col(p.color, '#888888') };
+      if (p.track || p.ongoing) q.track = true;
+      if (p.ongoing) q.ongoing = true;
+      out.partners[id] = q;
+    });
+    if (Array.isArray(raw.extraYears)) {
+      const ys = raw.extraYears.filter(y => Number.isInteger(y) && y > 1900 && y < 2101);
+      if (ys.length) out.extraYears = ys;
+    }
+    const okWho = id => id === 'me' || Object.prototype.hasOwnProperty.call(out.partners, id);
+    const okTok = tok => {
+      const m = /^([a-z0-9_-]+):([a-z]+)((?:\+[a-z]+)*)$/.exec(tok);
+      return !!m && okWho(m[1]) && !!PARTS[m[2]] && m[3].split('+').filter(Boolean).every(x => PARTS[m[2]].includes(x));
+    };
+    (Array.isArray(raw.events) ? raw.events : []).slice(0, 2000).forEach(e => {
+      if (!e || !/^(19|20)\d{2}(-(0[1-9]|1[0-2])(-(0[1-9]|[12]\d|3[01]))?)?$/.test(e.date)) return;
+      const o = { date: e.date };
+      if (e.undated) o.undated = true;
+      if (typeof e.info === 'string') {
+        if (!e.info.trim()) return;
+        o.info = str(e.info);
+      } else if (Array.isArray(e.who)) {
+        o.who = e.who.filter(id => id !== 'me' && okWho(id)).slice(0, 12);
+        if (!o.who.length) return;
+        if (Number.isInteger(e.extra) && e.extra > 0) o.extra = Math.min(e.extra, 99);
+        const boxes = (Array.isArray(e.boxes) ? e.boxes : []).slice(0, 12).map(b => {
+          const x = {};
+          const rows = (Array.isArray(b && b.rows) ? b.rows : []).map(r => String(r).trim().split(/\s+/).filter(okTok).join(' ')).filter(Boolean).slice(0, 12);
+          if (rows.length) x.rows = rows;
+          const t = str(b && b.text);
+          if (t.trim()) x.text = t;
+          return x;
+        }).filter(x => x.rows || x.text);
+        if (boxes.length) o.boxes = boxes;
+      } else {
+        const icons = (Array.isArray(e.icons) ? e.icons : []).filter((k, i, a) => (k === 'test' || k === 'vaccine') && a.indexOf(k) === i);
+        const tests = {};
+        TESTS.forEach(([k]) => { const v = e.tests && e.tests[k]; if (v === 'neg' || v === 'pos') tests[k] = v; });
+        const vaccine = str(e.vaccine, 200).trim(), text = str(e.text);
+        if (Object.keys(tests).length) o.tests = tests;
+        if (vaccine) o.vaccine = vaccine;
+        if (text.trim()) o.text = text;
+        if (!icons.length) { if (o.tests || !o.vaccine) icons.push('test'); if (o.vaccine) icons.push('vaccine'); }
+        o.icons = icons;
+        if (!leftText(o)) return;
+      }
+      out.events.push(o);
+    });
+    return out;
+  }
+
   const colorOf = who => who === 'me' ? D.me.color : (D.partners[who] || { color: '#888' }).color;
 
   // ---------- pictograms ----------
@@ -94,6 +174,24 @@
         `<div class="lg"><span class="sym">${r[0]}</span><span>= ${esc(r[1])}</span></div>`).join('') + '</div>').join('');
   }
 
+  // ---------- boundaries / summary / note ----------
+  function renderAbout() {
+    const a = D.about || {};
+    document.querySelectorAll('[data-about]').forEach(ul => {
+      let html = '', open = false;
+      String(a[ul.dataset.about] || '').split('\n').filter(l => l.trim()).forEach(l => {
+        const nested = /^(\s{2,}|\t)/.test(l) && html !== '';
+        if (nested && !open) { html = html.replace(/<\/li>$/, '<ul>'); open = true; }
+        if (!nested && open) { html += '</ul></li>'; open = false; }
+        html += `<li>${esc(l.trim())}</li>`;
+      });
+      if (open) html += '</ul></li>';
+      ul.innerHTML = html;
+      const sec = ul.closest('details');
+      if (sec && sec.id !== 'timeline') sec.hidden = !html; else ul.hidden = !html;
+    });
+  }
+
   // ---------- timeline ----------
   function render() {
     const W = root.clientWidth;
@@ -108,6 +206,11 @@
     const iconH = Math.max(P.s, 38);
 
     root.innerHTML = '';
+    if (!D.events.length) {
+      root.style.height = '';
+      root.innerHTML = '<p class="empty">Nothing on this timeline yet.</p>';
+      return;
+    }
     const events = D.events.map((e, i) => Object.assign({ t: time(e.date), _i: i }, e)).sort((a, b) => a.t - b.t);
     const pe = events.filter(e => e.who);
 
@@ -145,7 +248,7 @@
         e.iconsW = e.icons.length * P.iw;
         const el = document.createElement('div');
         el.className = 'box lbox';
-        el.textContent = e.text;
+        el.textContent = leftText(e);
         el.style.maxWidth = P.leftW + 'px';
         e.boxRight = axisX - 16 - e.iconsW - 10;
         el.style.right = (W - e.boxRight) + 'px';
@@ -284,6 +387,7 @@
   }
 
   legend();
+  renderAbout();
   // redraw whenever the available width changes (including the first time it becomes known)
   let lastW = -1, timer;
   const redraw = () => {
@@ -296,6 +400,6 @@
   if (window.ResizeObserver) new ResizeObserver(() => { clearTimeout(timer); timer = setTimeout(redraw, 80); }).observe(root);
   else window.addEventListener('resize', redraw);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => { if (root.clientWidth) render(); });
-  window.STIMELINE_RENDER = () => { if (root.clientWidth) render(); };
-  window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED };
+  window.STIMELINE_RENDER = () => { legend(); renderAbout(); if (root.clientWidth) render(); };
+  window.STIMELINE_UI = { pict, rowHTML, colorOf, esc, NOSTI, TESTED, TESTS, autoText, leftText, normalize };
 })();

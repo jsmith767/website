@@ -79,6 +79,7 @@
 
     #tl { position: relative; margin-top: 8px; font-family: Verdana, "DejaVu Sans", Geneva, sans-serif; font-size: 12px; line-height: normal; }
     #tl.small { font-size: 10.5px; }
+    #tl .empty { font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #555; padding: 24px 0; margin: 0; }
     #tl svg.gfx { position: absolute; left: 0; top: 0; pointer-events: none; font-family: inherit; }
 
     .box {
@@ -133,40 +134,22 @@
     <a id="editlink" href="?edit">Edit</a>
     <details class="sec" id="boundaries">
       <summary><h2>Boundaries</h2></summary>
-      <ul>
-        <li>My sexual partners communicate in a way to protect my sexual health.
-          <ul>
-            <li>They disclose their relevant STI status.</li>
-            <li>They disclose any activity that has the potential to change their STI status (e.g., sex with a new partner).</li>
-          </ul>
-        </li>
-      </ul>
+      <ul data-about="boundaries"></ul>
     </details>
     <details class="sec" id="summary">
       <summary><h2>Sexual Health Summary</h2></summary>
-      <ul>
-        <li>To the best of my knowledge (see timeline for more details):
-          <ul>
-            <li>I am negative for Gonorrhea, Chlamydia, Syphilis, Hep C and HIV</li>
-            <li>I am vaccinated against Hep B and HPV (Gardasil 9)</li>
-            <li>I have some risk, but my analysis is the risk is low, of harboring a high risk strain of HPV.</li>
-            <li>I have tested positive for the antibodies of HSV-1 (negative for HSV-2). I have never had a sore and have no reason to believe I have genital HSV-1/2. My mom had oral HSV-1</li>
-          </ul>
-        </li>
-      </ul>
+      <ul data-about="summary"></ul>
     </details>
     <details class="sec" id="timeline" open>
       <summary><h2>Timeline</h2></summary>
-      <ul>
-        <li>Hand to genital activity is not shown except in cases where there is a reasonable risk of the hand being a vector between other areas (e.g. genital-hand-genital, genital-hand-mouth, etc)</li>
-      </ul>
+      <ul data-about="note"></ul>
     <div id="legend"></div>
     <div id="editor"></div>
     <div id="tl"></div>
     </details>
   </main>
-  <script src="data.js?v=20261005233645"></script>
-  <script src="timeline.js?v=20261005233645"></script>
-  <script src="editor.js?v=20261005233645"></script>
+  <script src="data.js?v=20261005235830"></script>
+  <script src="timeline.js?v=20261005235830"></script>
+  <script src="editor.js?v=20261005235830"></script>
 </body>
 </html>
