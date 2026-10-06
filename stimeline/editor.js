@@ -9,9 +9,22 @@
   const esc = UI.esc;
 
   const replace = d => { for (const k in D) delete D[k]; Object.assign(D, UI.normalize(d)); };
+
+  // A private copy remembers which published version it was made from, so the page can say
+  // when the published timeline has moved on. `own` copies (started blank or opened from a
+  // file) belong to someone else's timeline and are never compared with the published one.
+  const hash = str => { let h = 5381; for (let i = 0; i < str.length; i++) h = (h * 33 ^ str.charCodeAt(i)) >>> 0; return h.toString(36); };
+  const pubHash = hash(published);
+  let base = pubHash, own = false, stale = false;
   try {
-    const draft = JSON.parse(localStorage.getItem(KEY));
-    if (draft && draft.events) replace(draft);
+    const saved = JSON.parse(localStorage.getItem(KEY));
+    const draft = saved && saved.v === 2 ? saved.data : saved;
+    if (draft && draft.events) {
+      replace(draft);
+      own = !!(saved.v === 2 && saved.own);
+      base = saved.v === 2 ? saved.base : null;
+      stale = !own && base !== pubHash && JSON.stringify(UI.normalize(D)) !== published;
+    }
   } catch (e) { /* no draft */ }
 
   const PARTS = [['penis', 'Penis'], ['penis+condom', 'Penis with condom'], ['vagina', 'Vagina'],
@@ -81,7 +94,7 @@
     return UI.leftText(toEvent()) ? '' : 'Tap what you were tested for, or write the result.';
   }
   function persist() {
-    try { localStorage.setItem(KEY, JSON.stringify(D)); } catch (e) { /* private mode */ }
+    try { localStorage.setItem(KEY, JSON.stringify({ v: 2, base, own, data: D })); } catch (e) { /* private mode */ }
     STIMELINE_RENDER();
     status();
   }
@@ -190,7 +203,12 @@
   function drawTop() {
     const a = D.about || {};
     const area = (k, label, rows, ph) => `<label class="about"><span>${label}</span><textarea data-about-f="${k}" rows="${rows}" placeholder="${ph}">${esc(a[k] || '')}</textarea></label>`;
+    const ongoing = Object.keys(D.partners).filter(id => D.partners[id].ongoing);
     document.getElementById('ed-top').innerHTML =
+      (stale ? `<div class="stale"><div><b>The published timeline has been updated since this private copy was made.</b> ` +
+        `Your copy here doesn't include those updates.</div><div class="barbtns">` +
+        `<button type="button" class="primary" data-act="reset">Switch to the latest</button>` +
+        `<button type="button" data-act="keepmine">Keep my copy</button></div></div>` : '') +
       `<div class="bar"><div class="bartext"><b>You're editing a private copy.</b> <span id="ed-status"></span></div>` +
       `<div class="barbtns"><button type="button" data-act="savefile">Save to a file</button>` +
       `<button type="button" data-act="openfile">Open a file</button>` +
@@ -202,6 +220,9 @@
       area('boundaries', 'Boundaries', 4, 'What you ask of partners') +
       area('summary', 'Sexual Health Summary', 6, 'Your current status in your own words') +
       area('note', 'Note above the timeline', 2, 'Anything a reader should know before reading it') +
+      (ongoing.length ? `<div class="about"><span>Ongoing partners in At a Glance</span>` +
+        `<div class="hint">One short line each, for example what you do together and their testing habits.</div>` +
+        ongoing.map(id => `<label class="pnote">${dot(D.partners[id].color)}<input type="text" data-pnote="${esc(id)}" value="${esc(D.partners[id].note || '')}" placeholder="e.g. Barriers for PIV. No known STIs. Tested regularly."></label>`).join('') + `</div>` : '') +
       `<label class="inl">My color on the timeline <input type="color" data-me-color value="${esc(D.me.color)}"></label></details>`;
     status();
   }
@@ -238,6 +259,9 @@
       D.about = D.about || {};
       if (t.value.trim()) D.about[t.dataset.aboutF] = t.value; else delete D.about[t.dataset.aboutF];
       clearTimeout(aboutTimer); aboutTimer = setTimeout(persist, 300);
+    } else if (t.dataset.pnote) {
+      const p = D.partners[t.dataset.pnote];
+      if (p) { if (t.value.trim()) p.note = t.value; else delete p.note; clearTimeout(aboutTimer); aboutTimer = setTimeout(persist, 300); }
     } else if (t.dataset.meColor != null) {
       D.me.color = t.value; clearTimeout(aboutTimer); aboutTimer = setTimeout(() => { persist(); draw(); }, 200);
     } else if (t.dataset.f === 'text') {
@@ -257,8 +281,8 @@
   host.addEventListener('change', ev => {
     const t = ev.target, id = t.dataset.id;
     if (t.id === 'ed-file') return openFile(t);
-    if (t.dataset.act === 'track') { if (t.checked) D.partners[id].track = true; else { delete D.partners[id].track; delete D.partners[id].ongoing; } persist(); draw(); }
-    if (t.dataset.act === 'ongoing') { if (t.checked) { D.partners[id].ongoing = true; D.partners[id].track = true; } else delete D.partners[id].ongoing; persist(); draw(); }
+    if (t.dataset.act === 'track') { if (t.checked) D.partners[id].track = true; else { delete D.partners[id].track; delete D.partners[id].ongoing; } persist(); drawTop(); draw(); }
+    if (t.dataset.act === 'ongoing') { if (t.checked) { D.partners[id].ongoing = true; D.partners[id].track = true; } else delete D.partners[id].ongoing; persist(); drawTop(); draw(); }
   });
 
   function loadData(raw, name) {
@@ -266,7 +290,7 @@
     if (!data || !Array.isArray(data.events)) { msg = "That file isn't a timeline saved from this page."; draw(); return; }
     const clean = UI.normalize(data);
     if (!confirm(`Open "${name}" (${clean.events.length} entries)? It replaces the timeline you're editing in this browser. Save yours to a file first if you want to keep it.`)) return;
-    replace(clean); persist(); resetForm(); msg = `Opened ${name}.`; drawTop(); draw();
+    own = true; stale = false; replace(clean); persist(); resetForm(); msg = `Opened ${name}.`; drawTop(); draw();
   }
   function openFile(input) {
     const file = input.files && input.files[0];
@@ -299,14 +323,15 @@
     else if (a === 'openfile') { document.getElementById('ed-file').click(); return; }
     else if (a === 'blank') {
       if (!confirm("Start a blank timeline? This clears the one you're editing in this browser. Save it to a file first if you want to keep it.")) return;
-      replace({ me: { color: D.me.color }, partners: {}, events: [] }); persist(); resetForm(); drawTop();
+      own = true; stale = false; replace({ me: { color: D.me.color }, partners: {}, events: [] }); persist(); resetForm(); drawTop();
       msg = 'Blank timeline started. Add your first entry below.';
     }
     else if (a === 'reset') {
       if (!confirm('Undo every change made in this browser and go back to the published timeline?')) return;
-      replace(JSON.parse(published)); try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
+      own = false; stale = false; base = pubHash; replace(JSON.parse(published)); try { localStorage.removeItem(KEY); } catch (e) { /* ignore */ }
       STIMELINE_RENDER(); resetForm(); drawTop(); msg = 'Back to the published timeline.';
     }
+    else if (a === 'keepmine') { stale = false; base = pubHash; persist(); drawTop(); msg = 'Keeping your copy.'; }
     else if (a === 'type') {
       f.type = t.dataset.t;
       if (f.type === 'info') { f.text = f.index != null && D.events[f.index].info || ''; f.auto = false; }
@@ -376,6 +401,10 @@
     #editor h3 { font-size: 14px; margin: 0 0 6px; text-transform: uppercase; letter-spacing: .04em; color: #333; }
     #ed-top { border: 2px solid #000; border-radius: 10px 10px 0 0; background: #f3eef9; padding: 12px 14px; }
     #ed-form { border: 2px solid #000; border-top: 0; border-radius: 0 0 10px 10px; background: #fff; padding: 16px 14px; }
+    #editor .stale { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; background: #fff4d6; border: 2px solid #b07800; border-radius: 8px; padding: 10px 12px; margin-bottom: 12px; font-size: 14px; }
+    #editor .stale > div:first-child { flex: 1 1 260px; }
+    #editor .pnote { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+    #editor .pnote input { max-width: none; }
     #editor .bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between; }
     #editor .bartext { flex: 1 1 260px; font-size: 14px; }
     #editor .barbtns { display: flex; flex-wrap: wrap; gap: 6px; }

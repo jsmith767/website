@@ -36,6 +36,7 @@ const STIMELINE = {
   },
 
   // track: draw a dotted line between this partner's appearances. ongoing: line runs to the top.
+  // note: for an ongoing partner, a short line shown in At a Glance.
   partners: {
     unnamed: { color: '#000000' },
     navy:    { color: '#0a0ab4', track: true },
@@ -44,7 +45,8 @@ const STIMELINE = {
     orange:  { color: '#d95f02', track: true },
     dkgreen: { color: '#0a8a0a', track: true },
     lpurple: { color: '#a030e0', track: true },
-    red:     { color: '#e60000', track: true, ongoing: true },
+    red:     { color: '#e60000', track: true, ongoing: true,
+               note: 'We have unbarriered vaginal and oral sex. No known STIs. Tested regularly.' },
     lime:    { color: '#7ef000' },
     cyan:    { color: '#19c4f0' },
     mint:    { color: '#19e6b4' },

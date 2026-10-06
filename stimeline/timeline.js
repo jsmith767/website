@@ -40,6 +40,8 @@
       const q = { color: col(p.color, '#888888') };
       if (p.track || p.ongoing) q.track = true;
       if (p.ongoing) q.ongoing = true;
+      const note = str(p.note, 400).trim();
+      if (note) q.note = note;
       out.partners[id] = q;
     });
     if (Array.isArray(raw.extraYears)) {
@@ -228,7 +230,8 @@
     const evs = D.events.map(e => Object.assign({ t: time(e.date) }, e)).sort((a, b) => a.t - b.t);
     const tests = evs.filter(e => e.tests && Object.keys(e.tests).length);
     const meetings = evs.filter(e => e.who), vaccines = evs.filter(e => e.vaccine);
-    sec.hidden = !tests.length && !vaccines.length;
+    const ongoing = Object.keys(D.partners).filter(id => D.partners[id].ongoing);
+    sec.hidden = !tests.length && !vaccines.length && !ongoing.length;
     if (sec.hidden) return;
     const guess = e => e.estimated || e.undated;
     const cap = x => x.charAt(0).toUpperCase() + x.slice(1);
@@ -262,6 +265,10 @@
     }
     const cleared = TESTS.filter(([k]) => positive[k] && latest[k].tests[k] === 'neg');
     if (cleared.length) html += `<li>Earlier positive result, since negative: ${cleared.map(([k]) => `${esc(full(k))} (${esc(sayDate(positive[k]))})`).join(', ')}</li>`;
+    if (ongoing.length) {
+      html += `<li>Ongoing ${ongoing.length === 1 ? 'partner' : 'partners'}:<ul>` + ongoing.map(id =>
+        `<li>${gdot(id)} ${D.partners[id].note ? rich(D.partners[id].note) : 'See the timeline for details.'}</li>`).join('') + '</ul></li>';
+    }
     if (last) {
       const since = meetings.filter(m => m.t > last.t);
       if (!since.length) html += '<li>Since the most recent test: no partner entries on the timeline.</li>';
