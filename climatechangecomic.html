@@ -326,8 +326,8 @@
     });
 
     if (mars) {
-      s += '<g transform="translate(' + bx + ',' + by + ') scale(1.5)">' + topBoat(true) + '</g>' +
-        '<g transform="translate(' + (bx - 14) + ',128) rotate(-90) scale(1.5)">' + swimmer() + '</g></g>';
+      s += '<g transform="translate(' + bx + ',' + by + ')">' + topBoat(true) + '</g>' +
+        '<g transform="translate(' + (bx - 12) + ',158) rotate(-90)">' + swimmer() + '</g></g>';
     } else {
       s += '<g transform="translate(' + bx + ',' + by + ') rotate(' + angle + ')">' + topBoat() +
         '<line x1="62" y1="0" x2="122" y2="0" stroke="' + RED + '" stroke-width="8" stroke-linecap="round"/>' +
