@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Climate Change Comic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root { --paper: #fbf8ef; --ink: #1d1d1b; --red: #d2382c; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink);
+    font-family: "Patrick Hand", "Comic Sans MS", "Chalkboard SE", cursive;
+    font-size: 20px; line-height: 1.3;
+  }
+  main { max-width: 940px; margin: 0 auto; padding: 24px 16px 64px; }
+  figure { margin: 0; }
+  .panel {
+    display: block; width: 100%; height: auto;
+    background: #fff; border: 3px solid var(--ink); border-radius: 4px;
+  }
+  figcaption { text-align: center; font-size: 24px; padding: 8px 4px 0; }
+  figcaption .n { display: inline-block; margin-right: 6px; color: var(--red); }
+  .title { text-align: center; margin: 22px 0 22px; }
+  .title h1 { font-weight: 400; font-size: clamp(28px, 5vw, 42px); line-height: 1.15; }
+  .title p { font-size: 22px; margin-top: 4px; }
+  .title .arrow { color: var(--red); font-weight: 700; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 22px; }
+  .more { text-align: center; margin: 34px 0 22px; }
+  .more button {
+    font: inherit; font-size: 22px; color: var(--ink); cursor: pointer;
+    background: none; border: 0; border-bottom: 2px dashed var(--ink); padding: 2px 4px;
+  }
+  .more button:hover { color: var(--red); border-color: var(--red); }
+  .more button:focus-visible { outline: 2px solid var(--red); outline-offset: 4px; }
+  #bonus[hidden] { display: none; }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    figcaption { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Shared hand-drawn wobble for every panel. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="wob" x="-3%" y="-3%" width="106%" height="106%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="n"/>
+    <feDisplacementMap in="SourceGraphic" in2="n" scale="3.2" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<main>
+  <figure id="f0"></figure>
+
+  <div class="title">
+    <h1>Climate change strategies, from a bird&rsquo;s-eye view</h1>
+    <p>(The <span class="arrow">&rarr;</span> arrow shows which way they&rsquo;re rowing)</p>
+  </div>
+
+  <div class="grid">
+    <figure id="f1"></figure>
+    <figure id="f2"></figure>
+    <figure id="f3"></figure>
+    <figure id="f4"></figure>
+  </div>
+
+  <div class="more">
+    <button id="moreBtn" type="button" aria-expanded="false" aria-controls="bonus">5. Meanwhile&hellip; &#9662;</button>
+  </div>
+
+  <div class="grid" id="bonus" hidden>
+    <figure id="f5"></figure>
+    <figure id="f6"></figure>
+  </div>
+</main>
+
+<script>
+(function () {
+  var INK = '#1d1d1b', WATER = '#bfe2ec', DEEP = '#93c8d8', WAVE = '#5f9fb3',
+      ROCK = '#b9ad9c', LAND = '#cfe2ae', TREE = '#7fae6a', WOOD = '#cf9452',
+      RED = '#d2382c', SHIRT_A = '#e9b13c', SHIRT_B = '#8a6cc4';
+
+  function wavy(x0, x1, y, amp, step) {
+    var d = 'M' + x0 + ',' + y, up = true;
+    for (var x = x0; x < x1 - 0.1; x += step) {
+      var nx = Math.min(x + step, x1);
+      d += ' Q' + (x + nx) / 2 + ',' + (y + (up ? -amp : amp)) + ' ' + nx + ',' + y;
+      up = !up;
+    }
+    return d;
+  }
+
+  function skull(x, y, s) {
+    var bones = [35, -35].map(function (r) {
+      return '<g transform="rotate(' + r + ')">' +
+        '<line x1="-32" x2="32" stroke="' + INK + '" stroke-width="10" stroke-linecap="round"/>' +
+        [[-33, -4], [-33, 4], [33, -4], [33, 4]].map(function (p) {
+          return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="4.5" fill="#fff" stroke="' + INK + '" stroke-width="2.2"/>';
+        }).join('') +
+        '<line x1="-32" x2="32" stroke="#fff" stroke-width="5.5" stroke-linecap="round"/></g>';
+    }).join('');
+    return '<g transform="translate(' + x + ',' + y + ') scale(' + s + ')">' + bones +
+      '<rect x="-10" y="6" width="20" height="14" rx="3" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
+      '<circle cx="0" cy="-6" r="19" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
+      '<rect x="-8.6" y="4" width="17.2" height="8" fill="#fff"/>' +
+      '<ellipse cx="-7.5" cy="-5" rx="5" ry="6" fill="' + INK + '"/>' +
+      '<ellipse cx="7.5" cy="-5" rx="5" ry="6" fill="' + INK + '"/>' +
+      '<path d="M0,3 l-3,6 h6 Z" fill="' + INK + '"/>' +
+      '<path d="M-4,13 v7 M0,13 v7 M4,13 v7" stroke="' + INK + '" stroke-width="1.6"/>' +
+      '</g>';
+  }
+
+  /* ---------- side view ---------- */
+
+  // One seated figure. f = facing (+1 right, -1 left); mood = 'calm' | 'angry' | 'happy'.
+  function person(x, f, shirt, mood, cap) {
+    var s = '<line x1="' + x + '" y1="-38" x2="' + x + '" y2="-3" stroke="' + INK + '" stroke-width="15" stroke-linecap="round"/>' +
+            '<line x1="' + x + '" y1="-38" x2="' + x + '" y2="-3" stroke="' + shirt + '" stroke-width="10" stroke-linecap="round"/>' +
+            '<circle cx="' + x + '" cy="-52" r="11" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>';
+    if (cap) {
+      s += '<path d="M' + (x - 11) + ',-55 Q' + x + ',-74 ' + (x + 11) + ',-55 Z" fill="' + shirt + '" stroke="' + INK + '" stroke-width="2.2"/>' +
+           '<line x1="' + (x + 9 * f) + '" y1="-55" x2="' + (x + 19 * f) + '" y2="-54" stroke="' + INK + '" stroke-width="3" stroke-linecap="round"/>';
+    } else {
+      s += '<path d="M' + (x - 10) + ',-57 Q' + x + ',-70 ' + (x + 10) + ',-57" fill="none" stroke="' + INK + '" stroke-width="3.5" stroke-linecap="round"/>';
+    }
+    s += '<circle cx="' + (x + 4.5 * f) + '" cy="-52" r="1.7" fill="' + INK + '"/>';
+    if (mood === 'angry') {
+      s += '<path d="M' + (x + 1 * f) + ',-58 l' + (7 * f) + ',3.5" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>' +
+           '<path d="M' + (x + 3 * f) + ',-45 q' + (3 * f) + ',-3 ' + (6 * f) + ',0" fill="none" stroke="' + INK + '" stroke-width="2" stroke-linecap="round"/>';
+    } else {
+      var q = mood === 'happy' ? 3.5 : 1.5;
+      s += '<path d="M' + (x + 2 * f) + ',-47 q' + (3 * f) + ',' + q + ' ' + (6 * f) + ',0" fill="none" stroke="' + INK + '" stroke-width="2" stroke-linecap="round"/>';
+    }
+    return s;
+  }
+
+  function arm(x1, y1, x2, y2) {
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + INK + '" stroke-width="4" stroke-linecap="round"/>';
+  }
+
+  function oar(x1, y1, x2, y2) {
+    var a = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+    return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '" stroke="' + INK + '" stroke-width="4" stroke-linecap="round"/>' +
+      '<ellipse cx="' + x2 + '" cy="' + y2 + '" rx="11" ry="5" transform="rotate(' + a + ' ' + x2 + ' ' + y2 + ')" fill="' + WOOD + '" stroke="' + INK + '" stroke-width="2.2"/>';
+  }
+
+  var HULL = '<path d="M-72,0 L72,0 Q62,26 42,28 L-42,28 Q-62,26 -72,0 Z" fill="' + WOOD + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
+             '<path d="M-64,9 L64,9" stroke="' + INK + '" stroke-width="1.6" opacity=".55"/>';
+
+  function crew(pose) {
+    if (pose === 'row') {
+      return person(-28, -1, SHIRT_A, 'calm', true) + person(24, -1, SHIRT_B, 'calm', false) + HULL +
+        arm(-28, -32, -45, -25) + oar(-46, -26, -62, 30) +
+        arm(24, -32, 7, -25) + oar(6, -26, -10, 32);
+    }
+    if (pose === 'fight') {
+      return oar(48, -58, -22, -94) +
+        person(-24, 1, SHIRT_A, 'angry', true) + person(24, -1, SHIRT_B, 'angry', false) + HULL +
+        arm(-24, -33, 12, -41) + arm(-24, -28, 13, -37) +
+        arm(24, -33, 34, -66) + arm(24, -33, 20, -70) +
+        '<text x="-58" y="-104" font-size="26" font-weight="700" fill="' + INK + '" transform="rotate(-8 -58 -104)">#@!%</text>' +
+        '<path d="M2,-62 l5,-11 M10,-58 l11,-7 M-3,-60 l-7,-9" stroke="' + INK + '" stroke-width="2.4" stroke-linecap="round"/>' +
+        '<path d="M-88,-6 q-9,10 -2,22 M88,-6 q9,10 2,22" fill="none" stroke="' + INK + '" stroke-width="2.2" stroke-linecap="round"/>';
+    }
+    // tea
+    var cup = function (cx, f) {
+      return '<path d="M' + (cx - 6) + ',-38 h12 l-2,9 h-8 Z" fill="#fff" stroke="' + INK + '" stroke-width="2"/>' +
+        '<path d="M' + (cx - 6 * f) + ',-36 q' + (-6 * f) + ',2 ' + (-1 * f) + ',6" fill="none" stroke="' + INK + '" stroke-width="1.8"/>' +
+        '<path d="M' + cx + ',-43 q-4,-5 0,-9 q4,-4 0,-9" fill="none" stroke="' + INK + '" stroke-width="1.6" stroke-linecap="round" opacity=".6"/>';
+    };
+    return oar(-34, -5, -104, -16) +
+      person(-26, 1, SHIRT_A, 'happy', true) + person(26, -1, SHIRT_B, 'happy', false) +
+      '<ellipse cx="0" cy="-10" rx="10" ry="8" fill="#fff" stroke="' + INK + '" stroke-width="2.2"/>' +
+      '<path d="M9,-12 q8,-1 9,-8" fill="none" stroke="' + INK + '" stroke-width="2.4" stroke-linecap="round"/>' +
+      '<path d="M-9,-13 q-7,2 -2,7" fill="none" stroke="' + INK + '" stroke-width="2"/>' +
+      '<circle cx="0" cy="-19.5" r="2.2" fill="' + INK + '"/>' +
+      HULL +
+      arm(-26, -32, -10, -30) + cup(-8, 1) +
+      arm(26, -32, 10, -30) + cup(8, -1);
+  }
+
+  function side(W, boatX, pose, opts) {
+    opts = opts || {};
+    var H = 380, e = W - 170, wl = 200;
+    var s = '<svg class="panel" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + opts.label + '"><g filter="url(#wob)">';
+
+    if (opts.sky) {
+      s += '<circle cx="92" cy="66" r="26" fill="#ffd95a" stroke="' + INK + '" stroke-width="2.5"/>' +
+        '<path d="M92,24 v-12 M92,108 v12 M50,66 h-12 M134,66 h12 M62,36 l-8,-8 M122,36 l8,-8 M62,96 l-8,8 M122,96 l8,8" stroke="' + INK + '" stroke-width="2.5" stroke-linecap="round"/>' +
+        '<path d="M560,74 q4,-22 28,-18 q10,-20 34,-8 q24,-6 26,16 q20,4 12,22 h-104 q-16,-6 4,-12 Z" fill="#fff" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+        // the bird whose view this is
+        '<g transform="translate(300,74)">' +
+        '<ellipse cx="0" cy="0" rx="20" ry="10" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
+        '<circle cx="19" cy="-5" r="8" fill="#fff" stroke="' + INK + '" stroke-width="2.5"/>' +
+        '<path d="M26,-3 l11,4 l-11,3 Z" fill="#f0a030" stroke="' + INK + '" stroke-width="1.8" stroke-linejoin="round"/>' +
+        '<circle cx="21" cy="-4" r="1.6" fill="' + INK + '"/>' +
+        '<path d="M-6,-6 q-10,-26 -30,-22 q10,8 14,24 Z" fill="#fff" stroke="' + INK + '" stroke-width="2.5" stroke-linejoin="round"/>' +
+        '<path d="M-19,2 l-14,-2 l12,8 Z" fill="#fff" stroke="' + INK + '" stroke-width="2.2" stroke-linejoin="round"/>' +
+        '</g>';
+    }
+
+    // cliff the river runs over
+    s += '<path d="M-10,244 L' + e + ',244 L' + e + ',' + (H + 10) + ' L-10,' + (H + 10) + ' Z" fill="' + ROCK + '" stroke="' + INK + '" stroke-width="3"/>';
+    for (var i = 0; i < Math.floor(e / 90); i++) {
+      var rx = 40 + i * 90;
+      s += '<path d="M' + rx + ',' + (278 + (i % 3) * 22) + ' l26,6 M' + (rx + 30) + ',' + (330 - (i % 2) * 24) + ' l-22,8" stroke="' + INK + '" stroke-width="2" stroke-linecap="round" opacity=".45"/>';
+    }
+
+    // river, then the drop
+    s += '<path d="' + wavy(-10, e - 22, wl, 6, 23) + ' Q' + (e + 44) + ',' + wl + ' ' + (e + 52) + ',' + (wl + 74) +
+      ' L' + (e + 52) + ',352 L' + e + ',352 L' + e + ',244 L-10,244 Z" fill="' + WATER + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>';
+    for (i = 0; i < Math.floor((e - 60) / 120); i++) {
+      s += '<path d="' + wavy(50 + i * 120, 90 + i * 120, 222 + (i % 2) * 8, 4, 13) + '" fill="none" stroke="' + WAVE + '" stroke-width="2.5" stroke-linecap="round"/>';
+    }
+    s += '<path d="M' + (e + 14) + ',236 V330 M' + (e + 27) + ',250 V342 M' + (e + 40) + ',262 V326" stroke="' + WAVE + '" stroke-width="2.5" stroke-linecap="round"/>';
+
+    // plunge pool, spray, and the point of the whole drawing
+    s += '<path d="' + wavy(e, W + 10, 352, 4, 19) + ' L' + (W + 10) + ',' + (H + 10) + ' L' + e + ',' + (H + 10) + ' Z" fill="' + DEEP + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>';
+    [[e + 4, 350, 12], [e + 27, 344, 17], [e + 54, 348, 14], [e + 76, 353, 10]].forEach(function (c) {
+      s += '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '" fill="#fff" stroke="' + INK + '" stroke-width="2.2"/>';
+    });
+    s += skull(W - 56, 296, 1.05);
+
+    if (opts.drift) {
+      s += '<g transform="rotate(-6 ' + opts.drift + ' 204)">' + oar(opts.drift - 30, 204, opts.drift + 26, 204) + '</g>';
+    }
+
+    s += '<g transform="translate(' + boatX + ',190) rotate(' + (opts.tilt || 0) + ')">' + crew(pose) + '</g>';
+
+    if (!opts.atLip) {
+      s += '<path d="' + wavy(boatX - 92, boatX + 92, 206, 4, 23) + ' L' + (boatX + 92) + ',222 L' + (boatX - 92) + ',222 Z" fill="' + WATER + '"/>' +
+        '<path d="' + wavy(boatX - 92, boatX + 92, 206, 4, 23) + '" fill="none" stroke="' + INK + '" stroke-width="2.5"/>';
+    }
+    return s + '</g></svg>';
+  }
+
+  /* ---------- bird's-eye view ---------- */
+
+  function topBoat() {
+    var s = '';
+    [-13, 13].forEach(function (x) {
+      [-1, 1].forEach(function (k) {
+        s += '<line x1="' + x + '" y1="' + 12 * k + '" x2="' + (x - 11) + '" y2="' + 44 * k + '" stroke="' + INK + '" stroke-width="3.5" stroke-linecap="round"/>' +
+          '<ellipse cx="' + (x - 12) + '" cy="' + 46 * k + '" rx="4.5" ry="9" transform="rotate(' + (-14 * k) + ' ' + (x - 12) + ' ' + 46 * k + ')" fill="' + WOOD + '" stroke="' + INK + '" stroke-width="2"/>';
+      });
+    });
+    s += '<path d="M-44,0 Q-40,-18 0,-18 Q32,-18 50,0 Q32,18 0,18 Q-40,18 -44,0 Z" fill="' + WOOD + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>' +
+      '<path d="M-30,-13 V13 M30,-10 V10" stroke="' + INK + '" stroke-width="1.6" opacity=".55"/>' +
+      '<ellipse cx="-13" cy="0" rx="6" ry="12.5" fill="' + SHIRT_B + '" stroke="' + INK + '" stroke-width="2.2"/>' +
+      '<circle cx="-13" cy="0" r="6.5" fill="' + INK + '"/>' +
+      '<ellipse cx="13" cy="0" rx="6" ry="12.5" fill="' + SHIRT_A + '" stroke="' + INK + '" stroke-width="2.2"/>' +
+      '<circle cx="13" cy="0" r="6.5" fill="' + SHIRT_A + '" stroke="' + INK + '" stroke-width="2.2"/>';
+    return s;
+  }
+
+  function top(angle, label) {
+    var W = 500, H = 380, lip = 408, bx = 190, by = 268, i;
+    var s = '<svg class="panel" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + label + '"><g filter="url(#wob)">' +
+      '<rect x="-10" y="-10" width="' + (lip + 30) + '" height="' + (H + 20) + '" fill="' + WATER + '"/>' +
+      '<rect x="' + (lip + 20) + '" y="-10" width="120" height="' + (H + 20) + '" fill="' + DEEP + '"/>';
+
+    // current, always pulling toward the drop
+    [[40, 96], [250, 118], [36, 190], [300, 224], [60, 340], [250, 346]].forEach(function (p) {
+      s += '<path d="' + wavy(p[0], p[0] + 66, p[1], 4, 22) + '" fill="none" stroke="' + WAVE + '" stroke-width="2.5" stroke-linecap="round"/>' +
+        '<path d="M' + (p[0] + 59) + ',' + (p[1] - 7) + ' l9,7 l-9,7" fill="none" stroke="' + WAVE + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    });
+
+    // the drop: lines of falling water, foam along the lip, skull at the bottom
+    for (i = 0; i < 9; i++) {
+      s += '<path d="M' + (lip + 34) + ',' + (62 + i * 38) + ' h' + (i % 2 ? 44 : 30) + '" stroke="' + WAVE + '" stroke-width="2.5" stroke-linecap="round"/>';
+    }
+    for (i = 0; i < 18; i++) {
+      s += '<circle cx="' + (lip + (i % 2 ? 22 : 8)) + '" cy="' + (48 + i * 21) + '" r="13" fill="#fff" stroke="' + INK + '" stroke-width="2.2"/>';
+    }
+    s += skull(lip + 62, 214, 0.6);
+
+    // the far shore
+    s += '<path d="' + wavy(-10, W + 10, 46, 4, 26) + ' L' + (W + 10) + ',-10 L-10,-10 Z" fill="' + LAND + '" stroke="' + INK + '" stroke-width="3" stroke-linejoin="round"/>';
+    [[34, 20, 11], [58, 26, 8], [156, 18, 9], [318, 22, 11], [342, 16, 8], [452, 22, 10]].forEach(function (t) {
+      s += '<circle cx="' + t[0] + '" cy="' + t[1] + '" r="' + t[2] + '" fill="' + TREE + '" stroke="' + INK + '" stroke-width="2"/>';
+    });
+
+    s += '<g transform="translate(' + bx + ',' + by + ') rotate(' + angle + ')">' + topBoat() +
+      '<line x1="62" y1="0" x2="122" y2="0" stroke="' + RED + '" stroke-width="8" stroke-linecap="round"/>' +
+      '<path d="M118,-15 L146,0 L118,15 Z" fill="' + RED + '" stroke="' + RED + '" stroke-width="3" stroke-linejoin="round"/>' +
+      '</g></g>' +
+      '<text x="238" y="30" text-anchor="middle" font-size="19" fill="' + INK + '">dry land</text>' +
+      '<text x="24" y="368" font-size="17" fill="#3f7f93">current</text>' +
+      '</svg>';
+    return s;
+  }
+
+  function put(id, svg, n, caption) {
+    document.getElementById(id).innerHTML = svg +
+      (caption ? '<figcaption>' + (n ? '<span class="n">' + n + '.</span>' : '') + caption + '</figcaption>' : '');
+  }
+
+  put('f0', side(1000, 380, 'row', { sky: true, label: 'Side view: two rowers in a boat on a wavy river, drifting toward a waterfall with a skull and crossbones at its base.' }));
+
+  put('f1', top(180, 'Seen from above, the rowers row straight upstream, away from the waterfall.'), 1, 'Carbon cutting, curtail production');
+  put('f2', top(-90, 'Seen from above, the rowers row straight across toward the distant shore.'), 2, 'Technological solution');
+  put('f3', top(-135, 'Seen from above, the rowers row at 45 degrees, upstream and toward the shore.'), 3, 'Combo approach: tech solution + decarbonize');
+  put('f4', top(0, 'Seen from above, the rowers row straight at the waterfall.'), 4, 'Capitalism');
+
+  put('f5', side(500, 150, 'fight', { tilt: -5, drift: 40, label: 'Side view: the two rowers are fighting. Nobody is rowing and an oar is floating away.' }), '', 'Congress');
+  put('f6', side(500, 322, 'tea', { tilt: 9, atLip: true, drift: 150, label: 'Side view: the two rowers are having tea at the very lip of the waterfall. Still nobody is rowing.' }), '', 'Thoughts and prayers');
+
+  var btn = document.getElementById('moreBtn'), bonus = document.getElementById('bonus');
+  btn.addEventListener('click', function () {
+    var open = bonus.hidden;
+    bonus.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.innerHTML = open ? '5. Meanwhile&hellip; &#9652;' : '5. Meanwhile&hellip; &#9662;';
+    if (open) bonus.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+})();
+</script>
+</body>
+</html>
