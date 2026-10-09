@@ -231,6 +231,24 @@
 
     s += '<g transform="translate(' + boatX + ',190) rotate(' + (opts.tilt || 0) + ')">' + crew(pose) + '</g>';
 
+    if (opts.thought) {
+      // what the purple one sees: same boat, same tea, no waterfall
+      var tx = W - 152, ty = 68;
+      s += [[boatX + 40, 118, 4], [boatX + 54, 107, 6], [boatX + 72, 98, 8]].map(function (c) {
+          return '<circle cx="' + c[0] + '" cy="' + c[1] + '" r="' + c[2] + '" fill="#fff" stroke="' + INK + '" stroke-width="2.2"/>';
+        }).join('') +
+        '<clipPath id="tb"><ellipse cx="' + tx + '" cy="' + ty + '" rx="116" ry="54"/></clipPath>' +
+        '<ellipse cx="' + tx + '" cy="' + ty + '" rx="116" ry="54" fill="#fff"/>' +
+        '<g clip-path="url(#tb)">' +
+        '<circle cx="' + (tx + 62) + '" cy="' + (ty - 22) + '" r="9" fill="#ffd95a" stroke="' + INK + '" stroke-width="1.8"/>' +
+        '<path d="' + wavy(tx - 130, tx + 130, ty + 16, 2.5, 13) + ' V' + (ty + 70) + ' H' + (tx - 130) + ' Z" fill="' + WATER + '" stroke="' + INK + '" stroke-width="2"/>' +
+        '<g transform="translate(' + (tx - 4) + ',' + (ty + 9) + ') scale(.6)">' + crew('tea') + '</g>' +
+        '<path d="' + wavy(tx - 52, tx + 44, ty + 22, 2, 9) + ' V' + (ty + 30) + ' H' + (tx - 52) + ' Z" fill="' + WATER + '"/>' +
+        '<path d="' + wavy(tx - 96, tx - 70, ty + 34, 2, 9) + ' M' + (tx + 44) + ',' + (ty + 36) + ' q5,-3 9,0 q5,3 9,0" fill="none" stroke="' + WAVE + '" stroke-width="2" stroke-linecap="round"/>' +
+        '</g>' +
+        '<ellipse cx="' + tx + '" cy="' + ty + '" rx="116" ry="54" fill="none" stroke="' + INK + '" stroke-width="2.8"/>';
+    }
+
     if (!opts.atLip) {
       s += '<path d="' + wavy(boatX - 92, boatX + 92, 206, 4, 23) + ' L' + (boatX + 92) + ',222 L' + (boatX - 92) + ',222 Z" fill="' + WATER + '"/>' +
         '<path d="' + wavy(boatX - 92, boatX + 92, 206, 4, 23) + '" fill="none" stroke="' + INK + '" stroke-width="2.5"/>';
@@ -307,7 +325,7 @@
   put('f4', top(0, 'Seen from above, the rowers row straight at the waterfall.'), 4, 'Capitalism');
 
   put('f5', side(500, 150, 'fight', { tilt: -5, drift: 40, label: 'Side view: the two rowers are fighting. Nobody is rowing and an oar is floating away.' }), '', 'Congress');
-  put('f6', side(500, 150, 'tea', { tilt: 3, drift: 40, label: 'Side view: the two rowers are having tea in the drifting boat. Still nobody is rowing.' }), '', 'Thoughts and prayers');
+  put('f6', side(500, 150, 'tea', { tilt: 3, drift: 40, thought: true, label: 'Side view: the two rowers are having tea in the drifting boat. Still nobody is rowing. One of them pictures the same scene with no waterfall.' }), '', 'Thoughts and prayers');
 
   var btn = document.getElementById('moreBtn'), bonus = document.getElementById('bonus');
   btn.addEventListener('click', function () {
