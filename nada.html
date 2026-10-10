@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Hi Nada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap">
+    <style>
+        /* Same palette and type as home.css, kept inline so this page stands alone. */
+        :root {
+            --bg: #eceee8; --ink: #1b231f; --muted: #59635d; --accent: #2c6855; --gold: #a9771a;
+            --f-display: "Spectral", "Iowan Old Style", Georgia, serif;
+            --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+            --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root { --bg: #0f1411; --ink: #e2e7e1; --muted: #9ba69f; --accent: #7cc4a8; --gold: #d6a548; color-scheme: dark; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            background: var(--bg); color: var(--ink);
+            font-family: var(--f-body); font-size: 18px; line-height: 1.6;
+            display: grid; place-items: center; padding: 24px;
+            overflow: hidden; cursor: pointer; user-select: none; -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        main { max-width: 34rem; text-align: center; }
+        h1 {
+            font-family: var(--f-display); font-weight: 300; font-style: italic;
+            font-size: clamp(3rem, 14vw, 6rem); line-height: 1.05; color: var(--accent);
+            animation: rise .9s ease-out both;
+        }
+        p { margin-top: 1.4rem; animation: rise .9s ease-out both; }
+        p:nth-of-type(1) { animation-delay: .35s; }
+        p:nth-of-type(2) { animation-delay: .7s; color: var(--muted); }
+        .hint {
+            margin-top: 2.6rem; font-family: var(--f-mono); font-size: 12px;
+            letter-spacing: .08em; text-transform: uppercase; color: var(--gold);
+            animation-delay: 1.4s !important;
+        }
+        @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+        .spark {
+            position: fixed; pointer-events: none; font-size: var(--size);
+            animation: fly var(--dur) ease-out forwards;
+        }
+        @keyframes fly {
+            to { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            h1, p { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Hi Nada</h1>
+        <p>Just really appreciate you.</p>
+        <p>This is just a little web page to show you something fun.</p>
+        <p class="hint">tap anywhere</p>
+    </main>
+    <script>
+        const sparks = ['✨', '🌿', '💛', '🌼', '✨', '🌱'];
+        function burst(x, y) {
+            for (let i = 0; i < 14; i++) {
+                const s = document.createElement('span');
+                const angle = Math.random() * Math.PI * 2;
+                const dist = 60 + Math.random() * 140;
+                s.className = 'spark';
+                s.textContent = sparks[Math.floor(Math.random() * sparks.length)];
+                s.style.left = x + 'px';
+                s.style.top = y + 'px';
+                s.style.setProperty('--size', (14 + Math.random() * 18) + 'px');
+                s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+                s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+                s.style.setProperty('--rot', (Math.random() * 360 - 180) + 'deg');
+                s.style.setProperty('--dur', (700 + Math.random() * 700) + 'ms');
+                s.addEventListener('animationend', () => s.remove());
+                document.body.appendChild(s);
+            }
+        }
+        document.addEventListener('pointerdown', e => burst(e.clientX, e.clientY));
+    </script>
+</body>
+</html>
