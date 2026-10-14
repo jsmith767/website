@@ -113,12 +113,19 @@
         "notes": "fresh or frozen"
       }
     ],
-    "originalText": "2 cup gluten-free oat flour\n1/2 cup blanched almond flour\n1/2 cup gluten-free old-fashioned rolled oats\n1/4 cup chia seeds\n2 teaspoon baking powder\n1/2 teaspoon baking soda\n1 teaspoon cinnamon\n1/4 teaspoon nutmeg — ground\n3/4 teaspoon sea salt\n2 bananas — very ripe bananas (1 cup mashed)\n1/3 cup creamy almond butter — or preferred nut/seed butter\n1/3 cup maple syrup\n1/2 cup unsweetened almond milk — or organic soy milk\n1 teaspoon pure vanilla extract\n1 cup blueberries — fresh or frozen",
     "tags": [
       "breakfast",
+      "snack",
       "dessert",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "make-ahead",
+      "freezer-friendly",
+      "kid-friendly"
+    ],
+    "servings": "12"
   },
   {
     "name": "Cinnamon-Spiced House Granola",
@@ -187,11 +194,17 @@
         "originalLine": "¼ cup water"
       }
     ],
-    "originalText": "3 cups gluten-free old-fashioned rolled oats\n1 cup sliced almonds\n1 tablespoon cinnamon\n½ teaspoon ground allspice\n¼ teaspoon sea salt\n½ cup maple syrup\n¼ cup unsweetened applesauce\n1 tablespoon pure vanilla extract\n¼ cup water",
     "tags": [
       "breakfast",
-      "vegan"
-    ]
+      "snack",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "make-ahead",
+      "kid-friendly"
+    ],
+    "servings": "8"
   },
   {
     "name": "Vegetable Jambalaya",
@@ -335,10 +348,17 @@
         "originalLine": "Parsley"
       }
     ],
-    "originalText": "1 large yellow onion, diced\n2 large celery stalks, thinly sliced\n2 medium carrots, diced\n4 garlic cloves, minced\n1 red bell pepper, deseeded and diced\n1½ teaspoon dried oregano\n1½ teaspoon smoked paprika\n1 teaspoon dried thyme\n1 teaspoon onion powder\n1 teaspoon garlic powder\n¼ teaspoon red pepper flakes or to your preference\n2 bay leaves\n1 (14.5-ounce) can diced tomatoes (regular or fire-roasted)\n3 cups low-sodium vegetable broth (more if needed)\n1¼ cups long-grain brown rice\n1 cup frozen peas\n1 tablespoon tamari\n1 cup baby spinach or chopped kale\nSea salt and black pepper\nParsley",
     "tags": [
-      "vegan"
-    ]
+      "dinner",
+      "lunch",
+      "main",
+      "vegan",
+      "nut-free",
+      "oil-free",
+      "one-pot",
+      "make-ahead"
+    ],
+    "servings": "4-6"
   },
   {
     "name": "Apricot, Cardamom & Blueberry Bars",
@@ -449,9 +469,8 @@
         "quantity": 1,
         "unit": null,
         "unitType": "count",
-        "ingredient": "Zest from 1 large orange",
-        "originalLine": "1 Zest from 1 large orange — (1 heaping tablespoon)",
-        "notes": "(1 heaping tablespoon)"
+        "ingredient": "orange",
+        "notes": "large; zest only (1 heaping tablespoon)"
       },
       {
         "quantity": 2,
@@ -470,12 +489,17 @@
         "notes": "fresh or frozen"
       }
     ],
-    "originalText": "1 tablespoon whole psyllium husk\n1 cup gluten-free old-fashioned rolled oats\n1/2 cup water\n1 cup quinoa flakes\n3/4 cup gluten-free oat flour\n1/2 cup coconut sugar\n1/2 cup walnuts — chopped\n3/4 cup dried apricot\n3 tablespoon hemp seeds — or sesame seeds\n1 teaspoon cinnamon\n1 1/4 teaspoon cardamom — ground\n1/4 teaspoon sea salt\n2/3 cup unsweetened almond milk\n1 tablespoon pure vanilla extract\n1 Zest from 1 large orange — (1 heaping tablespoon)\n2 tablespoon orange juice — fresh squeezed\n1 cup blueberries — fresh or frozen",
     "tags": [
       "breakfast",
+      "snack",
       "dessert",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "make-ahead"
+    ],
+    "servings": "9"
   },
   {
     "name": "Cranberry-Orange Muffins with Rosemary",
@@ -530,10 +554,11 @@
         "originalLine": "¾ teaspoon cinnamon"
       },
       {
-        "quantity": 1,
-        "unit": null,
-        "ingredient": "Heaping ¼ teaspoon ground nutmeg",
-        "originalLine": "Heaping ¼ teaspoon ground nutmeg"
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground nutmeg",
+        "notes": "heaping"
       },
       {
         "quantity": 0.75,
@@ -543,10 +568,11 @@
         "originalLine": "¾ teaspoon sea salt"
       },
       {
-        "quantity": 1,
-        "unit": null,
-        "ingredient": "Scant ½ cup unsweetened almond milk",
-        "originalLine": "Scant ½ cup unsweetened almond milk"
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk",
+        "notes": "scant"
       },
       {
         "quantity": 0.3333333333333333,
@@ -558,8 +584,9 @@
       {
         "quantity": 1,
         "unit": null,
-        "ingredient": "Zest of 1 large orange (1 heaping tablespoon)",
-        "originalLine": "Zest of 1 large orange (1 heaping tablespoon)"
+        "unitType": "count",
+        "ingredient": "orange",
+        "notes": "large; zest only (1 heaping tablespoon)"
       },
       {
         "quantity": 0.3333333333333333,
@@ -572,8 +599,8 @@
         "quantity": 3,
         "unit": "tablespoons",
         "unitType": "volume",
-        "ingredient": "well-stirred tahini",
-        "originalLine": "3 tablespoons well-stirred tahini"
+        "ingredient": "tahini",
+        "notes": "well-stirred"
       },
       {
         "quantity": 0.3333333333333333,
@@ -593,42 +620,55 @@
         "quantity": 1.5,
         "unit": "cups",
         "unitType": "volume",
-        "ingredient": "frozen or fresh cranberries",
-        "originalLine": "1½ cups frozen or fresh cranberries"
+        "ingredient": "cranberries",
+        "notes": "frozen or fresh"
       },
       {
         "quantity": 3,
         "unit": "tablespoons",
         "unitType": "volume",
-        "ingredient": "finely chopped fresh rosemary leaves",
-        "originalLine": "3 tablespoons finely chopped fresh rosemary leaves"
+        "ingredient": "fresh rosemary",
+        "notes": "leaves, finely chopped"
       }
     ],
-    "originalText": "2 teaspoons whole psyllium husk\n⅓ cup water\n¾ cup blanched almond flour\n1¾ cup gluten-free oat flour\n1¾ cups gluten-free old-fashioned rolled oats\n1 tablespoon baking powder\n¾ teaspoon cinnamon\nHeaping ¼ teaspoon ground nutmeg\n¾ teaspoon sea salt\nScant ½ cup unsweetened almond milk\n⅓ cup unsweetened applesauce\nZest of 1 large orange (1 heaping tablespoon)\n⅓ cup freshly squeezed orange juice\n3 tablespoons well-stirred tahini\n⅓ cup maple syrup\n1½ teaspoons pure vanilla extract\n1½ cups frozen or fresh cranberries\n3 tablespoons finely chopped fresh rosemary leaves",
     "tags": [
       "breakfast",
+      "snack",
       "dessert",
-      "vegan"
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "make-ahead",
+      "freezer-friendly"
     ],
     "about": "This is a classic muffin (my mom's favorite), just reinvented. Cranberries are rich in phytonutrients and are lower in sugar than most fruit but are generally passed over for other berries. Here, their tartness combines with oats, orange juice, and tahini to make a delicious low-sugar muffin. For an extra special touch and a little hint of elegance, add fresh chopped rosemary!",
-    "instructions": "1. Position the oven rack in the middle of the \noven and preheat to 350°F. \n2. In a small bowl, mix together the psyllium \nhusk and 1⁄2 cup water. Set aside for 5 minutes to thicken. \n3. Add the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg, and salt to a medium-sized bowl and mix, breaking up any chunks of almond flour. \n4. Add the almond milk, applesauce, orange \nzest and juice, tahini, maple syrup, vanilla, and the thickened psyllium mix to a blender and blend until smooth. \n5. Add the blended mixture to the bowl of dry \ningredients and mix using a spatula until no dry spots remain. Fold in the cranberries and \nrosemary. \n6. Scoop a heaping 1⁄2 cup of the batter, I like \nto use my 34 ounce spring-release scoop or disher, for each muffin and bake the muffins \nfor 23 to 26 minutes or until the muffins are \nalmost firm to the touch. \n7. Remove the muffins from the oven, place \non a cooling rack, and let them cool in the muffin tin for 15 minutes. If using a nonstick or traditional muffin tin, use a thin spatula to run along the edge of each muffin and \n(Continued on next page)"
+    "instructions": "1. Position the oven rack in the middle of the \noven and preheat to 350°F. \n2. In a small bowl, mix together the psyllium \nhusk and 1⁄2 cup water. Set aside for 5 minutes to thicken. \n3. Add the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg, and salt to a medium-sized bowl and mix, breaking up any chunks of almond flour. \n4. Add the almond milk, applesauce, orange \nzest and juice, tahini, maple syrup, vanilla, and the thickened psyllium mix to a blender and blend until smooth. \n5. Add the blended mixture to the bowl of dry \ningredients and mix using a spatula until no dry spots remain. Fold in the cranberries and \nrosemary. \n6. Scoop a heaping 1⁄2 cup of the batter, I like \nto use my 34 ounce spring-release scoop or disher, for each muffin and bake the muffins \nfor 23 to 26 minutes or until the muffins are \nalmost firm to the touch. \n7. Remove the muffins from the oven, place \non a cooling rack, and let them cool in the muffin tin for 15 minutes. If using a nonstick or traditional muffin tin, use a thin spatula to run along the edge of each muffin and \n(Continued on next page)",
+    "servings": "12"
   },
   {
     "name": "Tuesday Tempeh Tacos",
     "ingredients": [
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "package",
         "unitType": "count",
-        "ingredient": "(8 ounce) package tempeh",
-        "originalLine": "1(8 ounce) package tempeh"
+        "ingredient": "tempeh",
+        "notes": "8 ounce"
       },
       {
         "quantity": 0.5,
         "unit": null,
         "unitType": "count",
-        "ingredient": "yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped",
-        "originalLine": "½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped"
+        "ingredient": "yellow onion",
+        "notes": "or red onion; diced"
+      },
+      {
+        "quantity": 4,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "button mushrooms",
+        "notes": "or cremini; chopped"
       },
       {
         "quantity": 1,
@@ -709,29 +749,36 @@
       },
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "head",
         "unitType": "count",
-        "ingredient": "head Boston lettuce (if using tortillas)",
-        "originalLine": "1 head Boston lettuce (if using tortillas)"
+        "ingredient": "Boston lettuce",
+        "notes": "if using lettuce cups instead of tortillas"
       },
       {
         "quantity": 2,
         "unit": null,
         "unitType": "count",
-        "ingredient": "avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)",
-        "originalLine": "1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)"
+        "ingredient": "avocados",
+        "notes": "peeled and chopped; or Sour Cream"
       },
       {
         "quantity": 1,
-        "unit": null,
-        "ingredient": "Chopped cilantro or parsley (optional)",
-        "originalLine": "Chopped cilantro or parsley (optional)"
+        "unit": "bunch",
+        "unitType": "count",
+        "ingredient": "cilantro",
+        "notes": "or parsley; chopped; optional"
       }
     ],
-    "originalText": "1(8 ounce) package tempeh\n½ yellow or red onion, diced 4 ounces button or cremini mushrooms, chopped\n1 red bell pepper, deseeded and diced\n1 small jalapeño, deseeded and diced (omit for less spicy option)\n2½ teaspoons chili powder\n2 teaspoons ground cumin\n1 teaspoon garlic powder\n½ teaspoon dried oregano\n½ teaspoon smoked paprika\n1 tablespoon tamari\n½ cup chunky salsa (your favorite!)\n1 lime, cut into wedges\n8-10 corn tortillas (warmed)\n1 head Boston lettuce (if using tortillas)\n1-2 avocados, pits removed, peeled and chopped or Avocado Tartare (page 131) or Sour Cream (page 97)\nChopped cilantro or parsley (optional)",
     "tags": [
-      "vegan"
-    ]
+      "dinner",
+      "main",
+      "vegan",
+      "nut-free",
+      "oil-free",
+      "30-min",
+      "kid-friendly"
+    ],
+    "servings": "4"
   },
   {
     "name": "Sour Cream",
@@ -772,11 +819,17 @@
         "originalLine": "½ cup water"
       }
     ],
-    "originalText": "1 cup cashews, soaked in water for 2-3 hours\n1 tablespoon apple cider vinegar\n¾ teaspoon Dijon mustard\n¼ teaspoon sea salt\n½ cup water",
     "tags": [
       "add-on",
-      "vegan"
-    ]
+      "sauce",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead"
+    ],
+    "servings": "8"
   },
   {
     "name": "Easy Apple-Berry Crumble",
@@ -827,8 +880,8 @@
         "quantity": 1,
         "unit": "tablespoon",
         "unitType": "volume",
-        "ingredient": "well-stirred almond or sunflower seed butter",
-        "originalLine": "1 tablespoon well-stirred almond or sunflower seed butter"
+        "ingredient": "almond butter",
+        "notes": "or sunflower seed butter; well-stirred"
       },
       {
         "quantity": 0.5,
@@ -861,15 +914,20 @@
       {
         "quantity": 1,
         "unit": null,
-        "ingredient": "Almond Butter Caramel (page 45)",
-        "originalLine": "Almond Butter Caramel (page 45)"
+        "unitType": "count",
+        "ingredient": "Almond Butter Caramel",
+        "notes": "optional topping"
       }
     ],
-    "originalText": "1½ cup gluten-free old-fashioned rolled oats\n1 tablespoon coconut sugar\n1¼ teaspoons cinnamon\n¼ teaspoon ground allspice\n¼ teaspoon sea salt\n3 tablespoons maple syrup\n1 tablespoon well-stirred almond or sunflower seed butter\n½ teaspoon pure vanilla extract\n2 apples, peel left on, chopped in ½-inch cubes (2 heaping cups)\n3 cups mixed frozen berries (blueberries, raspberries, and blackberries work well)\n1 teaspoon arrowroot starch\nAlmond Butter Caramel (page 45)",
     "tags": [
       "dessert",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "kid-friendly"
+    ],
+    "servings": "6"
   },
   {
     "name": "Nice-Cream",
@@ -903,11 +961,18 @@
         "originalLine": "½ teaspoon vanilla extract"
       }
     ],
-    "originalText": "4 frozen overripe bananas, broken into chunks before freezing\n2 tablespoons almond butter\n1 cup sliced strawberries\n½ teaspoon vanilla extract",
     "tags": [
       "dessert",
-      "vegan"
-    ]
+      "snack",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "kid-friendly"
+    ],
+    "servings": "4"
   },
   {
     "name": "Golden bowls",
@@ -916,28 +981,33 @@
         "quantity": 1,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "dry white quinoa or brown rice",
-        "originalLine": "1 cup dry white quinoa or brown rice"
+        "ingredient": "white quinoa",
+        "notes": "dry; or brown rice"
       },
       {
         "quantity": 0.75,
         "unit": "teaspoon",
         "unitType": "volume",
-        "ingredient": "each ground turmeric, coriander,",
-        "originalLine": "¾ teaspoon each ground turmeric, coriander,"
+        "ingredient": "ground turmeric"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground coriander"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder"
       },
       {
         "quantity": 1,
-        "unit": null,
-        "ingredient": "garlic powder",
-        "originalLine": "garlic powder"
-      },
-      {
-        "quantity": 4,
-        "unit": null,
+        "unit": "pinch",
         "unitType": "count",
-        "ingredient": "grinds black pepper",
-        "originalLine": "4 grinds black pepper"
+        "ingredient": "black pepper",
+        "notes": "4 grinds"
       },
       {
         "quantity": 6,
@@ -947,17 +1017,18 @@
         "originalLine": "6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)"
       },
       {
-        "quantity": 1,
+        "quantity": 4,
         "unit": null,
-        "ingredient": "Plant-based protein of choice (in this picture, 3 B's Burger, cut in half)",
-        "originalLine": "Plant-based protein of choice (in this picture, 3 B's Burger, cut in half)"
+        "unitType": "count",
+        "ingredient": "plant-based protein of choice",
+        "notes": "e.g. 3 B's Burger, cut in half"
       },
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "bunch",
         "unitType": "count",
-        "ingredient": "bunch curly kale, stems removed, chopped (5 packed cups)",
-        "originalLine": "1 bunch curly kale, stems removed, chopped (5 packed cups)"
+        "ingredient": "curly kale",
+        "notes": "stems removed, chopped (5 packed cups)"
       },
       {
         "quantity": 0.5,
@@ -977,8 +1048,8 @@
         "quantity": 0.25,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "raw or toasted pumpkin seeds",
-        "originalLine": "¼ cup raw or toasted pumpkin seeds"
+        "ingredient": "pumpkin seeds",
+        "notes": "raw or toasted"
       },
       {
         "quantity": 1,
@@ -987,11 +1058,17 @@
         "originalLine": "Golden Tahini Sauce"
       }
     ],
-    "originalText": "1 cup dry white quinoa or brown rice\n¾ teaspoon each ground turmeric, coriander,\ngarlic powder\n4 grinds black pepper\n6 cups bite-sized cauliflower florets (1 medium-large head cauliflower)\nPlant-based protein of choice (in this picture, 3 B's Burger, cut in half)\n1 bunch curly kale, stems removed, chopped (5 packed cups)\n½ lemon\n1½ cups cherry tomatoes, halved\n¼ cup raw or toasted pumpkin seeds\nGolden Tahini Sauce",
     "tags": [
+      "lunch",
+      "dinner",
       "bowl",
-      "vegan"
-    ]
+      "main",
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "oil-free"
+    ],
+    "servings": "4"
   },
   {
     "name": "Golden Tahini Sauce",
@@ -1000,8 +1077,8 @@
         "quantity": 0.25,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "well-stirred tahini",
-        "originalLine": "¼ cup well-stirred tahini"
+        "ingredient": "tahini",
+        "notes": "well-stirred"
       },
       {
         "quantity": 2,
@@ -1047,16 +1124,29 @@
       },
       {
         "quantity": 1,
-        "unit": null,
-        "ingredient": "Pinch black pepper 2 tablespoons water",
-        "originalLine": "Pinch black pepper 2 tablespoons water"
+        "unit": "pinch",
+        "unitType": "count",
+        "ingredient": "black pepper"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "water"
       }
     ],
-    "originalText": "¼ cup well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n1 garlic clove, minced\n2 teaspoon maple syrup, optional\n1 teaspoon nutritional yeast\n¼ teaspoon ground turmeric\n⅛ teaspoon cayenne pepper\nPinch black pepper 2 tablespoons water",
     "tags": [
       "sauce",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "4"
   },
   {
     "name": "Bitchn' sauce",
@@ -1148,11 +1238,15 @@
         "originalLine": "1/2 teaspoon paprika"
       }
     ],
-    "originalText": "420 milliliter water\n270 milliliter grapeseed oil (or similar neutral oil)\n1 cup raw almonds\n180 milliliter lemon juice, fresh\n6 tablespoon nutritional yeast\n4 cloves garlic\n4 teaspoon Tamari\n1 teaspoon kosher salt\n1 teaspoon cumin\n1 teaspoon chili powder\n1/2 teaspoon coriander\n1/2 teaspoon paprika",
     "tags": [
       "sauce",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "16"
   },
   {
     "name": "House hummus",
@@ -1161,8 +1255,8 @@
         "quantity": 3,
         "unit": "cups",
         "unitType": "volume",
-        "ingredient": "cooked or canned chickpeas, drained and rinsed",
-        "originalLine": "3 cups cooked or canned chickpeas, drained and rinsed"
+        "ingredient": "chickpeas",
+        "notes": "cooked or canned; drained and rinsed"
       },
       {
         "quantity": 3,
@@ -1175,14 +1269,22 @@
         "quantity": 0.25,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "well-stirred tahini",
-        "originalLine": "¼ cup well-stirred tahini"
+        "ingredient": "tahini",
+        "notes": "well-stirred"
       },
       {
-        "quantity": 1,
-        "unit": null,
-        "ingredient": "Scant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained",
-        "originalLine": "Scant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained"
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "lemon juice",
+        "notes": "scant; freshly squeezed"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "capers",
+        "notes": "drained"
       },
       {
         "quantity": 0.25,
@@ -1192,19 +1294,27 @@
         "originalLine": "¼ teaspoon sea salt or to taste"
       },
       {
-        "quantity": 0.25,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "½ cup water or aquafaba",
-        "originalLine": "¼-½ cup water or aquafaba"
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "or aquafaba"
       }
     ],
-    "originalText": "3 cups cooked or canned chickpeas, drained and rinsed\n3 garlic cloves\n¼ cup well-stirred tahini\nScant ¼ cup freshly squeezed lemon juice 2 tablespoons capers, drained\n¼ teaspoon sea salt or to taste\n¼-½ cup water or aquafaba",
     "tags": [
       "hummus",
       "dip",
-      "vegan"
-    ]
+      "snack",
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "8"
   },
   {
     "name": "Spiced creamy carrot hummus",
@@ -1220,8 +1330,15 @@
         "quantity": 1.5,
         "unit": "cups",
         "unitType": "volume",
-        "ingredient": "cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini",
-        "originalLine": "1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini"
+        "ingredient": "navy beans",
+        "notes": "cooked or canned, or chickpeas; drained and rinsed"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "tahini",
+        "notes": "well-stirred"
       },
       {
         "quantity": 2,
@@ -1269,16 +1386,29 @@
         "quantity": 0.25,
         "unit": "teaspoon",
         "unitType": "volume",
-        "ingredient": "sea salt or to taste 2-6 tablespoons water or aquafaba",
-        "originalLine": "¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba"
+        "ingredient": "sea salt",
+        "notes": "or to taste"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "2–6 tablespoons, or aquafaba"
       }
     ],
-    "originalText": "1 medium carrot, roughly chopped (1 heaping cup)\n1½ cups cooked or canned navy beans or chickpeas, drained and rinsed 2 tablespoons well-stirred tahini\n2 tablespoons freshly squeezed lemon juice\n2 teaspoons white miso\n2 garlic cloves\n½ teaspoon ground coriander\n½ teaspoon red pepper flakes or to your preference\n¼ teaspoon ground cumin\n¼ teaspoon sea salt or to taste 2-6 tablespoons water or aquafaba",
     "tags": [
       "hummus",
       "dip",
-      "vegan"
-    ]
+      "snack",
+      "vegan",
+      "nut-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "6"
   },
   {
     "name": "Bacon-ish Bits",
@@ -1342,11 +1472,15 @@
         "originalLine": "1/2 cup sunflower seeds"
       }
     ],
-    "originalText": "1 teaspoon smoked paprika\n1/2 teaspoon onion powder\n1/2 teaspoon garlic powder\n1 teaspoon nutritional yeast\n20 milliliter tamari\n1 teaspoon maple syrup, optional\n1/2 cup sliced almonds\n1/2 cup sunflower seeds",
     "tags": [
       "add-on",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "oil-free",
+      "30-min",
+      "make-ahead"
+    ],
+    "servings": "8"
   },
   {
     "name": "Hemp-Balsamic Dressing",
@@ -1394,11 +1528,17 @@
         "originalLine": "2 teaspoons tamari"
       }
     ],
-    "originalText": "2 pitted Medjool dates, soaked in hot water for 15-30 minutes\n3 tablespoons hemp seeds\n3 tablespoons balsamic vinegar\n3 tablespoons freshly squeezed orange juice\n2 tablespoons smooth Dijon mustard (not grainy)\n2 teaspoons tamari",
     "tags": [
       "dressing",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "4"
   },
   {
     "name": "Loaded Lunch Salad with Hemp Balsamic Dressing",
@@ -1426,10 +1566,10 @@
       },
       {
         "quantity": 0.25,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "eup thinly sliced cucumber",
-        "originalLine": "¼ eup thinly sliced cucumber"
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cucumber",
+        "notes": "thinly sliced"
       },
       {
         "quantity": 0.25,
@@ -1446,31 +1586,32 @@
         "originalLine": "½ cup finely chopped broccoli or cauliflower"
       },
       {
-        "quantity": 0.25,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "½ cup cooked quinoa",
-        "originalLine": "¼-½ cup cooked quinoa"
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "quinoa",
+        "notes": "cooked"
       },
       {
-        "quantity": 0.25,
-        "unit": null,
-        "unitType": "count",
-        "ingredient": "½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus",
-        "originalLine": "¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus"
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "chickpeas",
+        "notes": "cooked; or lentils, black beans, or a scoop of hummus"
       },
       {
         "quantity": 1,
-        "unit": null,
-        "ingredient": "Pinch dulse flakes, optional",
-        "originalLine": "Pinch dulse flakes, optional"
+        "unit": "pinch",
+        "unitType": "count",
+        "ingredient": "dulse flakes",
+        "notes": "optional"
       },
       {
         "quantity": 2,
         "unit": "tablespoons",
         "unitType": "volume",
-        "ingredient": "nuts, seeds, or Bacon-ish Bits (page 116), optional",
-        "originalLine": "1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional"
+        "ingredient": "seeds or nuts",
+        "notes": "or Bacon-ish Bits; optional"
       },
       {
         "quantity": 1,
@@ -1479,11 +1620,17 @@
         "originalLine": "Hemp-Balsamic Dressing"
       }
     ],
-    "originalText": "3 cups leafy greens (baby lettuce, arugula, or spinach)\n⅔ cup shredded red cabbage\n1 small carrot, peeled into strips\n¼ eup thinly sliced cucumber\n¼ cup quartered cherry tomatoes\n½ cup finely chopped broccoli or cauliflower\n¼-½ cup cooked quinoa\n¼-½ cup cooked chickpeas, lentils, or black beans or a big scoop of hummus\nPinch dulse flakes, optional\n1-2 tablespoons nuts, seeds, or Bacon-ish Bits (page 116), optional\nHemp-Balsamic Dressing",
     "tags": [
+      "lunch",
       "salad",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "oil-free",
+      "no-cook",
+      "15-min"
+    ],
+    "servings": "1"
   },
   {
     "name": "Tahini Caesar Dressing",
@@ -1492,8 +1639,8 @@
         "quantity": 0.3333333333333333,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "well-stirred tahini",
-        "originalLine": "⅓ cup well-stirred tahini"
+        "ingredient": "tahini",
+        "notes": "well-stirred"
       },
       {
         "quantity": 3,
@@ -1564,11 +1711,18 @@
         "originalLine": "¼ cup water"
       }
     ],
-    "originalText": "⅓ cup well-stirred tahini\n3 tablespoons freshly squeezed lemon juice\n1 teaspoon apple cider vinegar\n2 small garlic cloves\n2 tablespoons capers, drained\n1½ teaspoons Dijon mustard\n1 teaspoon nutritional yeast\n1 teaspoon maple syrup, optional\nPinch sea salt\nPinch black pepper\n¼ cup water",
     "tags": [
       "dressing",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "15-min",
+      "make-ahead"
+    ],
+    "servings": "4"
   },
   {
     "name": "Quick Smoked Chickpeas",
@@ -1629,21 +1783,26 @@
         "originalLine": "2 tablespoons water"
       }
     ],
-    "originalText": "1½ cups cooked or canned chickpeas, drained and rinsed\n2 teaspoons dehydrated minced onion\n¾ teaspoon smoked paprika\nPinch red pepper flakes or to your preference\n½ teaspoon coconut sugar, optional\n2 teaspoons tamari\n1 teaspoon balsamic vinegar\n2 tablespoons water",
     "tags": [
       "add-on",
-      "vegan"
-    ]
+      "snack",
+      "vegan",
+      "gluten-free",
+      "nut-free",
+      "oil-free",
+      "15-min"
+    ],
+    "servings": "4"
   },
   {
-    "name": "Tahni Caesar Salad",
+    "name": "Tahini Caesar Salad",
     "ingredients": [
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "bunch",
         "unitType": "count",
-        "ingredient": "large bunch curly kale, stems removed, chopped (6 packed cups)",
-        "originalLine": "1 large bunch curly kale, stems removed, chopped (6 packed cups)"
+        "ingredient": "curly kale",
+        "notes": "large; stems removed, chopped (6 packed cups)"
       },
       {
         "quantity": 1,
@@ -1654,23 +1813,23 @@
       },
       {
         "quantity": 1,
-        "unit": null,
+        "unit": "head",
         "unitType": "count",
-        "ingredient": "large head romaine lettuce (hearts and leaves), chopped (5 packed cups)",
-        "originalLine": "1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)"
+        "ingredient": "romaine lettuce",
+        "notes": "large; hearts and leaves, chopped (5 packed cups)"
       },
       {
         "quantity": 0.5,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "Bacon-ish Bits (page 116)",
-        "originalLine": "½ cup Bacon-ish Bits (page 116)"
+        "ingredient": "Bacon-ish Bits"
       },
       {
         "quantity": 1,
         "unit": null,
-        "ingredient": "Cashew Turmeric Parmesan (page 149)",
-        "originalLine": "Cashew Turmeric Parmesan (page 149)"
+        "unitType": "count",
+        "ingredient": "Cashew Turmeric Parmesan",
+        "notes": "optional"
       },
       {
         "quantity": 1,
@@ -1685,11 +1844,15 @@
         "originalLine": "Tahini Caesar Dressing"
       }
     ],
-    "originalText": "1 large bunch curly kale, stems removed, chopped (6 packed cups)\n1 Lemon\n1 large head romaine lettuce (hearts and leaves), chopped (5 packed cups)\n½ cup Bacon-ish Bits (page 116)\nCashew Turmeric Parmesan (page 149)\nQuick Smoked Chickpeas\nTahini Caesar Dressing",
     "tags": [
+      "lunch",
+      "dinner",
       "salad",
-      "vegan"
-    ]
+      "vegan",
+      "gluten-free",
+      "oil-free"
+    ],
+    "servings": "4"
   },
   {
     "name": "After Ceremony Soup",
@@ -1727,8 +1890,7 @@
         "quantity": 8,
         "unit": null,
         "unitType": "count",
-        "ingredient": "zuccini",
-        "originalLine": "8 zuccini"
+        "ingredient": "zucchini"
       },
       {
         "quantity": 2,
@@ -1741,8 +1903,7 @@
         "quantity": 4,
         "unit": "cup",
         "unitType": "volume",
-        "ingredient": "of veggie stock",
-        "originalLine": "4 cup of veggie stock"
+        "ingredient": "vegetable stock"
       },
       {
         "quantity": 0.5,
@@ -1760,10 +1921,9 @@
       },
       {
         "quantity": 4,
-        "unit": null,
+        "unit": "head",
         "unitType": "count",
-        "ingredient": "bok choi",
-        "originalLine": "4 bok choi"
+        "ingredient": "bok choy"
       },
       {
         "quantity": 1,
@@ -1773,10 +1933,19 @@
         "originalLine": "1 bunch cilantro"
       }
     ],
-    "originalText": "1 pound potato — cubed\n4 bell pepper\n1 bundle celery\n11 carrot\n8 zuccini\n2 leek\n4 cup of veggie stock\n1/2 jar curry paste\n2 cans coconut milk\n4 bok choi\n1 bunch cilantro",
     "tags": [
       "soup",
-      "vegan"
-    ]
+      "dinner",
+      "lunch",
+      "main",
+      "vegan",
+      "nut-free",
+      "soy-free",
+      "oil-free",
+      "one-pot",
+      "make-ahead",
+      "freezer-friendly"
+    ],
+    "servings": "10"
   }
 ]

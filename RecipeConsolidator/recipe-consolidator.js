@@ -38,6 +38,8 @@ const MEAL_PLAN_KEY = 'recipeConsolidator_mealPlan';
 const MEAL_PLAN_NOTES_KEY = 'recipeConsolidator_mealPlanNotes';
 const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
 const STARTER_LOADED_KEY = 'recipeConsolidator_starterLoaded';
+// Bump when WholeFoods.json changes, so browsers and Cloudflare fetch the new copy
+const STARTER_DATA_VERSION = '2026-10-14';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
@@ -5702,7 +5704,7 @@ function emailRecipesToCreator() {
  */
 async function loadPreloadedRecipes(opts = {}) {
     try {
-        const response = await fetch('WholeFoods.json');
+        const response = await fetch('WholeFoods.json?v=' + STARTER_DATA_VERSION);
         if (!response.ok) {
             showMessage('Could not load preloaded recipes', 'error');
             return;

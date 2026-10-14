@@ -1012,7 +1012,7 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
-    <link rel="stylesheet" href="rc-app.css?v=20261013g">
+    <link rel="stylesheet" href="rc-app.css?v=20261014j">
 </head>
 <body class="rc-body">
     <header class="rc-appbar">
@@ -1229,6 +1229,17 @@
         </div>
     </div>
 
+    <!-- General-purpose sheet: recipe picker, add days, share -->
+    <div class="rc-sheet" id="rcPicker" onclick="if (event.target === this) rcClosePicker()">
+        <div class="rc-card rc-sheet-panel" role="dialog" aria-modal="true" aria-labelledby="rcPickerTitle">
+            <div class="rc-card-header">
+                <h2 id="rcPickerTitle"></h2>
+                <button class="rc-icon-btn" onclick="rcClosePicker()" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div id="rcPickerBody" class="rc-picker-body"></div>
+        </div>
+    </div>
+
     <main class="rc-section">
         <div class="rc-view active" id="view-recipes">
         <div id="section-recipes" class="rc-section-anchor"></div>
@@ -1254,9 +1265,6 @@
                         </button>
                         <button class="rc-actions-item" onclick="exportRecipes(); closeActionsMenu()">
                             <i class="fas fa-file-export"></i> Export to File
-                        </button>
-                        <button class="rc-actions-item" onclick="emailRecipesToCreator(); closeActionsMenu()">
-                            <i class="fas fa-envelope"></i> Email Recipes to Creator
                         </button>
                         <span id="devExportButton" style="display: none;">
                             <button class="rc-actions-item" onclick="exportWholeFoodsJson(); closeActionsMenu()" style="color: #9c27b0;">
@@ -1296,6 +1304,15 @@
                     </div>
                 </div>
                 <div id="activeFiltersContainer" style="display: none; flex-wrap: wrap; gap: 6px; padding: 8px 16px 10px;"></div>
+            </div>
+            <div class="rc-quick-filters" id="rcQuickFilters" aria-label="Quick filters">
+                <button class="rc-chip-btn" data-tag="gluten-free" onclick="toggleTagFilter('gluten-free')">Gluten-free</button>
+                <button class="rc-chip-btn" data-tag="nut-free" onclick="toggleTagFilter('nut-free')">Nut-free</button>
+                <button class="rc-chip-btn" data-tag="soy-free" onclick="toggleTagFilter('soy-free')">Soy-free</button>
+                <button class="rc-chip-btn" data-tag="15-min" onclick="toggleTagFilter('15-min')">15 min</button>
+                <button class="rc-chip-btn" data-tag="make-ahead" onclick="toggleTagFilter('make-ahead')">Make-ahead</button>
+                <button class="rc-chip-btn" data-tag="kid-friendly" onclick="toggleTagFilter('kid-friendly')">Kid-friendly</button>
+                <button class="rc-chip-btn" data-tag="main" onclick="toggleTagFilter('main')">Mains</button>
             </div>
             <!-- Legacy hidden elements kept for JS compatibility -->
             <div style="display:none">
@@ -1359,6 +1376,14 @@
                 </details>
                 <input type="file" id="importMealPlanInput" accept=".json" style="display: none;" onchange="importMealPlan(event)">
             </div>
+            <div class="rc-plan-bar">
+                <label class="rc-headcount">
+                    <i class="fas fa-users"></i> Feeding
+                    <input type="number" class="rc-headcount-input" inputmode="numeric" min="0" max="999" placeholder="–" aria-label="Number of people" onchange="rcSetHeadcount(this.value)" oninput="rcSetHeadcount(this.value)">
+                    people
+                </label>
+                <span id="rcPlanSummary" class="rc-plan-summary"></span>
+            </div>
             
             <div class="rc-meal-types">
                 <p class="rc-hint rc-hint-desktop">
@@ -1413,6 +1438,7 @@
                     <option value="imperial">US cups &amp; spoons</option>
                 </select>
             </div>
+            <div id="rcShopSummary" class="rc-shop-summary"></div>
             <div id="shoppingList" class="shopping-list"></div>
         </div>
         </div><!-- end view-shopping -->
@@ -1497,7 +1523,8 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js?v=20261013g"></script>
+    <script src="recipe-consolidator.js?v=20261014j"></script>
+    <script src="rc-plan.js?v=20261014j"></script>
 </body>
 </html>
 

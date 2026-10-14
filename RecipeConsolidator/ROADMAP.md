@@ -163,6 +163,25 @@ Minimum safety checklist for public endpoint:
 
 ---
 
+### Ideas logged (Oct 2026) — not built yet
+
+#### Simpler shopping (mostly no AI needed)
+- **Fewer-ingredients sorting**: rank recipes by how few *new* items they add to the current plan's list (ingredient overlap), so a plan needs fewer distinct purchases and wastes less. Deterministic: count unique non-pantry ingredients each recipe would add.
+- **"Uses up" suggestions**: when a plan buys e.g. a bunch of cilantro for one recipe, suggest other recipes that use the rest.
+- **Easy substitutions**: a small hand-made table (buttermilk → plant milk + lemon, etc.) shown next to shopping items and recipes. AI can extend it later.
+- **Package-aware amounts** (later): round to what you actually buy (1 bunch, 1 can) instead of "5/6 tablespoons".
+
+#### In my fridge / pantry
+- A **pantry list** (things you already have) that is subtracted from the shopping list.
+- **"What can I make now?"**: recipes you can cook with only pantry + fridge items, or needing at most 1–2 purchases.
+- **Shared community staples**: a group agrees on staples it always stocks (oats, rice, beans, spices…). Save/share that list as a file so everyone in the community plans against the same pantry.
+
+#### Later, with a local server
+- Small backend for syncing and recipe submissions (instead of the contact-form relay).
+- AI assistant (natural-language entry, smarter substitutions), only on Julian's own local GPU server.
+
+---
+
 ### Tagging taxonomy (starting point)
 Core tags:
 - `WFPB`, `WFPB-ish`, `gluten-free`, `nut-free`, `soy-free`, `kid-friendly`, `high-protein`
