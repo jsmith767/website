@@ -3,7 +3,7 @@
   "short_name": "Trip Food",
   "description": "Plan backpacking food: calories, weight, water and a pack-by-day list.",
   "id": "./?trip",
-  "start_url": "./?trip#planner",
+  "start_url": "./?trip#recipes",
   "scope": "./",
   "display": "standalone",
   "background_color": "#f6f8f5",

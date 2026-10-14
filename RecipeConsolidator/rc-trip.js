@@ -644,6 +644,7 @@ function rcSwitchMode(mode) {
     url.searchParams.delete('trip');
     url.searchParams.delete('event');
     url.searchParams.set(mode === 'trip' ? 'trip' : 'event', '');
-    url.hash = '#planner';
+    // Stay on the tab you're on
+    url.hash = '#' + (document.querySelector('.rc-view.active')?.id.replace('view-', '') || 'recipes');
     location.href = url.toString().replace(/=(&|#|$)/g, '$1');
 }
