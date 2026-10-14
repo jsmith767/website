@@ -604,8 +604,13 @@ if (RC_TRIP) {
 }
 
 // ----------------------------
-// Open recipes: preparation steps everyone can read (the access key protects cookbook steps)
+// About and Preparation are open by default: anyone can read and write them.
+// Only recipes marked lockedSteps (steps copied from a cookbook) still need the access key.
 // ----------------------------
+
+function rcStepsLocked(recipe) {
+    return !!(recipe && recipe.lockedSteps && !isAuthenticated());
+}
 
 function rcShowOpenText(modalId, titleId, bodyId, title, text) {
     const modal = document.getElementById(modalId);
@@ -617,26 +622,74 @@ function rcShowOpenText(modalId, titleId, bodyId, title, text) {
 const rcBaseTogglePrep = toggleRecipePreparation;
 toggleRecipePreparation = function (recipeId) {
     const r = rcRecipeById(recipeId);
-    if (r && r.openSteps && r.instructions) return rcShowOpenText('preparationModal', 'preparationModalTitle', 'preparationModalBody', `Preparation: ${r.name}`, r.instructions);
+    if (r && !rcStepsLocked(r) && r.instructions) return rcShowOpenText('preparationModal', 'preparationModalTitle', 'preparationModalBody', `Preparation: ${r.name}`, r.instructions);
     return rcBaseTogglePrep(recipeId);
 };
 
 const rcBaseShowAbout = showAboutModal;
 showAboutModal = function (recipeId) {
     const r = rcRecipeById(recipeId);
-    if (r && r.openSteps && r.about) return rcShowOpenText('aboutModal', 'aboutModalTitle', 'aboutModalBody', r.name, r.about);
+    if (r && !rcStepsLocked(r) && r.about) return rcShowOpenText('aboutModal', 'aboutModalTitle', 'aboutModalBody', r.name, r.about);
     return rcBaseShowAbout(recipeId);
 };
 
-// Drop the lock icons on open recipes' buttons
+// Lock icons only on recipes that are actually locked
 const rcOpenBaseUpdateRecipeList = updateRecipeList;
 updateRecipeList = function () {
     rcOpenBaseUpdateRecipeList();
     document.querySelectorAll('#recipeList .recipe-item').forEach(item => {
         const r = rcRecipeById(item.dataset.recipeId);
-        if (r && r.openSteps) item.querySelectorAll('.recipe-action-btn .fa-lock').forEach(i => i.remove());
+        if (r && !rcStepsLocked(r)) item.querySelectorAll('.recipe-action-btn .fa-lock').forEach(i => i.remove());
     });
 };
+
+function rcEditingRecipe() {
+    const id = document.getElementById('editingRecipeId')?.value;
+    return id ? rcRecipeById(id) : null;
+}
+
+// The form fields are editable unless you are editing a locked recipe
+updateFormLockState = function () {
+    const locked = rcStepsLocked(rcEditingRecipe());
+    ['recipeAbout', 'recipeInstructions'].forEach(id => { const el = document.getElementById(id); if (el) el.disabled = locked; });
+    ['aboutLockBadge', 'prepLockBadge'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = locked ? 'inline-flex' : 'none'; });
+    ['aboutUnlockBadge', 'prepUnlockBadge'].forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+};
+
+// Editing fills About and Preparation for open recipes (the original only did this with the key)
+const rcOpenBaseEditRecipe = editRecipe;
+editRecipe = function (recipeId) {
+    rcOpenBaseEditRecipe(recipeId);
+    const r = rcRecipeById(recipeId);
+    if (r && !rcStepsLocked(r)) {
+        const about = document.getElementById('recipeAbout');
+        const prep = document.getElementById('recipeInstructions');
+        if (about) about.value = r.about || '';
+        if (prep) prep.value = r.instructions || '';
+    }
+    updateFormLockState();
+};
+
+// Saving a locked recipe without the key keeps its stored steps instead of blanking them.
+// (Edits go through the ingredient review first, so fix the pending copy.)
+const rcOpenBaseSaveRecipeEdit = saveRecipeEdit;
+saveRecipeEdit = function () {
+    const before = rcEditingRecipe();
+    const result = rcOpenBaseSaveRecipeEdit();
+    if (before && rcStepsLocked(before) && pendingRecipeForReview) {
+        pendingRecipeForReview.about = before.about || '';
+        pendingRecipeForReview.instructions = before.instructions || '';
+    }
+    return result;
+};
+
+const rcOpenBaseCancelEdit = cancelRecipeEdit;
+cancelRecipeEdit = function () {
+    rcOpenBaseCancelEdit();
+    updateFormLockState();
+};
+
+document.addEventListener('DOMContentLoaded', () => setTimeout(updateFormLockState, 0));
 
 /** Switch between event and trip mode; the <head> script swaps the saved plans on reload */
 function rcSwitchMode(mode) {

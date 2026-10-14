@@ -644,7 +644,8 @@
     ],
     "about": "This is a classic muffin (my mom's favorite), just reinvented. Cranberries are rich in phytonutrients and are lower in sugar than most fruit but are generally passed over for other berries. Here, their tartness combines with oats, orange juice, and tahini to make a delicious low-sugar muffin. For an extra special touch and a little hint of elegance, add fresh chopped rosemary!",
     "instructions": "1. Position the oven rack in the middle of the \noven and preheat to 350°F. \n2. In a small bowl, mix together the psyllium \nhusk and 1⁄2 cup water. Set aside for 5 minutes to thicken. \n3. Add the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg, and salt to a medium-sized bowl and mix, breaking up any chunks of almond flour. \n4. Add the almond milk, applesauce, orange \nzest and juice, tahini, maple syrup, vanilla, and the thickened psyllium mix to a blender and blend until smooth. \n5. Add the blended mixture to the bowl of dry \ningredients and mix using a spatula until no dry spots remain. Fold in the cranberries and \nrosemary. \n6. Scoop a heaping 1⁄2 cup of the batter, I like \nto use my 34 ounce spring-release scoop or disher, for each muffin and bake the muffins \nfor 23 to 26 minutes or until the muffins are \nalmost firm to the touch. \n7. Remove the muffins from the oven, place \non a cooling rack, and let them cool in the muffin tin for 15 minutes. If using a nonstick or traditional muffin tin, use a thin spatula to run along the edge of each muffin and \n(Continued on next page)",
-    "servings": "12"
+    "servings": "12",
+    "lockedSteps": true
   },
   {
     "name": "Tuesday Tempeh Tacos",

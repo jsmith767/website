@@ -780,6 +780,7 @@ async function rcUpdateSavedStarterRecipes() {
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }
             if (starter.openSteps && !recipe.openSteps) { recipe.openSteps = true; changed = true; }
+            if (starter.lockedSteps && !recipe.lockedSteps) { recipe.lockedSteps = true; changed = true; }
         }
         // New trail recipes join libraries that already have the starter set
         const haveNames = new Set(recipes.map(r => r.name.toLowerCase()));
