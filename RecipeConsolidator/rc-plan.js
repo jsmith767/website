@@ -341,7 +341,7 @@ updateDayPlanner = function () {
         container.innerHTML = `
             <div class="empty-state rc-plan-empty">
                 <i class="fas fa-calendar-alt"></i>
-                <p><strong>Plan the days you're cooking for.</strong></p>
+                <p><strong>${document.documentElement.classList.contains('rc-trip-mode') ? 'Plan the days of your trip.' : "Plan the days you're cooking for."}</strong></p>
                 <p class="rc-hint">Add your days, then tap <strong>+ Add recipe</strong> in each meal.<br>Your shopping list follows the plan.</p>
                 <button class="btn" onclick="addDayToPlanner()"><i class="fas fa-plus"></i> Add days</button>
             </div>`;

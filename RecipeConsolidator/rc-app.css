@@ -698,3 +698,90 @@ body:not(.rc-dev) .rc-add-mode-toggle { display: none; }
 @media print {
     .rc-appbar, .rc-workflow-tabs, .rc-sheet, .rc-toast { display: none !important; }
 }
+
+/* ---------- Trip mode (backpacking) ---------- */
+html:not(.rc-trip-mode) .rc-trip-only { display: none !important; }
+html.rc-trip-mode .rc-event-only { display: none !important; }
+html.rc-trip-mode {
+    --bg: #f6f8f5;
+    --accent: #3d7a5a;
+    --accent-ink: #2f6247;
+    --accent-soft: #e9f3ec;
+    --active-ink: #2f6247;
+}
+.rc-trip-input { width: 76px; text-align: center; padding: 6px 8px; }
+.rc-plan-bar .rc-headcount { white-space: nowrap; }
+
+.rc-density { font-weight: 650; }
+.rc-density.is-great { color: #2f6247; }
+.rc-density.is-good { color: #6b6a1f; }
+.rc-density.is-heavy { color: #a35a1c; }
+.rc-row-kcal {
+    font-size: 12px;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.rc-trail-panel {
+    border: 1px solid var(--line);
+    background: var(--bg);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin: 4px 0 16px;
+}
+.rc-trail-panel > .rc-hint:only-child { margin: 0; }
+.rc-trail-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 8px; }
+.rc-trail-head .rc-density { text-transform: none; letter-spacing: 0; font-size: 14px; }
+.rc-trail-totals { display: grid; gap: 4px; margin-bottom: 8px; }
+.rc-trail-totals > div { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; }
+.rc-trail-totals span { color: var(--muted); }
+.rc-trail-rows { border-top: 1px solid var(--line); }
+.rc-trail-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.rc-trail-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.rc-trail-name small { font-size: 11px; color: var(--muted); }
+.rc-trail-vals { text-align: right; color: var(--ink); white-space: nowrap; font-size: 13px; }
+.rc-trail-row.is-water .rc-trail-vals { color: #2d6a8a; }
+.rc-trail-missing { color: #a35a1c; font-weight: 600; }
+.rc-trail-edit { background: none; border: none; color: var(--muted); padding: 6px; cursor: pointer; font-size: 12px; }
+.rc-trail-edit:hover { color: var(--ink); }
+.rc-trail-warn { font-size: 13px; padding: 8px 10px; border-radius: 8px; background: #fff7e8; color: #7a5317; margin: 6px 0 8px; }
+.rc-trail-note { margin: 8px 0 0; font-size: 12px; }
+.rc-food-editor { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px; padding: 8px 0 10px; border-bottom: 1px solid var(--line); }
+.rc-food-editor[hidden] { display: none; }
+.rc-food-editor label { display: flex; flex-direction: column; gap: 3px; font-size: 12px; color: var(--muted); }
+.rc-food-editor input { width: 110px; padding: 6px 8px; }
+.rc-food-editor .rc-hint { flex-basis: 100%; margin: 0; font-size: 12px; }
+
+.rc-trip-summary:empty { display: none; }
+.rc-trip-summary { margin-bottom: 14px; }
+.rc-trip-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
+.rc-trip-stats > div { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 10px; display: flex; flex-direction: column; gap: 2px; }
+.rc-trip-stats span { font-size: 12px; color: var(--muted); }
+.rc-trip-stats strong { font-size: 17px; }
+.rc-trip-stats strong small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.rc-trip-stats > div > small { font-size: 11px; color: var(--muted); }
+.rc-trip-summary .rc-hint { font-size: 12px; margin: 4px 0; }
+
+.rc-day-trip { margin: -4px 0 10px; font-size: 13px; color: var(--muted); }
+.rc-day-trip strong { color: var(--ink); }
+.rc-bar { height: 6px; border-radius: 999px; background: var(--line); overflow: hidden; margin-top: 5px; }
+.rc-bar span { display: block; height: 100%; background: #c9a34a; border-radius: 999px; transition: width 0.2s; }
+.rc-bar span.is-full { background: var(--accent); }
+
+.rc-segmented { display: inline-flex; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 3px; margin-bottom: 10px; }
+.rc-segmented button { border: none; background: none; padding: 7px 16px; border-radius: 999px; font-size: 14px; font-weight: 600; color: var(--muted); cursor: pointer; }
+.rc-segmented button.active { background: var(--surface); color: var(--ink); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); }
+.rc-pack-day { margin-bottom: 8px; }
+.rc-pack-row { display: flex; align-items: baseline; gap: 10px; padding: 9px 2px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.rc-pack-meal { width: 76px; flex-shrink: 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+.rc-pack-name { flex: 1; min-width: 0; }
+.rc-pack-vals { white-space: nowrap; color: var(--ink); font-size: 14px; }
+.rc-pack-vals small { color: var(--muted); }
+
+@media (max-width: 720px) {
+    .rc-trip-stats { grid-template-columns: 1fr 1fr; }
+    .rc-food-editor input { width: 96px; }
+}

@@ -176,6 +176,14 @@ Minimum safety checklist for public endpoint:
 - **"What can I make now?"**: recipes you can cook with only pantry + fridge items, or needing at most 1–2 purchases.
 - **Shared community staples**: a group agrees on staples it always stocks (oats, rice, beans, spices…). Save/share that list as a file so everyone in the community plans against the same pantry.
 
+#### Trip mode (backpacking) — building Oct 2026
+- Same tool, its own front door: `?trip` link, its own home-screen name/icon, its own saved plan.
+- Calorie and weight per ingredient from a built-in table of trail staples (approximate USDA FoodData Central values); unknown foods get entered once from the package label and are remembered ("My foods").
+- Live calories-per-gram (and per ounce) while writing a recipe; per-serving calories and weight.
+- Plan: hikers, daily calorie target, drinking water per day; each day shows calories, food weight and camp water per person.
+- Shop: buy list plus a pack-by-day list.
+- Later: home prep list (cook, dehydrate, bag), Julian's own trail recipes as the starter set, fuel estimate.
+
 #### Later, with a local server
 - Small backend for syncing and recipe submissions (instead of the contact-form relay).
 - AI assistant (natural-language entry, smarter substitutions), only on Julian's own local GPU server.
