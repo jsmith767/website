@@ -547,6 +547,7 @@ body:not(.rc-dev) .rc-add-mode-toggle { display: none; }
 
     .recipe-item { flex-direction: column; align-items: stretch; gap: 0; }
     .recipe-row-summary > div > div:last-child { flex-wrap: nowrap !important; overflow: hidden; }
+    .recipe-row-summary > div > div:last-child > span:not(.recipe-tag) { white-space: nowrap; }
     .recipe-row-detail { margin-left: 0; }
 
     #dayPlannerContainer { grid-template-columns: 1fr; }
