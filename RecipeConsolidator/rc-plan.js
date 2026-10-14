@@ -524,6 +524,8 @@ function rcAisleFor(item) {
         return 'Pantry';
     }
     const cat = getIngredientCategory(name) || 'Other';
+    // Dried and instant foods live in the pantry aisle, not with fresh produce
+    if (cat !== 'Spices & Seasonings' && /\b(dried|dehydrated|freeze[- ]dried|instant)\b/i.test(name)) return 'Pantry';
     const aisle = RC_AISLES.find(([, cats]) => cats.includes(cat));
     return aisle ? aisle[0] : 'Other';
 }
@@ -777,6 +779,17 @@ async function rcUpdateSavedStarterRecipes() {
             (starter.tags || []).forEach(t => tags.add(t));
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }
+            if (starter.openSteps && !recipe.openSteps) { recipe.openSteps = true; changed = true; }
+        }
+        // New trail recipes join libraries that already have the starter set
+        const haveNames = new Set(recipes.map(r => r.name.toLowerCase()));
+        const hasStarterSet = starters.some(r => haveNames.has(r.name.toLowerCase()));
+        if (hasStarterSet) {
+            for (const starter of starters) {
+                if (!(starter.tags || []).includes('trail') || haveNames.has(starter.name.toLowerCase())) continue;
+                recipes.push(Object.assign({}, starter, { id: Date.now() + Math.random() }));
+                changed = true;
+            }
         }
         localStorage.setItem(STARTER_UPDATE_KEY, STARTER_UPDATE_VERSION);
         if (changed) {

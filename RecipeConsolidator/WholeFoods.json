@@ -1947,5 +1947,830 @@
       "freezer-friendly"
     ],
     "servings": "10"
+  },
+  {
+    "name": "Peanut Butter Power Oatmeal",
+    "servings": "1",
+    "tags": [
+      "breakfast",
+      "trail",
+      "vegan",
+      "soy-free",
+      "oil-free",
+      "just-add-water",
+      "no-stove-option"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "rolled oats",
+        "notes": "gluten-free oats if needed"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanut butter",
+        "notes": "in a squeeze pouch or small jar"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "pecans",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "flaxseed",
+        "notes": "ground"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "raisins"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Medjool dates",
+        "notes": "pitted and chopped"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "boiling, or cold to soak overnight"
+      }
+    ],
+    "instructions": "At home: bag everything except the peanut butter and water.\n\nAt camp: add 1¼ cups boiling water, stir, cover and wait 5 minutes. Stir in the peanut butter.\n\nNo stove: add cold water in the evening and let it soak overnight.",
+    "openSteps": true
+  },
+  {
+    "name": "Thai Peanut Couscous",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "dinner",
+      "trail",
+      "vegan",
+      "soy-free",
+      "oil-free",
+      "just-add-water"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "couscous",
+        "notes": "instant"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanut butter"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "coconut strips",
+        "notes": "unsweetened"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanuts",
+        "notes": "crushed"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "curry powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground ginger"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "red pepper flakes",
+        "notes": "optional"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "boiling"
+      }
+    ],
+    "instructions": "At home: bag the couscous, seeds, coconut, peanuts and spices together. Carry the peanut butter separately.\n\nAt camp: stir the peanut butter into ¾ cup boiling water, pour it over the couscous mix, cover and wait 5 minutes. Fluff and eat.",
+    "openSteps": true
+  },
+  {
+    "name": "Southwest Bean Bowl",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "dinner",
+      "trail",
+      "vegan",
+      "nut-free",
+      "soy-free",
+      "just-add-water"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "instant refried beans",
+        "notes": "dehydrated bean flakes"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "instant rice",
+        "notes": "or instant couscous"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "Taco of Love seasoning",
+        "notes": "Penzeys, or any taco seasoning"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "sunflower seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "tortilla chips",
+        "notes": "crushed, optional"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "boiling"
+      }
+    ],
+    "instructions": "At home: bag the beans, rice and seasoning together; bag the hemp hearts, sunflower seeds, nutritional yeast and chips separately so they stay crunchy.\n\nAt camp: add 1¼ cups boiling water to the beans and rice, stir, cover and wait 8–10 minutes. Top with the seeds, nutritional yeast and chips.",
+    "openSteps": true
+  },
+  {
+    "name": "Coconut Curry Red Lentils",
+    "servings": "1",
+    "tags": [
+      "dinner",
+      "trail",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "red lentils",
+        "notes": "or quick-cooking red lentil flakes"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "coconut strips",
+        "notes": "unsweetened"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanut butter"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "curry powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "garlic powder"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dried mushrooms",
+        "notes": "optional"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      }
+    ],
+    "instructions": "Red lentils need about 15 minutes of simmering. To save fuel, cook and dehydrate them at home, or use red lentil flakes; then just add boiling water and wait 10 minutes.\n\nAt camp: simmer the lentils, mushrooms and spices in 1½ cups water until soft, then stir in the peanut butter and coconut.\n\nCheck labels if you need it to be strictly gluten-free (curry powder and lentils are usually fine).",
+    "openSteps": true
+  },
+  {
+    "name": "Loaded Mashed Potatoes",
+    "servings": "1",
+    "tags": [
+      "dinner",
+      "trail",
+      "vegan",
+      "nut-free",
+      "soy-free",
+      "just-add-water"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "instant mashed potato flakes"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "tahini",
+        "notes": "or 2 tablespoons sunflower seeds"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dried mushrooms"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "dried green onion"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "black pepper"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "boiling"
+      }
+    ],
+    "instructions": "At home: bag the potato flakes, nutritional yeast, mushrooms, green onion, pepper and salt together. Carry the hemp hearts and tahini separately.\n\nAt camp: add 1 cup boiling water, stir and wait 3–5 minutes for the mushrooms to soften. Stir in the tahini and top with hemp hearts.",
+    "openSteps": true
+  },
+  {
+    "name": "Taco Mushroom Ramen",
+    "servings": "1",
+    "tags": [
+      "dinner",
+      "trail",
+      "vegan",
+      "nut-free",
+      "just-add-water"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "ramen packet",
+        "notes": "Top Ramen; use half the seasoning packet or less"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dried mushrooms"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dehydrated napa cabbage"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dehydrated corn"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "Taco of Love seasoning",
+        "notes": "Penzeys"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "sunflower seeds"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      }
+    ],
+    "instructions": "At home: bag the noodles, mushrooms, cabbage, corn and seasonings together; bag the hemp hearts and sunflower seeds separately.\n\nAt camp: bring 1½ cups water to a boil, add everything except the toppings and simmer 3 minutes (or cover off the heat for 5). Top with hemp hearts, sunflower seeds and a squeeze of lime if you have one.",
+    "openSteps": true,
+    "about": "A “campfire taco soup” take on ramen, good as an after-ceremony meal. Let the taco seasoning be the main flavour; the ramen packet and taco seasoning are both salty, so go light on the packet."
+  },
+  {
+    "name": "Peanut Ramen",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "dinner",
+      "trail",
+      "vegan",
+      "just-add-water"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "ramen packets",
+        "notes": "use half the seasoning"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "peanut butter"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dried mushrooms"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "curry powder",
+        "notes": "or Taco of Love seasoning"
+      },
+      {
+        "quantity": 1.75,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      }
+    ],
+    "instructions": "At camp: cook the noodles and mushrooms in 1¾ cups boiling water for 3 minutes. Stir the peanut butter and spices into the broth until creamy, then top with hemp hearts.",
+    "openSteps": true
+  },
+  {
+    "name": "Sweet Crunch Wrap",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "snack",
+      "trail",
+      "vegan",
+      "soy-free",
+      "no-cook"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large flour tortilla",
+        "notes": "burrito size"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanut butter"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "pecans",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "sunflower seeds"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "raisins",
+        "notes": "or chopped dates"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "coconut strips",
+        "notes": "unsweetened"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "notes": "optional"
+      }
+    ],
+    "instructions": "Spread the peanut butter almost to the edges of the tortilla, scatter everything else over it, roll up and eat. No cooking.\n\nTip: a thin tortilla with a generous filling keeps the calories per gram high.",
+    "openSteps": true
+  },
+  {
+    "name": "Southwest Bean Wrap",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "trail",
+      "vegan",
+      "nut-free",
+      "soy-free"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large flour tortilla",
+        "notes": "burrito size"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "instant refried beans"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "Taco of Love seasoning",
+        "notes": "Penzeys, or any taco seasoning"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "hemp hearts"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "tortilla chips",
+        "notes": "crushed, optional"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "hot or cold"
+      }
+    ],
+    "instructions": "Stir the water into the bean flakes and seasoning and let it sit 5 minutes (hot water is faster). Spread on the tortilla, top with hemp hearts, nutritional yeast and chips, and roll up.",
+    "openSteps": true
+  },
+  {
+    "name": "Savory Mushroom Wrap",
+    "servings": "1",
+    "tags": [
+      "lunch",
+      "trail",
+      "vegan",
+      "nut-free",
+      "soy-free"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "large flour tortilla",
+        "notes": "burrito size"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dried mushrooms"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "dehydrated napa cabbage"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "tahini",
+        "notes": "or peanut butter"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "black pepper"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water",
+        "notes": "to rehydrate the vegetables"
+      }
+    ],
+    "instructions": "Soak the mushrooms and cabbage in the water for 10 minutes (hot water is faster), then drain. Spread the tahini on the tortilla, add the vegetables, nutritional yeast and pepper, and roll up.",
+    "openSteps": true
+  },
+  {
+    "name": "Classic Trail Mix",
+    "servings": "4",
+    "tags": [
+      "snack",
+      "trail",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "walnuts"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "almonds"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "pumpkin seeds"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "raisins"
+      }
+    ],
+    "instructions": "Mix and divide into 4 bags of about ½ cup each.",
+    "openSteps": true
+  },
+  {
+    "name": "Peanut Butter Stuffed Dates",
+    "servings": "1",
+    "tags": [
+      "snack",
+      "dessert",
+      "trail",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead"
+    ],
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Medjool dates",
+        "notes": "pitted"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "peanut butter"
+      }
+    ],
+    "instructions": "Slit each date, fill with peanut butter and press closed. Pack in a small container so they don't squash.",
+    "openSteps": true
+  },
+  {
+    "name": "Date-Walnut Energy Balls",
+    "servings": "12",
+    "tags": [
+      "snack",
+      "trail",
+      "vegan",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead"
+    ],
+    "ingredients": [
+      {
+        "quantity": 12,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Medjool dates",
+        "notes": "pitted"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "walnuts"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "rolled oats",
+        "notes": "gluten-free oats if needed"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "flaxseed",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      }
+    ],
+    "instructions": "Pulse the walnuts and oats in a food processor until coarse, add the dates, flax, cinnamon and salt and process until it sticks together. Roll into 12 balls. They keep about a week somewhere cool.",
+    "openSteps": true
   }
 ]

@@ -17,10 +17,14 @@ const G_PER_OZ = 28.3495;
 const TRAIL_FOODS = [
     { name: 'water', re: /^(hot |cold |boiling )?water$/, kcal: 0, cup: 237, water: true },
     { name: 'salt', re: /\bsalt\b/, kcal: 0, cup: 288 },
-    { name: 'spices', re: /\b(pepper flakes|black pepper|cumin|paprika|turmeric|cinnamon|oregano|thyme|basil|chili powder|garlic powder|onion powder|curry powder|coriander|allspice|nutmeg|cardamom|cayenne|spice|seasoning|baking soda|baking powder|psyllium|dulse)\b/, kcal: 260, cup: 120 },
+    { name: 'spices', re: /\b(pepper flakes|black pepper|cumin|paprika|turmeric|cinnamon|oregano|thyme|basil|chili powder|garlic powder|onion powder|curry powder|coriander|allspice|nutmeg|cardamom|cayenne|ginger|spice|seasoning|baking soda|baking powder|psyllium|dulse)\b/, kcal: 260, cup: 120 },
     { name: 'vanilla extract', re: /vanilla/, kcal: 288, cup: 208 },
     { name: 'bouillon', re: /bouillon|broth powder|stock powder|stock cube/, kcal: 250, cup: 120, each: 4 },
     { name: 'broth', re: /\b(broth|stock)\b/, kcal: 5, cup: 240 },
+    { name: 'tortilla chips', re: /tortilla chips|corn chips/, kcal: 500, cup: 50 },
+    { name: 'corn tortilla', re: /corn tortillas?/, kcal: 218, each: 26 },
+    { name: 'large flour tortilla', re: /(large|burrito)[- a-z]*tortillas?/, kcal: 300, each: 70 },
+    { name: 'flour tortilla', re: /tortillas?|wraps?\b/, kcal: 306, each: 49 },
     { name: 'oat flour', re: /oat flour/, kcal: 404, cup: 92 },
     { name: 'almond flour', re: /almond (flour|meal)/, kcal: 571, cup: 96 },
     { name: 'chickpea flour', re: /(chickpea|garbanzo) flour|besan/, kcal: 387, cup: 92 },
@@ -37,11 +41,9 @@ const TRAIL_FOODS = [
     { name: 'ramen', re: /ramen/, kcal: 440, each: 85 },
     { name: 'pasta (dry)', re: /pasta|macaroni|penne|spaghetti|fusilli|orzo|noodles/, kcal: 371, cup: 100 },
     { name: 'instant mashed potatoes', re: /potato flakes|instant mashed|mashed potato/, kcal: 354, cup: 60 },
-    { name: 'corn tortilla', re: /corn tortillas?/, kcal: 218, each: 26 },
-    { name: 'flour tortilla', re: /tortillas?|wraps?\b/, kcal: 306, each: 49 },
     { name: 'bagel', re: /bagels?/, kcal: 257, each: 99 },
     { name: 'TVP', re: /\btvp\b|textured (vegetable|soy) protein/, kcal: 333, cup: 96 },
-    { name: 'refried bean flakes', re: /bean flakes|dehydrated (refried )?beans|refried bean (flakes|mix)/, kcal: 350, cup: 90 },
+    { name: 'refried bean flakes', re: /bean flakes|dehydrated (refried )?beans|refried bean (flakes|mix)|instant (refried )?beans|instant refried/, kcal: 350, cup: 90 },
     { name: 'cooked lentils', re: /lentils?/, cooked: true, kcal: 116, cup: 198 },
     { name: 'lentils (dry)', re: /lentils?/, kcal: 358, cup: 192 },
     { name: 'cooked chickpeas', re: /chickpeas?|garbanzo/, cooked: true, kcal: 164, cup: 164 },
@@ -71,7 +73,7 @@ const TRAIL_FOODS = [
     { name: 'sesame seeds', re: /sesame seeds/, kcal: 573, cup: 144 },
     { name: 'coconut milk powder', re: /coconut milk powder|coconut cream powder/, kcal: 690, cup: 100 },
     { name: 'coconut milk (canned)', re: /coconut milk|coconut cream/, kcal: 197, cup: 226, units: { can: 400, cans: 400 } },
-    { name: 'shredded coconut', re: /coconut (flakes|chips)|shredded coconut|desiccated coconut|\bcoconut\b/, kcal: 660, cup: 80 },
+    { name: 'shredded coconut', re: /coconut (flakes|chips|strips)|shredded coconut|desiccated coconut|\bcoconut\b/, kcal: 660, cup: 80 },
     { name: 'coconut oil', re: /coconut oil/, kcal: 892, cup: 218 },
     { name: 'oil', re: /\boil\b/, kcal: 884, cup: 216 },
     { name: 'ghee', re: /\bghee\b/, kcal: 900, cup: 208 },
@@ -104,6 +106,10 @@ const TRAIL_FOODS = [
     { name: 'dried figs', re: /\bfigs?\b/, kcal: 249, cup: 149 },
     { name: 'prunes', re: /prunes?/, kcal: 240, cup: 174 },
     { name: 'sun-dried tomatoes', re: /sun[- ]dried tomato/, kcal: 258, cup: 54 },
+    { name: 'dried mushrooms', re: /(dried|dehydrated) (shiitake |porcini )?mushrooms?/, kcal: 296, cup: 30 },
+    { name: 'dried green onion', re: /(dried|dehydrated) (green onions?|chives|scallions?)/, kcal: 320, cup: 20 },
+    { name: 'dehydrated corn', re: /(dried|dehydrated|freeze[- ]dried) corn/, kcal: 350, cup: 75 },
+    { name: 'dehydrated cabbage or greens', re: /(dried|dehydrated) (napa |green |red )?(cabbage|kale|spinach|greens)/, kcal: 280, cup: 25 },
     { name: 'dehydrated vegetables', re: /dehydrated (vegetables|veggies)|dried vegetables/, kcal: 300, cup: 60 },
     { name: 'nutritional yeast', re: /nutritional yeast/, kcal: 400, cup: 60 },
     { name: 'miso', re: /\bmiso\b/, kcal: 199, cup: 275 },
@@ -154,8 +160,11 @@ function rcFindFood(ing) {
     const mine = rcMyFoods[key];
     const cooked = /\b(cooked|canned)\b/.test(name + ' ' + notes);
     const sliced = /\bsliced\b/.test(name + ' ' + notes);
+    // The parser moves words like "dried" and "large" into the notes; put them back in front for matching
+    const adjectives = (notes.match(/\b(freeze[- ]dried|dried|dehydrated|instant|large|burrito)\b/g) || []).join(' ');
+    const text = (adjectives + ' ' + name).trim();
     for (const f of TRAIL_FOODS) {
-        if (!f.re.test(name)) continue;
+        if (!f.re.test(text)) continue;
         if (f.cooked && !cooked) continue;
         if (f.sliced && !sliced) continue;
         return mine ? Object.assign({}, f, mine, { source: 'yours', name: f.name }) : Object.assign({ source: 'table' }, f);
@@ -593,6 +602,41 @@ if (RC_TRIP) {
         setTimeout(rcRefreshTripViews, 50);
     });
 }
+
+// ----------------------------
+// Open recipes: preparation steps everyone can read (the access key protects cookbook steps)
+// ----------------------------
+
+function rcShowOpenText(modalId, titleId, bodyId, title, text) {
+    const modal = document.getElementById(modalId);
+    document.getElementById(titleId).textContent = title;
+    document.getElementById(bodyId).innerHTML = `<pre style="white-space:pre-wrap; font-family:inherit; margin:0;">${escapeHtml(text)}</pre>`;
+    modal.classList.add('active');
+}
+
+const rcBaseTogglePrep = toggleRecipePreparation;
+toggleRecipePreparation = function (recipeId) {
+    const r = rcRecipeById(recipeId);
+    if (r && r.openSteps && r.instructions) return rcShowOpenText('preparationModal', 'preparationModalTitle', 'preparationModalBody', `Preparation: ${r.name}`, r.instructions);
+    return rcBaseTogglePrep(recipeId);
+};
+
+const rcBaseShowAbout = showAboutModal;
+showAboutModal = function (recipeId) {
+    const r = rcRecipeById(recipeId);
+    if (r && r.openSteps && r.about) return rcShowOpenText('aboutModal', 'aboutModalTitle', 'aboutModalBody', r.name, r.about);
+    return rcBaseShowAbout(recipeId);
+};
+
+// Drop the lock icons on open recipes' buttons
+const rcOpenBaseUpdateRecipeList = updateRecipeList;
+updateRecipeList = function () {
+    rcOpenBaseUpdateRecipeList();
+    document.querySelectorAll('#recipeList .recipe-item').forEach(item => {
+        const r = rcRecipeById(item.dataset.recipeId);
+        if (r && r.openSteps) item.querySelectorAll('.recipe-action-btn .fa-lock').forEach(i => i.remove());
+    });
+};
 
 /** Switch between event and trip mode; the <head> script swaps the saved plans on reload */
 function rcSwitchMode(mode) {
