@@ -37,6 +37,7 @@ const TAG_FILTER_LOGIC_KEY = 'recipeConsolidator_tagFilterLogic';
 const MEAL_PLAN_KEY = 'recipeConsolidator_mealPlan';
 const MEAL_PLAN_NOTES_KEY = 'recipeConsolidator_mealPlanNotes';
 const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
+const STARTER_LOADED_KEY = 'recipeConsolidator_starterLoaded';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
@@ -518,9 +519,6 @@ function loadRecipes() {
             updateRecipeList();
             updateShoppingList();
             updateTagFilters();
-            if (recipes.length > 0) {
-                showMessage(`Loaded ${recipes.length} saved recipe${recipes.length !== 1 ? 's' : ''}`, 'success');
-            }
         }
     } catch (error) {
         console.error('Error loading recipes:', error);
@@ -1901,8 +1899,10 @@ function cancelRecipeEdit() {
     
     // Hide edit mode
     editActions.style.display = 'none';
+    const sheetBody = document.getElementById('addRecipeBody');
+    if (sheetBody && !sheetBody.classList.contains('collapsed')) toggleAddRecipeForm();
     addRecipeTitle.textContent = 'Add Recipe';
-    addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
+    addRecipeDescription.textContent = 'Paste the ingredient list, one per line. Quantities and units are picked up automatically.';
     if (addRecipeButton) {
         addRecipeButton.style.display = 'inline-block';
     }
@@ -2362,7 +2362,7 @@ function confirmIngredientReview() {
     if (editActions) editActions.style.display = 'none';
     if (addRecipeTitle) addRecipeTitle.textContent = 'Add Recipe';
     if (addRecipeDescription) {
-        addRecipeDescription.textContent = 'Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.';
+        addRecipeDescription.textContent = 'Paste the ingredient list, one per line. Quantities and units are picked up automatically.';
     }
     clearTagSelectionForm();
     
@@ -2691,9 +2691,8 @@ function updateRecipeList() {
         const isActive = activeRecipeIds.has(recipe.id);
         const multiplier = recipeMultipliers[recipe.id] || 1;
         const item = document.createElement('div');
-        item.className = 'recipe-item';
+        item.className = 'recipe-item' + (isActive ? ' is-active' : '');
         item.dataset.recipeId = recipe.id;
-        item.style.background = isActive ? '#e8f5e9' : '#f8f6f2';
         item.innerHTML = `
             <!-- Collapsed row (always visible) -->
             <div class="recipe-row-summary" onclick="toggleRecipeExpand(${recipe.id}, event)">
@@ -3514,7 +3513,7 @@ function updateDayPlanner() {
             <div class="empty-state" style="width:100%;">
                 <i class="fas fa-calendar-alt"></i>
                 <p>No recipes selected yet.</p>
-                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#section-recipes" onclick="setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to recipes you want to plan.</p>
+                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#recipes" onclick="return setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to recipes you want to plan.</p>
             </div>`;
         return;
     }
@@ -5442,7 +5441,7 @@ function updateShoppingList() {
             <div class="empty-state">
                 <i class="fas fa-shopping-cart"></i>
                 <p>No recipes selected yet.</p>
-                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#section-recipes" onclick="setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to each recipe you want to include.</p>
+                <p style="font-size:14px; margin-top: 8px;">Go to the <a href="#recipes" onclick="return setActiveTab('recipes')" style="color:#d48247; text-decoration:none; font-weight:600;">Recipes tab</a> and check the box next to each recipe you want to include.</p>
             </div>`;
         return;
     }
@@ -5701,7 +5700,7 @@ function emailRecipesToCreator() {
 /**
  * Load preloaded recipes from WholeFoods.json
  */
-async function loadPreloadedRecipes() {
+async function loadPreloadedRecipes(opts = {}) {
     try {
         const response = await fetch('WholeFoods.json');
         if (!response.ok) {
@@ -5756,6 +5755,9 @@ async function loadPreloadedRecipes() {
         updateRecipeList();
         updateShoppingList();
         updateTagFilters();
+        updateDayPlanner();
+        updateTabBadges();
+        if (opts.quiet) return;
         
         const addedCount = newRecipes.length;
         const skippedCount = validRecipes.length - newRecipes.length;
@@ -6041,16 +6043,17 @@ function showMessage(message, type) {
     }
     messageDiv.textContent = message;
     
-    const firstCard = document.querySelector('.rc-card');
-    if (firstCard) {
-        firstCard.insertBefore(messageDiv, firstCard.firstChild);
-        
-        // Auto-remove after 5 seconds (10 seconds for warnings)
-        const timeout = type === 'warning' ? 10000 : 5000;
-        setTimeout(() => {
-            messageDiv.remove();
-        }, timeout);
-    }
+    // Shown as a toast so it is visible whichever view or sheet is open
+    messageDiv.classList.add('rc-toast');
+    messageDiv.setAttribute('role', 'status');
+    messageDiv.onclick = () => messageDiv.remove();
+    document.body.appendChild(messageDiv);
+
+    // Auto-remove after 4 seconds (8 seconds for warnings)
+    const timeout = type === 'warning' ? 8000 : 4000;
+    setTimeout(() => {
+        messageDiv.remove();
+    }, timeout);
 }
 
 /**
@@ -6393,7 +6396,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (devButton) {
             devButton.style.display = 'inline-block';
         }
+        document.body.classList.add('rc-dev');
     }
+
+    setActiveTab(tabFromHash(), { fromHash: true });
     
     // Load unit system preference
     loadUnitSystem();
@@ -6406,6 +6412,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Load saved recipes from localStorage
     loadRecipes();
+    // New visitors start with the starter library instead of an empty page (once only, so clearing stays cleared)
+    let starterOffered = true;
+    try { starterOffered = localStorage.getItem(STARTER_LOADED_KEY) === '1'; } catch (e) {}
+    if (!starterOffered && recipes.length === 0) {
+        try { localStorage.setItem(STARTER_LOADED_KEY, '1'); } catch (e) {}
+        loadPreloadedRecipes({ quiet: true });
+    }
     
     // Load meal plan
     loadMealPlan();
@@ -6453,21 +6466,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Recipe Assistant (beta)
     initRecipeAssistant();
 
-    // Collapse Add Recipe form if recipes already exist
-    if (recipes.length > 0) {
-        const body = document.getElementById('addRecipeBody');
-        const icon = document.getElementById('addRecipeToggleIcon');
-        const btn = document.getElementById('addRecipeToggleBtn');
-        if (body) {
-            body.style.maxHeight = body.scrollHeight + 'px';
-            body.classList.add('collapsed');
-            if (icon) { icon.className = 'fas fa-chevron-down'; }
-            if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i> Expand';
-        }
-    } else {
-        const body = document.getElementById('addRecipeBody');
-        if (body) body.style.maxHeight = body.scrollHeight + 'px';
-    }
+    // The Add Recipe form starts closed; it opens as a sheet from the Add button
 
     updateTabBadges();
 });
@@ -6693,16 +6692,14 @@ function updateFormLockState() {
 }
 
 function closeActionsMenu() {
-    const menu = document.querySelector('.rc-actions-menu');
-    if (menu) menu.removeAttribute('open');
+    document.querySelectorAll('.rc-actions-menu[open]').forEach(menu => menu.removeAttribute('open'));
 }
 
 // Close actions menu when clicking outside
 document.addEventListener('click', function(e) {
-    const menu = document.querySelector('.rc-actions-menu');
-    if (menu && menu.open && !menu.contains(e.target)) {
-        menu.removeAttribute('open');
-    }
+    document.querySelectorAll('.rc-actions-menu[open]').forEach(menu => {
+        if (!menu.contains(e.target)) menu.removeAttribute('open');
+    });
 });
 
 // --- Image recipe extraction ---
@@ -6997,32 +6994,56 @@ function resizeImage(file, maxPx) {
 
 function toggleAddRecipeForm() {
     const body = document.getElementById('addRecipeBody');
-    const icon = document.getElementById('addRecipeToggleIcon');
-    const btn = document.getElementById('addRecipeToggleBtn');
-    if (!body) return;
+    const sheet = document.getElementById('addRecipeSheet');
+    if (!body || !sheet) return;
 
+    // The form lives in a sheet; `collapsed` on the body still marks it closed so older callers keep working
     if (body.classList.contains('collapsed')) {
-        body.style.maxHeight = body.scrollHeight + 'px';
         body.classList.remove('collapsed');
-        if (icon) icon.className = 'fas fa-chevron-up';
-        if (btn) btn.innerHTML = '<i class="fas fa-chevron-up"></i> Collapse';
-        // After transition, set to 'none' so it can grow if content changes
-        setTimeout(() => { if (!body.classList.contains('collapsed')) body.style.maxHeight = 'none'; }, 320);
+        sheet.classList.add('open');
+        document.body.classList.add('rc-sheet-open');
+        const nameInput = document.getElementById('recipeName');
+        if (nameInput && window.matchMedia('(hover: hover)').matches) setTimeout(() => nameInput.focus(), 50);
     } else {
-        body.style.maxHeight = body.scrollHeight + 'px';
-        requestAnimationFrame(() => {
-            body.classList.add('collapsed');
-            if (icon) icon.className = 'fas fa-chevron-down';
-            if (btn) btn.innerHTML = '<i class="fas fa-chevron-down"></i> Expand';
-        });
+        body.classList.add('collapsed');
+        sheet.classList.remove('open');
+        document.body.classList.remove('rc-sheet-open');
+        if (document.getElementById('editingRecipeId').value) cancelRecipeEdit();
     }
 }
 
-function setActiveTab(tab) {
+function openAddRecipe() {
+    const body = document.getElementById('addRecipeBody');
+    if (body && body.classList.contains('collapsed')) toggleAddRecipeForm();
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const body = document.getElementById('addRecipeBody');
+    if (body && !body.classList.contains('collapsed') && !document.querySelector('.modal-overlay.active')) {
+        toggleAddRecipeForm();
+    }
+});
+
+const RC_VIEWS = ['recipes', 'planner', 'shopping'];
+
+function setActiveTab(tab, opts = {}) {
+    if (!RC_VIEWS.includes(tab)) tab = 'recipes';
     document.querySelectorAll('.rc-tab').forEach(t => t.classList.remove('active'));
     const el = document.getElementById('tab-' + tab);
     if (el) el.classList.add('active');
+    document.querySelectorAll('.rc-view').forEach(v => v.classList.toggle('active', v.id === 'view-' + tab));
+    if (!opts.fromHash && location.hash !== '#' + tab) history.replaceState(null, '', '#' + tab);
+    if (!opts.keepScroll) window.scrollTo(0, 0);
+    return false;
 }
+
+function tabFromHash() {
+    const h = location.hash.replace('#', '').replace('section-', '');
+    return RC_VIEWS.includes(h) ? h : 'recipes';
+}
+
+window.addEventListener('hashchange', () => setActiveTab(tabFromHash(), { fromHash: true }));
 
 function updateTabBadges() {
     const countEl = document.getElementById('tab-recipe-count');
@@ -7035,4 +7056,12 @@ function updateTabBadges() {
         activeEl.textContent = activeRecipeIds.size;
         activeEl.style.display = activeRecipeIds.size > 0 ? 'inline' : 'none';
     }
+}
+
+
+// Installable web app: cache the app so it opens offline
+if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => console.warn('Service worker not registered:', err));
+    });
 }

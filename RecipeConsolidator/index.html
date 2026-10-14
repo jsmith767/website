@@ -3,8 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE-edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Recipe Consolidator - Meal Planning Tool</title>
+    <meta name="description" content="Plan meals for a group, retreat or family and get one combined shopping list.">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Recipes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="stylesheet" href="../style.css">
     <script src="https://kit.fontawesome.com/18933f7f73.js" crossorigin="anonymous"></script>
     <style>
@@ -1003,54 +1012,46 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
+    <link rel="stylesheet" href="rc-app.css?v=20261013f">
 </head>
 <body class="rc-body">
-    <nav class="rc-nav">
-        <div class="container">
-            <div>
-                <a href="../index.html" style="color: #2c2c2c; text-decoration: none; font-size: 20px; font-weight: 600;">← Back to Main Site</a>
-            </div>
+    <header class="rc-appbar">
+        <div class="rc-appbar-inner">
+            <a class="rc-appbar-back" href="../index.html" title="julian-smith.org" aria-label="Back to julian-smith.org"><i class="fas fa-arrow-left"></i></a>
+            <div class="rc-appbar-title">Recipe Consolidator</div>
+            <nav class="rc-workflow-tabs" aria-label="Sections">
+                <a class="rc-tab active" id="tab-recipes" href="#recipes" onclick="setActiveTab('recipes'); return false;">
+                    <i class="fas fa-book-open"></i><span class="rc-tab-label">Recipes</span>
+                    <span class="tab-badge" id="tab-recipe-count" style="display:none">0</span>
+                </a>
+                <a class="rc-tab" id="tab-planner" href="#planner" onclick="setActiveTab('planner'); return false;">
+                    <i class="fas fa-calendar-alt"></i><span class="rc-tab-label">Plan</span>
+                </a>
+                <a class="rc-tab" id="tab-shopping" href="#shopping" onclick="setActiveTab('shopping'); return false;">
+                    <i class="fas fa-shopping-basket"></i><span class="rc-tab-label">Shop</span>
+                    <span class="tab-badge" id="tab-active-count" style="display:none">0</span>
+                </a>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <div class="rc-workflow-tabs">
-        <div class="container">
-            <a class="rc-tab active" id="tab-recipes" href="#section-recipes" onclick="setActiveTab('recipes')">
-                <i class="fas fa-book-open"></i> Recipes
-                <span class="tab-badge" id="tab-recipe-count" style="display:none">0</span>
-            </a>
-            <a class="rc-tab" id="tab-planner" href="#section-planner" onclick="setActiveTab('planner')">
-                <i class="fas fa-calendar-alt"></i> Day Planner
-            </a>
-            <a class="rc-tab" id="tab-shopping" href="#section-shopping" onclick="setActiveTab('shopping')">
-                <i class="fas fa-shopping-cart"></i> Shopping List
-                <span class="tab-badge" id="tab-active-count" style="display:none">0</span>
-            </a>
-        </div>
-    </div>
-
-    <div class="rc-hero">
-        <h1>Recipe Consolidator</h1>
-        <p>Add recipes, plan your days, and get a consolidated shopping list for your event</p>
-    </div>
-
-    <section class="rc-section">
-        <div id="section-recipes" class="rc-section-anchor"></div>
-        <div class="rc-card" id="addRecipeCard">
-            <div class="rc-card-header" onclick="toggleAddRecipeForm()">
+    <!-- Add / edit recipe sheet -->
+    <div class="rc-sheet" id="addRecipeSheet" onclick="if (event.target === this) toggleAddRecipeForm()">
+        <div class="rc-card rc-sheet-panel" id="addRecipeCard" role="dialog" aria-modal="true" aria-labelledby="addRecipeTitle">
+            <div class="rc-card-header">
                 <h2 id="addRecipeTitle">Add Recipe</h2>
-                <button class="rc-card-toggle" id="addRecipeToggleBtn" onclick="event.stopPropagation(); toggleAddRecipeForm()">
-                    <i class="fas fa-chevron-up" id="addRecipeToggleIcon"></i> Collapse
+                <button class="rc-icon-btn" id="addRecipeToggleBtn" onclick="toggleAddRecipeForm()" aria-label="Close">
+                    <i class="fas fa-times" id="addRecipeToggleIcon"></i>
                 </button>
             </div>
-            <div class="rc-card-body" id="addRecipeBody">
+            <div class="rc-card-body collapsed" id="addRecipeBody">
 
             <!-- Mode toggle -->
             <div class="rc-add-mode-toggle">
                 <button class="rc-mode-btn active" id="modeBtnText" onclick="setAddRecipeMode('text')">
                     <i class="fas fa-keyboard"></i> Paste Text
                 </button>
-                <button class="rc-mode-btn" id="modeBtnImage" onclick="setAddRecipeMode('image')">
+                <button class="rc-mode-btn rc-dev-only-inline" id="modeBtnImage" onclick="setAddRecipeMode('image')">
                     <i class="fas fa-camera"></i> From Image
                 </button>
             </div>
@@ -1082,25 +1083,25 @@
             </div>
 
             <p style="margin: 15px 0; color: #6a6a6a;" id="addRecipeDescription">
-                Add recipes by pasting text. The tool will automatically extract ingredients with quantities and units.
+                Paste the ingredient list, one per line. Quantities and units are picked up automatically.
             </p>
             <div style="display: flex; gap: 12px; margin-bottom: 15px;">
                 <input
                     type="text"
                     id="recipeName"
-                    placeholder="Recipe name (optional)"
+                    placeholder="Recipe name"
                     style="flex: 1; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif;"
                     onkeypress="if(event.key === 'Enter') addRecipe()">
                 <input
                     type="text"
                     id="recipeServings"
-                    placeholder="Serves (e.g. 4)"
+                    placeholder="Serves"
                     style="width: 160px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 16px; font-family: 'Poppins', sans-serif;">
             </div>
             <input type="hidden" id="editingRecipeId" value="">
 
-            <div style="margin: 5px 0; display: flex; justify-content: flex-end;">
-                <button 
+            <div class="rc-dev-only" style="margin: 5px 0; justify-content: flex-end;">
+                <button
                     type="button"
                     class="btn btn-secondary"
                     style="padding: 4px 10px; font-size: 11px; background: #f0f0f0; color: #555; border-radius: 14px;"
@@ -1217,27 +1218,33 @@
                     style="width: 100%; min-height: 120px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
             </div>
             
-            <button class="btn" id="addRecipeButton" onclick="addRecipe()">Add Recipe</button>
-            
-            <div id="editRecipeActions" style="display: none; margin-top: 15px;">
-                <button class="btn" onclick="saveRecipeEdit()">Save Changes</button>
-                <button class="btn btn-secondary" onclick="cancelRecipeEdit()" style="margin-left: 10px;">Cancel</button>
+            <div class="rc-sheet-actions">
+                <button class="btn" id="addRecipeButton" onclick="addRecipe()">Add Recipe</button>
+                <div id="editRecipeActions" style="display: none;">
+                    <button class="btn btn-secondary" onclick="cancelRecipeEdit()">Cancel</button>
+                    <button class="btn" onclick="saveRecipeEdit()">Save Changes</button>
+                </div>
             </div>
             </div><!-- end rc-card-body -->
         </div>
+    </div>
 
+    <main class="rc-section">
+        <div class="rc-view active" id="view-recipes">
+        <div id="section-recipes" class="rc-section-anchor"></div>
         <div class="rc-card">
             <!-- Card header: title + sort + actions menu -->
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-                <h2 style="margin: 0; flex: 1;">Manage Recipes</h2>
-                <select id="recipeSortSelect" onchange="sortRecipes()" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
+            <div class="rc-view-header">
+                <h2>Recipes</h2>
+                <button class="btn rc-add-btn" onclick="openAddRecipe()"><i class="fas fa-plus"></i> Add</button>
+                <select id="recipeSortSelect" class="rc-select" onchange="sortRecipes()" aria-label="Sort recipes">
                     <option value="name-asc">A → Z</option>
                     <option value="name-desc">Z → A</option>
                     <option value="added-desc">Recently Added</option>
                     <option value="added-asc">Oldest First</option>
                 </select>
                 <details class="rc-actions-menu">
-                    <summary class="rc-actions-btn"><i class="fas fa-ellipsis-h"></i> Actions</summary>
+                    <summary class="rc-actions-btn" aria-label="More actions"><i class="fas fa-ellipsis-h"></i></summary>
                     <div class="rc-actions-dropdown">
                         <button class="rc-actions-item" onclick="loadPreloadedRecipes(); closeActionsMenu()">
                             <i class="fas fa-download"></i> Load Starter Recipes
@@ -1301,7 +1308,7 @@
             <div id="recipeList" class="recipe-list"></div>
             <div id="noRecipesMessage" style="text-align: center; padding: 40px; color: #6a6a6a;">
                 <i class="fas fa-book" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
-                <p>No recipes yet. Add one above or use <strong>Actions → Load Starter Recipes</strong> to get started.</p>
+                <p>No recipes yet. Tap <strong>Add</strong> to paste one in, or load the starter recipes from the <strong>⋯</strong> menu.</p>
             </div>
         </div>
 
@@ -1331,26 +1338,31 @@
                 Tip: For a real AI chatbot (natural conversation + smarter substitutions), we can add a small server endpoint so you don’t expose an API key in the browser.
             </div>
         </div>
+        </div><!-- end view-recipes -->
 
+        <div class="rc-view" id="view-planner">
         <div id="section-planner" class="rc-section-anchor"></div>
         <div class="rc-card" id="dayPlannerCard">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap;">
-                <h2 style="margin: 0;">Day Planner</h2>
-                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                    <button class="btn btn-secondary" onclick="addDayToPlanner()" style="padding: 8px 15px; font-size: 14px;">Add Day</button>
-                    <button class="btn btn-secondary" onclick="exportMealPlan()" style="padding: 8px 15px; font-size: 14px;">Export Meal Plan</button>
-                    <button class="btn btn-secondary" onclick="exportMealPlanPrintable()" style="padding: 8px 15px; font-size: 14px;">Print Meal Plan (List)</button>
-                    <button class="btn btn-secondary" onclick="exportMealPlanVisual()" style="padding: 8px 15px; font-size: 14px;">Print Meal Plan (Visual)</button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('importMealPlanInput').click()" style="padding: 8px 15px; font-size: 14px;">Import Meal Plan</button>
-                    <input type="file" id="importMealPlanInput" accept=".json" style="display: none;" onchange="importMealPlan(event)">
-                    <button class="btn btn-secondary" onclick="clearMealPlan()" style="padding: 8px 15px; font-size: 14px; background: #ffebee; color: #c62828; border-color: #c62828;">Clear Plan</button>
-                </div>
+            <div class="rc-view-header">
+                <h2>Plan</h2>
+                <button class="btn rc-add-btn" onclick="addDayToPlanner()"><i class="fas fa-plus"></i> Day</button>
+                <details class="rc-actions-menu">
+                    <summary class="rc-actions-btn" aria-label="More plan actions"><i class="fas fa-ellipsis-h"></i></summary>
+                    <div class="rc-actions-dropdown">
+                        <button class="rc-actions-item" onclick="exportMealPlanPrintable(); closeActionsMenu()"><i class="fas fa-print"></i> Print plan (list)</button>
+                        <button class="rc-actions-item" onclick="exportMealPlanVisual(); closeActionsMenu()"><i class="fas fa-th"></i> Print plan (visual)</button>
+                        <button class="rc-actions-item" onclick="exportMealPlan(); closeActionsMenu()"><i class="fas fa-file-export"></i> Save plan to file</button>
+                        <button class="rc-actions-item" onclick="document.getElementById('importMealPlanInput').click(); closeActionsMenu()"><i class="fas fa-file-import"></i> Open plan from file</button>
+                        <div class="rc-actions-divider"></div>
+                        <button class="rc-actions-item danger" onclick="clearMealPlan(); closeActionsMenu()"><i class="fas fa-trash"></i> Clear plan</button>
+                    </div>
+                </details>
+                <input type="file" id="importMealPlanInput" accept=".json" style="display: none;" onchange="importMealPlan(event)">
             </div>
             
-            <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 2px solid #e8e8e8;">
-                <h3 style="font-size: 18px; color: #2c2c2c; margin-bottom: 15px;">Meal Types</h3>
-                <p style="font-size: 14px; color: #6a6a6a; margin-bottom: 15px;">
-                    <strong>Tip:</strong> Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) while dropping a recipe to add it to multiple meal slots without removing it from the original location. Useful for prep work!
+            <div class="rc-meal-types">
+                <p class="rc-hint rc-hint-desktop">
+                    Drag a meal type onto a day, then drag recipes into it. Hold <strong>Ctrl</strong>/<strong>Cmd</strong> while dropping to copy a recipe into another slot (handy for prep).
                 </p>
                 <div id="mealTypesContainer" style="display: flex; flex-wrap: wrap; gap: 10px;">
                     <div class="meal-type-box" draggable="true" ondragstart="handleMealTypeDragStart(event)" data-meal-type="breakfast">
@@ -1375,41 +1387,37 @@
                 <!-- Days will be added here -->
             </div>
             
-            <div style="margin-top: 30px; padding-top: 30px; border-top: 2px solid #e8e8e8;">
-                <h3 style="font-size: 18px; color: #2c2c2c; margin-bottom: 15px;">Unplanned Recipes</h3>
-                <div id="unplannedRecipes" class="unplanned-recipes-container" style="min-height: 100px; padding: 15px; background: #f8f6f2; border-radius: 6px; border: 2px dashed #d48247;">
+            <div class="rc-unplanned">
+                <h3>Not planned yet</h3>
+                <div id="unplannedRecipes" class="unplanned-recipes-container">
                     <!-- Unplanned recipes will be shown here -->
                 </div>
             </div>
         </div>
+        </div><!-- end view-planner -->
 
+        <div class="rc-view" id="view-shopping">
         <div id="section-shopping" class="rc-section-anchor"></div>
         <div class="rc-card" id="shoppingListCard">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 15px;">
-                <h2 style="margin: 0;">Shopping List</h2>
-                <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                    <label style="font-size: 14px; color: #6a6a6a;">Unit System:</label>
-                    <select id="unitSystemSelect" onchange="setUnitSystem(this.value)" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
-                        <option value="metric">Metric (mL, g)</option>
-                        <option value="imperial">Imperial (cups, tbsp, etc.)</option>
-                    </select>
-                    <label style="font-size: 14px; color: #6a6a6a;">Sort:</label>
-                    <select id="shoppingListSortSelect" onchange="setShoppingListSort(this.value)" style="padding: 8px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; background: white; cursor: pointer;">
-                        <option value="alphabetical">Alphabetical</option>
-                        <option value="category">By Category</option>
-                    </select>
-                    <button class="btn" onclick="downloadShoppingList()" style="padding: 10px 20px; font-size: 14px;">
-                        <i class="fas fa-download"></i> Download List
-                    </button>
-                </div>
+            <div class="rc-view-header">
+                <h2>Shop</h2>
+                <button class="btn rc-add-btn btn-quiet" onclick="downloadShoppingList()" aria-label="Download list"><i class="fas fa-download"></i><span class="rc-hide-narrow"> Download</span></button>
             </div>
-            <p style="margin-bottom: 15px; color: #6a6a6a; font-size: 14px;">
-                Shopping list based on selected recipes. Toggle recipes on/off above to include or exclude them.
-            </p>
+            <div class="rc-shop-controls">
+                <select id="shoppingListSortSelect" class="rc-select" onchange="setShoppingListSort(this.value)" aria-label="Group items">
+                    <option value="alphabetical">A → Z</option>
+                    <option value="category">By aisle</option>
+                </select>
+                <select id="unitSystemSelect" class="rc-select" onchange="setUnitSystem(this.value)" aria-label="Units">
+                    <option value="metric">Metric</option>
+                    <option value="imperial">US cups &amp; spoons</option>
+                </select>
+            </div>
             <div id="shoppingList" class="shopping-list"></div>
         </div>
+        </div><!-- end view-shopping -->
         
-    </section>
+    </main>
 
     <!-- About Modal -->
     <div id="aboutModal" class="modal-overlay" onclick="closeAboutModal(event)">
@@ -1489,7 +1497,7 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js"></script>
+    <script src="recipe-consolidator.js?v=20261013f"></script>
 </body>
 </html>
 
