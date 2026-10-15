@@ -1046,7 +1046,7 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
-    <link rel="stylesheet" href="rc-app.css?v=20261014v">
+    <link rel="stylesheet" href="rc-app.css?v=20261015b">
 </head>
 <body class="rc-body">
     <header class="rc-appbar">
@@ -1179,14 +1179,6 @@
                             placeholder="e.g., 145–147"
                             style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
                     </div>
-                    <div style="flex: 2 1 220px; min-width: 180px;">
-                        <label style="display: block; font-size: 14px; font-weight: 500; color: #2c2c2c; margin-bottom: 4px;">Source URL (optional):</label>
-                        <input 
-                            type="url" 
-                            id="recipeSourceUrl" 
-                            placeholder="Canonical recipe URL (non-affiliate)"
-                            style="width: 100%; padding: 10px 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif;">
-                    </div>
                 </div>
 
                 <div style="margin-bottom: 5px;">
@@ -1254,6 +1246,12 @@
                     style="width: 100%; min-height: 120px; padding: 12px; border: 2px solid #e8e8e8; border-radius: 6px; font-size: 14px; font-family: 'Poppins', sans-serif; margin-bottom: 15px; resize: vertical;"></textarea>
             </div>
             
+            <label class="rc-field rc-source-field">
+                <span>Source link (optional)</span>
+                <input type="url" id="recipeSourceUrl" inputmode="url" autocomplete="off" placeholder="https://… where the full recipe lives">
+                <small class="rc-hint">Got the steps from a website or book? Paste the link here (or name the book in a note) instead of copying their steps. Ingredients are always fine to share.</small>
+            </label>
+
             <div class="rc-sheet-actions">
                 <button class="btn" id="addRecipeButton" onclick="addRecipe()">Add Recipe</button>
                 <div id="editRecipeActions" style="display: none;">
@@ -1582,9 +1580,9 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js?v=20261014v"></script>
-    <script src="rc-plan.js?v=20261014v"></script>
-    <script src="rc-trip.js?v=20261014v"></script>
+    <script src="recipe-consolidator.js?v=20261015b"></script>
+    <script src="rc-plan.js?v=20261015b"></script>
+    <script src="rc-trip.js?v=20261015b"></script>
 </body>
 </html>
 

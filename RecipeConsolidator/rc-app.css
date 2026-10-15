@@ -785,3 +785,11 @@ html.rc-trip-mode {
     .rc-trip-stats { grid-template-columns: 1fr 1fr; }
     .rc-food-editor input { width: 96px; }
 }
+
+/* Source link and sharing rules */
+.rc-source-field { margin-top: 4px; }
+.rc-source-field small { font-size: 12px; margin: 0; }
+.rc-source-btn { text-decoration: none; }
+.rc-share-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4; margin: 4px 0 8px; cursor: pointer; }
+.rc-share-check input { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }

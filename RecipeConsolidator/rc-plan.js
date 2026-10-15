@@ -651,9 +651,14 @@ function rcOpenShare(idStr) {
         <label class="rc-field"><span>Note (optional)</span>
             <textarea id="rcShareNote" rows="3" maxlength="800" placeholder="Where it's from, what it's good for…"></textarea>
         </label>
+        ${(recipe.instructions || recipe.about) ? `
+        <label class="rc-share-check">
+            <input type="checkbox" id="rcShareOwnWords" onchange="document.getElementById('rcShareSend').disabled = !this.checked">
+            <span>The steps and notes are in my own words, or I've linked the original instead of copying it.</span>
+        </label>` : ''}
         <div class="rc-sheet-actions">
             <button class="btn btn-secondary" onclick="rcClosePicker()">Cancel</button>
-            <button class="btn" id="rcShareSend" onclick="rcSendShare('${recipe.id}')"><i class="fas fa-paper-plane"></i> Send</button>
+            <button class="btn" id="rcShareSend" onclick="rcSendShare('${recipe.id}')" ${(recipe.instructions || recipe.about) ? 'disabled' : ''}><i class="fas fa-paper-plane"></i> Send</button>
         </div>
     `);
 }
@@ -684,9 +689,10 @@ async function rcSendShare(idStr) {
     const message = [
         '[Recipe Consolidator] A recipe was shared with you',
         note ? `Note: ${note}` : '',
+        (recipe.instructions || recipe.about) ? 'Steps: the sender confirmed they are their own words or linked to the original.' : 'Steps: none included (ingredients only).',
         '',
         rcRecipeAsText(recipe)
-    ].filter((l, i) => l !== '' || i === 2).join('\n').slice(0, 4900);
+    ].filter((l, i) => l !== '' || i === 3).join('\n').slice(0, 4900);
 
     const form = new FormData();
     form.append('Name', (name || 'Anonymous') + ' (recipe share)');

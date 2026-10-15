@@ -640,6 +640,20 @@ updateRecipeList = function () {
     document.querySelectorAll('#recipeList .recipe-item').forEach(item => {
         const r = rcRecipeById(item.dataset.recipeId);
         if (r && !rcStepsLocked(r)) item.querySelectorAll('.recipe-action-btn .fa-lock').forEach(i => i.remove());
+        // Recipes that link to where they came from get a button to the full steps
+        const actions = item.querySelector('.recipe-item-actions');
+        if (r && actions && /^https?:\/\//i.test(r.sourceUrl || '') && !actions.querySelector('.rc-source-btn')) {
+            const link = document.createElement('a');
+            link.className = 'recipe-action-btn rc-source-btn';
+            link.href = r.sourceUrl;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            let host = '';
+            try { host = new URL(r.sourceUrl).hostname.replace(/^www\./, ''); } catch (e) {}
+            link.title = host ? `Full steps on ${host}` : 'Full steps';
+            link.innerHTML = '<i class="fas fa-external-link-alt"></i> Full steps';
+            actions.insertBefore(link, actions.querySelector('.rc-share-btn, .danger') || null);
+        }
     });
 };
 
@@ -667,6 +681,9 @@ editRecipe = function (recipeId) {
         if (about) about.value = r.about || '';
         if (prep) prep.value = r.instructions || '';
     }
+    // The source link is public now, so always load it (otherwise saving would drop it)
+    const src = document.getElementById('recipeSourceUrl');
+    if (src && r) src.value = r.sourceUrl || '';
     updateFormLockState();
 };
 
