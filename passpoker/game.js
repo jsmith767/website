@@ -12,9 +12,20 @@
   const SUIT_SYM = { S: '♠', H: '♥', D: '♦', C: '♣' };
   const fmt = c => rn(rv(c)) + SUIT_SYM[c[1]];
   const fmtList = cs => cs.map(fmt).join(' ');
-  const bidLabel = b => b[0] + (b[1] === 'P' ? '‖' : '✕');
+  // Variants: 'even' (every hand passes the average), 'bids' (each player's total is
+  // split by their own two bids), 'original' (fixed ✕ ‖ ✕ swaps; the symbol only rounds).
+  const VARIANTS = {
+    even: 'Even split',
+    bids: 'Split by your bids',
+    original: 'Original (✕ ‖ ✕ swaps)',
+  };
+  const ORIGINAL_DIRS = ['X', 'P', 'X'];
+  const bidLabel = (b, variant) => b[0] + (variant === 'original' ? (b[1] === 'P' ? '●' : '▲') : (b[1] === 'P' ? '‖' : '✕'));
+  const dirLabel = d => (d === 'P' ? '‖' : '✕');
   // ‖ goes straight across to the mirror hand, ✕ crosses the midline to the other one.
-  const target = (h, bid) => (bid[1] === 'P' ? h : 1 - h);
+  const target = (h, dir) => (dir[dir.length - 1] === 'P' ? h : 1 - h);
+  // Which opponent hand a hand passes to, given the variant and this pass's bid.
+  const passTarget = (variant, phase, h, bid) => target(h, variant === 'original' ? ORIGINAL_DIRS[phase - 1] : bid);
 
   function randInt(n) {
     if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
@@ -85,8 +96,8 @@
   }
 
   // ---------- state ----------
-  function newGame(names) {
-    const s = { names: names.slice(), round: 0, kept: [[], []], logs: [[], []], rounds: [] };
+  function newGame(names, variant) {
+    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', round: 0, kept: [[], []], logs: [[], []], rounds: [] };
     startRound(s);
     return s;
   }
@@ -126,11 +137,11 @@
       }
       case 'pass': {
         if (s.step !== 'pass' || s.pending.pass[p]) return err('Not time to pass');
-        const n = s.phaseInfo.n, cs = a.cards || [];
+        const counts = s.phaseInfo.counts[p], cs = a.cards || [];
         for (const h of [0, 1]) {
-          const x = cs[h];
+          const x = cs[h], n = counts[h];
           if (!Array.isArray(x) || x.length !== n || new Set(x).size !== n || !x.every(c => s.hands[p][h].includes(c)))
-            return err(`Choose exactly ${n} card${n > 1 ? 's' : ''} from each hand`);
+            return err(`Choose ${n} card${n === 1 ? '' : 's'} from your ${HN[h]}`);
         }
         s.pending.pass[p] = [cs[0].slice(), cs[1].slice()];
         if (s.pending.pass[o]) resolvePass(s);
@@ -179,7 +190,7 @@
       }
       case 'newGame': {
         if (s.step !== 'final') return err('Game still running');
-        Object.assign(s, newGame(s.names));
+        Object.assign(s, newGame(s.names, s.variant));
         return OK;
       }
     }
@@ -187,26 +198,73 @@
   }
 
   function resolveBids(s) {
-    const bids = s.pending.bid;
+    const bids = s.pending.bid, v = s.variant, num = b => +b[0];
     [0, 1].forEach(p => (s.bidsLeft[p] = s.bidsLeft[p].filter(b => !bids[p].includes(b))));
-    const sum = bids.flat().reduce((t, b) => t + +b[0], 0);
-    const n = Math.max(0, Math.ceil(sum / 4 - 0.5)); // nearest whole number, .5 rounds down
-    s.phaseInfo = { phase: s.phase, bids: bids.map(x => x.slice()), sum, n };
+    const sum = bids.flat().reduce((t, b) => t + num(b), 0);
+    const targets = [0, 1].map(p => [0, 1].map(h => passTarget(v, s.phase, h, bids[p][h])));
+    let counts, summary;
+    if (v === 'even') {
+      const n = Math.max(0, Math.ceil(sum / 4 - 0.5)); // nearest whole number, .5 rounds down
+      counts = [[n, n], [n, n]];
+      summary = `Total ${sum} ÷ 4 = ${+(sum / 4).toFixed(2)}, so each hand passes ${n}.`;
+    } else if (v === 'bids') {
+      const total = Math.floor(sum / 2);
+      counts = [0, 1].map(p => splitByBids(total, bids[p]));
+      summary = `Total ${sum} ÷ 2 = ${+(sum / 2).toFixed(1)}, so each player passes ${total}.`;
+    } else {
+      // Each of my hands swaps with one of theirs; the pair passes the average of its two bids.
+      // A .5 rounds down if the two cards share a symbol, up if they differ.
+      counts = [[0, 0], [0, 0]];
+      const parts = [];
+      for (const h of [0, 1]) {
+        const t = targets[0][h], b0 = bids[0][h], b1 = bids[1][t];
+        const avg = (num(b0) + num(b1)) / 2;
+        const n = avg % 1 ? (b0[1] === b1[1] ? Math.floor(avg) : Math.ceil(avg)) : avg;
+        counts[0][h] = n; counts[1][t] = n;
+        parts.push([h, t, b0, b1, avg, n]);
+      }
+      s.swapParts = parts;
+    }
+    s.phaseInfo = { phase: s.phase, bids: bids.map(x => x.slice()), sum, counts, targets };
     [0, 1].forEach(p => {
-      const me = bids[p], th = bids[1 - p];
-      log(s, p, `Pass ${s.phase} bids: you A ${bidLabel(me[0])}, B ${bidLabel(me[1])}; them A ${bidLabel(th[0])}, B ${bidLabel(th[1])}. ` +
-        `Total ${sum} ÷ 4 = ${+(sum / 4).toFixed(2)}, so each hand passes ${n}.`);
+      const me = bids[p], th = bids[1 - p], L = b => bidLabel(b, v);
+      let line = `Pass ${s.phase} bids: you A ${L(me[0])}, B ${L(me[1])}; them A ${L(th[0])}, B ${L(th[1])}. `;
+      if (v === 'original') {
+        line += `Direction ${dirLabel(ORIGINAL_DIRS[s.phase - 1])}. ` + s.swapParts.map(([h, t, b0, b1, avg, n]) => {
+          const [mh, th2, mb, tb] = p === 0 ? [h, t, b0, b1] : [t, h, b1, b0];
+          return `Your ${HN[mh]} ↔ their ${HN[th2]}: (${num(mb)}+${num(tb)})÷2 = ${avg}` +
+            (avg % 1 ? ` → ${mb[1] === tb[1] ? 'same symbol, down' : 'different symbols, up'}` : '') + ` = ${n} each way`;
+        }).join('; ') + '.';
+      } else {
+        line += summary + (v === 'bids' ? ` You pass ${counts[p][0]} from A and ${counts[p][1]} from B; they pass ${counts[1 - p][0]} from A and ${counts[1 - p][1]} from B.` : '');
+      }
+      log(s, p, line);
     });
-    if (n === 0) { logBoth(s, 'Nobody passes this time.'); nextPhase(s); }
+    if (counts.flat().every(n => n === 0)) { logBoth(s, 'Nobody passes this time.'); nextPhase(s); }
     else s.step = 'pass';
   }
 
+  // Split a player's total between their hands in proportion to their two bids.
+  // Exact halves: the higher bid passes the extra; equal bids → the ✕ hand. Max 5 per hand.
+  function splitByBids(total, bids) {
+    const a = +bids[0][0], b = +bids[1][0];
+    const share = a + b ? total * a / (a + b) : total / 2;
+    let x;
+    if (share % 1 === 0.5) {
+      const extraToA = a !== b ? a > b : bids[0][1] === 'X';
+      x = extraToA ? Math.ceil(share) : Math.floor(share);
+    } else x = Math.round(share);
+    x = Math.min(5, Math.max(total - 5, x));
+    return [x, total - x];
+  }
+
   function resolvePass(s) {
-    const bids = s.phaseInfo.bids, moves = [];
+    const moves = [];
     for (const p of [0, 1]) for (const h of [0, 1]) {
       const cards = s.pending.pass[p][h];
+      if (!cards.length) continue;
       s.hands[p][h] = s.hands[p][h].filter(c => !cards.includes(c));
-      moves.push({ p, h, t: target(h, bids[p][h]), cards });
+      moves.push({ p, h, t: s.phaseInfo.targets[p][h], cards });
     }
     for (const m of moves) {
       s.hands[1 - m.p][m.t].push(...m.cards);
@@ -220,7 +278,7 @@
       s.step = 'alloc';
       [0, 1].forEach(p => {
         const h = s.allocNeed[p];
-        if (h !== null) log(s, p, `Both batches landed in your ${HN[h]}. Choose 5 to keep; the rest go to your ${HN[1 - h]}.`);
+        if (h !== null) log(s, p, `Your ${HN[h]} has ${s.hands[p][h].length} cards. Choose 5 to keep; the rest go to your ${HN[1 - h]}.`);
       });
     } else nextPhase(s);
   }
@@ -289,7 +347,8 @@
     const o = 1 - seat, known = [[], [], []];
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
-      seat, names: s.names, round: s.round, phase: s.phase, step: s.step,
+      seat, names: s.names, variant: s.variant,
+      dir: s.variant === 'original' ? ORIGINAL_DIRS[s.phase - 1] : null, round: s.round, phase: s.phase, step: s.step,
       myHands: s.hands[seat], oppCounts: s.hands[o].map(h => h.length), known,
       bidsLeft: s.bidsLeft, phaseInfo: s.phaseInfo, lastPhaseInfo: s.lastPhaseInfo,
       myBid: s.pending.bid[seat], oppBidDone: !!s.pending.bid[o],
@@ -301,6 +360,6 @@
     }));
   }
 
-  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, handName, cmp, fmt, fmtList, bidLabel, target, rv, HN, MATCH_NAMES, ALL_BIDS };
+  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, handName, cmp, fmt, fmtList, bidLabel, dirLabel, target, passTarget, VARIANTS, ORIGINAL_DIRS, splitByBids, rv, HN, MATCH_NAMES, ALL_BIDS };
   if (typeof module !== 'undefined') module.exports = root.PassPoker;
 })(typeof window !== 'undefined' ? window : globalThis);

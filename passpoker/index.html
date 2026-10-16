@@ -80,6 +80,8 @@ details.journal li.r { color: var(--muted); }
 .big { font-size: 20px; font-weight: 700; }
 #toast { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 8px 14px; border-radius: 8px; display: none; }
 .rules { font-size: 14px; }
+.variants { border: 1px solid var(--line); border-radius: 8px; margin: 10px 0; padding: 8px 12px; font-size: 14px; }
+.variants label { display: block; margin: 6px 0; }
 @media (max-width: 520px) {
   main { padding: 12px; }
   .hands { gap: 6px; }
@@ -105,6 +107,11 @@ details.journal li.r { color: var(--muted); }
   <section id="lobby">
     <div class="panel">
       <div class="row"><label>Your name <input type="text" id="name" maxlength="16" placeholder="Name"></label></div>
+      <fieldset class="variants"><legend>Version <span class="muted">(the host's choice is used)</span></legend>
+        <label><input type="radio" name="variant" value="even" checked> <b>Even split</b>: every hand passes the average of all 4 bids.</label>
+        <label><input type="radio" name="variant" value="bids"> <b>Split by your bids</b>: each player passes half the bid total, divided between their hands in proportion to their own two bids.</label>
+        <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
+      </fieldset>
       <div class="row"><button class="btn" id="hostBtn">Create a room</button><span class="muted">and send the code to your opponent</span></div>
       <div class="row"><input type="text" id="joinCode" maxlength="4" placeholder="CODE" style="width:90px;text-transform:uppercase"><button class="btn" id="joinBtn">Join room</button></div>
       <div class="row" id="resumeRow" hidden><button class="btn ghost" id="resumeBtn"></button></div>
@@ -115,9 +122,11 @@ details.journal li.r { color: var(--muted); }
       <ul>
         <li>Each player gets two 5-card hands (A and B) and 10 bid cards: 0–4 with ‖, and 0–4 with ✕.</li>
         <li>Each round has 3 passes. For each pass, both players secretly put a bid card on each hand. Bid cards used in a round don't come back until the next round.</li>
-        <li>The 4 numbers are added up and divided by 4, then rounded to the nearest whole number (.5 rounds down). Every hand passes that many cards.</li>
+        <li><b>Even split:</b> the 4 numbers are added up and divided by 4, then rounded to the nearest whole number (.5 rounds down). Every hand passes that many cards.</li>
         <li>‖ sends straight across to the mirror hand (your A to their A). ✕ crosses over (your A to their B).</li>
-        <li>If both of your batches land in one of their hands, they choose 5 to keep there in secret. The rest go to their other hand.</li>
+        <li><b>Split by your bids:</b> each player passes half the bid total (.5 rounds down). That's split between your two hands in proportion to your own two bids (4 and 1 with 3 to pass → 2 and 1). On an exact half, the hand with the higher bid passes the extra card; with equal bids, the ✕ hand does. A hand passes at most 5, and any extra comes from the other hand.</li>
+        <li><b>Original:</b> the passes always go ✕, then ‖, then ✕, and bid cards are ● or ▲ instead. Each of your hands swaps with one of theirs, and both pass the average of those two bids. An average ending in .5 rounds down if the two cards share a symbol, and up if they differ.</li>
+        <li>If a hand ends a pass with more than 5 cards, its owner chooses 5 to keep there in secret. The rest go to their other hand.</li>
         <li>After 3 passes there are 3 matchups: high hand vs high hand, low vs low, and best 5 of all 10 cards vs best 5 of all 10.</li>
         <li>On a tie, the top card of the deck is flipped and added to both hands. If it's still tied, a coin flip decides.</li>
         <li>For each matchup, the winner picks a card from that matchup's 10 cards, then the loser picks. After the round, each player keeps 3 cards.</li>
@@ -131,7 +140,7 @@ details.journal li.r { color: var(--muted); }
 </main>
 <div id="toast"></div>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="game.js?v=1"></script>
-<script src="app.js?v=1"></script>
+<script src="game.js?v=2"></script>
+<script src="app.js?v=2"></script>
 </body>
 </html>

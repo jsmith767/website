@@ -2,7 +2,9 @@
 // 'host' (owns the state, seat 0) and 'guest' (seat 1, receives views over PeerJS).
 (function () {
   const G = window.PassPoker;
-  const { HN, fmt, bidLabel, target, MATCH_NAMES } = G;
+  const { HN, fmt, MATCH_NAMES, VARIANTS } = G;
+  let curVariant = 'even';
+  const bidLabel = b => G.bidLabel(b, curVariant);
   const $ = s => document.querySelector(s);
   const PREFIX = 'passpoker-v1-';
   const HOST_KEY = 'passpoker-host', NAME_KEY = 'passpoker-name';
@@ -41,19 +43,23 @@
     const key = `${v.round}.${v.phase}.${v.step}`;
     if (uiKey[me] !== key) { uiKey[me] = key; ui[me] = freshUI(); }
     const u = ui[me];
-    const pi = v.phaseInfo, n = pi ? pi.n : 0;
+    curVariant = v.variant;
+    const pi = v.phaseInfo;
+    const cnt = pi ? pi.counts[me] : [0, 0];
+    // Where my hand hh would send cards with bid b (in 'original' the pass number sets direction).
+    const tgt = (hh, b) => G.passTarget(v.variant, v.phase, hh, b || '0P');
     const playing = ['bid', 'pass', 'alloc'].includes(v.step);
 
     // status line
     let status = '', waiting = false;
     if (v.step === 'bid') {
       if (v.myBid) { status = `Waiting for ${opName} to choose bids…`; waiting = true; }
-      else status = `Pass ${v.phase} of 3: choose a bid card for each hand.` + (v.oppBidDone ? ` (${opName} is ready)` : '');
+      else status = `Pass ${v.phase} of 3${v.dir ? ` (${G.dirLabel(v.dir)})` : ''}: choose a bid card for each hand.` + (v.oppBidDone ? ` (${opName} is ready)` : '');
     } else if (v.step === 'pass') {
       if (v.myPassDone) { status = `Waiting for ${opName} to choose cards to pass…`; waiting = true; }
-      else status = `Each hand passes ${n}. Choose ${n} card${n > 1 ? 's' : ''} from each of your hands.` + (v.oppPassDone ? ` (${opName} is ready)` : '');
+      else status = `Choose ${cnt[0]} from your A and ${cnt[1]} from your B to pass.` + (v.oppPassDone ? ` (${opName} is ready)` : '');
     } else if (v.step === 'alloc') {
-      if (v.allocNeed !== null && !v.allocDone) status = `Both batches landed in your ${HN[v.allocNeed]}. Choose the 5 cards to keep there; the rest go to your ${HN[1 - v.allocNeed]}.`;
+      if (v.allocNeed !== null && !v.allocDone) status = `Your ${HN[v.allocNeed]} has ${v.myHands[v.allocNeed].length} cards. Choose the 5 to keep there; the rest go to your ${HN[1 - v.allocNeed]}.`;
       else { status = `Waiting for ${opName} to rearrange their hands…`; waiting = true; }
     } else if (v.step === 'draft') {
       const t = v.draft.order[v.draft.idx];
@@ -68,6 +74,7 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
+    h += `<div class="info muted">Version: ${esc(VARIANTS[v.variant])}</div>`;
 
     // opponent row
     h += `<div class="info"><b>${opName}</b><span>Bid cards left: ${v.bidsLeft[op].map(b => bidChip(b, { cls: 'small' })).join(' ') || 'none'}</span>` +
@@ -76,16 +83,16 @@
       h += '<div class="hands">' + [0, 1].map(hh => {
         const known = v.known[hh], unknown = Math.max(0, v.oppCounts[hh] - known.length);
         let note = '';
-        if (pi) note = `Their bid <b>${bidLabel(pi.bids[op][hh])}</b> → your ${HN[target(hh, pi.bids[op][hh])]}`;
+        if (pi) note = `Their bid <b>${bidLabel(pi.bids[op][hh])}</b> → passes ${pi.counts[op][hh]} to your ${HN[pi.targets[op][hh]]}`;
         return `<div class="hand opp"><div class="lab"><b>Their ${HN[hh]}</b><span class="muted">${v.oppCounts[hh]} card${v.oppCounts[hh] === 1 ? "" : "s"}</span></div>
           <div class="cards">${known.map(c => cardHTML(c, { cls: 'known', tag: 'yours' })).join('')}${backHTML().repeat(unknown)}</div>
           ${note ? `<div class="note">${note}</div>` : ''}</div>`;
       }).join('') + '</div>';
       if (v.known[2].length) h += `<div class="hand opp"><div class="lab"><b>Yours, somewhere in their hands</b><span class="muted">they sorted an overflow</span></div><div class="cards">${v.known[2].map(c => cardHTML(c, { cls: 'known' })).join('')}</div></div>`;
-      if (pi) h += `<div class="info muted">Bids total ${pi.sum} ÷ 4 = ${+(pi.sum / 4).toFixed(2)} → <b>&nbsp;each hand passes ${pi.n}</b></div>`;
+      if (pi) h += `<div class="info muted"><span>${passSummary(pi, me, v.variant)}</span></div>`;
       else if (v.lastPhaseInfo) {
         const lp = v.lastPhaseInfo;
-        h += `<div class="info muted">Last pass: you ${lp.bids[me].map(bidLabel).join(' / ')}, them ${lp.bids[op].map(bidLabel).join(' / ')} → ${lp.n} each</div>`;
+        h += `<div class="info muted">Last pass: you ${lp.bids[me].map(bidLabel).join(' / ')} passed ${lp.counts[me].join(' / ')}; them ${lp.bids[op].map(bidLabel).join(' / ')} passed ${lp.counts[op].join(' / ')}</div>`;
       }
 
       // my hands
@@ -95,20 +102,19 @@
         let cardsHTML, extra = '';
         if (v.step === 'pass' && !v.myPassDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'passcard', h: hh, sel: u.pass[hh].includes(c) })).join('');
-          const t = target(hh, pi.bids[me][hh]);
-          extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[t]} · selected ${u.pass[hh].length}/${n}</div>`;
+          extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[pi.targets[me][hh]]} · selected ${u.pass[hh].length}/${cnt[hh]}</div>`;
         } else if (v.step === 'alloc' && v.allocNeed === hh && !v.allocDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'keepcard', h: hh, sel: u.keep.includes(c) })).join('');
           extra = `<div class="note">Keeping ${u.keep.length}/5</div>`;
         } else {
           cardsHTML = cards.map(c => cardHTML(c)).join('');
-          if (pi) extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[target(hh, pi.bids[me][hh])]}</div>`;
+          if (pi) extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → passes ${cnt[hh]} to their ${HN[pi.targets[me][hh]]}</div>`;
         }
         if (v.step === 'bid' && !v.myBid) {
           extra = `<div class="bids">${v.bidsLeft[me].map(b => bidChip(b, { act: 'bidpick', h: hh, cls: u.bid[hh] === b ? 'sel' : u.bid[1 - hh] === b ? 'other' : '' })).join('')}</div>` +
-            (u.bid[hh] ? `<div class="note">${bidLabel(u.bid[hh])} → passes to their ${HN[target(hh, u.bid[hh])]}</div>` : '<div class="note">Pick a bid card for this hand</div>');
+            (u.bid[hh] ? `<div class="note">${bidLabel(u.bid[hh])} → passes to their ${HN[tgt(hh, u.bid[hh])]}</div>` : `<div class="note">Pick a bid card for this hand${v.dir ? ` (goes to their ${HN[tgt(hh)]})` : ''}</div>`);
         } else if (v.step === 'bid' && v.myBid) {
-          extra = `<div class="note">Locked: <b>${bidLabel(v.myBid[hh])}</b> → their ${HN[target(hh, v.myBid[hh])]}</div>`;
+          extra = `<div class="note">Locked: <b>${bidLabel(v.myBid[hh])}</b> → their ${HN[tgt(hh, v.myBid[hh])]}</div>`;
         }
         return `<div class="hand"><div class="lab"><b>Your ${HN[hh]}</b><span class="muted">${evName}</span></div><div class="cards">${cardsHTML}</div>${extra}</div>`;
       }).join('') + '</div>';
@@ -116,7 +122,7 @@
       // action button
       let btn = '';
       if (v.step === 'bid' && !v.myBid) btn = `<button class="btn" data-act="bidlock" ${u.bid[0] && u.bid[1] ? '' : 'disabled'}>Lock in bids</button>`;
-      if (v.step === 'pass' && !v.myPassDone) btn = `<button class="btn" data-act="passlock" ${u.pass.every(x => x.length === n) ? '' : 'disabled'}>Pass these cards</button>`;
+      if (v.step === 'pass' && !v.myPassDone) btn = `<button class="btn" data-act="passlock" ${u.pass.every((x, i) => x.length === cnt[i]) ? '' : 'disabled'}>Pass these cards</button>`;
       if (v.step === 'alloc' && v.allocNeed !== null && !v.allocDone) btn = `<button class="btn" data-act="keeplock" ${u.keep.length === 5 ? '' : 'disabled'}>Keep these 5</button>`;
       if (btn) h += `<div class="actions">${btn}</div>`;
     }
@@ -131,6 +137,13 @@
     const log = v.log.slice().reverse().map(l => `<li class="${/^Round \d dealt|^Pass \d of 3/.test(l.msg) ? 'r' : ''}">${esc(l.msg)}</li>`).join('');
     h += `<details class="journal panel" open><summary><b>What you know</b> <span class="muted">(newest first)</span></summary><ol reversed>${log}</ol></details>`;
     return `<div class="seat" data-seat="${me}">${h}</div>`;
+  }
+
+  function passSummary(pi, me, variant) {
+    const op = 1 - me, c = pi.counts;
+    if (variant === 'even') return `Bids total ${pi.sum} ÷ 4 = ${+(pi.sum / 4).toFixed(2)} → <b>each hand passes ${c[me][0]}</b>`;
+    if (variant === 'bids') return `Bids total ${pi.sum} ÷ 2 → <b>each player passes ${c[me][0] + c[me][1]}</b>: you ${c[me][0]} from A, ${c[me][1]} from B; them ${c[op][0]} from A, ${c[op][1]} from B`;
+    return [0, 1].map(h => `Your ${HN[h]} ↔ their ${HN[pi.targets[me][h]]}: <b>${c[me][h]} each way</b>`).join(' · ');
   }
 
   function showdownHTML(v) {
@@ -197,8 +210,8 @@
         return render();
       }
       case 'passcard': {
-        const sel = u.pass[+d.h], n = v.phaseInfo.n, i = sel.indexOf(d.c);
-        if (i >= 0) sel.splice(i, 1); else { sel.push(d.c); if (sel.length > n) sel.shift(); }
+        const sel = u.pass[+d.h], n = v.phaseInfo.counts[seat][+d.h], i = sel.indexOf(d.c);
+        if (i >= 0) sel.splice(i, 1); else if (n) { sel.push(d.c); if (sel.length > n) sel.shift(); }
         return render();
       }
       case 'keepcard': {
@@ -268,7 +281,7 @@
   function onHostData(m) {
     if (m.t === 'hello') {
       const guestName = String(m.name || 'Guest').slice(0, 16);
-      if (!state) state = G.newGame([myName, guestName]); else state.names[1] = guestName;
+      if (!state) state = G.newGame([myName, guestName], chosenVariant()); else state.names[1] = guestName;
       hostBar('Connected to ' + guestName);
       changed();
     } else if (m.t === 'act' && state) {
@@ -309,20 +322,22 @@
   function startPlaytest() {
     mode = 'playtest';
     hideLobby();
-    state = G.newGame([myName || 'Player 1', 'Player 2']);
+    state = G.newGame([myName || 'Player 1', 'Player 2'], chosenVariant());
     netbar('<span class="muted">Playtest: you control both seats.</span><button class="btn ghost" id="restart">Restart</button>');
-    $('#restart').onclick = () => { state = G.newGame(state.names); render(); };
+    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant); render(); };
     render();
   }
 
   function hideLobby() { $('#lobby').hidden = true; }
+
+  function chosenVariant() { const el = document.querySelector('input[name=variant]:checked'); return el ? el.value : 'even'; }
 
   // ---------- lobby ----------
   const params = new URLSearchParams(location.search);
   $('#name').value = store.get(NAME_KEY) || '';
   if (params.get('join')) $('#joinCode').value = params.get('join').toUpperCase();
   const saved = store.get(HOST_KEY);
-  if (saved && saved.state && saved.state.step !== 'final') {
+  if (saved && saved.state && saved.state.variant && saved.state.step !== 'final') {
     $('#resumeRow').hidden = false;
     $('#resumeBtn').textContent = `Resume hosting room ${saved.room} (round ${saved.state.round})`;
   }
