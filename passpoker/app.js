@@ -63,7 +63,7 @@
       else { status = `Waiting for ${opName} to rearrange their hands…`; waiting = true; }
     } else if (v.step === 'draft') {
       const t = v.draft.order[v.draft.idx];
-      if (t.seat === me) status = `Your pick (${v.draft.idx + 1} of 6): take a card from ${MATCH_NAMES[t.m]}.`;
+      if (t.seat === me) status = `Your pick (${v.draft.idx + 1} of ${v.draft.order.length}): take a card from ${MATCH_NAMES[t.m]}.`;
       else { status = `${opName} is picking from ${MATCH_NAMES[t.m]}…`; waiting = true; }
     } else if (v.step === 'between') {
       if (v.ready[me]) { status = `Waiting for ${opName} to start round 2…`; waiting = true; }
@@ -74,7 +74,7 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
-    h += `<div class="info muted">Version: ${esc(VARIANTS[v.variant])}</div>`;
+    h += `<div class="info muted">Version: ${v.spoils ? 'Spoils (even split, winner takes two)' : esc(VARIANTS[v.variant])}</div>`;
 
     // opponent row
     h += `<div class="info"><b>${opName}</b><span>Bid cards left: ${v.bidsLeft[op].map(b => bidChip(b, { cls: 'small' })).join(' ') || 'none'}</span>` +
@@ -172,11 +172,13 @@
     const me = v.seat, op = 1 - me, f = v.final;
     const side = (p, who) => {
       const r = f.res[p];
-      const cards = v.kept[p].map(c => cardHTML(c, r.left === c ? { cls: 'dim', tag: '6th' } : { cls: 'best' })).join('');
-      return `<div class="match"><div class="side"><span class="${f.winner === p ? 'win' : ''}">${who}</span><div><div class="cards">${cards}</div><div class="note">${esc(r.name)} · 6th card ${fmt(r.left)}</div></div></div></div>`;
+      const six = v.kept[p].length === 6;
+      const cards = v.kept[p].map(c => cardHTML(c, r.cards.includes(c) ? { cls: 'best' } : { cls: 'dim', tag: six ? '6th' : '' })).join('');
+      const extra = six ? `6th card ${fmt(r.left)}` : `${v.kept[p].length} cards; tiebreakers ${r.leftovers.map(fmt).join(' ')}`;
+      return `<div class="match"><div class="side"><span class="${f.winner === p ? 'win' : ''}">${who}</span><div><div class="cards">${cards}</div><div class="note">${esc(r.name)} · ${extra}</div></div></div></div>`;
     };
-    const res = f.winner === null ? 'Split: same hand and same 6th card.' :
-      `${f.winner === me ? 'You win' : esc(v.names[op]) + ' wins'}${f.by === 'sixth card' ? ' on the 6th card' : ''}.`;
+    const res = f.winner === null ? 'Split: same hand and same tiebreak cards.' :
+      `${f.winner === me ? 'You win' : esc(v.names[op]) + ' wins'}${f.by === 'sixth card' ? (v.spoils ? ' on the leftover cards' : ' on the 6th card') : ''}.`;
     return `<div class="panel"><div class="big">${res}</div>${side(me, 'You')}${side(op, esc(v.names[op]))}
       <div class="actions"><button class="btn" data-act="newgame">New game</button></div></div>`;
   }
@@ -281,7 +283,7 @@
   function onHostData(m) {
     if (m.t === 'hello') {
       const guestName = String(m.name || 'Guest').slice(0, 16);
-      if (!state) state = G.newGame([myName, guestName], chosenVariant()); else state.names[1] = guestName;
+      if (!state) state = newGameFromChoice([myName, guestName]); else state.names[1] = guestName;
       hostBar('Connected to ' + guestName);
       changed();
     } else if (m.t === 'act' && state) {
@@ -322,15 +324,19 @@
   function startPlaytest() {
     mode = 'playtest';
     hideLobby();
-    state = G.newGame([myName || 'Player 1', 'Player 2'], chosenVariant());
+    state = newGameFromChoice([myName || 'Player 1', 'Player 2']);
     netbar('<span class="muted">Playtest: you control both seats.</span><button class="btn ghost" id="restart">Restart</button>');
-    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant); render(); };
+    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils }); render(); };
     render();
   }
 
   function hideLobby() { $('#lobby').hidden = true; }
 
-  function chosenVariant() { const el = document.querySelector('input[name=variant]:checked'); return el ? el.value : 'even'; }
+  function newGameFromChoice(names) {
+    const el = document.querySelector('input[name=variant]:checked'), val = el ? el.value : 'even';
+    // 'spoils' = even split passing + winner of each matchup takes two cards
+    return val === 'spoils' ? G.newGame(names, 'even', { spoils: true }) : G.newGame(names, val);
+  }
 
   // ---------- lobby ----------
   const params = new URLSearchParams(location.search);

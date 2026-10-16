@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pass Poker Playtest Report</title>
+<meta name="robots" content="noindex">
+<style>
+:root { --bg: #f3f1ec; --panel: #fff; --ink: #1d1d1f; --muted: #6b6b70; --line: #dcd8cf; --accent: #2f6f4f; --hi: #e9f3ec; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #17181a; --panel: #222326; --ink: #ececee; --muted: #9a9aa2; --line: #3a3b40; --accent: #6cc196; --hi: #1f3328; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 24px 16px 60px; }
+h1 { font-size: 26px; line-height: 1.2; margin: 0 0 6px; }
+h2 { font-size: 19px; margin: 32px 0 8px; }
+p, li { max-width: 68ch; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.lead { font-size: 17px; }
+.box { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; margin: 14px 0; }
+.verdict { border-left: 4px solid var(--accent); }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 13px; color: var(--muted); font-weight: 600; }
+td.n { text-align: right; white-space: nowrap; }
+th.n { text-align: right; }
+tr.hi td { background: var(--hi); font-weight: 600; }
+.small { font-size: 14px; }
+</style>
+</head>
+<body>
+<main>
+  <p class="muted small"><a href="./">← Back to the game</a></p>
+  <h1>Pass Poker: which version plays best?</h1>
+  <p class="muted small">Playtest report from computer simulations, October 2026. Written by Claude for Julian and their brother.</p>
+
+  <p class="lead">Short answer: of the three versions you've played, <b>Even split</b> has slightly the most depth. But in all three, the passing and bidding barely decide who wins; the draft does. A small change to the draft, called <b>Spoils</b> below, makes the passing game matter a lot. It's now playable as a fourth option.</p>
+
+  <h2>How this was tested</h2>
+  <p>We can't play thousands of games ourselves, so I wrote computer players at different skill levels and had them play each other. Each level adds one skill:</p>
+  <ol>
+    <li><b>Random:</b> does everything at random.</li>
+    <li><b>Drafter:</b> drafts sensibly, picking the card that best builds toward a strong final hand, but bids and passes at random.</li>
+    <li><b>+ Passing:</b> also passes away its weakest cards and sorts overflows well.</li>
+    <li><b>+ Bidding:</b> also bids low on strong hands and high on weak ones, and avoids sending both batches to the same opposing hand.</li>
+    <li><b>+ Denial:</b> also drafts and passes to keep the opponent from completing their hand.</li>
+  </ol>
+  <p>If adding a skill makes a player win clearly more than 50% against the level below it, that skill matters in that version. A game with depth has several skills that each pay off, so there's always more to get better at. The bots are simple, so these numbers are a <i>floor</i>: real players reading each other will find more.</p>
+
+  <h2>The three versions you've played</h2>
+  <p>Win rate of each level against the level below it:</p>
+  <div class="box scroll">
+    <table>
+      <tr><th>Skill added</th><th class="n">Even split</th><th class="n">Split by bids</th><th class="n">Original</th></tr>
+      <tr><td>Drafting (vs random)</td><td class="n">96%</td><td class="n">96%</td><td class="n">96%</td></tr>
+      <tr><td>Passing</td><td class="n">56%</td><td class="n">57%</td><td class="n">53%</td></tr>
+      <tr><td>Bidding</td><td class="n">53%</td><td class="n">51%</td><td class="n">50%</td></tr>
+      <tr><td>Denial</td><td class="n">58%</td><td class="n">55%</td><td class="n">56%</td></tr>
+    </table>
+    <p class="muted small">2,000–4,000 games per number; each is accurate to about ±2 points. Equal bots split 50/50 in every version, so neither seat has an edge.</p>
+  </div>
+
+  <p><b>What this says:</b></p>
+  <ul>
+    <li><b>The draft is where the game is won.</b> A player who drafts well beats a random drafter 96% of the time, in every version.</li>
+    <li><b>Bidding hardly matters.</b> I tried several bidding styles: always low, always high, protect-the-strong-hand, and random. None beat random bidding by more than a few points. The one real edge is in Even split: <i>don't send both batches into the same opposing hand</i>, because the player who has to sort an overflow gets to pick the best 5 of up to 9 cards. That's worth about 4 points.</li>
+    <li><b>Why the passing phase is so weak:</b> every card in both players' hands ends up in a draft pool, so passing doesn't keep cards away from anyone. Winning a matchup only means you pick first instead of second from 10 cards, and the second-best card is usually nearly as good.</li>
+    <li><b>Ranking:</b> Even split is slightly deepest, mainly because the overflow rule adds a real choice. Split by your bids is close behind. Original is the shallowest: its swaps always balance, so there are never overflow decisions, and its passing edge is the smallest.</li>
+  </ul>
+
+  <h2>A fourth version: Spoils</h2>
+  <div class="box verdict">
+    <p style="margin-top:0"><b>The rule change:</b> everything plays like Even split, except that in each matchup's draft, <b>the winner picks first and third</b>. The winner takes two cards, the loser one.</p>
+    <p style="margin-bottom:0">That means you can end the game with anywhere from 6 to 12 cards. The best 5 wins, and if those tie, you compare the leftover cards from highest down. Having more cards gives you more ways to make a strong hand, so <b>every matchup is worth fighting for</b>.</p>
+  </div>
+  <p>The same skill test, with Spoils added to each passing rule:</p>
+  <div class="box scroll">
+    <table>
+      <tr><th>Skill added</th><th class="n">Even split</th><th class="n">Split by bids</th><th class="n">Original</th></tr>
+      <tr><td>Passing</td><td class="n">70%</td><td class="n">71%</td><td class="n">64%</td></tr>
+      <tr><td>Bidding</td><td class="n">61%</td><td class="n">52%</td><td class="n">54%</td></tr>
+      <tr><td>Denial</td><td class="n">61%</td><td class="n">60%</td><td class="n">62%</td></tr>
+    </table>
+    <p class="muted small">1,200–1,500 games per number, about ±3 points.</p>
+  </div>
+  <div class="box scroll">
+    <table>
+      <tr><th>Headline: full-skill bot vs a bot that only drafts well</th><th class="n">Wins</th></tr>
+      <tr><td>Even split (current)</td><td class="n">67%</td></tr>
+      <tr class="hi"><td>Spoils (even split + winner takes two)</td><td class="n">91%</td></tr>
+    </table>
+  </div>
+  <p>With Spoils, every skill pays off, <i>including bidding</i>, which was nearly irrelevant before. Bidding is the theme's signature mechanic, so it should matter. Spoils pairs best with Even split, the only passing rule where the bidding edge also shows up (61%).</p>
+
+  <h2>Where the depth is (so it doesn't get solved)</h2>
+  <ul>
+    <li><b>Bids are secret and simultaneous.</b> There's no single best bid, because the right one depends on what the other person plays. That makes it a reading game, like rock-paper-scissors with stakes, and those don't get solved into one fixed strategy.</li>
+    <li><b>Bid cards run out.</b> Each card is used once per round, so spending your 4s early leaves you without them in pass 3. That's planning across the whole round.</li>
+    <li><b>Round 2 is open information.</b> Both players can see each other's kept cards, so in round 2 you can pass and draft to block what your opponent needs (the "denial" skill above).</li>
+    <li><b>Overflows are a weapon.</b> Making your opponent sort an overflow helps them, and forcing yourself into one helps you. Neither of you controls it alone.</li>
+  </ul>
+
+  <h2>Risks and things to watch</h2>
+  <ul>
+    <li><b>Spoils may be too decisive.</b> Between two equal bots, whoever wins more matchups wins the game 87% of the time (66% in Even split). That's good for skill, but a bad round 1 may feel hard to come back from. If it does, a milder version gives the extra pick only in the <i>Best five of ten</i> matchup.</li>
+    <li><b>Bots aren't people.</b> These players don't bluff, read patterns, or adapt. Real play will have more depth than shown here. The comparison between versions is the useful part.</li>
+  </ul>
+
+  <h2>Recommendation</h2>
+  <p>Play a few games of <b>Spoils</b> against each other. If it feels too swingy, try the milder version above. If you'd rather stay with what you've played, <b>Even split</b> is the deepest of the original three.</p>
+  <p><a href="./">Play Pass Poker →</a></p>
+</main>
+</body>
+</html>

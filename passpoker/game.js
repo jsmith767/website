@@ -80,6 +80,18 @@
     best.name = handName(best.score);
     return best;
   }
+  // Best five of any number of cards; ties broken by the leftover cards, highest first.
+  function bestHand(cards) {
+    if (cards.length === 6) { const b = bestOfSix(cards); b.leftovers = [b.left]; return b; }
+    let best = null;
+    for (const c of combos(cards, 5)) {
+      const sc = eval5(c), left = cards.filter(x => !c.includes(x)).sort((a, b) => rv(b) - rv(a));
+      const d = best ? cmp(sc, best.score) || cmp(left.map(rv), best.leftovers.map(rv)) : 1;
+      if (d > 0) best = { score: sc, cards: c, leftovers: left, left: left[0] };
+    }
+    best.name = handName(best.score);
+    return best;
+  }
   function handName(sc) {
     const [c, a, b] = sc;
     switch (c) {
@@ -96,8 +108,8 @@
   }
 
   // ---------- state ----------
-  function newGame(names, variant) {
-    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', round: 0, kept: [[], []], logs: [[], []], rounds: [] };
+  function newGame(names, variant, opts = {}) {
+    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
     startRound(s);
     return s;
   }
@@ -177,7 +189,7 @@
         log(s, o, `They took ${fmt(a.card)} from ${MATCH_NAMES[turn.m]}.`);
         d.idx++;
         if (d.idx >= d.order.length) {
-          if (s.round === 1) { s.step = 'between'; logBoth(s, 'Round 1 done. Each of you keeps 3 cards.'); }
+          if (s.round === 1) { s.step = 'between'; [0, 1].forEach(q => log(s, q, `Round 1 done. You keep ${s.kept[q].length} cards; they keep ${s.kept[1 - q].length}.`)); }
           else finish(s);
         }
         return OK;
@@ -190,7 +202,7 @@
       }
       case 'newGame': {
         if (s.step !== 'final') return err('Game still running');
-        Object.assign(s, newGame(s.names, s.variant));
+        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils }));
         return OK;
       }
     }
@@ -324,30 +336,31 @@
       return { name: MATCH_NAMES[m], sides: side, winner, tie, pool: [...side[0].cards, ...side[1].cards] };
     });
     s.showdown = { matches };
-    s.draft = { order: matches.flatMap((mt, m) => [{ m, seat: mt.winner }, { m, seat: 1 - mt.winner }]), idx: 0, taken: {} };
+    // Spoils: the winner of each matchup picks first and third (takes two), the loser picks once.
+    s.draft = { order: matches.flatMap((mt, m) => [{ m, seat: mt.winner }, { m, seat: 1 - mt.winner }].concat(s.spoils ? [{ m, seat: mt.winner }] : [])), idx: 0, taken: {} };
     s.step = 'draft';
     matches.forEach(mt => {
       const tb = mt.tie ? ` (tied; flipped ${fmt(mt.tie.card)}${mt.tie.coin !== undefined ? ', still tied, coin flip' : ''})` : '';
       [0, 1].forEach(p => log(s, p, `${mt.name}: ${mt.sides[p].name} vs ${mt.sides[1 - p].name}. ${mt.winner === p ? 'You win' : 'They win'}${tb}.`));
     });
-    logBoth(s, 'Draft: each matchup’s winner picks first.');
+    logBoth(s, s.spoils ? 'Draft: each matchup’s winner picks first and third.' : 'Draft: each matchup’s winner picks first.');
   }
 
   function finish(s) {
-    const res = [0, 1].map(p => bestOfSix(s.kept[p]));
+    const res = [0, 1].map(p => bestHand(s.kept[p]));
     let c = cmp(res[0].score, res[1].score), by = 'hand';
-    if (c === 0) { c = Math.sign(rv(res[0].left) - rv(res[1].left)); by = 'sixth card'; }
+    if (c === 0) { c = cmp(res[0].leftovers.map(rv), res[1].leftovers.map(rv)); by = 'sixth card'; }
     s.final = { res, winner: c > 0 ? 0 : c < 0 ? 1 : null, by };
     s.step = 'final';
     [0, 1].forEach(p => log(s, p, s.final.winner === null ? 'Final: a split.' :
-      `Final: ${s.final.winner === p ? 'you win' : 'they win'} (${res[s.final.winner].name}${by === 'sixth card' ? ', on the 6th card' : ''}).`));
+      `Final: ${s.final.winner === p ? 'you win' : 'they win'} (${res[s.final.winner].name}${by === 'sixth card' ? (s.spoils ? ', on the leftover cards' : ', on the 6th card') : ''}).`));
   }
 
   function viewFor(s, seat) {
     const o = 1 - seat, known = [[], [], []];
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
-      seat, names: s.names, variant: s.variant,
+      seat, names: s.names, variant: s.variant, spoils: s.spoils,
       dir: s.variant === 'original' ? ORIGINAL_DIRS[s.phase - 1] : null, round: s.round, phase: s.phase, step: s.step,
       myHands: s.hands[seat], oppCounts: s.hands[o].map(h => h.length), known,
       bidsLeft: s.bidsLeft, phaseInfo: s.phaseInfo, lastPhaseInfo: s.lastPhaseInfo,
@@ -360,6 +373,6 @@
     }));
   }
 
-  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, handName, cmp, fmt, fmtList, bidLabel, dirLabel, target, passTarget, VARIANTS, ORIGINAL_DIRS, splitByBids, rv, HN, MATCH_NAMES, ALL_BIDS };
+  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, bestHand, handName, cmp, fmt, fmtList, bidLabel, dirLabel, target, passTarget, VARIANTS, ORIGINAL_DIRS, splitByBids, rv, HN, MATCH_NAMES, ALL_BIDS };
   if (typeof module !== 'undefined') module.exports = root.PassPoker;
 })(typeof window !== 'undefined' ? window : globalThis);

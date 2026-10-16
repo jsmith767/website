@@ -103,6 +103,7 @@ details.journal li.r { color: var(--muted); }
 <body>
 <main>
   <h1>Pass Poker <span class="muted" style="font-weight:400;font-size:14px">(working title)</span></h1>
+  <p class="muted" style="margin:0 0 8px;font-size:14px"><a href="report" style="color:inherit">Which version plays best? Read the report</a></p>
 
   <section id="lobby">
     <div class="panel">
@@ -110,6 +111,7 @@ details.journal li.r { color: var(--muted); }
       <fieldset class="variants"><legend>Version <span class="muted">(the host's choice is used)</span></legend>
         <label><input type="radio" name="variant" value="even" checked> <b>Even split</b>: every hand passes the average of all 4 bids.</label>
         <label><input type="radio" name="variant" value="bids"> <b>Split by your bids</b>: each player passes half the bid total, divided between their hands in proportion to their own two bids.</label>
+        <label><input type="radio" name="variant" value="spoils"> <b>Spoils</b> (new): even split passing, but the winner of each matchup takes two cards in the draft. <a href="report">Why?</a></label>
         <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
       </fieldset>
       <div class="row"><button class="btn" id="hostBtn">Create a room</button><span class="muted">and send the code to your opponent</span></div>
@@ -130,6 +132,7 @@ details.journal li.r { color: var(--muted); }
         <li>After 3 passes there are 3 matchups: high hand vs high hand, low vs low, and best 5 of all 10 cards vs best 5 of all 10.</li>
         <li>On a tie, the top card of the deck is flipped and added to both hands. If it's still tied, a coin flip decides.</li>
         <li>For each matchup, the winner picks a card from that matchup's 10 cards, then the loser picks. After the round, each player keeps 3 cards.</li>
+        <li><b>Spoils:</b> passing works like Even split. In each matchup's draft the winner picks, then the loser, then the winner again, so you can end with 6 to 12 cards. The best 5 wins; if those tie, compare the leftover cards from highest down.</li>
         <li>Round 2 is played the same way, with a fresh deck that leaves out the kept cards. The best 5 of your 6 kept cards wins. If those tie, the higher 6th card wins.</li>
       </ul>
     </details>
@@ -140,7 +143,7 @@ details.journal li.r { color: var(--muted); }
 </main>
 <div id="toast"></div>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="game.js?v=2"></script>
-<script src="app.js?v=2"></script>
+<script src="game.js?v=3"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
