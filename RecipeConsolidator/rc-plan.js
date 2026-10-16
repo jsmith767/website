@@ -712,6 +712,24 @@ async function rcSendShare(idStr) {
     }
 }
 
+// Contributors (people who shared a collection) get their own filter chip, first in the row
+function rcRenderContributorChips() {
+    const row = document.getElementById('rcQuickFilters');
+    if (!row) return;
+    const names = [...new Set(recipes.map(r => r.contributor).filter(Boolean))].sort();
+    row.querySelectorAll('.rc-contributor-chip').forEach(b => { if (!names.includes(b.dataset.tag)) b.remove(); });
+    names.slice().reverse().forEach(name => {
+        if (row.querySelector(`.rc-contributor-chip[data-tag="${CSS.escape(name)}"]`)) return;
+        const b = document.createElement('button');
+        b.className = 'rc-chip-btn rc-contributor-chip';
+        b.dataset.tag = name;
+        b.innerHTML = `<i class="fas fa-user-friends"></i> ${escapeHtml(name)}`;
+        b.title = `Recipes shared by ${name}`;
+        b.addEventListener('click', () => toggleTagFilter(name));
+        row.insertBefore(b, row.firstChild);
+    });
+}
+
 // Recipe rows show a few useful tags, not all of them (the full set still powers search and filters)
 const RC_COURSE_TAGS = ['breakfast', 'lunch', 'dinner', 'main', 'snack', 'dessert', 'soup', 'salad', 'bowl', 'sauce', 'dressing', 'dip', 'hummus', 'add-on'];
 const RC_DIET_TAGS = ['gluten-free', 'nut-free', 'soy-free'];
@@ -721,7 +739,7 @@ getRecipeTagsDisplay = function (recipe) {
     const tags = recipe.tags || [];
     if (!tags.length) return '';
     const course = tags.find(t => RC_COURSE_TAGS.includes(t));
-    const rank = t => selectedTagFilters.has(t) ? 0 : t === course ? 1 : RC_DIET_TAGS.includes(t) ? 2
+    const rank = t => selectedTagFilters.has(t) ? 0 : t === recipe.contributor ? 1 : t === course ? 1 : RC_DIET_TAGS.includes(t) ? 2
         : (RC_COURSE_TAGS.includes(t) || ['vegan', 'oil-free'].includes(t)) ? 4 : 3;
     const shown = tags.slice().sort((a, b) => rank(a) - rank(b) || tags.indexOf(a) - tags.indexOf(b)).slice(0, RC_ROW_TAG_LIMIT);
     const chip = tag => {
@@ -737,6 +755,7 @@ getRecipeTagsDisplay = function (recipe) {
 const rcOriginalUpdateRecipeList = updateRecipeList;
 updateRecipeList = function () {
     rcOriginalUpdateRecipeList();
+    rcRenderContributorChips();
     document.querySelectorAll('#rcQuickFilters [data-tag]').forEach(b => {
         b.classList.toggle('is-on', selectedTagFilters.has(b.dataset.tag));
         b.setAttribute('aria-pressed', selectedTagFilters.has(b.dataset.tag) ? 'true' : 'false');
@@ -788,12 +807,13 @@ async function rcUpdateSavedStarterRecipes() {
             if (starter.openSteps && !recipe.openSteps) { recipe.openSteps = true; changed = true; }
             if (starter.lockedSteps && !recipe.lockedSteps) { recipe.lockedSteps = true; changed = true; }
         }
-        // New trail recipes join libraries that already have the starter set
+        // New trail and contributor recipes join libraries that already have the starter set
         const haveNames = new Set(recipes.map(r => r.name.toLowerCase()));
         const hasStarterSet = starters.some(r => haveNames.has(r.name.toLowerCase()));
         if (hasStarterSet) {
             for (const starter of starters) {
-                if (!(starter.tags || []).includes('trail') || haveNames.has(starter.name.toLowerCase())) continue;
+                const isNewSet = (starter.tags || []).includes('trail') || starter.contributor;
+                if (!isNewSet || haveNames.has(starter.name.toLowerCase())) continue;
                 recipes.push(Object.assign({}, starter, { id: Date.now() + Math.random() }));
                 changed = true;
             }

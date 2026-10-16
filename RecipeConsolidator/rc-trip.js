@@ -640,6 +640,11 @@ updateRecipeList = function () {
     document.querySelectorAll('#recipeList .recipe-item').forEach(item => {
         const r = rcRecipeById(item.dataset.recipeId);
         if (r && !rcStepsLocked(r)) item.querySelectorAll('.recipe-action-btn .fa-lock').forEach(i => i.remove());
+        // Recipes saved as just a link say so instead of "0 ingredients"
+        if (r && !(r.ingredients || []).length && r.sourceUrl) {
+            const count = item.querySelector('.recipe-row-summary > div > div:last-child > span');
+            if (count && /^0 ingredient/.test(count.textContent)) { count.textContent = 'Link only'; count.classList.add('rc-link-only'); }
+        }
         // Recipes that link to where they came from get a button to the full steps
         const actions = item.querySelector('.recipe-item-actions');
         if (r && actions && /^https?:\/\//i.test(r.sourceUrl || '') && !actions.querySelector('.rc-source-btn')) {

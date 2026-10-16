@@ -793,3 +793,9 @@ html.rc-trip-mode {
 .rc-share-check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.4; margin: 4px 0 8px; cursor: pointer; }
 .rc-share-check input { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Contributor chips and tags */
+.rc-contributor-chip i { font-size: 11px; color: var(--accent-ink); }
+.rc-contributor-chip.is-on i { color: #fff; }
+.rc-link-only { color: var(--muted); font-style: italic; }
+@media (max-width: 720px) { .recipe-row-summary > div > div:last-child > span.rc-link-only { display: inline !important; } }
