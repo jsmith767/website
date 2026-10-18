@@ -234,7 +234,7 @@
     seats.className = mode === 'playtest' ? 'two' : '';
     if (mode === 'playtest') {
       seats.innerHTML = [0, 1].map(s => `<div><div class="seathead">Seat ${s + 1}: ${esc(state.names[s])}</div>${seatHTML(G.viewFor(state, s))}</div>`).join('');
-    } else if (mode === 'host') {
+    } else if (mode === 'host' || mode === 'bot') {
       seats.innerHTML = state ? seatHTML(G.viewFor(state, 0)) : '';
     } else if (mode === 'guest') {
       seats.innerHTML = guestView ? seatHTML(guestView) : '';
@@ -301,6 +301,7 @@
 
   function changed() {
     if (mode === 'host') { store.set(HOST_KEY, { room, name: myName, state }); sendView(); }
+    if (mode === 'bot') scheduleBot();
     render();
   }
 
@@ -388,6 +389,30 @@
     render();
   }
 
+  // ---------- computer opponent (seat 1) ----------
+  let botLevel = 'hard', botTimer = null;
+  function scheduleBot() {
+    clearTimeout(botTimer);
+    botTimer = setTimeout(() => {
+      const a = window.PassPokerBot.decide(state, 1, window.PassPokerBot.LEVELS[botLevel]);
+      if (!a) return;
+      a.seat = 1;
+      G.act(state, a);
+      render();
+      scheduleBot(); // it may have more to do (e.g. two draft picks in a row)
+    }, 450);
+  }
+  function startBot() {
+    mode = 'bot';
+    hideLobby();
+    botLevel = $('#botLevel').value;
+    const label = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }[botLevel];
+    state = newGameFromChoice([myName || 'You', `Computer (${label})`]);
+    netbar(`<span class="muted">Playing the computer (${label}).</span><button class="btn ghost" id="restart">Restart</button>`);
+    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority, offer: state.offer, swap: state.swap }); changed(); };
+    changed();
+  }
+
   function hideLobby() { $('#lobby').hidden = true; }
 
   function newGameFromChoice(names) {
@@ -420,6 +445,7 @@
     if (needName()) startGuest(code);
   };
   $('#playtestBtn').onclick = () => { myName = $('#name').value.trim(); startPlaytest(); };
+  $('#botBtn').onclick = () => { myName = $('#name').value.trim(); startBot(); };
 
   window.PassPokerDebug = { get state() { return state; } };
 })();
