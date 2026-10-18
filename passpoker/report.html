@@ -95,6 +95,27 @@ tr.hi td { background: var(--hi); font-weight: 600; }
   </div>
   <p>With Spoils, every skill pays off, <i>including bidding</i>, which was nearly irrelevant before. Bidding is the theme's signature mechanic, so it should matter. Spoils pairs best with Even split, the only passing rule where the bidding edge also shows up (61%).</p>
 
+  <h2>How does that compare to cribbage?</h2>
+  <p>To find out what "a lot of skill" looks like, I built cribbage (two players, to 121) with the same kind of skill ladder and ran 4,000 games per matchup.</p>
+  <div class="box scroll">
+    <table>
+      <tr><th>Cribbage skill added</th><th class="n">Wins vs level below</th></tr>
+      <tr><td>Keeps the best-scoring 4 cards (vs random)</td><td class="n">95%</td></tr>
+      <tr><td>Discards smarter, counting the starter card and whose crib it is</td><td class="n">63%</td></tr>
+      <tr><td>Pegging: plays for points now</td><td class="n">64%</td></tr>
+      <tr><td>Pegging: also avoids setting up the opponent</td><td class="n">59%</td></tr>
+    </table>
+  </div>
+  <div class="box scroll">
+    <table>
+      <tr><th>Game</th><th class="n">Each deeper skill</th></tr>
+      <tr><td>Cribbage</td><td class="n">59–64%</td></tr>
+      <tr><td>Pass Poker, original three versions</td><td class="n">50–58%</td></tr>
+      <tr class="hi"><td>Pass Poker, Spoils</td><td class="n">61–70%</td></tr>
+    </table>
+  </div>
+  <p>The "vs random" number is about 95% in any real game, so it doesn't tell you much. The useful number is what each <i>deeper</i> skill is worth. Cribbage sits at about 60%, Spoils is at or a little above that, and the original versions are below it. One difference: a cribbage game is about 9 deals, and small edges add up over more deals. A Pass Poker game is 2 rounds, so any single game is more about the cards you're dealt, even when the skill is there. The skill shows up over many games.</p>
+
   <h2>Where the depth is (so it doesn't get solved)</h2>
   <ul>
     <li><b>Bids are secret and simultaneous.</b> There's no single best bid, because the right one depends on what the other person plays. That makes it a reading game, like rock-paper-scissors with stakes, and those don't get solved into one fixed strategy.</li>
