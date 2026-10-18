@@ -109,13 +109,13 @@
 
   // ---------- state ----------
   function newGame(names, variant, opts = {}) {
-    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, priority: ['low', 'high'].includes(opts.priority) ? opts.priority : null, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
+    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, priority: ['low', 'high'].includes(opts.priority) ? opts.priority : null, offer: ['same', 'other'].includes(opts.offer) ? opts.offer : opts.offer ? 'same' : null, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
     startRound(s);
     return s;
   }
   function log(s, p, msg) { s.logs[p].push({ r: s.round, msg }); }
   function logBoth(s, msg) { log(s, 0, msg); log(s, 1, msg); }
-  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null] }; s.allocNeed = [null, null]; }
+  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null], choose: [null, null] }; s.allocNeed = [null, null]; }
 
   function startRound(s) {
     s.round++;
@@ -149,9 +149,9 @@
       }
       case 'pass': {
         if (s.step !== 'pass' || s.pending.pass[p]) return err('Not time to pass');
-        const counts = s.phaseInfo.counts[p], cs = a.cards || [];
+        const cs = a.cards || [];
         for (const h of [0, 1]) {
-          const x = cs[h], n = counts[h];
+          const x = cs[h], n = offerSize(s, p, h);
           if (!Array.isArray(x) || x.length !== n || new Set(x).size !== n || !x.every(c => s.hands[p][h].includes(c)))
             return err(`Choose ${n} card${n === 1 ? '' : 's'} from your ${HN[h]}`);
         }
@@ -195,6 +195,16 @@
         }
         return OK;
       }
+      case 'choose': {
+        if (s.step !== 'choose' || s.pending.choose[p]) return err('Nothing to send back');
+        const ret = a.returns || [];
+        for (const m of s.offers.filter(m => m.p === o && m.extra)) {
+          if (!m.cards.includes(ret[m.h])) return err(`Choose one card to send back to their ${HN[m.h]}`);
+        }
+        s.pending.choose[p] = [ret[0] || null, ret[1] || null];
+        if ([0, 1].every(q => s.pending.choose[q] || !s.offers.some(m => m.p === 1 - q && m.extra))) applyOffers(s);
+        return OK;
+      }
       case 'prio': {
         if (s.step !== 'prio' || s.pending.prio[p]) return err('Not time to play a bid card');
         if (!s.bidsLeft[p].includes(a.card)) return err('Play one of your leftover bid cards');
@@ -210,7 +220,7 @@
       }
       case 'newGame': {
         if (s.step !== 'final') return err('Game still running');
-        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils, priority: s.priority }));
+        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils, priority: s.priority, offer: s.offer }));
         return OK;
       }
     }
@@ -278,18 +288,54 @@
     return [x, total - x];
   }
 
+  // Offer-one-extra: on the 3rd pass each passing hand offers n+1 and the receiver sends one back.
+  function offerSize(s, p, h) {
+    const n = s.phaseInfo.counts[p][h];
+    return s.offer && s.phase === 3 && n >= 1 && n + 1 <= s.hands[p][h].length ? n + 1 : n;
+  }
+
   function resolvePass(s) {
     const moves = [];
     for (const p of [0, 1]) for (const h of [0, 1]) {
       const cards = s.pending.pass[p][h];
       if (!cards.length) continue;
       s.hands[p][h] = s.hands[p][h].filter(c => !cards.includes(c));
-      moves.push({ p, h, t: s.phaseInfo.targets[p][h], cards });
+      moves.push({ p, h, t: s.phaseInfo.targets[p][h], cards, extra: cards.length > s.phaseInfo.counts[p][h] });
     }
+    if (moves.some(m => m.extra)) {
+      s.offers = moves;
+      s.pending.choose = [null, null];
+      s.step = 'choose';
+      moves.filter(m => m.extra).forEach(m => {
+        log(s, m.p, `You offered ${fmtList(m.cards)} from your ${HN[m.h]} to their ${HN[m.t]}; they’ll send one back.`);
+        log(s, 1 - m.p, `They offered ${fmtList(m.cards)} from their ${HN[m.h]} to your ${HN[m.t]}. Choose one to send back.`);
+      });
+      return;
+    }
+    finishMoves(s, moves);
+  }
+
+  function applyOffers(s) {
+    const moves = s.offers;
+    for (const m of moves) {
+      if (!m.extra) continue;
+      // 'other': the rejected card lands in the passer's other hand, a sneaky way to move a card across.
+      const back = s.pending.choose[1 - m.p][m.h], dest = s.offer === 'other' ? 1 - m.h : m.h;
+      m.cards = m.cards.filter(c => c !== back);
+      s.hands[m.p][dest].push(back);
+      s.known[1 - m.p][back] = dest; // the receiver knows where their rejected card went
+      log(s, m.p, `They sent back ${fmt(back)}; it goes to your ${HN[dest]}.`);
+      log(s, 1 - m.p, `You sent back ${fmt(back)}; it’s in their ${HN[dest]}.`);
+    }
+    s.offers = null;
+    finishMoves(s, moves);
+  }
+
+  function finishMoves(s, moves) {
     for (const m of moves) {
       s.hands[1 - m.p][m.t].push(...m.cards);
       m.cards.forEach(c => (s.known[m.p][c] = m.t));
-      log(s, m.p, `You sent ${fmtList(m.cards)} from your ${HN[m.h]} to their ${HN[m.t]}.`);
+      log(s, m.p, `You${m.extra ? ' passed' : ' sent'} ${fmtList(m.cards)} from your ${HN[m.h]} to their ${HN[m.t]}.`);
       log(s, 1 - m.p, `You got ${fmtList(m.cards)} in your ${HN[m.t]} (from their ${HN[m.h]}).`);
     }
     refreshKnown(s);
@@ -401,7 +447,12 @@
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
       seat, names: s.names, variant: s.variant, spoils: s.spoils, priority: s.priority,
-      myPrio: s.pending.prio[seat], oppPrioDone: !!s.pending.prio[o],
+      myPrio: s.pending.prio[seat], oppPrioDone: !!s.pending.prio[o], offer: s.offer,
+      passSizes: s.step === 'pass' ? [0, 1].map(h => offerSize(s, seat, h)) : null,
+      offersIn: s.step === 'choose' ? s.offers.filter(m => m.p === o && m.extra) : [],
+      offersOut: s.step === 'choose' ? s.offers.filter(m => m.p === seat && m.extra) : [],
+      myChooseDone: !!s.pending.choose[seat] || (s.step === 'choose' && !s.offers.some(m => m.p === o && m.extra)),
+      oppChooseDone: !!s.pending.choose[o] || (s.step === 'choose' && !s.offers.some(m => m.p === seat && m.extra)),
       dir: s.variant === 'original' ? ORIGINAL_DIRS[s.phase - 1] : null, round: s.round, phase: s.phase, step: s.step,
       myHands: s.hands[seat], oppCounts: s.hands[o].map(h => h.length), known,
       bidsLeft: s.bidsLeft, phaseInfo: s.phaseInfo, lastPhaseInfo: s.lastPhaseInfo,
@@ -414,6 +465,6 @@
     }));
   }
 
-  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, bestHand, handName, cmp, fmt, fmtList, bidLabel, dirLabel, target, passTarget, VARIANTS, ORIGINAL_DIRS, splitByBids, rv, HN, MATCH_NAMES, ALL_BIDS };
+  root.PassPoker = { newGame, act, viewFor, eval5, best5, bestOfSix, bestHand, handName, cmp, fmt, fmtList, bidLabel, dirLabel, target, passTarget, VARIANTS, ORIGINAL_DIRS, splitByBids, offerSize, rv, HN, MATCH_NAMES, ALL_BIDS };
   if (typeof module !== 'undefined') module.exports = root.PassPoker;
 })(typeof window !== 'undefined' ? window : globalThis);

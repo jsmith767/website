@@ -11,7 +11,7 @@
 
   let mode = null, state = null, guestView = null;
   let peer = null, conn = null, room = null, myName = '';
-  const freshUI = () => ({ bid: [null, null], pass: [[], []], keep: [], prio: null });
+  const freshUI = () => ({ bid: [null, null], pass: [[], []], keep: [], prio: null, ret: [null, null] });
   const ui = [freshUI(), freshUI()], uiKey = ['', ''];
 
   const store = {
@@ -46,9 +46,11 @@
     curVariant = v.variant;
     const pi = v.phaseInfo;
     const cnt = pi ? pi.counts[me] : [0, 0];
+    const sizes = v.passSizes || cnt; // with offer-one-extra, the 3rd pass sends one more than the count
+    const xtra = hh => sizes[hh] > cnt[hh] ? ' (one extra they’ll send back)' : '';
     // Where my hand hh would send cards with bid b (in 'original' the pass number sets direction).
     const tgt = (hh, b) => G.passTarget(v.variant, v.phase, hh, b || '0P');
-    const playing = ['bid', 'pass', 'alloc'].includes(v.step);
+    const playing = ['bid', 'pass', 'alloc', 'choose'].includes(v.step);
 
     // status line
     let status = '', waiting = false;
@@ -57,7 +59,11 @@
       else status = `Pass ${v.phase} of 3${v.dir ? ` (${G.dirLabel(v.dir)})` : ''}: choose a bid card for each hand.` + (v.oppBidDone ? ` (${opName} is ready)` : '');
     } else if (v.step === 'pass') {
       if (v.myPassDone) { status = `Waiting for ${opName} to choose cards to pass…`; waiting = true; }
-      else status = `Choose ${cnt[0]} from your A and ${cnt[1]} from your B to pass.` + (v.oppPassDone ? ` (${opName} is ready)` : '');
+      else status = `Choose ${sizes[0]} from your A and ${sizes[1]} from your B to pass${sizes.some((x, i) => x > cnt[i]) ? ', including one extra per hand that they’ll send one back from' : ''}.` + (v.oppPassDone ? ` (${opName} is ready)` : '');
+    } else if (v.step === 'choose') {
+      const dest = v.offer === 'other' ? 'their other hand' : 'the hand it came from';
+      if (!v.myChooseDone) status = `Choose one card from each offer to send back. It goes to ${dest}.` + (v.oppChooseDone ? ` (${opName} is ready)` : '');
+      else { status = `Waiting for ${opName} to choose which card to send back…`; waiting = true; }
     } else if (v.step === 'alloc') {
       if (v.allocNeed !== null && !v.allocDone) status = `Your ${HN[v.allocNeed]} has ${v.myHands[v.allocNeed].length} cards. Choose the 5 to keep there; the rest go to your ${HN[1 - v.allocNeed]}.`;
       else { status = `Waiting for ${opName} to rearrange their hands…`; waiting = true; }
@@ -78,7 +84,7 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
-    h += `<div class="info muted">Version: ${v.spoils ? 'Spoils (even split, winner takes two)' : esc(VARIANTS[v.variant])}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}</div>`;
+    h += `<div class="info muted">Version: ${v.spoils ? 'Spoils (even split, winner takes two)' : esc(VARIANTS[v.variant])}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}</div>`;
 
     // opponent row
     h += `<div class="info"><b>${opName}</b><span>Bid cards left: ${v.bidsLeft[op].map(b => bidChip(b, { cls: 'small' })).join(' ') || 'none'}</span>` +
@@ -99,6 +105,14 @@
         h += `<div class="info muted">Last pass: you ${lp.bids[me].map(bidLabel).join(' / ')} passed ${lp.counts[me].join(' / ')}; them ${lp.bids[op].map(bidLabel).join(' / ')} passed ${lp.counts[op].join(' / ')}</div>`;
       }
 
+      // offers waiting on a send-back choice
+      if (v.step === 'choose') {
+        const destOf = m => v.offer === 'other' ? 1 - m.h : m.h;
+        h += v.offersIn.map(m => `<div class="hand"><div class="lab"><b>Offer from their ${HN[m.h]} → your ${HN[m.t]}</b><span class="muted">keep ${m.cards.length - 1}, send 1 back to their ${HN[destOf(m)]}</span></div>
+          <div class="cards">${m.cards.map(c => cardHTML(c, v.myChooseDone ? {} : { act: 'retpick', h: m.h, sel: u.ret[m.h] === c, tag: u.ret[m.h] === c ? 'back' : '' })).join('')}</div></div>`).join('');
+        h += v.offersOut.map(m => `<div class="note">You offered ${m.cards.map(fmt).join(' ')} from your ${HN[m.h]}; they’ll send one back to your ${HN[destOf(m)]}.</div>`).join('');
+      }
+
       // my hands
       h += '<div class="hands">' + [0, 1].map(hh => {
         const cards = v.myHands[hh];
@@ -106,7 +120,7 @@
         let cardsHTML, extra = '';
         if (v.step === 'pass' && !v.myPassDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'passcard', h: hh, sel: u.pass[hh].includes(c) })).join('');
-          extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[pi.targets[me][hh]]} · selected ${u.pass[hh].length}/${cnt[hh]}</div>`;
+          extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[pi.targets[me][hh]]} · selected ${u.pass[hh].length}/${sizes[hh]}${xtra(hh)}</div>`;
         } else if (v.step === 'alloc' && v.allocNeed === hh && !v.allocDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'keepcard', h: hh, sel: u.keep.includes(c) })).join('');
           extra = `<div class="note">Keeping ${u.keep.length}/5</div>`;
@@ -126,7 +140,8 @@
       // action button
       let btn = '';
       if (v.step === 'bid' && !v.myBid) btn = `<button class="btn" data-act="bidlock" ${u.bid[0] && u.bid[1] ? '' : 'disabled'}>Lock in bids</button>`;
-      if (v.step === 'pass' && !v.myPassDone) btn = `<button class="btn" data-act="passlock" ${u.pass.every((x, i) => x.length === cnt[i]) ? '' : 'disabled'}>Pass these cards</button>`;
+      if (v.step === 'pass' && !v.myPassDone) btn = `<button class="btn" data-act="passlock" ${u.pass.every((x, i) => x.length === sizes[i]) ? '' : 'disabled'}>Pass these cards</button>`;
+      if (v.step === 'choose' && !v.myChooseDone) btn = `<button class="btn" data-act="retlock" ${v.offersIn.every(m => u.ret[m.h]) ? '' : 'disabled'}>Send these back</button>`;
       if (v.step === 'alloc' && v.allocNeed !== null && !v.allocDone) btn = `<button class="btn" data-act="keeplock" ${u.keep.length === 5 ? '' : 'disabled'}>Keep these 5</button>`;
       if (btn) h += `<div class="actions">${btn}</div>`;
     }
@@ -222,7 +237,7 @@
         return render();
       }
       case 'passcard': {
-        const sel = u.pass[+d.h], n = v.phaseInfo.counts[seat][+d.h], i = sel.indexOf(d.c);
+        const sel = u.pass[+d.h], n = (v.passSizes || v.phaseInfo.counts[seat])[+d.h], i = sel.indexOf(d.c);
         if (i >= 0) sel.splice(i, 1); else if (n) { sel.push(d.c); if (sel.length > n) sel.shift(); }
         return render();
       }
@@ -235,6 +250,8 @@
       case 'passlock': return dispatch(seat, { type: 'pass', cards: u.pass.map(x => x.slice()) });
       case 'keeplock': return dispatch(seat, { type: 'alloc', keep: u.keep.slice() });
       case 'pick': return dispatch(seat, { type: 'pick', card: d.c });
+      case 'retpick': u.ret[+d.h] = u.ret[+d.h] === d.c ? null : d.c; return render();
+      case 'retlock': return dispatch(seat, { type: 'choose', returns: u.ret.slice() });
       case 'priopick': u.prio = u.prio === d.b ? null : d.b; return render();
       case 'priolock': return dispatch(seat, { type: 'prio', card: u.prio });
       case 'ready': return dispatch(seat, { type: 'ready' });
@@ -338,7 +355,7 @@
     hideLobby();
     state = newGameFromChoice([myName || 'Player 1', 'Player 2']);
     netbar('<span class="muted">Playtest: you control both seats.</span><button class="btn ghost" id="restart">Restart</button>');
-    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority }); render(); };
+    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority, offer: state.offer }); render(); };
     render();
   }
 
@@ -347,8 +364,8 @@
   function newGameFromChoice(names) {
     const el = document.querySelector('input[name=variant]:checked'), val = el ? el.value : 'even';
     // 'spoils' = even split passing + winner of each matchup takes two cards
-    const priority = $('#auction').checked ? 'low' : null;
-    return val === 'spoils' ? G.newGame(names, 'even', { spoils: true, priority }) : G.newGame(names, val, { priority });
+    const priority = $('#auction').checked ? 'low' : null, offer = $('#offer').value || null;
+    return val === 'spoils' ? G.newGame(names, 'even', { spoils: true, priority, offer }) : G.newGame(names, val, { priority, offer });
   }
 
   // ---------- lobby ----------

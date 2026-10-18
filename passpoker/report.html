@@ -128,6 +128,21 @@ tr.hi td { background: var(--hi); font-weight: 600; }
     <p class="muted small">1,000 games per number, about ±3 points.</p>
   </div>
 
+  <h2>Add-on: offer one extra (3rd pass)</h2>
+  <p>This is another optional switch. On the 3rd pass, each hand offers one more card than it has to, and the receiver sends one back. It goes either to the hand it came from, or (Julian's twist) to the passer's <i>other</i> hand, a sneaky way to move a card between your own hands.</p>
+  <div class="box scroll">
+    <table>
+      <tr><th>Spoils, plus…</th><th class="n">Nothing</th><th class="n">Back to same hand</th><th class="n">To other hand</th></tr>
+      <tr><td>Passing</td><td class="n">70%</td><td class="n">73%</td><td class="n">70%</td></tr>
+      <tr><td>Bidding</td><td class="n">61%</td><td class="n">59%</td><td class="n">56%</td></tr>
+      <tr><td>Denial</td><td class="n">61%</td><td class="n">63%</td><td class="n">59%</td></tr>
+      <tr><td>Choosing what to send back</td><td class="n">—</td><td class="n">56%</td><td class="n">52%</td></tr>
+      <tr><td>Simple sneaky offers (other-hand mode)</td><td class="n">—</td><td class="n">—</td><td class="n">47%</td></tr>
+    </table>
+    <p class="muted small">1,000 games per number, about ±3 points.</p>
+  </div>
+  <p>The bots can't judge the other-hand mode well. It's a bluffing decision: you offer a card you'd like moved, and the receiver has to guess whether you want it back. A bot that simply offered its most useful card <i>lost</i> a little, because the receiver often kept it. That's a real risk-and-reward call, which is good, but only playing it will show whether it's fun.</p>
+
   <h2>Where the depth is (so it doesn't get solved)</h2>
   <ul>
     <li><b>Bids are secret and simultaneous.</b> There's no single best bid, because the right one depends on what the other person plays. That makes it a reading game, like rock-paper-scissors with stakes, and those don't get solved into one fixed strategy.</li>
