@@ -109,13 +109,13 @@
 
   // ---------- state ----------
   function newGame(names, variant, opts = {}) {
-    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
+    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, priority: ['low', 'high'].includes(opts.priority) ? opts.priority : null, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
     startRound(s);
     return s;
   }
   function log(s, p, msg) { s.logs[p].push({ r: s.round, msg }); }
   function logBoth(s, msg) { log(s, 0, msg); log(s, 1, msg); }
-  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false] }; s.allocNeed = [null, null]; }
+  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null] }; s.allocNeed = [null, null]; }
 
   function startRound(s) {
     s.round++;
@@ -188,10 +188,18 @@
         log(s, p, `You took ${fmt(a.card)} from ${MATCH_NAMES[turn.m]}.`);
         log(s, o, `They took ${fmt(a.card)} from ${MATCH_NAMES[turn.m]}.`);
         d.idx++;
-        if (d.idx >= d.order.length) {
+        if (d.idx >= d.order.length && s.priority && d.auctions.length < 3) startAuction(s);
+        else if (d.idx >= d.order.length) {
           if (s.round === 1) { s.step = 'between'; [0, 1].forEach(q => log(s, q, `Round 1 done. You keep ${s.kept[q].length} cards; they keep ${s.kept[1 - q].length}.`)); }
           else finish(s);
         }
+        return OK;
+      }
+      case 'prio': {
+        if (s.step !== 'prio' || s.pending.prio[p]) return err('Not time to play a bid card');
+        if (!s.bidsLeft[p].includes(a.card)) return err('Play one of your leftover bid cards');
+        s.pending.prio[p] = a.card;
+        if (s.pending.prio[o]) resolveAuction(s);
         return OK;
       }
       case 'ready': {
@@ -202,7 +210,7 @@
       }
       case 'newGame': {
         if (s.step !== 'final') return err('Game still running');
-        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils }));
+        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils, priority: s.priority }));
         return OK;
       }
     }
@@ -337,13 +345,45 @@
     });
     s.showdown = { matches };
     // Spoils: the winner of each matchup picks first and third (takes two), the loser picks once.
-    s.draft = { order: matches.flatMap((mt, m) => [{ m, seat: mt.winner }, { m, seat: 1 - mt.winner }].concat(s.spoils ? [{ m, seat: mt.winner }] : [])), idx: 0, taken: {} };
-    s.step = 'draft';
+    if (s.priority) {
+      // Each matchup's pick order is settled by a sealed leftover-bid-card auction just before its draft.
+      s.draft = { order: [], idx: 0, taken: {}, auctions: [] };
+      startAuction(s);
+    } else {
+      s.draft = { order: matches.flatMap((mt, m) => [{ m, seat: mt.winner }, { m, seat: 1 - mt.winner }].concat(s.spoils ? [{ m, seat: mt.winner }] : [])), idx: 0, taken: {} };
+      s.step = 'draft';
+    }
     matches.forEach(mt => {
       const tb = mt.tie ? ` (tied; flipped ${fmt(mt.tie.card)}${mt.tie.coin !== undefined ? ', still tied, coin flip' : ''})` : '';
       [0, 1].forEach(p => log(s, p, `${mt.name}: ${mt.sides[p].name} vs ${mt.sides[1 - p].name}. ${mt.winner === p ? 'You win' : 'They win'}${tb}.`));
     });
-    logBoth(s, s.spoils ? 'Draft: each matchup’s winner picks first and third.' : 'Draft: each matchup’s winner picks first.');
+    logBoth(s, s.priority ? `Draft: before each matchup, both play a leftover bid card; the ${s.priority}er number picks first${s.spoils ? ' and the matchup winner takes two' : ''}.`
+      : s.spoils ? 'Draft: each matchup’s winner picks first and third.' : 'Draft: each matchup’s winner picks first.');
+  }
+
+  function startAuction(s) {
+    s.step = 'prio';
+    s.pending.prio = [null, null];
+    if (!s.bidsLeft[0].length || !s.bidsLeft[1].length) resolveAuction(s); // nothing left to play
+  }
+
+  // Lower (or higher) leftover bid card picks first; ties go to the matchup winner.
+  // With spoils the matchup winner still takes two cards.
+  function resolveAuction(s) {
+    const d = s.draft, m = d.auctions.length, mt = s.showdown.matches[m], cards = s.pending.prio.slice();
+    [0, 1].forEach(p => { if (cards[p]) s.bidsLeft[p] = s.bidsLeft[p].filter(b => b !== cards[p]); });
+    let first = mt.winner;
+    if (cards[0] && cards[1] && cards[0][0] !== cards[1][0]) {
+      const zeroLower = +cards[0][0] < +cards[1][0];
+      first = (s.priority === 'low') === zeroLower ? 0 : 1;
+    }
+    d.auctions.push({ m, cards, first });
+    const second = 1 - first;
+    d.order.push({ m, seat: first }, { m, seat: second });
+    if (s.spoils) d.order.push({ m, seat: mt.winner });
+    s.pending.prio = [null, null];
+    s.step = 'draft';
+    [0, 1].forEach(p => log(s, p, `${mt.name} auction: you played ${cards[p] ? bidLabel(cards[p], s.variant) : 'nothing'}, they played ${cards[1 - p] ? bidLabel(cards[1 - p], s.variant) : 'nothing'}. ${first === p ? 'You pick' : 'They pick'} first.`));
   }
 
   function finish(s) {
@@ -360,7 +400,8 @@
     const o = 1 - seat, known = [[], [], []];
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
-      seat, names: s.names, variant: s.variant, spoils: s.spoils,
+      seat, names: s.names, variant: s.variant, spoils: s.spoils, priority: s.priority,
+      myPrio: s.pending.prio[seat], oppPrioDone: !!s.pending.prio[o],
       dir: s.variant === 'original' ? ORIGINAL_DIRS[s.phase - 1] : null, round: s.round, phase: s.phase, step: s.step,
       myHands: s.hands[seat], oppCounts: s.hands[o].map(h => h.length), known,
       bidsLeft: s.bidsLeft, phaseInfo: s.phaseInfo, lastPhaseInfo: s.lastPhaseInfo,

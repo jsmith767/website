@@ -114,6 +114,7 @@ details.journal li.r { color: var(--muted); }
         <label><input type="radio" name="variant" value="spoils"> <b>Spoils</b> (new): even split passing, but the winner of each matchup takes two cards in the draft. <a href="report">Why?</a></label>
         <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
       </fieldset>
+      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="auction" style="margin-top:4px"> <span><b>First-pick auction</b> (new, works with any version): before each matchup's draft, both secretly play a leftover bid card. The lower number picks first; a tie goes to the matchup winner.</span></label>
       <div class="row"><button class="btn" id="hostBtn">Create a room</button><span class="muted">and send the code to your opponent</span></div>
       <div class="row"><input type="text" id="joinCode" maxlength="4" placeholder="CODE" style="width:90px;text-transform:uppercase"><button class="btn" id="joinBtn">Join room</button></div>
       <div class="row" id="resumeRow" hidden><button class="btn ghost" id="resumeBtn"></button></div>
@@ -133,6 +134,7 @@ details.journal li.r { color: var(--muted); }
         <li>On a tie, the top card of the deck is flipped and added to both hands. If it's still tied, a coin flip decides.</li>
         <li>For each matchup, the winner picks a card from that matchup's 10 cards, then the loser picks. After the round, each player keeps 3 cards.</li>
         <li><b>Spoils:</b> passing works like Even split. In each matchup's draft the winner picks, then the loser, then the winner again, so you can end with 6 to 12 cards. The best 5 wins; if those tie, compare the leftover cards from highest down.</li>
+        <li><b>First-pick auction:</b> each round you have 4 bid cards left after passing. Before each matchup's draft, both players secretly play one, and the lower number picks first (a tie goes to the matchup winner). In Spoils, the matchup winner still gets two cards. Spending big bids while passing saves your low cards for the draft.</li>
         <li>Round 2 is played the same way, with a fresh deck that leaves out the kept cards. The best 5 of your 6 kept cards wins. If those tie, the higher 6th card wins.</li>
       </ul>
     </details>
@@ -143,7 +145,7 @@ details.journal li.r { color: var(--muted); }
 </main>
 <div id="toast"></div>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
-<script src="game.js?v=3"></script>
-<script src="app.js?v=3"></script>
+<script src="game.js?v=4"></script>
+<script src="app.js?v=4"></script>
 </body>
 </html>
