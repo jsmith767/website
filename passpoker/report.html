@@ -143,6 +143,20 @@ tr.hi td { background: var(--hi); font-weight: 600; }
   </div>
   <p>The bots can't judge the other-hand mode well. It's a bluffing decision: you offer a card you'd like moved, and the receiver has to guess whether you want it back. A bot that simply offered its most useful card <i>lost</i> a little, because the receiver often kept it. That's a real risk-and-reward call, which is good, but only playing it will show whether it's fun.</p>
 
+  <h2>Add-on: swaps between your own hands</h2>
+  <p>Another optional switch, designed by Julian. After passes 1 and 2, you may trade one card between your two hands. An open swap costs 1 bid card, and your opponent sees both cards and where they went. A secret swap costs 2, and they only see that you swapped. Two secret swaps use up exactly all 10 bid cards in a round.</p>
+  <div class="box scroll">
+    <table>
+      <tr><th>Swapping well vs never swapping</th><th class="n">Wins</th></tr>
+      <tr><td>Even split</td><td class="n">59%</td></tr>
+      <tr class="hi"><td>Spoils</td><td class="n">71%</td></tr>
+      <tr><td>Spoils + first-pick auction (bid cards needed for both)</td><td class="n">61%</td></tr>
+      <tr><td>Always secret vs always open (Spoils)</td><td class="n">47%</td></tr>
+    </table>
+    <p class="muted small">1,000 games per number, about ±3 points.</p>
+  </div>
+  <p>Swapping is the strongest new skill we've tested, on par with passing itself. The bots don't use what they learn from an open swap, so for them going secret is pure cost (47%). Against a person who <i>does</i> plan around your revealed cards, the secret swap should be worth more, and only real play will show how much.</p>
+
   <h2>Where the depth is (so it doesn't get solved)</h2>
   <ul>
     <li><b>Bids are secret and simultaneous.</b> There's no single best bid, because the right one depends on what the other person plays. That makes it a reading game, like rock-paper-scissors with stakes, and those don't get solved into one fixed strategy.</li>

@@ -109,13 +109,13 @@
 
   // ---------- state ----------
   function newGame(names, variant, opts = {}) {
-    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, priority: ['low', 'high'].includes(opts.priority) ? opts.priority : null, offer: ['same', 'other'].includes(opts.offer) ? opts.offer : opts.offer ? 'same' : null, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
+    const s = { names: names.slice(), variant: VARIANTS[variant] ? variant : 'even', spoils: !!opts.spoils, priority: ['low', 'high'].includes(opts.priority) ? opts.priority : null, offer: ['same', 'other'].includes(opts.offer) ? opts.offer : opts.offer ? 'same' : null, swap: !!opts.swap, round: 0, kept: [[], []], logs: [[], []], rounds: [] };
     startRound(s);
     return s;
   }
   function log(s, p, msg) { s.logs[p].push({ r: s.round, msg }); }
   function logBoth(s, msg) { log(s, 0, msg); log(s, 1, msg); }
-  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null], choose: [null, null] }; s.allocNeed = [null, null]; }
+  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null], choose: [null, null], swap: [null, null] }; s.allocNeed = [null, null]; }
 
   function startRound(s) {
     s.round++;
@@ -126,7 +126,7 @@
     s.phase = 1; s.step = 'bid';
     s.phaseInfo = null; s.lastPhaseInfo = null;
     s.known = [{}, {}];  // known[p][card] = opponent hand index (0/1) or 'either'
-    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false];
+    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false]; s.swapPhase = null;
     resetPending(s);
     logBoth(s, `Round ${s.round} dealt. Pass 1 of 3: choose your bids.`);
   }
@@ -205,6 +205,19 @@
         if ([0, 1].every(q => s.pending.choose[q] || !s.offers.some(m => m.p === 1 - q && m.extra))) applyOffers(s);
         return OK;
       }
+      case 'swap': {
+        if (s.step !== 'swap' || s.pending.swap[p]) return err('Not time to swap');
+        if (a.skip) { s.pending.swap[p] = { skip: true }; }
+        else {
+          const [ca, cb] = a.cards || [], pay = a.pay || [], need = a.secret ? 2 : 1;
+          if (!s.hands[p][0].includes(ca) || !s.hands[p][1].includes(cb)) return err('Pick one card from each of your hands');
+          if (pay.length !== need || new Set(pay).size !== need || !pay.every(b => s.bidsLeft[p].includes(b))) return err(`Pick ${need} bid card${need > 1 ? 's' : ''} to spend`);
+          if (s.bidsLeft[p].length - need < 2 * (3 - s.phase)) return err('You need to keep enough bid cards for the passes left');
+          s.pending.swap[p] = { cards: [ca, cb], pay: pay.slice(), secret: !!a.secret };
+        }
+        if (s.pending.swap[o]) resolveSwaps(s);
+        return OK;
+      }
       case 'prio': {
         if (s.step !== 'prio' || s.pending.prio[p]) return err('Not time to play a bid card');
         if (!s.bidsLeft[p].includes(a.card)) return err('Play one of your leftover bid cards');
@@ -220,7 +233,7 @@
       }
       case 'newGame': {
         if (s.step !== 'final') return err('Game still running');
-        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils, priority: s.priority, offer: s.offer }));
+        Object.assign(s, newGame(s.names, s.variant, { spoils: s.spoils, priority: s.priority, offer: s.offer, swap: s.swap }));
         return OK;
       }
     }
@@ -360,6 +373,11 @@
   function nextPhase(s) {
     s.lastPhaseInfo = s.phaseInfo; s.phaseInfo = null;
     resetPending(s);
+    if (s.swap && s.phase < 3 && s.swapPhase !== s.phase) {
+      s.swapPhase = s.phase; s.step = 'swap';
+      logBoth(s, 'Swap: you may swap one card between your own hands (1 bid card open, 2 to keep it secret).');
+      return;
+    }
     if (s.phase < 3) { s.phase++; s.step = 'bid'; logBoth(s, `Pass ${s.phase} of 3: choose your bids.`); }
     else showdown(s);
   }
@@ -407,10 +425,32 @@
       : s.spoils ? 'Draft: each matchup’s winner picks first and third.' : 'Draft: each matchup’s winner picks first.');
   }
 
+  function resolveSwaps(s) {
+    for (const p of [0, 1]) {
+      const sw = s.pending.swap[p], o = 1 - p;
+      if (sw.skip) { log(s, p, 'You didn’t swap.'); log(s, o, 'They didn’t swap.'); continue; }
+      const [ca, cb] = sw.cards;
+      s.hands[p][0] = s.hands[p][0].filter(c => c !== ca).concat(cb);
+      s.hands[p][1] = s.hands[p][1].filter(c => c !== cb).concat(ca);
+      s.bidsLeft[p] = s.bidsLeft[p].filter(b => !sw.pay.includes(b));
+      const paid = sw.pay.map(b => bidLabel(b, s.variant)).join(' ');
+      log(s, p, `You swapped ${fmt(ca)} (A → B) and ${fmt(cb)} (B → A)${sw.secret ? ' in secret' : ' openly'}, spending ${paid}.`);
+      if (sw.secret) {
+        // they know a swap happened, so anything they knew about in your hands could have moved
+        for (const c of Object.keys(s.known[o])) s.known[o][c] = 'either';
+        log(s, o, `They swapped a card between their hands in secret, spending ${paid}.`);
+      } else {
+        s.known[o][ca] = 1; s.known[o][cb] = 0;
+        log(s, o, `They openly swapped ${fmt(ca)} into their B and ${fmt(cb)} into their A, spending ${paid}.`);
+      }
+    }
+    nextPhase(s);
+  }
+
   function startAuction(s) {
     s.step = 'prio';
     s.pending.prio = [null, null];
-    if (!s.bidsLeft[0].length || !s.bidsLeft[1].length) resolveAuction(s); // nothing left to play
+    if (!s.bidsLeft[0].length || !s.bidsLeft[1].length) resolveAuction(s); // someone has nothing left to play
   }
 
   // Lower (or higher) leftover bid card picks first; ties go to the matchup winner.
@@ -419,7 +459,9 @@
     const d = s.draft, m = d.auctions.length, mt = s.showdown.matches[m], cards = s.pending.prio.slice();
     [0, 1].forEach(p => { if (cards[p]) s.bidsLeft[p] = s.bidsLeft[p].filter(b => b !== cards[p]); });
     let first = mt.winner;
-    if (cards[0] && cards[1] && cards[0][0] !== cards[1][0]) {
+    const has = [0, 1].map(p => s.bidsLeft[p].length > 0 || !!cards[p]);
+    if (has[0] !== has[1]) first = has[0] ? 0 : 1; // only one player has a card left: they pick first for free
+    else if (cards[0] && cards[1] && cards[0][0] !== cards[1][0]) {
       const zeroLower = +cards[0][0] < +cards[1][0];
       first = (s.priority === 'low') === zeroLower ? 0 : 1;
     }
@@ -447,6 +489,8 @@
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
       seat, names: s.names, variant: s.variant, spoils: s.spoils, priority: s.priority,
+      swap: s.swap, mySwapDone: !!s.pending.swap[seat], oppSwapDone: !!s.pending.swap[o],
+      swapBudget: s.step === 'swap' ? s.bidsLeft[seat].length - 2 * (3 - s.phase) : 0,
       myPrio: s.pending.prio[seat], oppPrioDone: !!s.pending.prio[o], offer: s.offer,
       passSizes: s.step === 'pass' ? [0, 1].map(h => offerSize(s, seat, h)) : null,
       offersIn: s.step === 'choose' ? s.offers.filter(m => m.p === o && m.extra) : [],

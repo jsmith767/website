@@ -11,7 +11,7 @@
 
   let mode = null, state = null, guestView = null;
   let peer = null, conn = null, room = null, myName = '';
-  const freshUI = () => ({ bid: [null, null], pass: [[], []], keep: [], prio: null, ret: [null, null] });
+  const freshUI = () => ({ bid: [null, null], pass: [[], []], keep: [], prio: null, ret: [null, null], sw: { c: [null, null], secret: false, pay: [] } });
   const ui = [freshUI(), freshUI()], uiKey = ['', ''];
 
   const store = {
@@ -50,7 +50,7 @@
     const xtra = hh => sizes[hh] > cnt[hh] ? ' (one extra they’ll send back)' : '';
     // Where my hand hh would send cards with bid b (in 'original' the pass number sets direction).
     const tgt = (hh, b) => G.passTarget(v.variant, v.phase, hh, b || '0P');
-    const playing = ['bid', 'pass', 'alloc', 'choose'].includes(v.step);
+    const playing = ['bid', 'pass', 'alloc', 'choose', 'swap'].includes(v.step);
 
     // status line
     let status = '', waiting = false;
@@ -60,6 +60,9 @@
     } else if (v.step === 'pass') {
       if (v.myPassDone) { status = `Waiting for ${opName} to choose cards to pass…`; waiting = true; }
       else status = `Choose ${sizes[0]} from your A and ${sizes[1]} from your B to pass${sizes.some((x, i) => x > cnt[i]) ? ', including one extra per hand that they’ll send one back from' : ''}.` + (v.oppPassDone ? ` (${opName} is ready)` : '');
+    } else if (v.step === 'swap') {
+      if (v.mySwapDone) { status = `Waiting for ${opName} to decide on a swap…`; waiting = true; }
+      else status = 'Optional swap: trade one card between your hands. Open costs 1 bid card; secret costs 2.' + (v.oppSwapDone ? ` (${opName} is ready)` : '');
     } else if (v.step === 'choose') {
       const dest = v.offer === 'other' ? 'their other hand' : 'the hand it came from';
       if (!v.myChooseDone) status = `Choose one card from each offer to send back. It goes to ${dest}.` + (v.oppChooseDone ? ` (${opName} is ready)` : '');
@@ -84,7 +87,7 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
-    h += `<div class="info muted">Version: ${v.spoils ? 'Spoils (even split, winner takes two)' : esc(VARIANTS[v.variant])}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}</div>`;
+    h += `<div class="info muted">Version: ${v.spoils ? 'Spoils (even split, winner takes two)' : esc(VARIANTS[v.variant])}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}${v.swap ? ' + swaps' : ''}</div>`;
 
     // opponent row
     h += `<div class="info"><b>${opName}</b><span>Bid cards left: ${v.bidsLeft[op].map(b => bidChip(b, { cls: 'small' })).join(' ') || 'none'}</span>` +
@@ -121,6 +124,9 @@
         if (v.step === 'pass' && !v.myPassDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'passcard', h: hh, sel: u.pass[hh].includes(c) })).join('');
           extra = `<div class="note">Your bid <b>${bidLabel(pi.bids[me][hh])}</b> → their ${HN[pi.targets[me][hh]]} · selected ${u.pass[hh].length}/${sizes[hh]}${xtra(hh)}</div>`;
+        } else if (v.step === 'swap' && !v.mySwapDone && v.swapBudget >= 1) {
+          cardsHTML = cards.map(c => cardHTML(c, { act: 'swapcard', h: hh, sel: u.sw.c[hh] === c, tag: u.sw.c[hh] === c ? `→ ${HN[1 - hh]}` : '' })).join('');
+          extra = `<div class="note">${u.sw.c[hh] ? `${fmt(u.sw.c[hh])} moves to your ${HN[1 - hh]}` : `Pick a card to move to your ${HN[1 - hh]}`}</div>`;
         } else if (v.step === 'alloc' && v.allocNeed === hh && !v.allocDone) {
           cardsHTML = cards.map(c => cardHTML(c, { act: 'keepcard', h: hh, sel: u.keep.includes(c) })).join('');
           extra = `<div class="note">Keeping ${u.keep.length}/5</div>`;
@@ -143,6 +149,20 @@
       if (v.step === 'pass' && !v.myPassDone) btn = `<button class="btn" data-act="passlock" ${u.pass.every((x, i) => x.length === sizes[i]) ? '' : 'disabled'}>Pass these cards</button>`;
       if (v.step === 'choose' && !v.myChooseDone) btn = `<button class="btn" data-act="retlock" ${v.offersIn.every(m => u.ret[m.h]) ? '' : 'disabled'}>Send these back</button>`;
       if (v.step === 'alloc' && v.allocNeed !== null && !v.allocDone) btn = `<button class="btn" data-act="keeplock" ${u.keep.length === 5 ? '' : 'disabled'}>Keep these 5</button>`;
+      if (v.step === 'swap' && !v.mySwapDone) {
+        const need = u.sw.secret ? 2 : 1, ready = u.sw.c[0] && u.sw.c[1] && u.sw.pay.length === need;
+        if (v.swapBudget < 1) btn = `<span class="muted">You need your bid cards for the passes left, so no swap this time.</span> <button class="btn" data-act="swapskip">Continue</button>`;
+        else btn = `<div style="width:100%">
+            <div class="bids">
+              <button class="bid ${!u.sw.secret ? 'sel' : ''}" data-act="swapmode" data-b="open">Open (1 card)</button>
+              <button class="bid ${u.sw.secret ? 'sel' : ''}" data-act="swapmode" data-b="secret" ${v.swapBudget >= 2 ? '' : 'disabled'}>Secret (2 cards)</button>
+            </div>
+            <div class="note">Spend ${need} bid card${need > 1 ? 's' : ''}:</div>
+            <div class="bids">${v.bidsLeft[me].map(b => bidChip(b, { act: 'swappay', h: 0, cls: u.sw.pay.includes(b) ? 'sel' : '' })).join('')}</div>
+          </div>
+          <button class="btn" data-act="swaplock" ${ready ? '' : 'disabled'}>Swap</button>
+          <button class="btn ghost" data-act="swapskip">Don’t swap</button>`;
+      }
       if (btn) h += `<div class="actions">${btn}</div>`;
     }
 
@@ -250,6 +270,15 @@
       case 'passlock': return dispatch(seat, { type: 'pass', cards: u.pass.map(x => x.slice()) });
       case 'keeplock': return dispatch(seat, { type: 'alloc', keep: u.keep.slice() });
       case 'pick': return dispatch(seat, { type: 'pick', card: d.c });
+      case 'swapcard': u.sw.c[+d.h] = u.sw.c[+d.h] === d.c ? null : d.c; return render();
+      case 'swapmode': u.sw.secret = d.b === 'secret'; u.sw.pay = u.sw.pay.slice(0, u.sw.secret ? 2 : 1); return render();
+      case 'swappay': {
+        const i = u.sw.pay.indexOf(d.b), need = u.sw.secret ? 2 : 1;
+        if (i >= 0) u.sw.pay.splice(i, 1); else { u.sw.pay.push(d.b); if (u.sw.pay.length > need) u.sw.pay.shift(); }
+        return render();
+      }
+      case 'swaplock': return dispatch(seat, { type: 'swap', cards: u.sw.c.slice(), pay: u.sw.pay.slice(), secret: u.sw.secret });
+      case 'swapskip': return dispatch(seat, { type: 'swap', skip: true });
       case 'retpick': u.ret[+d.h] = u.ret[+d.h] === d.c ? null : d.c; return render();
       case 'retlock': return dispatch(seat, { type: 'choose', returns: u.ret.slice() });
       case 'priopick': u.prio = u.prio === d.b ? null : d.b; return render();
@@ -355,7 +384,7 @@
     hideLobby();
     state = newGameFromChoice([myName || 'Player 1', 'Player 2']);
     netbar('<span class="muted">Playtest: you control both seats.</span><button class="btn ghost" id="restart">Restart</button>');
-    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority, offer: state.offer }); render(); };
+    $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority, offer: state.offer, swap: state.swap }); render(); };
     render();
   }
 
@@ -364,8 +393,8 @@
   function newGameFromChoice(names) {
     const el = document.querySelector('input[name=variant]:checked'), val = el ? el.value : 'even';
     // 'spoils' = even split passing + winner of each matchup takes two cards
-    const priority = $('#auction').checked ? 'low' : null, offer = $('#offer').value || null;
-    return val === 'spoils' ? G.newGame(names, 'even', { spoils: true, priority, offer }) : G.newGame(names, val, { priority, offer });
+    const priority = $('#auction').checked ? 'low' : null, offer = $('#offer').value || null, swap = $('#swap').checked;
+    return val === 'spoils' ? G.newGame(names, 'even', { spoils: true, priority, offer, swap }) : G.newGame(names, val, { priority, offer, swap });
   }
 
   // ---------- lobby ----------
