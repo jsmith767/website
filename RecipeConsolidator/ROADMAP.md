@@ -176,6 +176,39 @@ Minimum safety checklist for public endpoint:
 - **"What can I make now?"**: recipes you can cook with only pantry + fridge items, or needing at most 1–2 purchases.
 - **Shared community staples**: a group agrees on staples it always stocks (oats, rice, beans, spices…). Save/share that list as a file so everyone in the community plans against the same pantry.
 
+#### Shared pantry + community grocery list (first home: Sahale)
+The pantry stops being a private list and becomes a shared, live picture of what the community has, with a grocery list that fills itself as things run low.
+
+**Core idea**
+- Every staple has a status: **in stock**, **low** or **out**, plus where it lives (e.g. "Pantry, shelf 2, left bin").
+- Marking something **low** or **out** adds it to the **community grocery list**. Buying it and marking it **in stock** takes it off again.
+- The whole pantry is listed online and **searchable** ("do we have tahini? where is it?").
+
+**Ways to update it (start with the simplest)**
+1. **Tell the chatbot (start here).** Message a WhatsApp bot in plain words: "oats are low", "we're out of tahini", "got oats and rice". The bot updates the pantry and the list, and answers "what's on the grocery list?" or "do we have miso?". No app or new habit beyond a message.
+2. **Grocery list online.** The same list as a web page anyone in the community can open, tick off while shopping, and share.
+3. **NFC tags (tap your phone, no camera).** Small NFC stickers on each staple's shelf spot or bin, or in a binder with one tag per item. Tapping with a phone opens that item's link ("Oats: mark low / out / restocked"). Print a QR code on the same label for phones without NFC. Recent iPhones and most Android phones read NFC links without an app; stickers cost well under $1 each.
+
+**How it connects to recipes**
+- Recipes and plans know what is already in stock: in-stock items drop off the shopping list automatically.
+- **"What can we make now?"** ranks recipes by how few items they need that aren't in stock.
+- Low or out items show on a recipe so the cook knows before starting.
+- From a plan's shopping list: **"Add missing items to the community grocery list."**
+
+**Building blocks and open questions**
+- **Needs a small shared backend** (the first feature that does): a single list everyone reads and writes. Simplest start: a Google Sheet + Apps Script web app (the same pattern the site's contact form already uses). It is free, reliable and easy for people to read directly. Later it can move to Julian's local server.
+- **WhatsApp bot**: needs a WhatsApp Business number through Meta's Cloud API (or a provider like Twilio). Check current pricing and whether bots can sit in a group chat, or only 1:1. A Signal or Telegram bot is easier to set up if WhatsApp is a blocker. Understanding loose phrasing ("almost out of the good olive oil") is where an AI helps; exact item names can work without one.
+- **One canonical item list with aliases** ("oats" = "rolled oats" = "old-fashioned oats") so chat messages, tags and recipe ingredients all point to the same item.
+- **Who can edit**: anyone with the community link or in the chat; keep a simple history (who changed what, and when) so mistakes are easy to undo.
+- **Staples vs. everything**: start with the agreed staples (the ones with a fixed storage spot), not every item in the fridge.
+
+**Suggested order**
+1. Staples list + grocery list in a Sheet, with a simple web page to view and tick off.
+2. Chatbot that can mark low/out/in stock and read the list back.
+3. Pantry page: searchable, with locations; recipes subtract in-stock items.
+4. NFC/QR labels on shelves or in a binder.
+5. "What can we make now?" and "add missing to the grocery list" from plans.
+
 #### Trip mode (backpacking) — building Oct 2026
 - Same tool, its own front door: `?trip` link, its own home-screen name/icon, its own saved plan.
 - Calorie and weight per ingredient from a built-in table of trail staples (approximate USDA FoodData Central values); unknown foods get entered once from the package label and are remembered ("My foods").
