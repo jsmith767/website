@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Movie Night List</title>
+<style>
+  :root {
+    --bg: #faf6f0; --card: #ffffff; --ink: #2a2420; --muted: #75695f;
+    --line: #e6ddd2; --accent: #b4452f; --chip: #f2ebe2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17130f; --card: #221c17; --ink: #f1e9df; --muted: #a8998a;
+            --line: #3a3029; --accent: #e07a5f; --chip: #2e2620; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 32px 16px 64px; }
+  h1 { font-size: 2rem; margin: 0 0 4px; letter-spacing: -0.02em; }
+  .sub { color: var(--muted); margin: 0 0 28px; }
+  .film { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+          overflow: hidden; margin-bottom: 22px; }
+  .trailer { position: relative; aspect-ratio: 16/9; background: #000 center/cover no-repeat;
+             cursor: pointer; border: 0; width: 100%; display: block; padding: 0; }
+  .trailer::after { content: ""; position: absolute; inset: 0;
+                    background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 55%); }
+  .play { position: absolute; z-index: 1; left: 50%; top: 50%; transform: translate(-50%,-50%);
+          width: 76px; height: 76px; border-radius: 50%; background: rgba(180,69,47,.92);
+          display: grid; place-items: center; transition: transform .15s; }
+  .trailer:hover .play { transform: translate(-50%,-50%) scale(1.08); }
+  .play svg { width: 30px; height: 30px; margin-left: 5px; fill: #fff; }
+  .trailer .label { position: absolute; z-index: 1; left: 16px; bottom: 12px; color: #fff;
+                    font-weight: 600; font-size: .9rem; }
+  .trailer iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; z-index: 2; }
+  .no-trailer { aspect-ratio: auto; padding: 22px 16px; background: var(--chip); color: var(--muted);
+                font-size: .95rem; }
+  .body { padding: 18px 20px 20px; }
+  h2 { margin: 0; font-size: 1.4rem; }
+  .meta { color: var(--muted); font-size: .92rem; margin: 2px 0 12px; }
+  .ratings { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+  .chip { background: var(--chip); border-radius: 999px; padding: 3px 11px; font-size: .85rem; }
+  .chip b { font-weight: 700; }
+  p { margin: 0 0 12px; }
+  .watch { border-top: 1px solid var(--line); padding-top: 12px; font-size: .95rem; }
+  .watch strong { color: var(--accent); }
+  .links { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 14px; font-size: .9rem; }
+  a { color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; background: var(--card);
+          border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--chip); font-size: .85rem; text-transform: uppercase; letter-spacing: .04em; }
+  tr:last-child td { border-bottom: 0; }
+  .seen { margin-left: auto; font-size: .85rem; color: var(--muted); display: flex; gap: 6px; align-items: center; }
+  .head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .film.done { opacity: .6; }
+  h3 { margin: 40px 0 12px; }
+  .note { color: var(--muted); font-size: .85rem; margin-top: 28px; }
+  @media (max-width: 560px) { th:nth-child(3), td:nth-child(3) { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Movie Night List</h1>
+  <p class="sub">Movies for Sabrina &amp; Julian. Tap a trailer to play it.</p>
+
+  <!-- The Bride! -->
+  <article class="film" data-id="bride">
+    <button class="trailer" data-yt="IhgcUArO3Uo" aria-label="Play The Bride! trailer">
+      <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      <span class="label">▶ Official trailer</span>
+    </button>
+    <div class="body">
+      <div class="head"><h2>The Bride!</h2>
+        <label class="seen"><input type="checkbox"> Watched</label></div>
+      <div class="meta">2026 · R · 2h 6m · Gothic horror / romance · Dir. Maggie Gyllenhaal</div>
+      <div class="ratings">
+        <span class="chip">🍅 <b>59%</b> Rotten Tomatoes</span>
+        <span class="chip">IMDb <b>5.7</b>/10</span>
+      </div>
+      <p>Maggie Gyllenhaal's punk, 1930s-Chicago reimagining of the Bride of Frankenstein. A lonely
+        Frankenstein's monster (Christian Bale) gets a murdered young woman (Jessie Buckley) brought back
+        to life as his companion, and she turns out to have a will of her own. With Peter Sarsgaard,
+        Annette Bening, Penélope Cruz and Jake Gyllenhaal. Critics split: big, wild swings that some loved and some found messy.</p>
+      <div class="watch"><strong>How to watch:</strong> Streaming on <b>HBO Max</b> (since May 22, 2026). Also rent/buy on Prime Video, Apple TV and Fandango at Home.</div>
+      <div class="links">
+        <a href="https://www.imdb.com/title/tt30851137/" target="_blank" rel="noopener">IMDb</a>
+        <a href="https://www.rottentomatoes.com/m/the_bride_2026" target="_blank" rel="noopener">Rotten Tomatoes</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Mother Mary -->
+  <article class="film" data-id="mothermary">
+    <button class="trailer" data-yt="ATGaqU6Srcc" aria-label="Play Mother Mary trailer">
+      <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      <span class="label">▶ Official trailer</span>
+    </button>
+    <div class="body">
+      <div class="head"><h2>Mother Mary</h2>
+        <label class="seen"><input type="checkbox"> Watched</label></div>
+      <div class="meta">2026 · R · about 1h 52m · Psychological drama · Dir. David Lowery · A24</div>
+      <div class="ratings">
+        <span class="chip">🍅 <b>71%</b> Rotten Tomatoes</span>
+        <span class="chip">🍿 <b>59%</b> audience</span>
+      </div>
+      <p>A world-famous pop star (Anne Hathaway) reunites with the costume designer (Michaela Coel) she
+        fell out with years ago, on the eve of a comeback, and the meeting forces her to face her past.
+        From the director of <i>A Ghost Story</i> and <i>The Green Knight</i>, with original songs, Hunter Schafer, Kaia Gerber and FKA Twigs.
+        Moody, strange and divisive.</p>
+      <div class="watch"><strong>How to watch:</strong> Streaming on <b>HBO Max</b> (since Aug 21, 2026). Also rent/buy on Apple TV and other stores.</div>
+      <div class="links">
+        <a href="https://www.imdb.com/title/tt27200708/" target="_blank" rel="noopener">IMDb</a>
+        <a href="https://www.rottentomatoes.com/m/mother_mary" target="_blank" rel="noopener">Rotten Tomatoes</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Backrooms -->
+  <article class="film" data-id="backrooms">
+    <button class="trailer" data-yt="0HjdiohVOik" aria-label="Play Backrooms trailer">
+      <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      <span class="label">▶ Official trailer</span>
+    </button>
+    <div class="body">
+      <div class="head"><h2>Backrooms</h2>
+        <label class="seen"><input type="checkbox"> Watched</label></div>
+      <div class="meta">2026 · R · 1h 45m · Sci-fi horror · Dir. Kane Parsons · A24</div>
+      <div class="ratings">
+        <span class="chip">🍅 <b>~87%</b> Rotten Tomatoes</span>
+        <span class="chip">IMDb <b>6.8</b>/10</span>
+      </div>
+      <p>Based on Kane Parsons' viral YouTube series. A furniture-store owner (Chiwetel Ejiofor) finds a
+        doorway in his basement that opens onto an endless maze of empty, humming yellow rooms where
+        reality stops following the rules. With Renate Reinsve and Mark Duplass. Became A24's biggest movie ever (~$367M worldwide).</p>
+      <div class="watch"><strong>How to watch:</strong> Streaming on <b>HBO Max</b> (since Sept 25, 2026). Also rent/buy on Prime Video and Apple TV.</div>
+      <div class="links">
+        <a href="https://www.imdb.com/find/?q=Backrooms%202026" target="_blank" rel="noopener">IMDb</a>
+        <a href="https://www.rottentomatoes.com/search?search=backrooms" target="_blank" rel="noopener">Rotten Tomatoes</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- The Cycle of Love -->
+  <article class="film" data-id="cycleoflove">
+    <button class="trailer" data-yt="biXpA5aJPug" aria-label="Play The Cycle of Love trailer">
+      <span class="play"><svg viewBox="0 0 24 24"><path d="M6 4l15 8-15 8z"/></svg></span>
+      <span class="label">▶ Official trailer</span>
+    </button>
+    <div class="body">
+      <div class="head"><h2>The Cycle of Love</h2>
+        <label class="seen"><input type="checkbox"> Watched</label></div>
+      <div class="meta">2026 · 1h 38m · Documentary · Dir. Orlando von Einsiedel · Exec. prod. Priyanka Chopra Jonas</div>
+      <div class="ratings">
+        <span class="chip">🍅 Fresh (few reviews so far)</span>
+        <span class="chip">Audience Award, Middleburg</span>
+      </div>
+      <p>The true story of PK Mahanandia, a young street artist from a poor "untouchable" family in Delhi,
+        who in 1977 got on a second-hand bicycle and rode about 6,000 miles across Asia and Europe to
+        Sweden to find Lotta, the woman he loved. Critics call it joyful, delicate and deeply romantic.
+        From the director of <i>Virunga</i> and the Oscar-winning <i>The White Helmets</i>.</p>
+      <div class="watch"><strong>How to watch:</strong> In <b>theaters</b> (limited US release from Aug 28, 2026). Find a screening on the film's
+        <a href="https://thecycleoflovefilm.com/buy-tickets/" target="_blank" rel="noopener">tickets page</a>. Not streaming yet.</div>
+      <div class="links">
+        <a href="https://thecycleoflovefilm.com/" target="_blank" rel="noopener">Official site</a>
+        <a href="https://www.rottentomatoes.com/m/the_cycle_of_love" target="_blank" rel="noopener">Rotten Tomatoes</a>
+        <a href="https://en.wikipedia.org/wiki/The_Cycle_of_Love" target="_blank" rel="noopener">Wikipedia</a>
+      </div>
+    </div>
+  </article>
+
+  <!-- Seekers -->
+  <article class="film" data-id="seekers">
+    <div class="trailer no-trailer">Trailer is free to watch on <a href="https://seekers.co" target="_blank" rel="noopener">seekers.co</a></div>
+    <div class="body">
+      <div class="head"><h2>Seekers: How to Be Human</h2>
+        <label class="seen"><input type="checkbox"> Watched</label></div>
+      <div class="meta">2026 · Docuseries, 6 episodes (~45 min each, 4.5 hrs total) · Created &amp; directed by Gio Israel</div>
+      <div class="ratings">
+        <span class="chip">Festival selections &amp; awards 2025–26</span>
+        <span class="chip">No IMDb/RT scores yet</span>
+      </div>
+      <p>Six people going through something hard (grief, depression, war trauma, losing their sense of self)
+        each travel to meet a wisdom keeper from a living tradition, across four continents. Pairings include
+        Riley Keough with Jack Kornfield and Trudy Goodman, Édgar Ramírez with Ammaji Swaminii Pramananda,
+        Jamie-Lynn Sigler with Swami Nardinand, and Mona Polacca, Manari Ushigua and Mbuya Rupiya.</p>
+      <div class="watch"><strong>How to watch:</strong> Directly on <a href="https://seekers.co" target="_blank" rel="noopener">seekers.co</a> ("Start watching"), on a pay-it-forward model.</div>
+    </div>
+  </article>
+
+  <h3>How to watch, at a glance</h3>
+  <table>
+    <tr><th>Title</th><th>Where</th><th>Length</th></tr>
+    <tr><td>The Bride!</td><td>HBO Max · rent on Prime / Apple</td><td>2h 6m</td></tr>
+    <tr><td>Mother Mary</td><td>HBO Max · rent on Apple</td><td>~1h 52m</td></tr>
+    <tr><td>Backrooms</td><td>HBO Max · rent on Prime / Apple</td><td>1h 45m</td></tr>
+    <tr><td>The Cycle of Love</td><td>Theaters only (for now)</td><td>1h 38m</td></tr>
+    <tr><td>Seekers</td><td>seekers.co (pay it forward)</td><td>6 × ~45m</td></tr>
+  </table>
+  <p class="note">Three of the five are on HBO Max, so one subscription covers most of the list. Info as of October 2026.</p>
+</main>
+
+<script>
+  document.querySelectorAll('.trailer[data-yt]').forEach(function (btn) {
+    var id = btn.dataset.yt;
+    btn.style.backgroundImage = 'url(https://i.ytimg.com/vi/' + id + '/hqdefault.jpg)';
+    btn.addEventListener('click', function () {
+      if (btn.querySelector('iframe')) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      f.allow = 'autoplay; encrypted-media; fullscreen; picture-in-picture';
+      f.allowFullscreen = true;
+      btn.appendChild(f);
+    });
+  });
+  // "Watched" checkboxes are remembered on this device only
+  document.querySelectorAll('.film').forEach(function (film) {
+    var box = film.querySelector('.seen input'), key = 'movies-seen-' + film.dataset.id;
+    try { box.checked = localStorage.getItem(key) === '1'; } catch (e) {}
+    film.classList.toggle('done', box.checked);
+    box.addEventListener('change', function () {
+      film.classList.toggle('done', box.checked);
+      try { localStorage.setItem(key, box.checked ? '1' : '0'); } catch (e) {}
+    });
+  });
+</script>
+</body>
+</html>
