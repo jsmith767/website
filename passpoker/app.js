@@ -406,7 +406,7 @@
     mode = 'bot';
     hideLobby();
     botLevel = $('#botLevel').value;
-    const label = { easy: 'Easy', medium: 'Medium', hard: 'Hard' }[botLevel];
+    const label = { easy: 'Easy', medium: 'Medium', hard: 'Hard', expert: 'Expert' }[botLevel];
     state = newGameFromChoice([myName || 'You', `Computer (${label})`]);
     netbar(`<span class="muted">Playing the computer (${label}).</span><button class="btn ghost" id="restart">Restart</button>`);
     $('#restart').onclick = () => { state = G.newGame(state.names, state.variant, { spoils: state.spoils, priority: state.priority, offer: state.offer, swap: state.swap }); changed(); };

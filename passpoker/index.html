@@ -84,6 +84,8 @@ details.journal li.r { color: var(--muted); }
 .rules { font-size: 14px; }
 .variants { border: 1px solid var(--line); border-radius: 8px; margin: 10px 0; padding: 8px 12px; font-size: 14px; }
 .variants label { display: block; margin: 6px 0; }
+.more { margin: 6px 0; font-size: 14px; }
+.more summary { cursor: pointer; color: var(--muted); margin-bottom: 4px; }
 @media (max-width: 520px) {
   main { padding: 12px; }
   .hands { gap: 6px; }
@@ -116,20 +118,22 @@ details.journal li.r { color: var(--muted); }
         <label><input type="radio" name="variant" value="spoils"> <b>Spoils</b> (new): even split passing, but the winner of each matchup takes two cards in the draft. <a href="report">Why?</a></label>
         <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
       </fieldset>
+      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="swap" style="margin-top:4px"> <span><b>Swaps between your hands</b> (new, works with any version): after passes 1 and 2 you may trade one card between your own hands. It costs 1 bid card and your opponent sees the swap, or 2 bid cards to keep it secret.</span></label>
+      <details class="more"><summary>More options to experiment with</summary>
       <label class="row" style="font-size:14px;align-items:flex-start;flex-wrap:wrap"><b>Offer one extra on the 3rd pass</b> (new):
         <select id="offer" style="font:inherit;padding:4px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink)">
           <option value="">Off</option>
           <option value="same">Rejected card goes back to the same hand</option>
           <option value="other">Rejected card goes to the passer's other hand</option>
         </select></label>
-      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="swap" style="margin-top:4px"> <span><b>Swaps between your hands</b> (new, works with any version): after passes 1 and 2 you may trade one card between your own hands. It costs 1 bid card and your opponent sees the swap, or 2 bid cards to keep it secret.</span></label>
       <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="auction" style="margin-top:4px"> <span><b>First-pick auction</b> (new, works with any version): before each matchup's draft, both secretly play a leftover bid card. The lower number picks first; a tie goes to the matchup winner. If only one player has a bid card left, they pick first.</span></label>
+      </details>
       <div class="row"><button class="btn" id="hostBtn">Create a room</button><span class="muted">and send the code to your opponent</span></div>
       <div class="row"><input type="text" id="joinCode" maxlength="4" placeholder="CODE" style="width:90px;text-transform:uppercase"><button class="btn" id="joinBtn">Join room</button></div>
       <div class="row" id="resumeRow" hidden><button class="btn ghost" id="resumeBtn"></button></div>
       <div class="row"><button class="btn ghost" id="botBtn">Play vs computer</button>
         <select id="botLevel" style="font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)">
-          <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard" selected>Hard</option>
+          <option value="easy">Easy</option><option value="medium">Medium</option><option value="hard" selected>Hard</option><option value="expert">Expert</option>
         </select></div>
       <div class="row"><button class="btn ghost" id="playtestBtn">Playtest: play both sides</button></div>
     </div>
@@ -161,7 +165,7 @@ details.journal li.r { color: var(--muted); }
 <div id="toast"></div>
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="game.js?v=7"></script>
-<script src="bot.js?v=1"></script>
-<script src="app.js?v=7"></script>
+<script src="bot.js?v=2"></script>
+<script src="app.js?v=8"></script>
 </body>
 </html>
