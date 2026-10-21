@@ -104,6 +104,19 @@ function decide(s, p, sk) {
     }
     return { type: 'pick', card: best.c };
   }
+  if (s.step === 'discard' && !v.myDiscardDone) {
+    return { type: 'discard', cards: [0, 1].map(h => {
+      const k = v.discardNeed[h], hand = v.myHands[h];
+      if (!k) return [];
+      if (!sk.pass) return pick(hand, k);
+      let best = null;
+      for (const keep of combos(hand, 5)) {
+        const val = pctScore(G.eval5(keep)) + keep.reduce((t, x) => t + RV(x), 0) / 5000;
+        if (!best || val > best.v) best = { v: val, keep };
+      }
+      return hand.filter(c => !best.keep.includes(c));
+    }) };
+  }
   if (s.step === 'swap' && !v.mySwapDone) {
     if (!sk.swap || v.swapBudget < 1) return { type: 'swap', skip: true };
     const [A, B] = v.myHands;

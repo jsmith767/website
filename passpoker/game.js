@@ -18,6 +18,7 @@
     even: 'Even split',
     bids: 'Split by your bids',
     original: 'Original (✕ ‖ ✕ swaps)',
+    own: 'Pass your bid',
   };
   const ORIGINAL_DIRS = ['X', 'P', 'X'];
   const bidLabel = (b, variant) => b[0] + (variant === 'original' ? (b[1] === 'P' ? '●' : '▲') : (b[1] === 'P' ? '‖' : '✕'));
@@ -115,7 +116,7 @@
   }
   function log(s, p, msg) { s.logs[p].push({ r: s.round, msg }); }
   function logBoth(s, msg) { log(s, 0, msg); log(s, 1, msg); }
-  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null], choose: [null, null], swap: [null, null] }; s.allocNeed = [null, null]; }
+  function resetPending(s) { s.pending = { bid: [null, null], pass: [null, null], alloc: [false, false], prio: [null, null], choose: [null, null], swap: [null, null], discard: [null, null] }; s.allocNeed = [null, null]; }
 
   function startRound(s) {
     s.round++;
@@ -126,7 +127,7 @@
     s.phase = 1; s.step = 'bid';
     s.phaseInfo = null; s.lastPhaseInfo = null;
     s.known = [{}, {}];  // known[p][card] = opponent hand index (0/1) or 'either'
-    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false]; s.swapPhase = null;
+    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false]; s.swapPhase = null; s.discards = []; s.discardNeed = [[0, 0], [0, 0]];
     resetPending(s);
     logBoth(s, `Round ${s.round} dealt. Pass 1 of 3: choose your bids.`);
   }
@@ -157,6 +158,30 @@
         }
         s.pending.pass[p] = [cs[0].slice(), cs[1].slice()];
         if (s.pending.pass[o]) resolvePass(s);
+        return OK;
+      }
+      case 'discard': {
+        if (s.step !== 'discard' || s.pending.discard[p]) return err('Nothing to discard');
+        const cs = a.cards || [];
+        for (const h of [0, 1]) {
+          const k = s.discardNeed[p][h], x = cs[h] || [];
+          if (x.length !== k || new Set(x).size !== k || !x.every(c => s.hands[p][h].includes(c))) return err(`Discard ${k} from your ${HN[h]}`);
+        }
+        s.pending.discard[p] = [(cs[0] || []).slice(), (cs[1] || []).slice()];
+        if (s.pending.discard[o]) {
+          for (const q of [0, 1]) {
+            const d = s.pending.discard[q];
+            if (d === true) continue;
+            for (const h of [0, 1]) if (d[h].length) {
+              s.hands[q][h] = s.hands[q][h].filter(c => !d[h].includes(c));
+              s.discards.push(...d[h]);
+              log(s, q, `You discarded ${fmtList(d[h])} from your ${HN[h]} (face up).`);
+              log(s, 1 - q, `They discarded ${fmtList(d[h])} from their ${HN[h]} (face up).`);
+            }
+          }
+          refreshKnown(s);
+          nextPhase(s);
+        }
         return OK;
       }
       case 'alloc': {
@@ -250,6 +275,10 @@
       const n = Math.max(0, Math.ceil(sum / 4 - 0.5)); // nearest whole number, .5 rounds down
       counts = [[n, n], [n, n]];
       summary = `Total ${sum} ÷ 4 = ${+(sum / 4).toFixed(2)}, so each hand passes ${n}.`;
+    } else if (v === 'own') {
+      // each hand passes exactly its own bid; overflow is discarded face up, shortfall drawn from the deck
+      counts = [0, 1].map(p => [0, 1].map(h => num(bids[p][h])));
+      summary = 'Each hand passes its own bid.';
     } else if (v === 'bids') {
       const total = Math.floor(sum / 2);
       counts = [0, 1].map(p => splitByBids(total, bids[p]));
@@ -279,7 +308,7 @@
             (avg % 1 ? ` → ${mb[1] === tb[1] ? 'same symbol, down' : 'different symbols, up'}` : '') + ` = ${n} each way`;
         }).join('; ') + '.';
       } else {
-        line += summary + (v === 'bids' ? ` You pass ${counts[p][0]} from A and ${counts[p][1]} from B; they pass ${counts[1 - p][0]} from A and ${counts[1 - p][1]} from B.` : '');
+        line += summary + (v === 'bids' || v === 'own' ? ` You pass ${counts[p][0]} from A and ${counts[p][1]} from B; they pass ${counts[1 - p][0]} from A and ${counts[1 - p][1]} from B.` : '');
       }
       log(s, p, line);
     });
@@ -352,6 +381,7 @@
       log(s, 1 - m.p, `You got ${fmtList(m.cards)} in your ${HN[m.t]} (from their ${HN[m.h]}).`);
     }
     refreshKnown(s);
+    if (s.variant === 'own') return settleOwn(s);
     for (const p of [0, 1]) for (const h of [0, 1]) if (s.hands[p][h].length > 5) s.allocNeed[p] = h;
     if (s.allocNeed.some(x => x !== null)) {
       s.step = 'alloc';
@@ -359,6 +389,24 @@
         const h = s.allocNeed[p];
         if (h !== null) log(s, p, `Your ${HN[h]} has ${s.hands[p][h].length} cards. Choose 5 to keep; the rest go to your ${HN[1 - h]}.`);
       });
+    } else nextPhase(s);
+  }
+
+  // Pass your bid: short hands draw from the deck (face down); long hands discard down to 5 (face up).
+  function settleOwn(s) {
+    s.discardNeed = [[0, 0], [0, 0]];
+    for (const p of [0, 1]) for (const h of [0, 1]) {
+      const n = s.hands[p][h].length;
+      if (n < 5) {
+        s.hands[p][h].push(...s.deck.splice(0, 5 - n));
+        log(s, p, `Your ${HN[h]} drew ${5 - n} from the deck.`);
+        log(s, 1 - p, `Their ${HN[h]} drew ${5 - n} from the deck.`);
+      } else if (n > 5) s.discardNeed[p][h] = n - 5;
+    }
+    if (s.discardNeed.flat().some(x => x)) {
+      s.step = 'discard';
+      s.pending.discard = [0, 1].map(p => s.discardNeed[p].some(x => x) ? null : true);
+      [0, 1].forEach(p => s.discardNeed[p].forEach((k, h) => { if (k) log(s, p, `Your ${HN[h]} has ${5 + k} cards. Discard ${k} face up.`); }));
     } else nextPhase(s);
   }
 
@@ -489,6 +537,8 @@
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
       seat, names: s.names, variant: s.variant, spoils: s.spoils, priority: s.priority,
+      discards: s.discards || [], discardNeed: s.discardNeed ? s.discardNeed[seat] : [0, 0],
+      myDiscardDone: !!s.pending.discard[seat], oppDiscardDone: !!s.pending.discard[o],
       swap: s.swap, mySwapDone: !!s.pending.swap[seat], oppSwapDone: !!s.pending.swap[o],
       swapBudget: s.step === 'swap' ? s.bidsLeft[seat].length - 2 * (3 - s.phase) : 0,
       myPrio: s.pending.prio[seat], oppPrioDone: !!s.pending.prio[o], offer: s.offer,
