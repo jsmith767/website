@@ -818,6 +818,25 @@ async function rcUpdateSavedStarterRecipes() {
                 changed = true;
             }
         }
+        // Contributor recipes that were only links (no ingredients) are no longer part of the starter set:
+        // drop them unless someone has since added ingredients
+        const starterNames = new Set(starters.map(r => r.name.toLowerCase()));
+        const dropIds = new Set(recipes
+            .filter(r => r.contributor && !(r.ingredients || []).length && r.sourceUrl && !starterNames.has(r.name.toLowerCase()))
+            .map(r => r.id));
+        if (dropIds.size) {
+            recipes = recipes.filter(r => !dropIds.has(r.id));
+            dropIds.forEach(id => { activeRecipeIds.delete(id); delete recipeMultipliers[id]; });
+            for (const date of Object.keys(mealPlan)) {
+                for (const meal of Object.keys(mealPlan[date] || {})) {
+                    if (Array.isArray(mealPlan[date][meal])) mealPlan[date][meal] = mealPlan[date][meal].filter(id => !dropIds.has(id));
+                }
+            }
+            saveActiveRecipes();
+            saveRecipeMultipliers();
+            saveMealPlan();
+            changed = true;
+        }
         localStorage.setItem(STARTER_UPDATE_KEY, STARTER_UPDATE_VERSION);
         if (changed) {
             saveRecipes();
