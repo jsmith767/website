@@ -90,7 +90,6 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
-    if (v.variant === 'own') h += discardPileHTML(v);
     h += `<div class="info muted">Version: ${v.spoils ? (v.variant === 'even' ? 'Spoils (even split, winner takes two)' : `${esc(VARIANTS[v.variant])}, winner takes two`) : esc(VARIANTS[v.variant])}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}${v.swap ? ' + swaps' : ''}</div>`;
 
     // opponent row
@@ -112,6 +111,7 @@
         h += `<div class="info muted">Last pass: you ${lp.bids[me].map(bidLabel).join(' / ')} passed ${lp.counts[me].join(' / ')}; them ${lp.bids[op].map(bidLabel).join(' / ')} passed ${lp.counts[op].join(' / ')}</div>`;
       }
 
+      if (v.variant === 'own' && v.discards.length) h += `<div class="info"><span class="muted">Discarded this round (face up):</span> ${v.discards.map(c => cardHTML(c, { cls: 'dim' })).join('')}</div>`;
 
       // offers waiting on a send-back choice
       if (v.step === 'choose') {
@@ -189,14 +189,6 @@
     const log = v.log.slice().reverse().map(l => `<li class="${/^Round \d dealt|^Pass \d of 3/.test(l.msg) ? 'r' : ''}">${esc(l.msg)}</li>`).join('');
     h += `<details class="journal panel" open><summary><b>What you know</b> <span class="muted">(newest first)</span></summary><ol reversed>${log}</ol></details>`;
     return `<div class="seat" data-seat="${me}">${h}</div>`;
-  }
-
-  // Pass your bid: every discarded card stays visible all game.
-  function discardPileHTML(v) {
-    const pile = (label, cards) => `<div class="hand opp"><div class="lab"><b>${label}</b><span class="muted">${cards.length} card${cards.length === 1 ? '' : 's'}</span></div>
-      <div class="cards">${cards.length ? cards.map(c => cardHTML(c)).join('') : '<span class="muted" style="font-size:13px">None yet</span>'}</div></div>`;
-    return pile(`Discarded in round ${v.round} (face up)`, v.discards) +
-      (v.round === 2 && v.prevDiscards.length ? pile('Discarded in round 1 (shuffled back into the deck)', v.prevDiscards) : '');
   }
 
   function passSummary(pi, me, variant) {
