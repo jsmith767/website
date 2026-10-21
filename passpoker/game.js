@@ -127,7 +127,7 @@
     s.phase = 1; s.step = 'bid';
     s.phaseInfo = null; s.lastPhaseInfo = null;
     s.known = [{}, {}];  // known[p][card] = opponent hand index (0/1) or 'either'
-    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false]; s.swapPhase = null; s.discards = []; s.discardNeed = [[0, 0], [0, 0]];
+    s.showdown = null; s.draft = null; s.final = null; s.ready = [false, false]; s.swapPhase = null; s.prevDiscards = s.discards || []; s.discards = []; s.discardNeed = [[0, 0], [0, 0]];
     resetPending(s);
     logBoth(s, `Round ${s.round} dealt. Pass 1 of 3: choose your bids.`);
   }
@@ -537,7 +537,7 @@
     for (const c of Object.keys(s.known[seat])) { const v = s.known[seat][c]; known[v === 'either' ? 2 : v].push(c); }
     return JSON.parse(JSON.stringify({
       seat, names: s.names, variant: s.variant, spoils: s.spoils, priority: s.priority,
-      discards: s.discards || [], discardNeed: s.discardNeed ? s.discardNeed[seat] : [0, 0],
+      discards: s.discards || [], prevDiscards: s.prevDiscards || [], discardNeed: s.discardNeed ? s.discardNeed[seat] : [0, 0],
       myDiscardDone: !!s.pending.discard[seat], oppDiscardDone: !!s.pending.discard[o],
       swap: s.swap, mySwapDone: !!s.pending.swap[seat], oppSwapDone: !!s.pending.swap[o],
       swapBudget: s.step === 'swap' ? s.bidsLeft[seat].length - 2 * (3 - s.phase) : 0,
