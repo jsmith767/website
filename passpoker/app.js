@@ -90,7 +90,8 @@
     }
 
     let h = `<div class="status ${waiting ? 'wait' : ''}">Round ${v.round} of 2 · ${status}</div>`;
-    h += `<div class="info muted">Version: ${v.spoils ? (v.variant === 'even' ? 'Spoils (even split, winner takes two)' : `${esc(VARIANTS[v.variant])}, winner takes two`) : esc(VARIANTS[v.variant])}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}${v.swap ? ' + swaps' : ''}</div>`;
+    const standard = v.variant === 'own' && v.spoils;
+    h += `<div class="info muted">${standard ? 'Pass Poker' : 'Version: ' + (v.spoils ? (v.variant === 'even' ? 'Spoils (even split, winner takes two)' : `${esc(VARIANTS[v.variant])}, winner takes two`) : esc(VARIANTS[v.variant]))}${v.offer ? ` + offer one extra (${v.offer === 'other' ? 'to the other hand' : 'back to the same hand'})` : ''}${v.priority ? ` + first-pick auction (${v.priority}er wins)` : ''}${v.swap ? ' + swaps' : ''}</div>`;
 
     // opponent row
     h += `<div class="info"><b>${opName}</b><span>Bid cards left: ${v.bidsLeft[op].map(b => bidChip(b, { cls: 'small' })).join(' ') || 'none'}</span>` +

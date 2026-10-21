@@ -107,21 +107,21 @@ details.journal li.r { color: var(--muted); }
 <body>
 <main>
   <h1>Pass Poker <span class="muted" style="font-weight:400;font-size:14px">(working title)</span></h1>
-  <p class="muted" style="margin:0 0 8px;font-size:14px"><a href="report" style="color:inherit">Which version plays best? Read the report</a></p>
+  <p class="muted" style="margin:0 0 8px;font-size:14px"><a href="report" style="color:inherit">How the versions compare: read the playtest report</a></p>
 
   <section id="lobby">
     <div class="panel">
       <div class="row"><label>Your name <input type="text" id="name" maxlength="16" placeholder="Name"></label></div>
+      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="swap" style="margin-top:4px"> <span><b>Swaps between your hands</b> (optional): after passes 1 and 2 you may trade one card between your own hands. It costs 1 bid card and your opponent sees the swap, or 2 bid cards to keep it secret.</span></label>
+      <details class="more"><summary>Other versions and options</summary>
       <fieldset class="variants"><legend>Version <span class="muted">(the host's choice is used)</span></legend>
-        <label><input type="radio" name="variant" value="own" checked> <b>Pass your bid</b> (default): each hand passes exactly the number you bid on it. A hand that ends up over 5 discards down to 5, face up; a hand under 5 draws from the deck.</label>
+        <label><input type="radio" name="variant" value="own" checked> <b>Pass Poker</b> (standard): each hand passes exactly its bid; over 5 discards face up, under 5 draws.</label>
         <label><input type="radio" name="variant" value="even"> <b>Even split</b>: every hand passes the average of all 4 bids.</label>
         <label><input type="radio" name="variant" value="bids"> <b>Split by your bids</b>: each player passes half the bid total, divided between their hands in proportion to their own two bids.</label>
         <label><input type="radio" name="variant" value="spoils"> <b>Spoils</b> (new): even split passing, but the winner of each matchup takes two cards in the draft. <a href="report">Why?</a></label>
         <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
       </fieldset>
-      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="spoilsRule" checked style="margin-top:4px"> <span><b>Winner takes two</b> (on by default; works with any version): in each matchup's draft the winner picks first and third. Already part of Spoils.</span></label>
-      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="swap" style="margin-top:4px"> <span><b>Swaps between your hands</b> (new, works with any version): after passes 1 and 2 you may trade one card between your own hands. It costs 1 bid card and your opponent sees the swap, or 2 bid cards to keep it secret.</span></label>
-      <details class="more"><summary>More options to experiment with</summary>
+      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="spoilsRule" checked style="margin-top:4px"> <span><b>Winner takes two</b> (part of standard Pass Poker; works with any version): in each matchup's draft the winner picks first and third. Already part of Spoils.</span></label>
       <label class="row" style="font-size:14px;align-items:flex-start;flex-wrap:wrap"><b>Offer one extra on the 3rd pass</b> (new):
         <select id="offer" style="font:inherit;padding:4px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--ink)">
           <option value="">Off</option>
@@ -144,20 +144,24 @@ details.journal li.r { color: var(--muted); }
       <ul>
         <li>Each player gets two 5-card hands (A and B) and 10 bid cards: 0–4 with ‖, and 0–4 with ✕.</li>
         <li>Each round has 3 passes. For each pass, both players secretly put a bid card on each hand. Bid cards used in a round don't come back until the next round.</li>
-        <li><b>Even split:</b> the 4 numbers are added up and divided by 4, then rounded to the nearest whole number (.5 rounds down). Every hand passes that many cards.</li>
-        <li>‖ sends straight across to the mirror hand (your A to their A). ✕ crosses over (your A to their B).</li>
-        <li><b>Split by your bids:</b> each player passes half the bid total (.5 rounds down). That's split between your two hands in proportion to your own two bids (4 and 1 with 3 to pass → 2 and 1). On an exact half, the hand with the higher bid passes the extra card; with equal bids, the ✕ hand does. A hand passes at most 5, and any extra comes from the other hand.</li>
-        <li><b>Original:</b> the passes always go ✕, then ‖, then ✕, and bid cards are ● or ▲ instead. Each of your hands swaps with one of theirs, and both pass the average of those two bids. An average ending in .5 rounds down if the two cards share a symbol, and up if they differ.</li>
-        <li>If a hand ends a pass with more than 5 cards, its owner chooses 5 to keep there in secret. The rest go to their other hand.</li>
+        <li>Each hand passes exactly the number on its bid card. ‖ sends straight across to the mirror hand (your A to their A); ✕ crosses over (your A to their B).</li>
+        <li>After the pass, a hand with more than 5 cards discards down to 5 (you choose; discards are face up and out for the round), and a hand with fewer than 5 draws from the deck (face down; your opponent sees how many).</li>
         <li>After 3 passes there are 3 matchups: high hand vs high hand, low vs low, and best 5 of all 10 cards vs best 5 of all 10.</li>
         <li>On a tie, the top card of the deck is flipped and added to both hands. If it's still tied, a coin flip decides.</li>
-        <li>For each matchup, the winner picks a card from that matchup's 10 cards, then the loser picks. After the round, each player keeps 3 cards.</li>
-        <li><b>Pass your bid:</b> no averaging. Each hand passes exactly the number on its own bid card, in the direction of its symbol. After the pass, a hand with more than 5 cards discards down to 5 (you choose; discards are face up and out for the round), and a hand with fewer than 5 draws from the deck (face down; your opponent sees how many).</li>
-        <li><b>Spoils:</b> passing works like Even split. In each matchup's draft the winner picks, then the loser, then the winner again, so you can end with 6 to 12 cards. The best 5 wins; if those tie, compare the leftover cards from highest down.</li>
-        <li><b>Offer one extra (3rd pass only):</b> each hand that passes cards offers one more than it has to. The receiver keeps the right number and sends one back, either to the hand it came from or to the passer's <i>other</i> hand, depending on the setting. With "other hand", that's a sneaky way to move a card between your own hands, but the receiver decides which card goes back.</li>
-        <li><b>Swaps:</b> after passes 1 and 2, each player may trade one card from their A with one from their B. An open swap costs 1 bid card, and both moved cards are shown to the opponent. A secret swap costs 2, and the opponent only learns that you swapped. You can't spend cards you'll need for the passes still to come.</li>
-        <li><b>First-pick auction:</b> each round you have 4 bid cards left after passing. Before each matchup's draft, both players secretly play one, and the lower number picks first (a tie goes to the matchup winner). In Spoils, the matchup winner still gets two cards. Spending big bids while passing saves your low cards for the draft.</li>
-        <li>Round 2 is played the same way, with a fresh deck that leaves out the kept cards. The best 5 of your 6 kept cards wins. If those tie, the higher 6th card wins.</li>
+        <li>Draft: in each matchup, the winner picks a card from that matchup's 10 cards, then the loser, then the winner again. So you can end the game with 6 to 12 cards.</li>
+        <li>Round 2 is played the same way, with a fresh deck that leaves out the kept cards. The best 5 of all your kept cards wins; if those tie, compare the leftover cards from highest down.</li>
+        <li><b>Swaps</b> (optional): after passes 1 and 2, each player may trade one card from their A with one from their B. An open swap costs 1 bid card, and both moved cards are shown to the opponent. A secret swap costs 2, and the opponent only learns that you swapped. You can't spend cards you'll need for the passes still to come.</li>
+      </ul>
+      <p style="margin:10px 0 4px"><b>Other versions and options</b></p>
+      <ul>
+        <li><b>Even split:</b> the 4 bid numbers are added up and divided by 4, then rounded to the nearest whole number (.5 rounds down). Every hand passes that many cards.</li>
+        <li><b>Split by your bids:</b> each player passes half the bid total (.5 rounds down), split between your two hands in proportion to your own two bids (4 and 1 with 3 to pass → 2 and 1). On an exact half, the hand with the higher bid passes the extra card; with equal bids, the ✕ hand does. A hand passes at most 5, and any extra comes from the other hand.</li>
+        <li><b>Original:</b> the passes always go ✕, then ‖, then ✕, and bid cards are ● or ▲ instead. Each of your hands swaps with one of theirs, and both pass the average of those two bids. An average ending in .5 rounds down if the two cards share a symbol, and up if they differ.</li>
+        <li>In those three versions, a hand that ends a pass with more than 5 cards is sorted instead of discarding: its owner chooses 5 to keep there in secret, and the rest go to their other hand.</li>
+        <li><b>Spoils:</b> Even split passing with the winner-takes-two draft.</li>
+        <li><b>Winner takes two</b> off: the matchup winner picks once and the loser once, so each player keeps 3 cards per round; the best 5 of your 6 wins, and the 6th card breaks ties.</li>
+        <li><b>Offer one extra (3rd pass only):</b> each hand that passes cards offers one more than it has to. The receiver keeps the right number and sends one back, either to the hand it came from or to the passer's <i>other</i> hand, depending on the setting.</li>
+        <li><b>First-pick auction:</b> each round you have 4 bid cards left after passing. Before each matchup's draft, both players secretly play one, and the lower number picks first (a tie goes to the matchup winner). The matchup winner still gets two cards with Winner takes two.</li>
       </ul>
     </details>
   </section>
@@ -169,6 +173,6 @@ details.journal li.r { color: var(--muted); }
 <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 <script src="game.js?v=8"></script>
 <script src="bot.js?v=3"></script>
-<script src="app.js?v=9"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>
