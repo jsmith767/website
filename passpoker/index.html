@@ -113,13 +113,13 @@ details.journal li.r { color: var(--muted); }
     <div class="panel">
       <div class="row"><label>Your name <input type="text" id="name" maxlength="16" placeholder="Name"></label></div>
       <fieldset class="variants"><legend>Version <span class="muted">(the host's choice is used)</span></legend>
-        <label><input type="radio" name="variant" value="even" checked> <b>Even split</b>: every hand passes the average of all 4 bids.</label>
+        <label><input type="radio" name="variant" value="own" checked> <b>Pass your bid</b> (default): each hand passes exactly the number you bid on it. A hand that ends up over 5 discards down to 5, face up; a hand under 5 draws from the deck.</label>
+        <label><input type="radio" name="variant" value="even"> <b>Even split</b>: every hand passes the average of all 4 bids.</label>
         <label><input type="radio" name="variant" value="bids"> <b>Split by your bids</b>: each player passes half the bid total, divided between their hands in proportion to their own two bids.</label>
         <label><input type="radio" name="variant" value="spoils"> <b>Spoils</b> (new): even split passing, but the winner of each matchup takes two cards in the draft. <a href="report">Why?</a></label>
-        <label><input type="radio" name="variant" value="own"> <b>Pass your bid</b> (new): each hand passes exactly the number you bid on it. A hand that ends up over 5 discards down to 5, face up; a hand under 5 draws from the deck.</label>
         <label><input type="radio" name="variant" value="original"> <b>Original</b>: passes go ✕, ‖, ✕. Each pair of swapping hands trades the average of its two bids.</label>
       </fieldset>
-      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="spoilsRule" style="margin-top:4px"> <span><b>Winner takes two</b> (the Spoils rule, for any version): in each matchup's draft the winner picks first and third. Already part of Spoils.</span></label>
+      <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="spoilsRule" checked style="margin-top:4px"> <span><b>Winner takes two</b> (on by default; works with any version): in each matchup's draft the winner picks first and third. Already part of Spoils.</span></label>
       <label class="row" style="font-size:14px;align-items:flex-start"><input type="checkbox" id="swap" style="margin-top:4px"> <span><b>Swaps between your hands</b> (new, works with any version): after passes 1 and 2 you may trade one card between your own hands. It costs 1 bid card and your opponent sees the swap, or 2 bid cards to keep it secret.</span></label>
       <details class="more"><summary>More options to experiment with</summary>
       <label class="row" style="font-size:14px;align-items:flex-start;flex-wrap:wrap"><b>Offer one extra on the 3rd pass</b> (new):
