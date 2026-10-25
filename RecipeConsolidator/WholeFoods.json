@@ -1947,7 +1947,7 @@
       "make-ahead",
       "freezer-friendly"
     ],
-    "servings": "10"
+    "servings": "20"
   },
   {
     "name": "Peanut Butter Power Oatmeal",
@@ -7763,6 +7763,3945 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/cranberry-lime-pie",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Hummus",
+    "tags": [
+      "sauce",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "chickpeas",
+        "notes": "dried"
+      },
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "baking soda, divided",
+        "notes": "divided"
+      },
+      {
+        "quantity": 20,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "sea salt, divided",
+        "notes": "divided",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 1,
+            "unit": "tbsp"
+          },
+          {
+            "quantity": 1,
+            "unit": "tsp"
+          }
+        ]
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bay leaf"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "lemon juice"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "tahini"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "cumin"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "reserved chickpea cooking liquid",
+        "notes": "this amount is an estimate"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "extra virgin olive oil, parsley, chopped kalamata olives, for garnish",
+        "notes": "parsley, chopped kalamata olives, for garnish"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "sourceUrl": "https://www.theedgyveg.com/2020/02/11/israel-hummus-abu-hassan-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Pad Kee Mao Sauce",
+    "servings": "2",
+    "tags": [
+      "sauce",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "lb",
+        "unitType": "weight",
+        "ingredient": "wide rice noodles",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Thai chilies",
+        "notes": "or to taste"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "spur chili",
+        "notes": "or ⅛ red bell pepper, chopped"
+      },
+      {
+        "quantity": 8,
+        "unit": "oz",
+        "unitType": "weight",
+        "ingredient": "protein of your choice"
+      },
+      {
+        "quantity": 2,
+        "unit": "oz",
+        "unitType": "weight",
+        "ingredient": "carrots",
+        "notes": "(cut in thin sticks)"
+      },
+      {
+        "quantity": 2.8,
+        "unit": "oz",
+        "unitType": "weight",
+        "ingredient": "Chinese broccoli"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "julienned grachai",
+        "notes": "optional"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "stems young peppercorns",
+        "notes": "(cut in small chunks, optional)"
+      },
+      {
+        "quantity": 2.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "A dash black or dark soy sauce",
+        "notes": "optional"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "holy basil leaves"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "oyster sauce"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "soy sauce"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "Golden Mountain Sauce",
+        "notes": "or substitute more soy sauce"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "fish sauce"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "sourceUrl": "https://hot-thai-kitchen.com/pad-kee-mao-2/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Roasted Eggplant",
+    "tags": [
+      "side",
+      "snack",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggplant, top removed and cut into slices the long way",
+        "notes": "large, top removed and cut into slices the long way"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "sea salt"
+      },
+      {
+        "quantity": 3,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "garlic powder"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "paprika"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "sourceUrl": "https://www.theedgyveg.com/2020/06/14/oven-roasted-eggplant-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Frizzled Chickpeas with Feta and Scallions",
+    "tags": [
+      "side",
+      "snack",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can chick peas, drained and rinsed",
+        "notes": "drained and rinsed"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "shallots, peeled and thinly sliced into rings",
+        "notes": "peeled and thinly sliced into rings"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "leek, white and light green parts",
+        "notes": "large, white and light green parts finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic, peeled and thinly",
+        "notes": "peeled and thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Salt and freshly ground pepper",
+        "notes": "Salt and freshly ground"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pinch red pepper flakes",
+        "notes": "large"
+      },
+      {
+        "quantity": 2,
+        "unit": "oz",
+        "unitType": "weight",
+        "ingredient": "feta, crumbled",
+        "notes": "crumbled"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "scallion, thinly",
+        "notes": "large, thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "egg",
+        "notes": "optional"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bunch of chives",
+        "notes": "small, finely chopped, chopped, finely"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "sourceUrl": "https://www.lemonandsaltblog.com/home/2021/1/11/frizzled-chick-peas-with-feta-and-scallions",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Dukkah",
+    "servings": "8",
+    "tags": [
+      "side",
+      "snack",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "hazelnuts"
+      },
+      {
+        "quantity": 3,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "almonds"
+      },
+      {
+        "quantity": 4,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "white sesame seeds"
+      },
+      {
+        "quantity": 3,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "shelled pistachios"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "fennel seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "cumin",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "coriander",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "cayenne pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "kosher salt"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "sourceUrl": "https://www.themediterraneandish.com/dukkah-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Mediterranean Marinated Chickpeas with Basil and Feta",
+    "servings": "6",
+    "tags": [
+      "side",
+      "snack",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cans  chickpeas, rinsed and drained, or 3 cups cooked chickpeas"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "roasted red peppers",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "crumbled feta cheese"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "basil",
+        "notes": "chopped, fresh"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "red wine vinegar"
+      },
+      {
+        "quantity": 20,
+        "unit": "ml",
+        "unitType": "volume",
+        "ingredient": "honey",
+        "isCombined": true,
+        "originalPairs": [
+          {
+            "quantity": 1,
+            "unit": "tablespoon"
+          },
+          {
+            "quantity": 1,
+            "unit": "teaspoon"
+          }
+        ]
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic, pressed or",
+        "notes": "medium, pressed or minced, minced"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "oregano",
+        "notes": "dried"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "freshly ground black pepper",
+        "notes": "freshly ground black"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "red pepper flakes"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "sourceUrl": "https://cookieandkate.com/marinated-chickpeas-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Sweet Potato Waffles",
+    "servings": "4",
+    "tags": [
+      "breakfast",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "all-purpose flour",
+        "notes": "all-purpose"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "mashed sweet potato",
+        "notes": "about 1 medium peeled and cooked"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "light brown sugar"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "avocado oil"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggs",
+        "notes": "large"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Cooking spray"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Maple syrup",
+        "notes": "for serving"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "sourceUrl": "https://feelgoodfoodie.net/recipe/sweet-potato-waffles/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Savory Sardine Salad",
+    "servings": "4",
+    "tags": [
+      "salad",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "4-ounce can of lightly smoked sardines",
+        "notes": "including oil"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "lemon juice",
+        "notes": "from about one lemon"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "red onion",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "curly leaf parsley",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "freshly ground black pepper",
+        "notes": "freshly ground black"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://allwaysdelicious.com/sardine-salad-parsley-lemon/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Italian Pasta Salad with Prosciutto",
+    "servings": "8",
+    "tags": [
+      "salad",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 8,
+        "unit": "oz.",
+        "unitType": "weight",
+        "ingredient": "uncooked brown rice farfalle or rotini"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "English cucumber, seeded and",
+        "notes": "seeded and diced, diced"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cherry tomatoes",
+        "notes": "quartered"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "pitted kalamata olives"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp.",
+        "unitType": "volume",
+        "ingredient": "chives",
+        "notes": "minced"
+      },
+      {
+        "quantity": 4,
+        "unit": "oz.",
+        "unitType": "weight",
+        "ingredient": "prosciutto",
+        "notes": "diced"
+      },
+      {
+        "quantity": 4,
+        "unit": "oz.",
+        "unitType": "weight",
+        "ingredient": "crumbled feta"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp.",
+        "unitType": "volume",
+        "ingredient": "red wine vinegar"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp.",
+        "unitType": "volume",
+        "ingredient": "garlic-infused olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "oregano",
+        "notes": "dried"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "basil",
+        "notes": "dried"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "dijon mustard"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "tsp.",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Salt and pepper",
+        "notes": "to taste"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://funwithoutfodmaps.com/low-fodmap-italian-pasta-salad/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Moroccan Lentil Salad",
+    "servings": "6",
+    "tags": [
+      "salad",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "red onion",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 4,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cooked lentils",
+        "notes": "(whole black, brown or green lentils)"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "celery",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "apricots",
+        "notes": "dried, chopped"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "almonds, chopped or slivered, toasted",
+        "notes": "chopped or slivered, toasted"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cilantro or flat-leaf parsley",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "zest of one orange"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Juice of ½ an orange",
+        "notes": "roughly ¼ cup"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "honey or maple syrup"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "red wine vinegar, or sherry or apple cider vinegar",
+        "notes": "or sherry or apple cider vinegar"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, finely minced, minced, finely"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt, more",
+        "notes": "more to taste, to taste"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cumin"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cloves",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pinch chili flakes",
+        "notes": "optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://www.feastingathome.com/moroccan-lentil-salad/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Zucchini, Pea & Goat Cheese Orzo Salad",
+    "tags": [
+      "salad",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "lb",
+        "unitType": "weight",
+        "ingredient": "orzo"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "zucchini",
+        "notes": "large, sliced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "shallots",
+        "notes": "large, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "frozen peas"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "goat cheese"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lemon, juiced",
+        "notes": "juiced"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "lemon zest"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "pepper"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "thyme"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://alltypesofbowls.com/recipes/zucchini-pea-and-goat-cheese-orzo-salad",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Low FODMAP Orzo Salad",
+    "servings": "6",
+    "tags": [
+      "salad",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 12,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "low FODMAP gluten-free orzo"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Low FODMAP Lemon Salad Dressing",
+        "notes": "made with coarse mustard"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "seedless cucumbers",
+        "notes": "small"
+      },
+      {
+        "quantity": 15,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cherry or grape tomatoes",
+        "notes": "halved"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dill",
+        "notes": "chopped, fresh"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "flat-leaf parsley",
+        "notes": "chopped, fresh"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "scallions",
+        "notes": "chopped (green parts only), chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "lemon zest",
+        "notes": "finely, minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Freshly ground black pepper",
+        "notes": "Freshly ground black"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://www.fodmapeveryday.com/recipes/low-fodmap-orzo-salad/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Vegan Chickpea “Tuna” Salad",
+    "servings": "4",
+    "tags": [
+      "salad",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can chickpeas, drained and rinsed",
+        "notes": "(15 oz), drained and rinsed"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "onion",
+        "notes": "minced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "ribs celery",
+        "notes": "finely diced, diced, finely"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "vegan mayonnaise"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "Dijon mustard"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "dill relish"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "juice of 1/2 lemon"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "salt and pepper",
+        "notes": "to taste"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://sarahsvegankitchen.com/recipes/classic-chickpea-salad/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Korean Hangover Soup (Ppyeo-haejangguk 뼈해장국)",
+    "tags": [
+      "soup",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "ox bones",
+        "notes": "sliced"
+      },
+      {
+        "quantity": 2,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "napa cabbage",
+        "notes": "or chard"
+      },
+      {
+        "quantity": 6,
+        "unit": "quarts",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "Korean fermented soybean paste",
+        "notes": "doenjang"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, minced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "green chili peppers",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "fish sauce"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "green onions",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Korean hot pepper flakes",
+        "notes": "(gochugaru), optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://www.maangchi.com/recipe/ppyeo-haejangguk",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Kimchi",
+    "tags": [
+      "side",
+      "snack",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 6,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "napa cabbage"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "sweet rice flour",
+        "notes": "glutinous rice flour"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "turbinado sugar",
+        "notes": "or brown or white sugar"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "Korean radish matchsticks",
+        "notes": "(or daikon)"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "carrot matchsticks"
+      },
+      {
+        "quantity": 7,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "to 8 green onions",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "Asian chives",
+        "notes": "chopped (buchu), optional, chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water dropwort",
+        "notes": "(minari), optional"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "garlic cloves",
+        "notes": "cloves (24 cloves), minced"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "ginger",
+        "notes": "minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion",
+        "notes": "medium, minced"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fish sauce"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fermented salted shrimp",
+        "notes": "(saeujeot), chopped"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "red pepper flakes",
+        "notes": "gochugaru"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "sourceUrl": "https://www.maangchi.com/recipe/tongbaechu-kimchi",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Cubed Radish Kimchi (Kkakdugi 깍두기)",
+    "tags": [
+      "korean",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 4,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "Korean radish",
+        "notes": "or daikon"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fish sauce"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "Korean hot pepper flakes",
+        "notes": "gochugaru"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "stalks green onions",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "garlic",
+        "notes": "minced (about 5 or 6 cloves), minced"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "ginger",
+        "notes": "minced"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "sourceUrl": "https://www.maangchi.com/recipe/kkakdugi",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Japchae (Stir-fried Noodles and Vegetables 잡채)",
+    "servings": "4",
+    "tags": [
+      "korean",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 8,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "pork belly, pork shoulder, beef, or chicken, cut into strips",
+        "notes": "pork shoulder, beef, or chicken, cut into strips (optional)"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "soy sauce",
+        "notes": "for the meat"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "brown sugar",
+        "notes": "for the meat"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "toasted sesame oil",
+        "notes": "for the meat"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggs",
+        "notes": "(optional garnish)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "a pinch of kosher salt",
+        "notes": "a pinch of kosher"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vegetable oil",
+        "notes": "vegetable"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "soy sauce"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "brown sugar"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "to 1 teaspoon ground black pepper",
+        "notes": "to 1 teaspoon ground black"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, minced"
+      },
+      {
+        "quantity": 8,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "sweet potato starch noodles",
+        "notes": "dangmyeon"
+      },
+      {
+        "quantity": 7,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "or 8 dried wood ear mushrooms"
+      },
+      {
+        "quantity": 8,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "king oyster mushrooms",
+        "notes": "(or shiitake or button), sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion",
+        "notes": "large (8 ounces), sliced, large"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "carrot, cut into matchsticks",
+        "notes": "large, cut into matchsticks"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bunch spinach",
+        "notes": "about 8 ounces"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "vegetable oil",
+        "notes": "vegetable"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "plus 1 teaspoon toasted sesame seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "toasted sesame oil"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "sourceUrl": "https://www.maangchi.com/recipe/easy-japchae",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Spicy Cucumber Side Dish (Oi-muchim 오이무침)",
+    "servings": "4",
+    "tags": [
+      "korean",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "English cucumber",
+        "notes": "or 2 to 3 kirby cucumbers"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "thinly sliced onion"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "green onion",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, minced"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "soy sauce"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "Korean hot pepper flakes",
+        "notes": "gochugaru"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "sesame oil"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "toasted sesame seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sugar",
+        "notes": "optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "sourceUrl": "https://www.maangchi.com/recipe/oi-muchim",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Chicken Pho",
+    "servings": "6",
+    "tags": [
+      "soup",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "canola oil",
+        "notes": "canola"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "sweet onion",
+        "notes": "large, quartered"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "2-inch piece ginger",
+        "notes": "sliced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic, smashed",
+        "notes": "smashed"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "whole cloves"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "star anise pods"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cinnamon stick"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cardamom",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "coriander",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "black peppercorns",
+        "notes": "black corns"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "bone-in chicken thighs, skin removed",
+        "notes": "skin removed"
+      },
+      {
+        "quantity": 4,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "chicken stock"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "fish sauce"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "brown sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt and freshly ground black pepper",
+        "notes": "Kosher and freshly ground black pepper (to taste)"
+      },
+      {
+        "quantity": 8,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "rice noodles"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "bean sprouts"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "basil leaves",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "torn mint leaves"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Thai bird chili pepper, thinly",
+        "notes": "thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lime, cut into wedges",
+        "notes": "cut into wedges"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://damndelicious.net/2018/05/30/instant-pot-pho/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Vegetarian Italian Wedding Soup",
+    "tags": [
+      "soup",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Cooking spray"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "yellow onion, chopped and divided",
+        "notes": "large yellow, chopped and divided, large"
+      },
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cooked white beans",
+        "notes": "(2 15-oz cans)"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "whole wheat bread crumbs"
+      },
+      {
+        "quantity": 6,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic, pressed",
+        "notes": "pressed (divided)"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast or flour"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "olive oil",
+        "notes": "divided"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "soy sauce or tamari"
+      },
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "all-purpose no-salt seasoning blend"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "thyme",
+        "notes": "dried"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "basil",
+        "notes": "dried"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "oregano",
+        "notes": "dried"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Zest of 1 lemon"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "egg",
+        "notes": "optional"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "carrots",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "ribs celery",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "pasta, such as orzo",
+        "notes": "small, such as orzo, dried"
+      },
+      {
+        "quantity": 9,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "vegetable broth"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "lemon juice",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 5,
+        "unit": "oz",
+        "unitType": "weight",
+        "ingredient": "baby kale or other dark leafy greens"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "sea salt"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "freshly ground pepper",
+        "notes": "freshly ground"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "basil",
+        "notes": "chopped, fresh"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Parmesan cheese, for garnish",
+        "notes": "Grated, for garnish (optional)"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "http://radishrose.net/2015/01/03/healthy-vegetarian-italian-wedding-soup/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Carrot Turmeric Ginger Soup",
+    "servings": "4",
+    "tags": [
+      "soup",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 12,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "carrots",
+        "notes": "peeled"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "turmeric",
+        "notes": "dried"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "thumbs fresh ginger",
+        "notes": "about 1 inch each"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "sprigs fresh rosemary"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "chicken broth or vegetable broth"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can  coconut milk"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Greek yogurt, to serve",
+        "notes": "to serve (optional)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "parsley",
+        "notes": "Fresh"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://realbalanced.com/recipe/low-fodmap-anti-bloat-anti-inflammatory-healing-carrot-turmeric-ginger-soup/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Lemon Coriander Soup",
+    "tags": [
+      "soup",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "oil"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "inch ginger",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "coriander stem",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "carrot",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "cabbage",
+        "notes": "shredded"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "beans",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "sweet corn"
+      },
+      {
+        "quantity": 3.25,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "pepper powder"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "corn flour"
+      },
+      {
+        "quantity": 3,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "coriander leaves",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "lemon juice"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://hebbarskitchen.com/lemon-coriander-soup-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Vegan Lentil Shepherd’s Pie",
+    "servings": "8",
+    "tags": [
+      "main",
+      "dinner",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "yellow onions",
+        "notes": "large yellow, diced, large"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "kosher salt and freshly cracked black pepper",
+        "notes": "kosher and freshly cracked black pepper"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "thyme leaves",
+        "notes": "fresh, chopped"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "rosemary leaves",
+        "notes": "fresh, chopped"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "tomato paste"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dry red wine"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "green or brown lentils"
+      },
+      {
+        "quantity": 3.75,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "vegetable broth"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bay leaves"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "sweet or hot paprika"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "tahini, well-stirred",
+        "notes": "well-stirred"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "tamari or soy sauce"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "aged balsamic vinegar"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "vegan Worcestershire sauce",
+        "notes": "optional"
+      },
+      {
+        "quantity": 20,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "Russet potatoes"
+      },
+      {
+        "quantity": 16,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "cauliflower, cut into large florets",
+        "notes": "cut into large florets"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "rosemary sprig",
+        "notes": "fresh (optional), fresh"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "vegan butter",
+        "notes": "or olive oil"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "lite coconut milk"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "nutritional yeast"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Extra virgin olive oil for baking and finishing"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "flat-leaf parsley",
+        "notes": "Chopped"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://rainbowplantlife.com/healthy-vegan-lentil-shepherds-pie/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Mediterranean Chicken Tray Bake with Potatoes, Peppers, and Olives",
+    "servings": "4",
+    "tags": [
+      "main",
+      "dinner",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "extra-virgin olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lemon, juiced",
+        "notes": "juiced"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "balsamic vinegar"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "tarragon",
+        "notes": "dried"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "oregano",
+        "notes": "dried"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "paprika"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "black pepper",
+        "notes": "black"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "chicken thighs with skin"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red onion, sliced into petals",
+        "notes": "small, sliced into petals"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "mini bell peppers, halved and seeded",
+        "notes": "halved and seeded"
+      },
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "baby potatoes",
+        "notes": "halved"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lemon",
+        "notes": "sliced"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "crumbled feta cheese"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "parsley",
+        "notes": "fresh, chopped"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pitted kalamata olives"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://www.allrecipes.com/recipe/268999/mediterranean-chicken-sheet-pan-dinner/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Saffron Asparagus Kitchari",
+    "tags": [
+      "main",
+      "dinner",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "saffron"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "ghee"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cumin seeds"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "fenugreek seeds"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "to 4 curry leaves"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "onion",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "asafoetida",
+        "notes": "hing"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "split mung dal"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "basmati rice"
+      },
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "asparagus",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt"
+      },
+      {
+        "quantity": 6,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cumin",
+        "notes": "ground"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://www.banyanbotanicals.com/info/blog-the-banyan-insight/details/saffron-asparagus-kitchari/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Falafel",
+    "servings": "24",
+    "tags": [
+      "main",
+      "dinner",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "chickpeas",
+        "notes": "dried (not canned), dried"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "baking soda"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "parsley leaves",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cilantro leaves",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dill",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion",
+        "notes": "small, quartered"
+      },
+      {
+        "quantity": 8,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, peeled"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Salt",
+        "notes": "to taste"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "black pepper",
+        "notes": "ground black, ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "cumin",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "coriander",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "cayenne pepper",
+        "notes": "optional"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "toasted sesame seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Oil for frying"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Tahini sauce, to serve",
+        "notes": "to serve"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Pita pockets"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "English cucumbers",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Tomatoes",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Baby arugula"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Pickles"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://www.themediterraneandish.com/how-to-make-falafel/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Sicilian Pasta con le Sarde",
+    "servings": "4",
+    "tags": [
+      "main",
+      "dinner",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dry white wine"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "golden raisins",
+        "notes": "(about 1/4 cup)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Pinch saffron",
+        "notes": "optional"
+      },
+      {
+        "quantity": 4.5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "extra-virgin olive oil, divided",
+        "notes": "divided"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "fennel seed",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "panko bread crumbs",
+        "notes": "(about 1/2 cup)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt and freshly ground black pepper",
+        "notes": "Kosher and freshly ground black pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "fennel bulb, fronds reserved",
+        "notes": "minced, fronds reserved"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "yellow onion",
+        "notes": "minced yellow, minced"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "oil-packed anchovy fillets"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "pine nuts , toasted",
+        "notes": "(about 1/4 cup), toasted"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "whole sardines , filleted and cut into 1-inch pieces",
+        "notes": "(about 3/4 pound), filleted and cut into 1-inch pieces"
+      },
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "bucatini or spaghetti"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://www.seriouseats.com/pasta-pasta-con-le-sarde-sicilian-pasta-with-sardines",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Chicken Paprikash",
+    "servings": "4",
+    "tags": [
+      "main",
+      "dinner",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "lbs",
+        "unitType": "weight",
+        "ingredient": "chicken thighs or breast, cubed",
+        "notes": "cubed"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "yellow onion",
+        "notes": "medium yellow, finely chopped, chopped, finely, medium"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red bell peppers",
+        "notes": "medium, finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "heaping tablespoon tomato paste"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can  full-fat coconut milk"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "sweet paprika"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cayenne pepper"
+      },
+      {
+        "quantity": 0.5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "chicken stock cube"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "cornstarch"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Neutral oil for searing"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt and pepper",
+        "notes": "Kosher and pepper"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "parsley and green onions, for serving",
+        "notes": "Fresh, for serving"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "all-purpose flour",
+        "notes": "all-purpose (dumplings)"
+      },
+      {
+        "quantity": 6,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggs",
+        "notes": "large (dumplings), large"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://carolinagelen.com/chicken-paprikash/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Orange Roast Chicken with Shallots and Fennel",
+    "tags": [
+      "main",
+      "dinner",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "fennel seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "coriander seeds"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "granulated sugar",
+        "notes": "granulated"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Zest of 2 medium oranges"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "sage leaves",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "sprigs tarragon",
+        "notes": "finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "Dijon mustard"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "extra-virgin olive oil",
+        "notes": "divided"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "whole chicken",
+        "notes": "4 to 4.5 pounds"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "navel oranges",
+        "notes": "medium"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "fennel bulbs",
+        "notes": "medium"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "shallots",
+        "notes": "medium"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "orange juice"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "sourceUrl": "https://carolinagelen.substack.com/p/orange-chicken-roast-with-fennel",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Korean Braised Potatoes",
+    "servings": "4",
+    "tags": [
+      "korean",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "lb",
+        "unitType": "weight",
+        "ingredient": "potato, washed and",
+        "notes": "washed and peeled, peeled"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "light soy sauce"
+      },
+      {
+        "quantity": 2,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "mirin"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cloves garlic",
+        "notes": "minced"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "neutral oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "tsp",
+        "unitType": "volume",
+        "ingredient": "sesame oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "tbsp",
+        "unitType": "volume",
+        "ingredient": "sesame seeds"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "sourceUrl": "https://cjeatsrecipes.com/korean-braised-potatoes/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Ginger Lemon Switchel (Laborade)",
+    "tags": [
+      "postpartum",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "raw honey"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "hot water"
+      },
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cold or room-temperature water",
+        "notes": "or sparkling mineral water"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "apple cider vinegar"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "freshly squeezed lemon juice"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ginger pulp or juice",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "drops trace mineral drops"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "drops Bach Rescue Remedy",
+        "notes": "optional"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "mineral sea salt"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "sourceUrl": "https://motherbees.com/blogs/motherbees-blogs/recipe-ginger-lemon-switchel",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Lactation Cookies #2",
+    "servings": "20",
+    "tags": [
+      "postpartum",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "old-fashioned rolled oats"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "all-purpose flour",
+        "notes": "all-purpose"
+      },
+      {
+        "quantity": 5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "brewers yeast"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "flaxseed",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking soda"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 12,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "unsalted butter",
+        "notes": "unsalted"
+      },
+      {
+        "quantity": 4,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "virgin coconut oil"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cane sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "egg plus 1 large egg yolk",
+        "notes": "large"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "vanilla extract"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "dark chocolate chips"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "sourceUrl": "https://www.howsweeteats.com/2015/02/lactation-cookies/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Blueberry Lemon Yogurt Cake",
+    "servings": "8",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "vegetable or another neutral oil"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "plus 1 tablespoon granulated sugar",
+        "notes": "plus 1 tablespoon granulated"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "or 2 large lemons",
+        "notes": "small"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggs",
+        "notes": "large"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla extract",
+        "notes": "optional"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "plain yogurt"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "plus 1 tablespoon all-purpose flour",
+        "notes": "plus 1 tablespoon all-purpose"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "blueberries, fresh or frozen",
+        "notes": "fresh or frozen"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Powdered sugar for dusting",
+        "notes": "optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://smittenkitchen.com/2008/04/lemon-yogurt-anything-cake/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Roasted Strawberry Miso Ice Cream",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "strawberries"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "golden syrup",
+        "notes": "or maple syrup or light honey"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "balsamic vinegar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "a few turns of black pepper",
+        "notes": "a few turns of black"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "whole milk",
+        "notes": "whole"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "egg yolks",
+        "notes": "large"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "white miso"
+      },
+      {
+        "quantity": 1.75,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "heavy cream"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla extract"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://www.davidlebovitz.com/roasted-strawberry-miso-ice-cream-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Raw Superfood Cheesecake",
+    "servings": "9",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "almonds",
+        "notes": "(crust)"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "rolled oats"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "raisins"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cacao butter, melted",
+        "notes": "melted"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cashews"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sea salt"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "lemon juice",
+        "notes": "vanilla layer"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "notes": "vanilla layer"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "vanilla extract"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla bean"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "dates"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "lemon juice",
+        "notes": "mint layer"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "coconut oil, melted",
+        "notes": "melted (mint layer)"
+      },
+      {
+        "quantity": 0.16666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "notes": "mint layer"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "brazil nuts"
+      },
+      {
+        "quantity": 3,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "green superfood powder",
+        "notes": "optional"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "mint leaves"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cranberries",
+        "notes": "dried"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "almonds",
+        "notes": "(strawberry layer)"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "strawberries"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "beet",
+        "notes": "chopped"
+      },
+      {
+        "quantity": 0.16666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "notes": "strawberry layer"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "lime juice"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "coconut oil, melted",
+        "notes": "melted (strawberry layer)"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://www.thisrawsomeveganlife.com/2016/09/magical-superfood-cheesecake.html",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Vegan (or Not) Brown Butter Peach Cobbler",
+    "servings": "10",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "but firm peaches",
+        "notes": "ripe"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "blueberries",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "brown sugar",
+        "notes": "or coconut sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "freshly grated nutmeg"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ginger",
+        "notes": "ground"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cardamom",
+        "notes": "ground (optional), ground"
+      },
+      {
+        "quantity": 10,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "vegan butter"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "all-purpose flour",
+        "notes": "all-purpose"
+      },
+      {
+        "quantity": 0.6666666666666666,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "old-fashioned rolled oats"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cane sugar"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 1.25,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "full-fat oat milk"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "pure vanilla extract"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "pure almond extract",
+        "notes": "optional"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "vegan vanilla ice cream, to serve",
+        "notes": "to serve (optional)"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://rainbowplantlife.com/vegan-brown-butter-peach-cobbler/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Strawberry and Matcha Tiramisu",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pack lady fingers",
+        "notes": "(about 7 ounces, 24 cookies)"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "whole milk",
+        "notes": "whole"
+      },
+      {
+        "quantity": 1,
+        "unit": "pound",
+        "unitType": "weight",
+        "ingredient": "strawberries",
+        "notes": "fresh"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "matcha powder",
+        "notes": "dusting"
+      },
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "pasteurized egg yolks"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "matcha powder",
+        "notes": "cream"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "mascarpone"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "heavy whipping cream"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://lifebymikeg.com/blogs/all/matcha-lovers-rejoice-for-a-twist-on-a-classic-italian-dessert",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Gluten-Free Sandwich Bread",
+    "servings": "10",
+    "tags": [
+      "gluten-free",
+      "baking",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "all purpose gluten free flour blend"
+      },
+      {
+        "quantity": 3,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "xanthan gum",
+        "notes": "omit if your blend contains it"
+      },
+      {
+        "quantity": 2.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "instant yeast"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cream of tartar"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "granulated sugar",
+        "notes": "granulated"
+      },
+      {
+        "quantity": 2,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "kosher salt"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "warm milk"
+      },
+      {
+        "quantity": 4,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "unsalted butter, melted",
+        "notes": "unsalted, melted"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "apple cider vinegar"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "egg whites, room temperature",
+        "notes": "room temperature"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Toasted sesame seeds for sprinkling",
+        "notes": "optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
+    "sourceUrl": "https://glutenfreeonashoestring.com/gluten-free-bread-recipe/",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Horchata",
+    "servings": "4",
+    "tags": [
+      "drink",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "long-grain white or brown rice, uncooked",
+        "notes": "uncooked"
+      },
+      {
+        "quantity": 6,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "water"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "notes": "ground"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "plant-based milk"
+      },
+      {
+        "quantity": 0.25,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "to ½ cup sugar"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla extract"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Drinks). Full steps are on the original page.",
+    "sourceUrl": "https://plantbasedonabudget.com/horchata/",
     "contributor": "Ava & Charlie"
   }
 ]

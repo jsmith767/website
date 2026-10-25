@@ -780,6 +780,8 @@ updateRecipeList = function () {
 const STARTER_UPDATE_KEY = 'recipeConsolidator_starterUpdate';
 const STARTER_UPDATE_VERSION = STARTER_DATA_VERSION;
 const STARTER_RENAMES = { 'tahni caesar salad': 'Tahini Caesar Salad' };
+// Starter serving sizes that were corrected: name -> the old default value
+const STARTER_SERVINGS_FIXES = { 'after ceremony soup': '10' };
 
 async function rcUpdateSavedStarterRecipes() {
     try {
@@ -804,6 +806,9 @@ async function rcUpdateSavedStarterRecipes() {
             (starter.tags || []).forEach(t => tags.add(t));
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }
+            // Corrected starter serving sizes replace the old default (not a number someone typed themselves)
+            const oldServings = STARTER_SERVINGS_FIXES[recipe.name.toLowerCase()];
+            if (oldServings && recipe.servings === oldServings && starter.servings && starter.servings !== oldServings) { recipe.servings = starter.servings; changed = true; }
             if (starter.openSteps && !recipe.openSteps) { recipe.openSteps = true; changed = true; }
             if (starter.lockedSteps && !recipe.lockedSteps) { recipe.lockedSteps = true; changed = true; }
         }
