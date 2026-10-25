@@ -11703,5 +11703,600 @@
     "about": "From Ava and Charlie's Digital Cookbook (Drinks). Full steps are on the original page.",
     "sourceUrl": "https://plantbasedonabudget.com/horchata/",
     "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Shakshuka",
+    "servings": "4",
+    "tags": [
+      "breakfast",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "extra-virgin olive oil"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "onion, halved and thinly",
+        "notes": "large, halved and thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red bell pepper, seeded and thinly",
+        "notes": "large, seeded and thinly sliced, sliced"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves, thinly",
+        "notes": "cloves, thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cumin",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "sweet paprika"
+      },
+      {
+        "quantity": 0.125,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cayenne, or",
+        "notes": "ground, or to taste, to taste"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can whole plum tomatoes with their juices",
+        "notes": "(28-ounce), coarsely chopped, chopped, coarsely"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "kosher salt, plus more as needed",
+        "notes": "kosher, plus more as needed"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "black pepper, plus more as needed",
+        "notes": "black, plus more as needed"
+      },
+      {
+        "quantity": 5,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "feta, crumbled",
+        "notes": "crumbled (about 1 ¼ cups)"
+      },
+      {
+        "quantity": 6,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "eggs",
+        "notes": "large"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cilantro, for serving",
+        "notes": "Chopped, for serving"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Hot sauce, for serving",
+        "notes": "for serving"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1014721-shakshuka-with-feta",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Cucumber, Watermelon, and Feta Salad",
+    "servings": "4",
+    "tags": [
+      "salad",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 3,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "cubed watermelon"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "tomatoes",
+        "notes": "large, ripe"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cucumber",
+        "notes": "medium"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red onion",
+        "notes": "small"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "pitted kalamata olives"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "crumbled feta"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Some chopped parsley and mint"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Olive oil and red-wine vinegar"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Salt and pepper"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1014895-greek-style-watermelon-salad",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Spiced Chickpea Stew with Coconut and Turmeric (“The Stew”)",
+    "servings": "4",
+    "tags": [
+      "soup",
+      "vegetarian",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "olive oil, plus more for serving",
+        "notes": "plus more for serving"
+      },
+      {
+        "quantity": 4,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, chopped"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "yellow onion",
+        "notes": "large yellow, chopped, large"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "piece ginger",
+        "notes": "(2-inch), finely chopped, chopped, finely"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt and black pepper",
+        "notes": "Kosher and black pepper"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "turmeric, plus more for serving",
+        "notes": "ground, plus more for serving"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "red-pepper flakes, plus more for serving",
+        "notes": "plus more for serving"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cans chickpeas, drained and rinsed",
+        "notes": "(15-ounce), drained and rinsed"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "cans full-fat coconut milk",
+        "notes": "15-ounce"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "vegetable or chicken stock"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "bunch Swiss chard, kale or collard greens, stems removed, torn into bite-size pieces",
+        "notes": "kale or collard greens, stems removed, torn into bite-size pieces"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "mint leaves, for serving",
+        "notes": "for serving"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Yogurt, for serving",
+        "notes": "for serving (optional)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Toasted pita, lavash or other flatbread, for serving",
+        "notes": "lavash or other flatbread, for serving (optional)"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1019772-spiced-chickpea-stew-with-coconut-and-turmeric",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Coconut Miso Salmon Curry",
+    "servings": "4",
+    "tags": [
+      "soup",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "safflower or canola oil",
+        "notes": "safflower or canola"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red onion, halved and sliced ½-inch thick",
+        "notes": "medium, halved and sliced ½-inch thick (about 2 cups)"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "piece fresh ginger",
+        "notes": "1-inch), minced (about 2 tablespoons, minced"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves, thinly",
+        "notes": "cloves, thinly sliced, sliced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt and black pepper",
+        "notes": "Kosher and black pepper"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "white miso"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened, full-fat canned coconut milk",
+        "notes": "full-fat canned coconut milk"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "salmon fillet, cut into 2-inch pieces",
+        "notes": "(1 ½-pound), cut into 2-inch pieces"
+      },
+      {
+        "quantity": 5,
+        "unit": "ounces",
+        "unitType": "weight",
+        "ingredient": "baby spinach",
+        "notes": "about 5 packed cups"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "lime juice, plus lime wedges for serving",
+        "notes": "fresh, plus lime wedges for serving"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Steamed rice, such as jasmine or basmati, for serving",
+        "notes": "such as jasmine or basmati, for serving"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "basil",
+        "notes": "chopped, fresh"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cilantro",
+        "notes": "chopped, fresh"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1020045-coconut-miso-salmon-curry",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Spicy Coconut Corn Chowder",
+    "servings": "4",
+    "tags": [
+      "soup",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 5,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "ears yellow or bicolor corn",
+        "notes": "or 5 cups frozen corn kernels"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "olive oil"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "shallots, thinly sliced into rings",
+        "notes": "thinly sliced into rings"
+      },
+      {
+        "quantity": 3,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic cloves",
+        "notes": "cloves, minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "piece ginger, peeled and",
+        "notes": "(1-inch), peeled and minced, minced"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "serrano chile",
+        "notes": "(or other chile), minced"
+      },
+      {
+        "quantity": 2,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "red potatoes , cut into ½-inch cubes",
+        "notes": "small (6 to 8 ounces total), cut into ½-inch cubes, small"
+      },
+      {
+        "quantity": 2.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "vegetable broth",
+        "notes": "or 2 ½ cups of hot water whisked with 1 ½ teaspoons jarred bouillon"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "can full-fat coconut milk",
+        "notes": "15-ounce"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "lime juice",
+        "notes": "from ½ lime"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Kosher salt, to season",
+        "notes": "Kosher, to season"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Torn cilantro leaves, toasted coconut flakes, chopped roasted peanuts, crispy fried shallots, lime wedges and more sliced Serrano chiles, to serve",
+        "notes": "toasted coconut flakes, chopped roasted peanuts, crispy fried shallots, lime wedges and more sliced Serrano chiles, to serve (optional)"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1019451-spicy-corn-and-coconut-soup",
+    "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Vegan Chocolate Cupcakes",
+    "servings": "12",
+    "tags": [
+      "dessert",
+      "vegetarian",
+      "vegan",
+      "Ava & Charlie"
+    ],
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "soy or rice milk"
+      },
+      {
+        "quantity": 1,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vinegar"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "sugar"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "vegetable oil",
+        "notes": "vegetable"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "vanilla extract"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "flour"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cocoa powder"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking soda"
+      },
+      {
+        "quantity": 0.5,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "baking powder"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "salt"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "confectioners’ sugar"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "cocoa powder, sifted",
+        "notes": "sifted"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "soy or rice milk"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "Chocolate sprinkles",
+        "notes": "optional"
+      }
+    ],
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "sourceUrl": "https://cooking.nytimes.com/recipes/1012423-vegan-chocolate-cupcakes",
+    "contributor": "Ava & Charlie"
   }
 ]
