@@ -799,3 +799,29 @@ html.rc-trip-mode {
 .rc-contributor-chip.is-on i { color: #fff; }
 .rc-link-only { color: var(--muted); font-style: italic; }
 @media (max-width: 720px) { .recipe-row-summary > div > div:last-child > span.rc-link-only { display: inline !important; } }
+
+/* About button and guide */
+.rc-about-btn { width: 34px; height: 34px; border-radius: 50%; font-size: 13px; flex-shrink: 0; }
+.rc-about h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin: 18px 0 8px; }
+.rc-about p, .rc-about li { font-size: 15px; line-height: 1.5; }
+.rc-about-lead { font-size: 16px !important; margin: 0 0 4px; }
+.rc-about-steps, .rc-about-list { padding-left: 20px; margin: 0; }
+.rc-about-steps li, .rc-about-list li { margin-bottom: 8px; }
+.rc-about a { color: var(--accent-ink); }
+
+/* Scaling a recipe in the Ingredients view */
+#ingredientsModalBody { white-space: normal; line-height: 1.5; }
+.rc-scale { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-bottom: 8px; }
+.rc-scale-servings { display: flex; align-items: center; gap: 6px; font-size: 15px; }
+.rc-scale-servings input { width: 64px; text-align: center; padding: 6px; }
+.rc-scale-servings .rc-icon-btn { width: 36px; height: 36px; border-radius: 50%; }
+.rc-ing-list { list-style: none; padding: 0; margin: 8px 0 12px; }
+.rc-ing-list li { display: flex; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.rc-ing-qty { flex: 0 0 96px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+.rc-ing-name { flex: 1; display: flex; flex-direction: column; }
+.rc-ing-name small { color: var(--muted); font-size: 12px; }
+.rc-scale-actions .btn { width: 100%; margin-bottom: 6px; }
+@media (max-width: 720px) {
+    .rc-appbar-title { margin-right: 0; }
+    .rc-ing-qty { flex-basis: 84px; }
+}

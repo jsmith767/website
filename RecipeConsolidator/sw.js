@@ -1,7 +1,7 @@
 // Recipe Consolidator service worker: lets the installed app open offline.
 // Network first, so a fresh deploy is picked up whenever there is a connection;
 // the cached copy is only used when the network fails.
-const CACHE = 'rc-v4';
+const CACHE = 'rc-v5';
 const APP_SHELL = [
     './',
     'index.html',
@@ -9,6 +9,7 @@ const APP_SHELL = [
     'recipe-consolidator.js',
     'rc-plan.js',
     'rc-trip.js',
+    'rc-extras.js',
     'manifest-trip.webmanifest',
     'WholeFoods.json',
     'manifest.webmanifest',
