@@ -825,3 +825,9 @@ html.rc-trip-mode {
     .rc-appbar-title { margin-right: 0; }
     .rc-ing-qty { flex-basis: 84px; }
 }
+
+/* Share-on-save option in the Add Recipe form */
+.rc-share-optin { display: flex; gap: 10px; align-items: flex-start; margin: 14px 0 4px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--accent-soft); cursor: pointer; }
+.rc-share-optin input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; }
+.rc-share-optin span { display: flex; flex-direction: column; gap: 2px; font-size: 15px; }
+.rc-share-optin small { font-size: 13px; color: var(--muted); }

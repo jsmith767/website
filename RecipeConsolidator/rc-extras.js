@@ -19,7 +19,7 @@ function rcOpenAbout() {
                 ${trip
                     ? '<li><strong>Trip mode</strong> (you\'re in it): each recipe shows calories, weight and calories per gram; the plan shows calories, food weight and water per person per day; Shop has a pack-by-day list.</li>'
                     : '<li><strong>Trip mode</strong> for backpacking: switch in the ⋯ menu to see calories, weight and water per person per day, and a pack-by-day list.</li>'}
-                <li><strong>Share a recipe</strong> with the Share button in any recipe: it may be added to the library everyone starts with. Share ingredients freely; for steps, use your own words or link to the original.</li>
+                <li><strong>Share a recipe</strong> with Julian: tick <strong>Also share this recipe with Julian</strong> when you add one, or use the Share button in any recipe. It may be added to the library everyone starts with. Share ingredients freely; for steps, use your own words or link to the original.</li>
                 <li><strong>Install it</strong> like an app: in Safari tap Share → Add to Home Screen (on Android, the ⋯ menu). It then works offline too.</li>
             </ol>
 
@@ -160,3 +160,23 @@ document.addEventListener('DOMContentLoaded', () => {
     b.addEventListener('click', rcOpenAbout);
     bar.insertBefore(b, tabs || null);
 });
+
+// ----------------------------
+// "Also share with Julian" when saving a recipe
+// ----------------------------
+
+const rcBaseConfirmReview = confirmIngredientReview;
+confirmIngredientReview = function () {
+    const box = document.getElementById('rcShareOnSave');
+    const wantsShare = !!(box && box.checked);
+    const pending = pendingRecipeForReview;
+    const editId = pending && pending.id;
+    const countBefore = recipes.length;
+    const result = rcBaseConfirmReview.apply(this, arguments);
+    if (wantsShare) {
+        const saved = editId ? rcRecipeById(editId) : (recipes.length > countBefore ? recipes[recipes.length - 1] : null);
+        if (saved) setTimeout(() => rcOpenShare(String(saved.id)), 350);
+        box.checked = false;
+    }
+    return result;
+};
