@@ -654,7 +654,7 @@ function rcOpenShare(idStr) {
         ${(recipe.instructions || recipe.about) ? `
         <label class="rc-share-check">
             <input type="checkbox" id="rcShareOwnWords" onchange="document.getElementById('rcShareSend').disabled = !this.checked">
-            <span>The steps and notes are in my own words, or I've linked the original instead of copying it.</span>
+            <span>The steps and notes are in my own words. If they came from a website, cookbook or paid subscription, I've removed them and put the link in Source instead.</span>
         </label>` : ''}
         <div class="rc-sheet-actions">
             <button class="btn btn-secondary" onclick="rcClosePicker()">Cancel</button>

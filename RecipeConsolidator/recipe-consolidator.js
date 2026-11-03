@@ -39,7 +39,7 @@ const MEAL_PLAN_NOTES_KEY = 'recipeConsolidator_mealPlanNotes';
 const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
 const STARTER_LOADED_KEY = 'recipeConsolidator_starterLoaded';
 // Bump when WholeFoods.json changes, so browsers and Cloudflare fetch the new copy
-const STARTER_DATA_VERSION = '2026-10-24b';
+const STARTER_DATA_VERSION = '2026-11-03';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
@@ -830,16 +830,19 @@ function splitPrepWordsFromName(name, existingNotes) {
             const prefix = wl + ' ';
             const suffix = ' ' + wl;
             
+            // Only note a prep word once (e.g. "finely grated" already covers "grated" and "finely")
+            const alreadyNoted = (' ' + notesParts.join(' ').toLowerCase().replace(/[^a-z\s]/g, ' ') + ' ').includes(' ' + wl + ' ');
+
             if (lower.startsWith(prefix)) {
                 ingredientName = ingredientName.slice(prefix.length).trim();
-                notesParts.push(word);
+                if (!alreadyNoted) notesParts.push(word);
                 changed = true;
                 break;
             }
-            
+
             if (lower.endsWith(suffix)) {
                 ingredientName = ingredientName.slice(0, lower.lastIndexOf(suffix)).trim();
-                notesParts.push(word);
+                if (!alreadyNoted) notesParts.push(word);
                 changed = true;
                 break;
             }

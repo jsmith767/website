@@ -12298,5 +12298,107 @@
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1012423-vegan-chocolate-cupcakes",
     "contributor": "Ava & Charlie"
+  },
+  {
+    "name": "Crisped Chickpea and Cauliflower Traybake with Lemon-Garlic Yogurt",
+    "servings": "4",
+    "tags": [
+      "dinner",
+      "main",
+      "side",
+      "sheet-pan",
+      "vegetarian",
+      "gluten-free",
+      "nut-free",
+      "soy-free",
+      "Misty"
+    ],
+    "contributor": "Misty",
+    "sourceUrl": "https://www.177milkstreet.com/recipes/crisped-chickpea-cauliflower-traybake-lemon-garlic-yogurt",
+    "about": "Shared by Misty. From Christopher Kimball's Milk Street (subscription); full steps are on their site.",
+    "ingredients": [
+      {
+        "quantity": 5,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "extra-virgin olive oil",
+        "notes": "divided"
+      },
+      {
+        "quantity": 3,
+        "unit": "teaspoons",
+        "unitType": "volume",
+        "ingredient": "curry powder",
+        "notes": "or baharat; divided"
+      },
+      {
+        "quantity": 1,
+        "unit": "pinch",
+        "unitType": "count",
+        "ingredient": "kosher salt",
+        "notes": "and ground black pepper, to taste"
+      },
+      {
+        "quantity": 2.75,
+        "unit": "pounds",
+        "unitType": "weight",
+        "ingredient": "cauliflower",
+        "notes": "2½–3 lb; trimmed and cut into 1-inch florets"
+      },
+      {
+        "quantity": 1,
+        "unit": "can",
+        "unitType": "count",
+        "ingredient": "chickpeas",
+        "notes": "15½ oz; rinsed and drained"
+      },
+      {
+        "quantity": 0.3333333333333333,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "plain whole-milk yogurt"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "lemon zest",
+        "notes": "grated"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "lemon juice"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "garlic clove",
+        "notes": "medium; finely grated"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "lemon",
+        "notes": "cut into wedges, to serve"
+      },
+      {
+        "quantity": 1,
+        "unit": "bunch",
+        "unitType": "count",
+        "ingredient": "fresh mint or cilantro",
+        "notes": "to garnish (optional)"
+      },
+      {
+        "quantity": 1,
+        "unit": "pinch",
+        "unitType": "count",
+        "ingredient": "Aleppo pepper or pomegranate molasses",
+        "notes": "to garnish (optional)"
+      }
+    ]
   }
 ]

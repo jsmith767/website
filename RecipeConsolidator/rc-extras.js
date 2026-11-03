@@ -180,3 +180,44 @@ confirmIngredientReview = function () {
     }
     return result;
 };
+
+// ----------------------------
+// Ingredient lines: tidy two common patterns before parsing
+//   "2 1/2 to 3 pounds cauliflower"       -> 3 pounds cauliflower — 2 1/2–3 pounds
+//   "1 can (15 1/2 ounces) chickpeas"      -> 1 can chickpeas — 15 1/2 ounces
+//   "1 (15-ounce) can chickpeas"           -> 1 can chickpeas — 15-ounce
+// ----------------------------
+
+const RC_NUM = '\\d+(?:\\.\\d+)?(?:\\s+\\d+\\/\\d+)?|\\d+\\/\\d+|[½¼¾⅓⅔⅛]|\\d+\\s*[½¼¾⅓⅔⅛]';
+const RC_RANGE_RE = new RegExp('^\\s*(' + RC_NUM + ')\\s*(?:-|–|—|to)\\s*(' + RC_NUM + ')\\s+(.+)$', 'i');
+const RC_CONTAINER = '(?:cans?|jars?|packages?|pkgs?|bags?|boxes?|cartons?|bottles?|blocks?|tins?)';
+const RC_CAN_AFTER_RE = new RegExp('^\\s*(' + RC_NUM + ')\\s+(' + RC_CONTAINER + ')\\s*\\(([^)]+)\\)\\s*(.+)$', 'i');
+const RC_CAN_BEFORE_RE = new RegExp('^\\s*(' + RC_NUM + ')\\s*\\(([^)]+)\\)\\s*(' + RC_CONTAINER + ')\\s+(.+)$', 'i');
+
+function rcAddNote(line, note) {
+    if (/\s[—–]\s/.test(line)) return `${line}; ${note}`;
+    // "cauliflower, trimmed" -> keep "trimmed" as a note rather than part of the name
+    const comma = line.indexOf(',');
+    if (comma > 0) return `${line.slice(0, comma)} — ${line.slice(comma + 1).trim()}; ${note}`;
+    return `${line} — ${note}`;
+}
+
+function rcTidyIngredientLine(line) {
+    let s = String(line || '');
+    let m = s.match(RC_CAN_AFTER_RE);
+    if (m) s = rcAddNote(`${m[1]} ${m[2]} ${m[4]}`, m[3]);
+    m = s.match(RC_CAN_BEFORE_RE);
+    if (m) s = rcAddNote(`${m[1]} ${m[3]} ${m[4]}`, m[2]);
+    m = s.match(RC_RANGE_RE);
+    if (m) {
+        // Use the larger amount for shopping, keep the range in the notes
+        const unitWord = (m[3].match(/^[a-zA-Z.]+/) || [''])[0];
+        s = rcAddNote(`${m[2]} ${m[3]}`, `${m[1]}–${m[2]}${unitWord ? ' ' + unitWord : ''}`);
+    }
+    return s;
+}
+
+const rcBaseParseIngredientLine = parseIngredientLine;
+parseIngredientLine = function (line) {
+    return rcBaseParseIngredientLine(rcTidyIngredientLine(line));
+};
