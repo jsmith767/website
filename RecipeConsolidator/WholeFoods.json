@@ -642,10 +642,11 @@
       "make-ahead",
       "freezer-friendly"
     ],
-    "about": "This is a classic muffin (my mom's favorite), just reinvented. Cranberries are rich in phytonutrients and are lower in sugar than most fruit but are generally passed over for other berries. Here, their tartness combines with oats, orange juice, and tahini to make a delicious low-sugar muffin. For an extra special touch and a little hint of elegance, add fresh chopped rosemary!",
-    "instructions": "1. Position the oven rack in the middle of the \noven and preheat to 350°F. \n2. In a small bowl, mix together the psyllium \nhusk and 1⁄2 cup water. Set aside for 5 minutes to thicken. \n3. Add the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg, and salt to a medium-sized bowl and mix, breaking up any chunks of almond flour. \n4. Add the almond milk, applesauce, orange \nzest and juice, tahini, maple syrup, vanilla, and the thickened psyllium mix to a blender and blend until smooth. \n5. Add the blended mixture to the bowl of dry \ningredients and mix using a spatula until no dry spots remain. Fold in the cranberries and \nrosemary. \n6. Scoop a heaping 1⁄2 cup of the batter, I like \nto use my 34 ounce spring-release scoop or disher, for each muffin and bake the muffins \nfor 23 to 26 minutes or until the muffins are \nalmost firm to the touch. \n7. Remove the muffins from the oven, place \non a cooling rack, and let them cool in the muffin tin for 15 minutes. If using a nonstick or traditional muffin tin, use a thin spatula to run along the edge of each muffin and \n(Continued on next page)",
+    "about": "Low-sugar, gluten-free cranberry-orange muffins made with oats, almond flour and tahini, with a little fresh rosemary. Adapted from a whole-food plant-based cookbook.",
+    "instructions": "1. Heat the oven to 350°F and line or grease a 12-cup muffin tin.\n2. Stir the psyllium husk into the water and leave it about 5 minutes to gel.\n3. In a large bowl, whisk together the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg and salt, breaking up any lumps.\n4. Blend the almond milk, applesauce, orange zest and juice, tahini, maple syrup, vanilla and the psyllium gel until smooth.\n5. Pour the wet mix into the dry and stir just until there are no dry patches, then fold in the cranberries and rosemary.\n6. Divide among the 12 cups (about ½ cup each) and bake 23–26 minutes, until the tops feel nearly firm.\n7. Let them cool in the tin for 15 minutes, then loosen the edges and move them to a rack.",
     "servings": "12",
-    "lockedSteps": true
+    "openSteps": true,
+    "stepsVersion": 2
   },
   {
     "name": "Tuesday Tempeh Tacos",
@@ -12315,7 +12316,7 @@
     ],
     "contributor": "Misty",
     "sourceUrl": "https://www.177milkstreet.com/recipes/crisped-chickpea-cauliflower-traybake-lemon-garlic-yogurt",
-    "about": "Shared by Misty. From Christopher Kimball's Milk Street (subscription); full steps are on their site.",
+    "about": "Shared by Misty. Adapted from Christopher Kimball's Milk Street; the original recipe is on their site (subscription).",
     "ingredients": [
       {
         "quantity": 5,
@@ -12399,6 +12400,9 @@
         "ingredient": "Aleppo pepper or pomegranate molasses",
         "notes": "to garnish (optional)"
       }
-    ]
+    ],
+    "instructions": "1. Heat the oven to 425°F.\n2. In a large bowl, whisk 4 tablespoons of the oil with 2 teaspoons of the curry powder, 1 teaspoon salt and ½ teaspoon pepper. Toss in the cauliflower and chickpeas until well coated, then spread them in one layer on a rimmed sheet pan.\n3. Roast 50–60 minutes, stirring twice along the way, until the cauliflower is soft and browned at the edges and the chickpeas are crisp.\n4. While it roasts, mix the yogurt with the lemon zest and juice, garlic, the last tablespoon of oil, the last teaspoon of curry powder and a pinch of salt.\n5. Taste the tray and adjust the salt and pepper. Serve with the yogurt sauce and lemon wedges, topped with mint or cilantro, a pinch of Aleppo pepper or a drizzle of pomegranate molasses if you like.",
+    "openSteps": true,
+    "stepsVersion": 2
   }
 ]

@@ -811,6 +811,15 @@ async function rcUpdateSavedStarterRecipes() {
             if (oldServings && recipe.servings === oldServings && starter.servings && starter.servings !== oldServings) { recipe.servings = starter.servings; changed = true; }
             if (starter.openSteps && !recipe.openSteps) { recipe.openSteps = true; changed = true; }
             if (starter.lockedSteps && !recipe.lockedSteps) { recipe.lockedSteps = true; changed = true; }
+            // Rewritten starter steps (own words) replace the old text in saved copies
+            if (starter.stepsVersion && (recipe.stepsVersion || 0) < starter.stepsVersion) {
+                recipe.instructions = starter.instructions;
+                recipe.about = starter.about;
+                recipe.openSteps = true;
+                delete recipe.lockedSteps;
+                recipe.stepsVersion = starter.stepsVersion;
+                changed = true;
+            }
         }
         // New trail and contributor recipes join libraries that already have the starter set
         const haveNames = new Set(recipes.map(r => r.name.toLowerCase()));
