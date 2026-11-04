@@ -712,19 +712,23 @@ async function rcSendShare(idStr) {
     }
 }
 
-// Contributors (people who shared a collection) get their own filter chip, first in the row
+// Contributors (people who shared a collection) and sources (books, sites) get their own filter chip, first in the row
 function rcRenderContributorChips() {
     const row = document.getElementById('rcQuickFilters');
     if (!row) return;
-    const names = [...new Set(recipes.map(r => r.contributor).filter(Boolean))].sort();
+    const people = [...new Set(recipes.map(r => r.contributor).filter(Boolean))].sort();
+    const sources = [...new Set(recipes.map(r => r.sourceTitle).filter(Boolean))].sort().filter(s => !people.includes(s));
+    const names = people.concat(sources);
     row.querySelectorAll('.rc-contributor-chip').forEach(b => { if (!names.includes(b.dataset.tag)) b.remove(); });
     names.slice().reverse().forEach(name => {
-        if (row.querySelector(`.rc-contributor-chip[data-tag="${CSS.escape(name)}"]`)) return;
+        const existing = row.querySelector(`.rc-contributor-chip[data-tag="${CSS.escape(name)}"]`);
+        if (existing) { row.insertBefore(existing, row.firstChild); return; }
+        const isSource = sources.includes(name);
         const b = document.createElement('button');
         b.className = 'rc-chip-btn rc-contributor-chip';
         b.dataset.tag = name;
-        b.innerHTML = `<i class="fas fa-user-friends"></i> ${escapeHtml(name)}`;
-        b.title = `Recipes shared by ${name}`;
+        b.innerHTML = `<i class="fas ${isSource ? 'fa-book' : 'fa-user-friends'}"></i> ${escapeHtml(name)}`;
+        b.title = isSource ? `Recipes from ${name}` : `Recipes shared by ${name}`;
         b.addEventListener('click', () => toggleTagFilter(name));
         row.insertBefore(b, row.firstChild);
     });
@@ -739,7 +743,7 @@ getRecipeTagsDisplay = function (recipe) {
     const tags = recipe.tags || [];
     if (!tags.length) return '';
     const course = tags.find(t => RC_COURSE_TAGS.includes(t));
-    const rank = t => selectedTagFilters.has(t) ? 0 : t === recipe.contributor ? 1 : t === course ? 1 : RC_DIET_TAGS.includes(t) ? 2
+    const rank = t => selectedTagFilters.has(t) ? 0 : (t === recipe.contributor || t === recipe.sourceTitle) ? 1 : t === course ? 1 : RC_DIET_TAGS.includes(t) ? 2
         : (RC_COURSE_TAGS.includes(t) || ['vegan', 'oil-free'].includes(t)) ? 4 : 3;
     const shown = tags.slice().sort((a, b) => rank(a) - rank(b) || tags.indexOf(a) - tags.indexOf(b)).slice(0, RC_ROW_TAG_LIMIT);
     const chip = tag => {
@@ -805,6 +809,7 @@ async function rcUpdateSavedStarterRecipes() {
             const before = tags.size;
             (starter.tags || []).forEach(t => tags.add(t));
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
+            if (starter.sourceTitle && !recipe.sourceTitle) { recipe.sourceTitle = starter.sourceTitle; changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }
             // Corrected starter serving sizes replace the old default (not a number someone typed themselves)
             const oldServings = STARTER_SERVINGS_FIXES[recipe.name.toLowerCase()];

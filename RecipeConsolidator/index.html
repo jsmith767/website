@@ -1046,7 +1046,7 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
-    <link rel="stylesheet" href="rc-app.css?v=20261104b">
+    <link rel="stylesheet" href="rc-app.css?v=20261104c">
 </head>
 <body class="rc-body">
     <header class="rc-appbar">
@@ -1349,6 +1349,7 @@
             </div>
             <div class="rc-quick-filters" id="rcQuickFilters" aria-label="Quick filters">
                 <button class="rc-chip-btn rc-trip-only" data-tag="trail" onclick="toggleTagFilter('trail')">Trail</button>
+                <button class="rc-chip-btn" id="rcStepsChip" onclick="rcToggleStepsOnly()" aria-pressed="false" title="Only recipes with written steps"><i class="fas fa-list-ol"></i> Has steps</button>
                 <button class="rc-chip-btn" data-tag="gluten-free" onclick="toggleTagFilter('gluten-free')">Gluten-free</button>
                 <button class="rc-chip-btn" data-tag="nut-free" onclick="toggleTagFilter('nut-free')">Nut-free</button>
                 <button class="rc-chip-btn" data-tag="soy-free" onclick="toggleTagFilter('soy-free')">Soy-free</button>
@@ -1585,10 +1586,10 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js?v=20261104b"></script>
-    <script src="rc-plan.js?v=20261104b"></script>
-    <script src="rc-trip.js?v=20261104b"></script>
-    <script src="rc-extras.js?v=20261104b"></script>
+    <script src="recipe-consolidator.js?v=20261104c"></script>
+    <script src="rc-plan.js?v=20261104c"></script>
+    <script src="rc-trip.js?v=20261104c"></script>
+    <script src="rc-extras.js?v=20261104c"></script>
 </body>
 </html>
 

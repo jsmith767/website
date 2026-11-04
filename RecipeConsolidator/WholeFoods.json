@@ -640,13 +640,15 @@
       "soy-free",
       "oil-free",
       "make-ahead",
-      "freezer-friendly"
+      "freezer-friendly",
+      "The Plant-Based Cookbook"
     ],
     "about": "Low-sugar, gluten-free cranberry-orange muffins made with oats, almond flour and tahini, with a little fresh rosemary. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. Heat the oven to 350°F and line or grease a 12-cup muffin tin.\n2. Stir the psyllium husk into the water and leave it about 5 minutes to gel.\n3. In a large bowl, whisk together the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg and salt, breaking up any lumps.\n4. Blend the almond milk, applesauce, orange zest and juice, tahini, maple syrup, vanilla and the psyllium gel until smooth.\n5. Pour the wet mix into the dry and stir just until there are no dry patches, then fold in the cranberries and rosemary.\n6. Divide among the 12 cups (about ½ cup each) and bake 23–26 minutes, until the tops feel nearly firm.\n7. Let them cool in the tin for 15 minutes, then loosen the edges and move them to a rack.",
     "servings": "12",
     "openSteps": true,
-    "stepsVersion": 3
+    "stepsVersion": 3,
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Everyday Overnight Oats",
@@ -659,7 +661,8 @@
       "oil-free",
       "no-cook",
       "make-ahead",
-      "15-min"
+      "15-min",
+      "The Plant-Based Cookbook"
     ],
     "about": "Half overnight oats, half chia pudding: five minutes the night before and breakfast is waiting in the fridge. Good in a jar to take with you. Top with fruit, the Cinnamon-Spiced House Granola, or a spoon of nut butter. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. In a large lidded container, combine the oats, chia, berries and cinnamon.\n2. Pour in the milk and vanilla, plus maple syrup if you want it sweeter, and stir well.\n3. Cover and refrigerate overnight.\n4. In the morning give it a stir, loosen with a splash more milk if it's thick, and spoon into bowls with any toppings.\n5. Prefer it warm? Heat a portion gently on the stove.\n\nTip: frozen berries will tint the milk as they thaw.",
@@ -717,7 +720,8 @@
         "notes": "1–2 tablespoons, optional"
       }
     ],
-    "openSteps": true
+    "openSteps": true,
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Rise n' Shine Smoothie Bowl",
@@ -729,7 +733,8 @@
       "soy-free",
       "oil-free",
       "no-cook",
-      "15-min"
+      "15-min",
+      "The Plant-Based Cookbook"
     ],
     "about": "A thick, spoonable smoothie with banana, mango or berries, spinach and seeds. Add more milk to drink it as a smoothie instead. Nice toppings: granola, chia, goji or fresh berries, shredded coconut. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. Put everything in the blender, liquid first and frozen fruit last.\n2. Blend on high until thick and smooth, pushing it down with the tamper as needed. Add a little more milk to thin it, or hold back milk for a thicker bowl.\n3. Split between two bowls and add your toppings.",
@@ -796,7 +801,8 @@
         "originalLine": "1 pinch cinnamon"
       }
     ],
-    "openSteps": true
+    "openSteps": true,
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Raw Green Buckwheat Bowl",
@@ -808,7 +814,8 @@
       "soy-free",
       "oil-free",
       "no-cook",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
     "about": "Buckwheat groats soaked overnight, then blended with banana, almond milk and a handful of greens you won't taste. Small servings but filling. Skip the almond butter for a lighter or nut-free bowl, or swap the spinach for kale. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. The night before, cover the buckwheat with a few inches of water in a bowl, drape a clean towel over it and leave it to soak (counter or fridge).\n2. In the morning, tip it into a fine strainer and rinse well. The soaking water is thick and slow to drain; that's normal, so give it a few minutes and throw it away.\n3. Blend the almond milk, banana, sweetener (maple or dates), spinach, flax, almond butter and cinnamon until smooth.\n4. Add the drained buckwheat and blend again, briefly for some texture or longer for smooth. Thin with more milk if needed.\n5. Serve in bowls topped with berries and sliced banana.",
@@ -876,7 +883,8 @@
         "originalLine": "1 pinch cinnamon"
       }
     ],
-    "openSteps": true
+    "openSteps": true,
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Sunshine Smoothie",
@@ -890,7 +898,8 @@
       "oil-free",
       "nut-free",
       "no-cook",
-      "15-min"
+      "15-min",
+      "The Plant-Based Cookbook"
     ],
     "about": "A bright yellow smoothie with pineapple, banana, turmeric and fresh ginger, plus flax and hemp. Use water instead of almond milk to keep it nut-free, swap the pineapple for frozen blueberries for a blue version, or add a handful of spinach or kale. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. Add everything to the blender, liquid first.\n2. Blend on high, adding more milk a splash at a time until it's as thick or thin as you like.\n\nGreen option: add a packed cup of spinach or kale before blending.",
@@ -957,7 +966,8 @@
         "originalLine": "1 pinch cinnamon"
       }
     ],
-    "openSteps": true
+    "openSteps": true,
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Tuesday Tempeh Tacos",
@@ -12623,7 +12633,8 @@
       "gluten-free",
       "nut-free",
       "soy-free",
-      "Misty"
+      "Misty",
+      "Milk Street"
     ],
     "contributor": "Misty",
     "sourceUrl": "https://www.177milkstreet.com/recipes/crisped-chickpea-cauliflower-traybake-lemon-garlic-yogurt",
@@ -12714,6 +12725,7 @@
     ],
     "instructions": "1. Heat the oven to 425°F.\n2. In a large bowl, whisk 4 tablespoons of the oil with 2 teaspoons of the curry powder, 1 teaspoon salt and ½ teaspoon pepper. Toss in the cauliflower and chickpeas until well coated, then spread them in one layer on a rimmed sheet pan.\n3. Roast 50–60 minutes, stirring twice along the way, until the cauliflower is soft and browned at the edges and the chickpeas are crisp.\n4. While it roasts, mix the yogurt with the lemon zest and juice, garlic, the last tablespoon of oil, the last teaspoon of curry powder and a pinch of salt.\n5. Taste the tray and adjust the salt and pepper. Serve with the yogurt sauce and lemon wedges, topped with mint or cilantro, a pinch of Aleppo pepper or a drizzle of pomegranate molasses if you like.",
     "openSteps": true,
-    "stepsVersion": 2
+    "stepsVersion": 2,
+    "sourceTitle": "Milk Street"
   }
 ]

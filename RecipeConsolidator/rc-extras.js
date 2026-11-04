@@ -12,7 +12,7 @@ function rcOpenAbout() {
 
             <h3>How to use it</h3>
             <ol class="rc-about-steps">
-                <li><strong>Recipes.</strong> Browse or search the library, filter by tag (gluten-free, quick, a contributor…), and tap a recipe for its ingredients, steps and a link to the original. Tap <strong>+ Add</strong> to paste in your own: one ingredient per line, and amounts and units are picked up automatically.</li>
+                <li><strong>Recipes.</strong> Browse or search the library, filter by tag (gluten-free, quick, a contributor or a book…) or tap <strong>Has steps</strong> for recipes with written steps, and tap a recipe for its ingredients, steps and a link to the original. Tap <strong>+ Add</strong> to paste in your own: one ingredient per line, and amounts and units are picked up automatically.</li>
                 <li><strong>Plan.</strong> Add your days, then tap <strong>+ Add recipe</strong> in each meal. Set how many people you're feeding and every recipe scales to the group.</li>
                 <li><strong>Shop.</strong> One list for the whole plan, grouped by aisle. Tick things off as you shop; ticked items move to the bottom.</li>
                 <li><strong>Change a recipe's amount.</strong> Open a recipe's <strong>Ingredients</strong> and use the servings buttons to see it halved, doubled or for any number of people.</li>
@@ -220,4 +220,38 @@ function rcTidyIngredientLine(line) {
 const rcBaseParseIngredientLine = parseIngredientLine;
 parseIngredientLine = function (line) {
     return rcBaseParseIngredientLine(rcTidyIngredientLine(line));
+};
+
+// ----------------------------
+// "Has steps" filter: only recipes with written steps in the app
+// ----------------------------
+
+const RC_STEPS_ONLY_KEY = 'recipeConsolidator_stepsOnly';
+let rcStepsOnly = false;
+try { rcStepsOnly = localStorage.getItem(RC_STEPS_ONLY_KEY) === '1'; } catch (e) { /* storage unavailable */ }
+
+function rcHasSteps(recipe) {
+    return !!(recipe.instructions && recipe.instructions.trim()) && !rcStepsLocked(recipe);
+}
+
+const rcBaseGetSortedRecipes = getSortedRecipes;
+getSortedRecipes = function () {
+    const list = rcBaseGetSortedRecipes();
+    return rcStepsOnly ? list.filter(rcHasSteps) : list;
+};
+
+function rcToggleStepsOnly() {
+    rcStepsOnly = !rcStepsOnly;
+    try { localStorage.setItem(RC_STEPS_ONLY_KEY, rcStepsOnly ? '1' : '0'); } catch (e) { /* storage unavailable */ }
+    updateRecipeList();
+}
+
+const rcStepsBaseUpdateRecipeList = updateRecipeList;
+updateRecipeList = function () {
+    rcStepsBaseUpdateRecipeList();
+    const chip = document.getElementById('rcStepsChip');
+    if (chip) {
+        chip.classList.toggle('is-on', rcStepsOnly);
+        chip.setAttribute('aria-pressed', rcStepsOnly ? 'true' : 'false');
+    }
 };
