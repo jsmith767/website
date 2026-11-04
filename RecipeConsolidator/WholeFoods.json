@@ -642,11 +642,322 @@
       "make-ahead",
       "freezer-friendly"
     ],
-    "about": "Low-sugar, gluten-free cranberry-orange muffins made with oats, almond flour and tahini, with a little fresh rosemary. Adapted from a whole-food plant-based cookbook.",
+    "about": "Low-sugar, gluten-free cranberry-orange muffins made with oats, almond flour and tahini, with a little fresh rosemary. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
     "instructions": "1. Heat the oven to 350°F and line or grease a 12-cup muffin tin.\n2. Stir the psyllium husk into the water and leave it about 5 minutes to gel.\n3. In a large bowl, whisk together the almond flour, oat flour, oats, baking powder, cinnamon, nutmeg and salt, breaking up any lumps.\n4. Blend the almond milk, applesauce, orange zest and juice, tahini, maple syrup, vanilla and the psyllium gel until smooth.\n5. Pour the wet mix into the dry and stir just until there are no dry patches, then fold in the cranberries and rosemary.\n6. Divide among the 12 cups (about ½ cup each) and bake 23–26 minutes, until the tops feel nearly firm.\n7. Let them cool in the tin for 15 minutes, then loosen the edges and move them to a rack.",
     "servings": "12",
     "openSteps": true,
-    "stepsVersion": 2
+    "stepsVersion": 3
+  },
+  {
+    "name": "Everyday Overnight Oats",
+    "servings": "3-4",
+    "tags": [
+      "breakfast",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead",
+      "15-min"
+    ],
+    "about": "Half overnight oats, half chia pudding: five minutes the night before and breakfast is waiting in the fridge. Good in a jar to take with you. Top with fruit, the Cinnamon-Spiced House Granola, or a spoon of nut butter. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
+    "instructions": "1. In a large lidded container, combine the oats, chia, berries and cinnamon.\n2. Pour in the milk and vanilla, plus maple syrup if you want it sweeter, and stir well.\n3. Cover and refrigerate overnight.\n4. In the morning give it a stir, loosen with a splash more milk if it's thick, and spoon into bowls with any toppings.\n5. Prefer it warm? Heat a portion gently on the stove.\n\nTip: frozen berries will tint the milk as they thaw.",
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "gluten-free rolled oats",
+        "originalLine": "1½ cups gluten-free old-fashioned rolled oats"
+      },
+      {
+        "quantity": 3,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "chia seeds",
+        "originalLine": "3 tablespoons chia seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "blueberries or raspberries",
+        "originalLine": "1 cup blueberries or raspberries",
+        "notes": "fresh or frozen"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "¼ teaspoon cinnamon"
+      },
+      {
+        "quantity": 2,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk",
+        "originalLine": "2 cups unsweetened almond milk",
+        "notes": "or soy milk"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "vanilla extract",
+        "originalLine": "¼ teaspoon pure vanilla extract"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "1-2 tablespoons maple syrup",
+        "notes": "1–2 tablespoons, optional"
+      }
+    ],
+    "openSteps": true
+  },
+  {
+    "name": "Rise n' Shine Smoothie Bowl",
+    "servings": "2",
+    "tags": [
+      "breakfast",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "15-min"
+    ],
+    "about": "A thick, spoonable smoothie with banana, mango or berries, spinach and seeds. Add more milk to drink it as a smoothie instead. Nice toppings: granola, chia, goji or fresh berries, shredded coconut. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
+    "instructions": "1. Put everything in the blender, liquid first and frozen fruit last.\n2. Blend on high until thick and smooth, pushing it down with the tamper as needed. Add a little more milk to thin it, or hold back milk for a thicker bowl.\n3. Split between two bowls and add your toppings.",
+    "ingredients": [
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk",
+        "originalLine": "1½ cups unsweetened almond milk",
+        "notes": "about 1½ cups"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "banana",
+        "originalLine": "1 large frozen banana",
+        "notes": "large, frozen"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "frozen mango or mixed berries",
+        "originalLine": "1 cup frozen mango or mixed berries",
+        "notes": "a heaping cup"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "baby spinach",
+        "originalLine": "1 cup packed baby spinach",
+        "notes": "packed"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "hemp seeds",
+        "originalLine": "1 tablespoon hemp seeds"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "flax seeds",
+        "originalLine": "1 tablespoon whole flax seeds",
+        "notes": "whole"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "almond butter",
+        "originalLine": "1 tablespoon almond butter"
+      },
+      {
+        "quantity": 1,
+        "unit": "pinch",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 pinch cinnamon"
+      }
+    ],
+    "openSteps": true
+  },
+  {
+    "name": "Raw Green Buckwheat Bowl",
+    "servings": "3",
+    "tags": [
+      "breakfast",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "no-cook",
+      "make-ahead"
+    ],
+    "about": "Buckwheat groats soaked overnight, then blended with banana, almond milk and a handful of greens you won't taste. Small servings but filling. Skip the almond butter for a lighter or nut-free bowl, or swap the spinach for kale. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
+    "instructions": "1. The night before, cover the buckwheat with a few inches of water in a bowl, drape a clean towel over it and leave it to soak (counter or fridge).\n2. In the morning, tip it into a fine strainer and rinse well. The soaking water is thick and slow to drain; that's normal, so give it a few minutes and throw it away.\n3. Blend the almond milk, banana, sweetener (maple or dates), spinach, flax, almond butter and cinnamon until smooth.\n4. Add the drained buckwheat and blend again, briefly for some texture or longer for smooth. Thin with more milk if needed.\n5. Serve in bowls topped with berries and sliced banana.",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "raw buckwheat groats",
+        "originalLine": "1 cup raw buckwheat groats",
+        "notes": "soaked overnight"
+      },
+      {
+        "quantity": 0.75,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk",
+        "originalLine": "¾ cup unsweetened almond milk",
+        "notes": "or soy milk; more if needed"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "banana",
+        "originalLine": "1 medium ripe banana",
+        "notes": "medium, ripe"
+      },
+      {
+        "quantity": 2,
+        "unit": "tablespoons",
+        "unitType": "volume",
+        "ingredient": "maple syrup",
+        "originalLine": "1-2 tablespoons maple syrup",
+        "notes": "or 2–3 soft Medjool dates; optional"
+      },
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "baby spinach",
+        "originalLine": "1 cup baby spinach"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "flax seeds",
+        "originalLine": "1 tablespoon ground flax seeds",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "almond butter",
+        "originalLine": "1 tablespoon almond butter",
+        "notes": "optional"
+      },
+      {
+        "quantity": 1,
+        "unit": "pinch",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 pinch cinnamon"
+      }
+    ],
+    "openSteps": true
+  },
+  {
+    "name": "Sunshine Smoothie",
+    "servings": "2",
+    "tags": [
+      "breakfast",
+      "drink",
+      "vegan",
+      "gluten-free",
+      "soy-free",
+      "oil-free",
+      "nut-free",
+      "no-cook",
+      "15-min"
+    ],
+    "about": "A bright yellow smoothie with pineapple, banana, turmeric and fresh ginger, plus flax and hemp. Use water instead of almond milk to keep it nut-free, swap the pineapple for frozen blueberries for a blue version, or add a handful of spinach or kale. Adapted from The Plant-Based Cookbook: Vegan, Gluten-Free, Oil-Free Recipes for Lifelong Health.",
+    "instructions": "1. Add everything to the blender, liquid first.\n2. Blend on high, adding more milk a splash at a time until it's as thick or thin as you like.\n\nGreen option: add a packed cup of spinach or kale before blending.",
+    "ingredients": [
+      {
+        "quantity": 1,
+        "unit": "cup",
+        "unitType": "volume",
+        "ingredient": "unsweetened almond milk or water",
+        "originalLine": "1 cup unsweetened almond milk or water",
+        "notes": "plus more if needed"
+      },
+      {
+        "quantity": 0.25,
+        "unit": "teaspoon",
+        "unitType": "volume",
+        "ingredient": "ground turmeric",
+        "originalLine": "¼ teaspoon ground turmeric"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "fresh ginger",
+        "originalLine": "½ inch fresh ginger",
+        "notes": "¼–½ inch knob, to taste"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "flax seeds",
+        "originalLine": "1 tablespoon ground flax seeds",
+        "notes": "ground"
+      },
+      {
+        "quantity": 1,
+        "unit": "tablespoon",
+        "unitType": "volume",
+        "ingredient": "hemp seeds",
+        "originalLine": "1 tablespoon hemp seeds"
+      },
+      {
+        "quantity": 1.5,
+        "unit": "cups",
+        "unitType": "volume",
+        "ingredient": "frozen pineapple",
+        "originalLine": "1½ cups frozen pineapple",
+        "notes": "or blueberries, or half and half"
+      },
+      {
+        "quantity": 1,
+        "unit": null,
+        "unitType": "count",
+        "ingredient": "banana",
+        "originalLine": "1 large frozen banana",
+        "notes": "large, frozen"
+      },
+      {
+        "quantity": 1,
+        "unit": "pinch",
+        "unitType": "volume",
+        "ingredient": "cinnamon",
+        "originalLine": "1 pinch cinnamon"
+      }
+    ],
+    "openSteps": true
   },
   {
     "name": "Tuesday Tempeh Tacos",

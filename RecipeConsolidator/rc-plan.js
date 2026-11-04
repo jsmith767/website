@@ -821,12 +821,12 @@ async function rcUpdateSavedStarterRecipes() {
                 changed = true;
             }
         }
-        // New trail and contributor recipes join libraries that already have the starter set
+        // New trail, contributor and open-steps (e.g. cookbook) recipes join libraries that already have the starter set
         const haveNames = new Set(recipes.map(r => r.name.toLowerCase()));
         const hasStarterSet = starters.some(r => haveNames.has(r.name.toLowerCase()));
         if (hasStarterSet) {
             for (const starter of starters) {
-                const isNewSet = (starter.tags || []).includes('trail') || starter.contributor;
+                const isNewSet = (starter.tags || []).includes('trail') || starter.contributor || starter.openSteps;
                 if (!isNewSet || haveNames.has(starter.name.toLowerCase())) continue;
                 recipes.push(Object.assign({}, starter, { id: Date.now() + Math.random() }));
                 changed = true;

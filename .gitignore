@@ -25,3 +25,6 @@ images/W9_JSmith2026.pdf
 # Raw source video - converted version (FireMove.mp4) is what the site uses
 images/IMG_0060.MOV
 
+
+# Scanned cookbook pages - private, never commit
+RecipeConsolidator/*.pdf

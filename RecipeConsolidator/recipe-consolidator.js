@@ -39,7 +39,7 @@ const MEAL_PLAN_NOTES_KEY = 'recipeConsolidator_mealPlanNotes';
 const SELECTED_DAYS_KEY = 'recipeConsolidator_selectedDays';
 const STARTER_LOADED_KEY = 'recipeConsolidator_starterLoaded';
 // Bump when WholeFoods.json changes, so browsers and Cloudflare fetch the new copy
-const STARTER_DATA_VERSION = '2026-11-03b';
+const STARTER_DATA_VERSION = '2026-11-04b';
 
 // Unit system preference (default: imperial)
 let unitSystem = 'imperial';
