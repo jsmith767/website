@@ -1,7 +1,7 @@
 // ============================================
 // Recipe Consolidator: filter by category
 // One short row (Meal, Diet, Source, Ingredient, Has steps). Each opens a sheet with every option and a count.
-// Within a category any option matches; across categories a recipe must match each one.
+// Meal and Source match any pick; Diet and Ingredient need every pick; across categories a recipe must match each one.
 // Loads after rc-extras.js
 // ============================================
 
@@ -63,7 +63,10 @@ function rcMatchesCategories(recipe, tags) {
         (groups[cat] = groups[cat] || []).push(t);
     }
     const recipeTags = recipe.tags || [];
-    return Object.values(groups).every(group => group.some(t => recipeTags.includes(t)));
+    // Diet (and its "Also" tags) narrows with every pick; Meal and Source match any pick
+    return Object.entries(groups).every(([cat, group]) => (cat === 'diet' || cat === 'also')
+        ? group.every(t => recipeTags.includes(t))
+        : group.some(t => recipeTags.includes(t)));
 }
 
 const rcFiltersBaseGetSortedRecipes = getSortedRecipes;
@@ -131,8 +134,9 @@ function rcRenderFilterBar() {
         </button>`;
     });
     buttons.push(`<button class="rc-chip-btn${rcStepsOnly ? ' is-on' : ''}" id="rcStepsChip" onclick="rcToggleStepsOnly()" aria-pressed="${rcStepsOnly}" title="Only recipes with written steps"><i class="fas fa-list-ol"></i> Has steps</button>`);
+    // Clear all sits first so it's never scrolled out of view on a phone
     if (selectedTagFilters.size || selectedIngredients.size || rcStepsOnly) {
-        buttons.push(`<button class="rc-chip-btn rc-cat-clear" onclick="rcClearAllFilters()">Clear</button>`);
+        buttons.unshift(`<button class="rc-chip-btn rc-cat-clear" onclick="rcClearAllFilters()" title="Clear all filters"><i class="fas fa-times"></i> Clear all</button>`);
     }
     row.innerHTML = buttons.join('');
 }
@@ -164,10 +168,12 @@ function rcFilterSheetBody(key) {
     const present = list => list.filter(t => counts[t]);
     let html = '';
     if (key === 'meal') {
+        html += `<p class="rc-filter-hint">Matches any you pick: soup + salad shows both.</p>`;
         html += rcTagChips(present(RC_MEAL_TAGS), counts);
     } else if (key === 'diet') {
         const diet = present(RC_DIET_FILTER_TAGS).filter(t => t !== 'trail' || RC_TRIP || counts.trail);
         const also = Object.keys(counts).filter(t => rcTagCategory(t) === 'also').sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+        html += `<p class="rc-filter-hint">Matches all you pick: gluten-free + nut-free shows recipes that are both.</p>`;
         html += rcTagChips(diet, counts);
         if (also.length) html += `<div class="rc-pick-group">Also</div>` + rcTagChips(also, counts);
     } else if (key === 'source') {
@@ -179,6 +185,7 @@ function rcFilterSheetBody(key) {
         const books = sources.filter(isBook).sort(byCount);
         const sites = sources.filter(s => !isBook(s)).sort(byCount);
         if (sources.length > 12) html += `<input type="search" class="rc-pick-search" placeholder="Search people, books and websites" oninput="rcFilterSourceChips(this.value)" autocomplete="off">`;
+        html += `<p class="rc-filter-hint">Matches any you pick.</p>`;
         if (people.length) html += `<div class="rc-pick-group">People</div>` + rcTagChips(people, counts);
         if (books.length) html += `<div class="rc-pick-group">Books</div>` + rcTagChips(books, counts);
         // One-recipe websites only appear when searched for (or when picked)
@@ -191,7 +198,7 @@ function rcFilterSheetBody(key) {
         if (!people.length && !sources.length) html += `<p class="rc-filter-hint">No sources yet.</p>`;
     } else if (key === 'ingredient') {
         html += `<input type="search" class="rc-pick-search" id="rcIngSearch" placeholder="Search ingredients (e.g. chickpeas)" oninput="rcRenderIngredientOptions(this.value)" autocomplete="off">
-            <p class="rc-filter-hint">Shows recipes that use all the ingredients you pick.</p>
+            <p class="rc-filter-hint">Matches all you pick: recipes that use every ingredient chosen.</p>
             <div id="rcIngOptions"></div>`;
     }
     html += `<div class="rc-sheet-actions">

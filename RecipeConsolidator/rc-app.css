@@ -850,3 +850,5 @@ html.rc-trip-mode {
 }
 .rc-filter-empty { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 14px; }
 .rc-filter-empty p { margin: 0 0 10px; }
+.rc-cat-clear { border-style: solid; border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.rc-cat-clear i { color: inherit; }
