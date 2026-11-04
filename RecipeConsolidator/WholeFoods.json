@@ -3144,7 +3144,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Bon Appétit"
     ],
     "ingredients": [
       {
@@ -3214,7 +3215,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/muhammara-2",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bon Appétit"
   },
   {
     "name": "Thai Peanut Dressing",
@@ -3222,7 +3224,8 @@
     "tags": [
       "sauce",
       "Ava & Charlie",
-      "gluten-free"
+      "gluten-free",
+      "The Modern Proper"
     ],
     "ingredients": [
       {
@@ -3281,7 +3284,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://themodernproper.com/thai-salad-dressing",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Modern Proper"
   },
   {
     "name": "Ginger Garlic Miso Tahini Sauce",
@@ -3290,7 +3294,8 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "Minimalist Baker"
     ],
     "ingredients": [
       {
@@ -3392,7 +3397,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://minimalistbaker.com/quick-ginger-garlic-miso-tahini-dressing/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Minimalist Baker"
   },
   {
     "name": "Green Goddess",
@@ -3403,7 +3409,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Love and Lemons"
     ],
     "ingredients": [
       {
@@ -3476,7 +3483,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://www.loveandlemons.com/green-goddess-dressing/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Love and Lemons"
   },
   {
     "name": "Sundried Tomato and Almond Pesto",
@@ -3487,7 +3495,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -3550,7 +3559,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/vegan-red-pesto-60",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Jalapeño Cashew Cream Sauce",
@@ -3561,7 +3571,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Ambitious Kitchen"
     ],
     "ingredients": [
       {
@@ -3618,7 +3629,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://www.ambitiouskitchen.com/jalapeno-cashew-cream-sauce/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Ambitious Kitchen"
   },
   {
     "name": "Pumpkin Seed Dressing",
@@ -3628,7 +3640,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Cooking for Peanuts"
     ],
     "ingredients": [
       {
@@ -3708,7 +3721,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://cookingforpeanuts.com/pumpkin-seed-dressing/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Cooking for Peanuts"
   },
   {
     "name": "Crunchy Almond and Mango Granola",
@@ -3719,7 +3733,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -3812,7 +3827,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/crunchy-almond-mango-granola-58",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Tachin/Tahdig Iranian Crispy Saffron Rice",
@@ -3824,7 +3840,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Bon Appétit"
     ],
     "ingredients": [
       {
@@ -3892,7 +3909,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/crunchy-baked-saffron-rice-with-barberries",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bon Appétit"
   },
   {
     "name": "Korean Drug “Mayak” Eggs",
@@ -3902,7 +3920,8 @@
       "snack",
       "vegetarian",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Cookerru"
     ],
     "ingredients": [
       {
@@ -3982,7 +4001,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.cookerru.com/mayak-eggs/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Cookerru"
   },
   {
     "name": "Red Potato Salad",
@@ -3994,7 +4014,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Love and Lemons"
     ],
     "ingredients": [
       {
@@ -4087,7 +4108,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.loveandlemons.com/red-potato-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Love and Lemons"
   },
   {
     "name": "Orange Oat Chocolate Bars",
@@ -4097,7 +4119,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -4177,7 +4200,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/orange-high-energy-oat-bars-75",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Sweet Potato Quinoa Oat Bars",
@@ -4187,7 +4211,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Abbey's Kitchen"
     ],
     "ingredients": [
       {
@@ -4337,7 +4362,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://www.abbeyskitchen.com/breakfast-bars/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Abbey's Kitchen"
   },
   {
     "name": "Buckwheat Pancakes",
@@ -4347,7 +4373,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "gluten-free"
+      "gluten-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -4423,7 +4450,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/fabulously-healthy-buckwheat-pancakes-185",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Quinoa Rice Pudding",
@@ -4434,7 +4462,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Darn Good Veggies"
     ],
     "ingredients": [
       {
@@ -4502,7 +4531,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://www.darngoodveggies.com/breakfast-quinoa-rice-pudding/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Darn Good Veggies"
   },
   {
     "name": "Oat and Cranberry Breakfast Bars",
@@ -4510,7 +4540,8 @@
       "breakfast",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Kate Scarlata"
     ],
     "ingredients": [
       {
@@ -4587,7 +4618,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://blog.katescarlata.com/2019/07/11/low-fodmap-oat-cranberry-breakfast-bars/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Kate Scarlata"
   },
   {
     "name": "Savory Chickpea Pancake",
@@ -4598,7 +4630,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Oh She Glows"
     ],
     "ingredients": [
       {
@@ -4681,7 +4714,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://ohsheglows.com/2013/09/15/jumbo-chickpea-pancake-a-high-protein-filling-vegan-breakfast-or-lunch/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Oh She Glows"
   },
   {
     "name": "Frozen Yogurt Oat Breakfast Bars",
@@ -4690,7 +4724,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -4740,7 +4775,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/frozen-yogurt-breakfast-bars-150",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Tempeh, Sausage, and Potato Hash",
@@ -4749,7 +4785,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Nikki Vegan"
     ],
     "ingredients": [
       {
@@ -4835,7 +4872,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://nikkivegan.com/everything-bagel-breakfast-burrito-boats/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Nikki Vegan"
   },
   {
     "name": "Blueberry Breakfast Crumble",
@@ -4845,7 +4883,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Nikki Vegan"
     ],
     "ingredients": [
       {
@@ -4908,7 +4947,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://nikkivegan.com/blueberry-breakfast-crumble-with-oil-free-cinnamon-oat-topping/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Nikki Vegan"
   },
   {
     "name": "Baked Oats Tiramisu",
@@ -4917,7 +4957,8 @@
       "breakfast",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Glow Diaries"
     ],
     "ingredients": [
       {
@@ -5057,7 +5098,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://glow-diaries.com/tiramisu-baked-oats/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Glow Diaries"
   },
   {
     "name": "Garlicky Kale Lentil Salad",
@@ -5067,7 +5109,8 @@
       "vegetarian",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Bon Appétit"
     ],
     "ingredients": [
       {
@@ -5148,7 +5191,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/make-ahead-lentil-salad",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bon Appétit"
   },
   {
     "name": "Roasted Vegetable White Bean Salad",
@@ -5158,7 +5202,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "TODAY"
     ],
     "ingredients": [
       {
@@ -5284,14 +5329,16 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://www.today.com/recipes/roasted-vegetable-white-bean-salad-recipe-t144350",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "TODAY"
   },
   {
     "name": "Thai Chicken Zoodle Salad",
     "servings": "6",
     "tags": [
       "salad",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "Dinner, then Dessert"
     ],
     "ingredients": [
       {
@@ -5392,7 +5439,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://dinnerthendessert.com/healthy-thai-peanut-chicken-zucchini-noodles/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Dinner, then Dessert"
   },
   {
     "name": "Spicy Broccoli Salad",
@@ -5401,7 +5449,8 @@
       "salad",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "PlantYou"
     ],
     "ingredients": [
       {
@@ -5473,7 +5522,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://plantyou.com/vegan-broccoli-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "PlantYou"
   },
   {
     "name": "Red Kuri Fall Salad",
@@ -5484,7 +5534,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Heartbeet Kitchen"
     ],
     "ingredients": [
       {
@@ -5582,7 +5633,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://heartbeetkitchen.com/roasted-red-kuri-squash-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Heartbeet Kitchen"
   },
   {
     "name": "African Peanut Stew",
@@ -5592,7 +5644,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Making Thyme for Health"
     ],
     "ingredients": [
       {
@@ -5691,7 +5744,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://www.makingthymeforhealth.com/one-pot-african-peanut-stew/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Making Thyme for Health"
   },
   {
     "name": "Tom Yum Soup",
@@ -5700,7 +5754,8 @@
       "soup",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Monash FODMAP"
     ],
     "ingredients": [
       {
@@ -5771,7 +5826,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://www.monashfodmap.com/recipe/thai-tom-yum-soup/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Monash FODMAP"
   },
   {
     "name": "Hungarian Mushroom Soup",
@@ -5780,7 +5836,8 @@
       "soup",
       "vegetarian",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "The Modern Proper"
     ],
     "ingredients": [
       {
@@ -5894,7 +5951,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://themodernproper.com/hungarian-mushroom-soup",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Modern Proper"
   },
   {
     "name": "Vegan Creamy Corn Chowder",
@@ -5905,7 +5963,8 @@
       "vegan",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Sweet Potato Soul"
     ],
     "ingredients": [
       {
@@ -6005,7 +6064,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://sweetpotatosoul.com/vegan-creamy-corn-chowder-video/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Sweet Potato Soul"
   },
   {
     "name": "Slow Cooker Pulled Pork",
@@ -6016,7 +6076,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "100 Days of Real Food"
     ],
     "ingredients": [
       {
@@ -6091,7 +6152,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.100daysofrealfood.com/recipe-best-pulled-pork-crock-pot/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "100 Days of Real Food"
   },
   {
     "name": "Sun-Dried Tomato and Roasted Vegetable Tart",
@@ -6103,7 +6165,8 @@
       "vegan",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -6219,7 +6282,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/sun-dried-tomato-roasted-vegetable-tart-309",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Chickpea and Dill Salad Sandwich",
@@ -6231,7 +6295,8 @@
       "vegan",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -6333,7 +6398,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/mashed-chickpea-dill-sandwich-134",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Texan-Style Vegan Chili",
@@ -6345,7 +6411,8 @@
       "vegan",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Brand New Vegan"
     ],
     "ingredients": [
       {
@@ -6488,7 +6555,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.brandnewvegan.com/recipes/soups/best-damn-vegan-chili-ever",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Brand New Vegan"
   },
   {
     "name": "Lemon-Parsley Panko Crusted Salmon",
@@ -6498,7 +6566,8 @@
       "dinner",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Barefoot Contessa"
     ],
     "ingredients": [
       {
@@ -6511,7 +6580,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://barefootcontessa.com/recipes/panko-crusted-salmon",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Barefoot Contessa"
   },
   {
     "name": "Roast Chicken with Tomatoes",
@@ -6522,7 +6592,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Bon Appétit"
     ],
     "ingredients": [
       {
@@ -6595,7 +6666,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/roast-chicken-with-tomatoes",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bon Appétit"
   },
   {
     "name": "Thai Tuna Laab",
@@ -6606,7 +6678,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Feed the Pudge"
     ],
     "ingredients": [
       {
@@ -6704,7 +6777,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://feedthepudge.com/canned-tuna-laab/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Feed the Pudge"
   },
   {
     "name": "Sheet Pan Chicken Shawarma with Garlic Sauce",
@@ -6714,7 +6788,8 @@
       "dinner",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Number 2 Pencil"
     ],
     "ingredients": [
       {
@@ -6882,7 +6957,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.number-2-pencil.com/sheet-pan-chicken-shawarma-with-garlic-sauce/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Number 2 Pencil"
   },
   {
     "name": "Korean Beef Short Ribs",
@@ -6890,7 +6966,8 @@
     "tags": [
       "korean",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "From a Chef's Kitchen"
     ],
     "ingredients": [
       {
@@ -6995,7 +7072,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
     "sourceUrl": "https://www.fromachefskitchen.com/korean-braised-beef-short-ribs/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "From a Chef's Kitchen"
   },
   {
     "name": "Lactation Cookies #1",
@@ -7004,7 +7082,8 @@
       "postpartum",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Bunsen Burner Bakery"
     ],
     "ingredients": [
       {
@@ -7097,7 +7176,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
     "sourceUrl": "https://www.bunsenburnerbakery.com/lactation-cookies-oatmeal-chocolate-chip/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bunsen Burner Bakery"
   },
   {
     "name": "Lactation Cookies #3",
@@ -7106,7 +7186,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Flavorful Life"
     ],
     "ingredients": [
       {
@@ -7225,7 +7306,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
     "sourceUrl": "https://flavorfulife.com/my-favorite-lactation-cookies/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Flavorful Life"
   },
   {
     "name": "Grain-Free Chocolate Chip Cookies",
@@ -7235,7 +7317,8 @@
       "vegetarian",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Texanerin Baking"
     ],
     "ingredients": [
       {
@@ -7307,7 +7390,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.texanerin.com/perfect-paleo-chocolate-chip-cookies/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Texanerin Baking"
   },
   {
     "name": "Frozen Lime Meringue Pie",
@@ -7316,7 +7400,8 @@
       "dessert",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "ckbk"
     ],
     "ingredients": [
       {
@@ -7413,7 +7498,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://app.ckbk.com/recipe/baki38612c02s001ss008r021/frozen-lime-meringue-pie",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "ckbk"
   },
   {
     "name": "Red Wine Velvet Cake with Mascarpone Frosting",
@@ -7423,7 +7509,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "House & Garden"
     ],
     "ingredients": [
       {
@@ -7532,7 +7619,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.houseandgarden.co.uk/recipe/red-wine-velvet-cake-smitten-kitchen",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "House & Garden"
   },
   {
     "name": "Almond Brownie Cookies",
@@ -7542,7 +7630,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Pick Up Limes"
     ],
     "ingredients": [
       {
@@ -7610,7 +7699,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/almond-brownie-cookies-44",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Pick Up Limes"
   },
   {
     "name": "Ina Garten’s Tiramisu",
@@ -7620,7 +7710,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Barefoot Contessa"
     ],
     "ingredients": [
       {
@@ -7633,7 +7724,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://barefootcontessa.com/recipes/tiramisu",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Barefoot Contessa"
   },
   {
     "name": "No-Bake Marbled Pumpkin Pie",
@@ -7644,7 +7736,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "The Bojon Gourmet"
     ],
     "ingredients": [
       {
@@ -7772,7 +7865,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://bojongourmet.com/kinda-raw-marbled-pumpkin-tart-grain/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Bojon Gourmet"
   },
   {
     "name": "Cherry Chocolate Cheesecake",
@@ -7782,7 +7876,8 @@
       "vegetarian",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Panacea's Pantry"
     ],
     "ingredients": [
       {
@@ -7901,7 +7996,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://panaceaspantryblog.com/cherry-chocolate-mousse-cake-grain-free/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Panacea's Pantry"
   },
   {
     "name": "Veggie Crinkle Cake",
@@ -7911,7 +8007,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Carolina Gelen"
     ],
     "ingredients": [
       {
@@ -7996,7 +8093,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://carolinagelen.com/breakfast-veggie-crinkle-cake/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Carolina Gelen"
   },
   {
     "name": "Banana Nut Muffins",
@@ -8005,7 +8103,8 @@
       "dessert",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Love and Lemons"
     ],
     "ingredients": [
       {
@@ -8095,7 +8194,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.loveandlemons.com/healthy-banana-muffins/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Love and Lemons"
   },
   {
     "name": "Cranberry-Lime Pie",
@@ -8105,7 +8205,8 @@
       "baking",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Bon Appétit"
     ],
     "ingredients": [
       {
@@ -8206,7 +8307,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
     "sourceUrl": "https://www.bonappetit.com/recipe/cranberry-lime-pie",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Bon Appétit"
   },
   {
     "name": "Hummus",
@@ -8217,7 +8319,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "The Edgy Veg"
     ],
     "ingredients": [
       {
@@ -8305,7 +8408,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://www.theedgyveg.com/2020/02/11/israel-hummus-abu-hassan-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Edgy Veg"
   },
   {
     "name": "Pad Kee Mao Sauce",
@@ -8313,7 +8417,8 @@
     "tags": [
       "sauce",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Hot Thai Kitchen"
     ],
     "ingredients": [
       {
@@ -8423,7 +8528,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
     "sourceUrl": "https://hot-thai-kitchen.com/pad-kee-mao-2/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Hot Thai Kitchen"
   },
   {
     "name": "Roasted Eggplant",
@@ -8435,7 +8541,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "The Edgy Veg"
     ],
     "ingredients": [
       {
@@ -8472,7 +8579,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.theedgyveg.com/2020/06/14/oven-roasted-eggplant-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Edgy Veg"
   },
   {
     "name": "Frizzled Chickpeas with Feta and Scallions",
@@ -8483,7 +8591,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Lemon and Salt"
     ],
     "ingredients": [
       {
@@ -8565,7 +8674,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.lemonandsaltblog.com/home/2021/1/11/frizzled-chick-peas-with-feta-and-scallions",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Lemon and Salt"
   },
   {
     "name": "Dukkah",
@@ -8577,7 +8687,8 @@
       "vegan",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "The Mediterranean Dish"
     ],
     "ingredients": [
       {
@@ -8639,7 +8750,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.themediterraneandish.com/dukkah-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Mediterranean Dish"
   },
   {
     "name": "Mediterranean Marinated Chickpeas with Basil and Feta",
@@ -8651,7 +8763,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Cookie and Kate"
     ],
     "ingredients": [
       {
@@ -8745,7 +8858,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://cookieandkate.com/marinated-chickpeas-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Cookie and Kate"
   },
   {
     "name": "Sweet Potato Waffles",
@@ -8754,7 +8868,8 @@
       "breakfast",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Feel Good Foodie"
     ],
     "ingredients": [
       {
@@ -8830,7 +8945,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://feelgoodfoodie.net/recipe/sweet-potato-waffles/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Feel Good Foodie"
   },
   {
     "name": "Savory Sardine Salad",
@@ -8840,7 +8956,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "All Ways Delicious"
     ],
     "ingredients": [
       {
@@ -8887,7 +9004,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://allwaysdelicious.com/sardine-salad-parsley-lemon/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "All Ways Delicious"
   },
   {
     "name": "Italian Pasta Salad with Prosciutto",
@@ -8897,7 +9015,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Fun Without FODMAPs"
     ],
     "ingredients": [
       {
@@ -9000,7 +9119,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://funwithoutfodmaps.com/low-fodmap-italian-pasta-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Fun Without FODMAPs"
   },
   {
     "name": "Moroccan Lentil Salad",
@@ -9010,7 +9130,8 @@
       "vegetarian",
       "Ava & Charlie",
       "gluten-free",
-      "soy-free"
+      "soy-free",
+      "Feasting at Home"
     ],
     "ingredients": [
       {
@@ -9136,7 +9257,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://www.feastingathome.com/moroccan-lentil-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Feasting at Home"
   },
   {
     "name": "Zucchini, Pea & Goat Cheese Orzo Salad",
@@ -9145,7 +9267,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "All Types of Bowls"
     ],
     "ingredients": [
       {
@@ -9226,7 +9349,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://alltypesofbowls.com/recipes/zucchini-pea-and-goat-cheese-orzo-salad",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "All Types of Bowls"
   },
   {
     "name": "Low FODMAP Orzo Salad",
@@ -9238,7 +9362,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "FODMAP Everyday"
     ],
     "ingredients": [
       {
@@ -9312,7 +9437,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://www.fodmapeveryday.com/recipes/low-fodmap-orzo-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "FODMAP Everyday"
   },
   {
     "name": "Vegan Chickpea “Tuna” Salad",
@@ -9324,7 +9450,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Sarah's Vegan Kitchen"
     ],
     "ingredients": [
       {
@@ -9382,14 +9509,16 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://sarahsvegankitchen.com/recipes/classic-chickpea-salad/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Sarah's Vegan Kitchen"
   },
   {
     "name": "Korean Hangover Soup (Ppyeo-haejangguk 뼈해장국)",
     "tags": [
       "soup",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Maangchi"
     ],
     "ingredients": [
       {
@@ -9456,7 +9585,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://www.maangchi.com/recipe/ppyeo-haejangguk",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Maangchi"
   },
   {
     "name": "Kimchi",
@@ -9466,7 +9596,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Maangchi"
     ],
     "ingredients": [
       {
@@ -9579,7 +9710,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
     "sourceUrl": "https://www.maangchi.com/recipe/tongbaechu-kimchi",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Maangchi"
   },
   {
     "name": "Cubed Radish Kimchi (Kkakdugi 깍두기)",
@@ -9588,7 +9720,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Maangchi"
     ],
     "ingredients": [
       {
@@ -9647,7 +9780,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
     "sourceUrl": "https://www.maangchi.com/recipe/kkakdugi",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Maangchi"
   },
   {
     "name": "Japchae (Stir-fried Noodles and Vegetables 잡채)",
@@ -9655,7 +9789,8 @@
     "tags": [
       "korean",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Maangchi"
     ],
     "ingredients": [
       {
@@ -9796,7 +9931,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
     "sourceUrl": "https://www.maangchi.com/recipe/easy-japchae",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Maangchi"
   },
   {
     "name": "Spicy Cucumber Side Dish (Oi-muchim 오이무침)",
@@ -9806,7 +9942,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Maangchi"
     ],
     "ingredients": [
       {
@@ -9871,7 +10008,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
     "sourceUrl": "https://www.maangchi.com/recipe/oi-muchim",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Maangchi"
   },
   {
     "name": "Chicken Pho",
@@ -9880,7 +10018,8 @@
       "soup",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Damn Delicious"
     ],
     "ingredients": [
       {
@@ -10024,7 +10163,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://damndelicious.net/2018/05/30/instant-pot-pho/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Damn Delicious"
   },
   {
     "name": "Vegetarian Italian Wedding Soup",
@@ -10032,7 +10172,8 @@
       "soup",
       "vegetarian",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Radish Rose"
     ],
     "ingredients": [
       {
@@ -10197,7 +10338,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "http://radishrose.net/2015/01/03/healthy-vegetarian-italian-wedding-soup/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Radish Rose"
   },
   {
     "name": "Carrot Turmeric Ginger Soup",
@@ -10207,7 +10349,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Real Balanced"
     ],
     "ingredients": [
       {
@@ -10290,7 +10433,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://realbalanced.com/recipe/low-fodmap-anti-bloat-anti-inflammatory-healing-carrot-turmeric-ginger-soup/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Real Balanced"
   },
   {
     "name": "Lemon Coriander Soup",
@@ -10301,7 +10445,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Hebbar's Kitchen"
     ],
     "ingredients": [
       {
@@ -10405,7 +10550,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://hebbarskitchen.com/lemon-coriander-soup-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Hebbar's Kitchen"
   },
   {
     "name": "Vegan Lentil Shepherd’s Pie",
@@ -10416,7 +10562,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "Rainbow Plant Life"
     ],
     "ingredients": [
       {
@@ -10583,7 +10730,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://rainbowplantlife.com/healthy-vegan-lentil-shepherds-pie/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Rainbow Plant Life"
   },
   {
     "name": "Mediterranean Chicken Tray Bake with Potatoes, Peppers, and Olives",
@@ -10594,7 +10742,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Allrecipes"
     ],
     "ingredients": [
       {
@@ -10705,7 +10854,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.allrecipes.com/recipe/268999/mediterranean-chicken-sheet-pan-dinner/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Allrecipes"
   },
   {
     "name": "Saffron Asparagus Kitchari",
@@ -10715,7 +10865,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Banyan Botanicals"
     ],
     "ingredients": [
       {
@@ -10803,7 +10954,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.banyanbotanicals.com/info/blog-the-banyan-insight/details/saffron-asparagus-kitchari/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Banyan Botanicals"
   },
   {
     "name": "Falafel",
@@ -10815,7 +10967,8 @@
       "vegan",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "The Mediterranean Dish"
     ],
     "ingredients": [
       {
@@ -10961,7 +11114,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.themediterraneandish.com/how-to-make-falafel/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "The Mediterranean Dish"
   },
   {
     "name": "Sicilian Pasta con le Sarde",
@@ -10970,7 +11124,8 @@
       "main",
       "dinner",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Serious Eats"
     ],
     "ingredients": [
       {
@@ -11064,7 +11219,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://www.seriouseats.com/pasta-pasta-con-le-sarde-sicilian-pasta-with-sardines",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Serious Eats"
   },
   {
     "name": "Chicken Paprikash",
@@ -11074,7 +11230,8 @@
       "dinner",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Carolina Gelen"
     ],
     "ingredients": [
       {
@@ -11184,7 +11341,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://carolinagelen.com/chicken-paprikash/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Carolina Gelen"
   },
   {
     "name": "Orange Roast Chicken with Shallots and Fennel",
@@ -11194,7 +11352,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Carolina Gelen"
     ],
     "ingredients": [
       {
@@ -11292,7 +11451,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
     "sourceUrl": "https://carolinagelen.substack.com/p/orange-chicken-roast-with-fennel",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Carolina Gelen"
   },
   {
     "name": "Korean Braised Potatoes",
@@ -11302,7 +11462,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "CJ Eats"
     ],
     "ingredients": [
       {
@@ -11364,7 +11525,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
     "sourceUrl": "https://cjeatsrecipes.com/korean-braised-potatoes/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "CJ Eats"
   },
   {
     "name": "Ginger Lemon Switchel (Laborade)",
@@ -11374,7 +11536,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Mother Bees"
     ],
     "ingredients": [
       {
@@ -11437,7 +11600,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
     "sourceUrl": "https://motherbees.com/blogs/motherbees-blogs/recipe-ginger-lemon-switchel",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Mother Bees"
   },
   {
     "name": "Lactation Cookies #2",
@@ -11447,7 +11611,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "How Sweet Eats"
     ],
     "ingredients": [
       {
@@ -11542,7 +11707,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
     "sourceUrl": "https://www.howsweeteats.com/2015/02/lactation-cookies/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "How Sweet Eats"
   },
   {
     "name": "Blueberry Lemon Yogurt Cake",
@@ -11552,7 +11718,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Smitten Kitchen"
     ],
     "ingredients": [
       {
@@ -11631,7 +11798,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://smittenkitchen.com/2008/04/lemon-yogurt-anything-cake/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Smitten Kitchen"
   },
   {
     "name": "Roasted Strawberry Miso Ice Cream",
@@ -11639,7 +11807,8 @@
       "dessert",
       "vegetarian",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "David Lebovitz"
     ],
     "ingredients": [
       {
@@ -11709,7 +11878,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.davidlebovitz.com/roasted-strawberry-miso-ice-cream-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "David Lebovitz"
   },
   {
     "name": "Raw Superfood Cheesecake",
@@ -11719,7 +11889,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "This Rawsome Vegan Life"
     ],
     "ingredients": [
       {
@@ -11882,7 +12053,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://www.thisrawsomeveganlife.com/2016/09/magical-superfood-cheesecake.html",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "This Rawsome Vegan Life"
   },
   {
     "name": "Vegan (or Not) Brown Butter Peach Cobbler",
@@ -11891,7 +12063,8 @@
       "dessert",
       "vegetarian",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "Rainbow Plant Life"
     ],
     "ingredients": [
       {
@@ -12008,7 +12181,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://rainbowplantlife.com/vegan-brown-butter-peach-cobbler/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Rainbow Plant Life"
   },
   {
     "name": "Strawberry and Matcha Tiramisu",
@@ -12017,7 +12191,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Life by Mike G"
     ],
     "ingredients": [
       {
@@ -12082,7 +12257,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://lifebymikeg.com/blogs/all/matcha-lovers-rejoice-for-a-twist-on-a-classic-italian-dessert",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Life by Mike G"
   },
   {
     "name": "Gluten-Free Sandwich Bread",
@@ -12093,7 +12269,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Gluten Free on a Shoestring"
     ],
     "ingredients": [
       {
@@ -12170,7 +12347,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
     "sourceUrl": "https://glutenfreeonashoestring.com/gluten-free-bread-recipe/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Gluten Free on a Shoestring"
   },
   {
     "name": "Horchata",
@@ -12182,7 +12360,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "Plant Based on a Budget"
     ],
     "ingredients": [
       {
@@ -12226,7 +12405,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Drinks). Full steps are on the original page.",
     "sourceUrl": "https://plantbasedonabudget.com/horchata/",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "Plant Based on a Budget"
   },
   {
     "name": "Shakshuka",
@@ -12237,7 +12417,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12339,7 +12520,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1014721-shakshuka-with-feta",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Cucumber, Watermelon, and Feta Salad",
@@ -12350,7 +12532,8 @@
       "Ava & Charlie",
       "gluten-free",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12413,7 +12596,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1014895-greek-style-watermelon-salad",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Spiced Chickpea Stew with Coconut and Turmeric (“The Stew”)",
@@ -12423,7 +12607,8 @@
       "vegetarian",
       "Ava & Charlie",
       "nut-free",
-      "soy-free"
+      "soy-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12526,7 +12711,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1019772-spiced-chickpea-stew-with-coconut-and-turmeric",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Coconut Miso Salmon Curry",
@@ -12534,7 +12720,8 @@
     "tags": [
       "soup",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12630,7 +12817,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1020045-coconut-miso-salmon-curry",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Spicy Coconut Corn Chowder",
@@ -12640,7 +12828,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "soy-free"
+      "soy-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12729,7 +12918,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1019451-spicy-corn-and-coconut-soup",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Vegan Chocolate Cupcakes",
@@ -12739,7 +12929,8 @@
       "vegetarian",
       "vegan",
       "Ava & Charlie",
-      "nut-free"
+      "nut-free",
+      "NYT Cooking"
     ],
     "ingredients": [
       {
@@ -12832,7 +13023,8 @@
     ],
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1012423-vegan-chocolate-cupcakes",
-    "contributor": "Ava & Charlie"
+    "contributor": "Ava & Charlie",
+    "sourceTitle": "NYT Cooking"
   },
   {
     "name": "Crisped Chickpea and Cauliflower Traybake with Lemon-Garlic Yogurt",

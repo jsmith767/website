@@ -163,8 +163,15 @@ function rcFilterSheetBody(key) {
     } else if (key === 'source') {
         const people = rcFilterPeople().filter(t => counts[t]);
         const sources = rcFilterSources().filter(t => counts[t]);
+        // A book is a source with no web links; everything else is a website
+        const isBook = s => !recipes.some(r => r.sourceTitle === s && r.sourceUrl);
+        const byCount = (a, b) => counts[b] - counts[a] || a.localeCompare(b);
+        const books = sources.filter(isBook).sort(byCount);
+        const sites = sources.filter(s => !isBook(s)).sort(byCount);
+        if (sources.length > 12) html += `<input type="search" class="rc-pick-search" placeholder="Search people, books and websites" oninput="rcFilterSourceChips(this.value)" autocomplete="off">`;
         if (people.length) html += `<div class="rc-pick-group">People</div>` + rcTagChips(people, counts);
-        if (sources.length) html += `<div class="rc-pick-group">Books &amp; sites</div>` + rcTagChips(sources, counts);
+        if (books.length) html += `<div class="rc-pick-group">Books</div>` + rcTagChips(books, counts);
+        if (sites.length) html += `<div class="rc-pick-group">Websites</div>` + rcTagChips(sites, counts);
         if (!people.length && !sources.length) html += `<p class="rc-filter-hint">No sources yet.</p>`;
     } else if (key === 'ingredient') {
         html += `<input type="search" class="rc-pick-search" id="rcIngSearch" placeholder="Search ingredients (e.g. chickpeas)" oninput="rcRenderIngredientOptions(this.value)" autocomplete="off">
@@ -176,6 +183,13 @@ function rcFilterSheetBody(key) {
         <button class="btn" onclick="rcClosePicker()">Show ${getSortedRecipes().length} recipes</button>
     </div>`;
     return html;
+}
+
+function rcFilterSourceChips(query) {
+    const q = (query || '').toLowerCase().trim();
+    document.querySelectorAll('#rcPickerBody .rc-filter-opt').forEach(b => {
+        b.style.display = !q || b.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
 }
 
 function rcOpenFilterSheet(key) {
