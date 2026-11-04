@@ -810,6 +810,8 @@ async function rcUpdateSavedStarterRecipes() {
             (starter.tags || []).forEach(t => tags.add(t));
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
             if (starter.sourceTitle && !recipe.sourceTitle) { recipe.sourceTitle = starter.sourceTitle; changed = true; }
+            if (starter.sourceUrl && !recipe.sourceUrl) { recipe.sourceUrl = starter.sourceUrl; changed = true; }
+            if (starter.about && !recipe.about) { recipe.about = starter.about; changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }
             // Corrected starter serving sizes replace the old default (not a number someone typed themselves)
             const oldServings = STARTER_SERVINGS_FIXES[recipe.name.toLowerCase()];

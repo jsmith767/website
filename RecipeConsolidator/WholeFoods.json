@@ -123,9 +123,11 @@
       "oil-free",
       "make-ahead",
       "freezer-friendly",
-      "kid-friendly"
+      "kid-friendly",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "12"
+    "servings": "12",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Cinnamon-Spiced House Granola",
@@ -202,9 +204,11 @@
       "soy-free",
       "oil-free",
       "make-ahead",
-      "kid-friendly"
+      "kid-friendly",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "8"
+    "servings": "8",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Vegetable Jambalaya",
@@ -356,9 +360,11 @@
       "nut-free",
       "oil-free",
       "one-pot",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4-6"
+    "servings": "4-6",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Apricot, Cardamom & Blueberry Bars",
@@ -497,9 +503,11 @@
       "gluten-free",
       "soy-free",
       "oil-free",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "9"
+    "servings": "9",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Cranberry-Orange Muffins with Rosemary",
@@ -1099,9 +1107,11 @@
       "nut-free",
       "oil-free",
       "30-min",
-      "kid-friendly"
+      "kid-friendly",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Sour Cream",
@@ -1150,9 +1160,11 @@
       "soy-free",
       "oil-free",
       "no-cook",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "8"
+    "servings": "8",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Easy Apple-Berry Crumble",
@@ -1248,9 +1260,11 @@
       "gluten-free",
       "soy-free",
       "oil-free",
-      "kid-friendly"
+      "kid-friendly",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "6"
+    "servings": "6",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Nice-Cream",
@@ -1293,9 +1307,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "kid-friendly"
+      "kid-friendly",
+      "The How Not to Die Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The How Not to Die Cookbook"
   },
   {
     "name": "Golden bowls",
@@ -1389,9 +1405,11 @@
       "vegan",
       "gluten-free",
       "nut-free",
-      "oil-free"
+      "oil-free",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Golden Tahini Sauce",
@@ -1467,9 +1485,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Bitchn' sauce",
@@ -1567,9 +1587,13 @@
       "gluten-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Faux Martha"
     ],
-    "servings": "16"
+    "servings": "16",
+    "sourceTitle": "The Faux Martha",
+    "sourceUrl": "https://www.thefauxmartha.com/bitchin-sauce/",
+    "about": "A copycat of Bitchin' Sauce, the creamy almond dip. This is The Faux Martha's recipe doubled, with tamari in place of liquid aminos. Full steps are on the original page."
   },
   {
     "name": "House hummus",
@@ -1635,9 +1659,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "8"
+    "servings": "8",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Spiced creamy carrot hummus",
@@ -1729,9 +1755,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "6"
+    "servings": "6",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Bacon-ish Bits",
@@ -1801,9 +1829,11 @@
       "gluten-free",
       "oil-free",
       "30-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "8"
+    "servings": "8",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Hemp-Balsamic Dressing",
@@ -1859,9 +1889,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Loaded Lunch Salad with Hemp Balsamic Dressing",
@@ -1951,9 +1983,11 @@
       "nut-free",
       "oil-free",
       "no-cook",
-      "15-min"
+      "15-min",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "1"
+    "servings": "1",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Tahini Caesar Dressing",
@@ -2043,9 +2077,11 @@
       "oil-free",
       "no-cook",
       "15-min",
-      "make-ahead"
+      "make-ahead",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Quick Smoked Chickpeas",
@@ -2113,9 +2149,11 @@
       "gluten-free",
       "nut-free",
       "oil-free",
-      "15-min"
+      "15-min",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "Tahini Caesar Salad",
@@ -2173,9 +2211,11 @@
       "salad",
       "vegan",
       "gluten-free",
-      "oil-free"
+      "oil-free",
+      "The Plant-Based Cookbook"
     ],
-    "servings": "4"
+    "servings": "4",
+    "sourceTitle": "The Plant-Based Cookbook"
   },
   {
     "name": "After Ceremony Soup",
