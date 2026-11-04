@@ -73,12 +73,22 @@ getSortedRecipes = function () {
 };
 
 // Row tags still highlight the selected filters while the list renders
+// Websites with a single recipe: their tag stays (search still finds it) but isn't shown on the recipe row
+function rcSoloSites() {
+    const counts = {};
+    for (const r of recipes) if (r.sourceTitle && r.sourceUrl) counts[r.sourceTitle] = (counts[r.sourceTitle] || 0) + 1;
+    return new Set(Object.keys(counts).filter(s => counts[s] === 1 && !rcFilterPeople().includes(s)));
+}
+
 const rcFiltersBaseTagsDisplay = getRecipeTagsDisplay;
 getRecipeTagsDisplay = function (recipe) {
-    if (!rcCategoryTags) return rcFiltersBaseTagsDisplay(recipe);
+    const selected = rcCategoryTags || selectedTagFilters;
+    const solo = rcSoloSites();
+    const shown = Object.assign({}, recipe, { tags: (recipe.tags || []).filter(t => !solo.has(t) || selected.has(t)) });
+    if (!rcCategoryTags) return rcFiltersBaseTagsDisplay(shown);
     const empty = selectedTagFilters;
     selectedTagFilters = rcCategoryTags;
-    try { return rcFiltersBaseTagsDisplay(recipe); } finally { selectedTagFilters = empty; }
+    try { return rcFiltersBaseTagsDisplay(shown); } finally { selectedTagFilters = empty; }
 };
 
 // Contributor and source chips now live in the Source sheet
@@ -171,7 +181,13 @@ function rcFilterSheetBody(key) {
         if (sources.length > 12) html += `<input type="search" class="rc-pick-search" placeholder="Search people, books and websites" oninput="rcFilterSourceChips(this.value)" autocomplete="off">`;
         if (people.length) html += `<div class="rc-pick-group">People</div>` + rcTagChips(people, counts);
         if (books.length) html += `<div class="rc-pick-group">Books</div>` + rcTagChips(books, counts);
-        if (sites.length) html += `<div class="rc-pick-group">Websites</div>` + rcTagChips(sites, counts);
+        // One-recipe websites only appear when searched for (or when picked)
+        const solo = rcSoloSites();
+        const mainSites = sites.filter(s => !solo.has(s) || selectedTagFilters.has(s));
+        const soloSites = sites.filter(s => solo.has(s) && !selectedTagFilters.has(s));
+        if (mainSites.length) html += `<div class="rc-pick-group">Websites</div>` + rcTagChips(mainSites, counts);
+        if (soloSites.length) html += `<div class="rc-solo-sites" hidden><div class="rc-pick-group">More websites</div>${rcTagChips(soloSites, counts)}</div>
+            <p class="rc-filter-hint rc-solo-hint">${soloSites.length} more websites with one recipe each: search to find them.</p>`;
         if (!people.length && !sources.length) html += `<p class="rc-filter-hint">No sources yet.</p>`;
     } else if (key === 'ingredient') {
         html += `<input type="search" class="rc-pick-search" id="rcIngSearch" placeholder="Search ingredients (e.g. chickpeas)" oninput="rcRenderIngredientOptions(this.value)" autocomplete="off">
@@ -189,6 +205,14 @@ function rcFilterSourceChips(query) {
     const q = (query || '').toLowerCase().trim();
     document.querySelectorAll('#rcPickerBody .rc-filter-opt').forEach(b => {
         b.style.display = !q || b.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+    const solo = document.querySelector('#rcPickerBody .rc-solo-sites');
+    if (solo) solo.hidden = !q || ![...solo.querySelectorAll('.rc-filter-opt')].some(b => b.style.display !== 'none');
+    const hint = document.querySelector('#rcPickerBody .rc-solo-hint');
+    if (hint) hint.hidden = !!q;
+    document.querySelectorAll('#rcPickerBody .rc-pick-group').forEach(g => {
+        const row = g.nextElementSibling;
+        if (row && row.classList.contains('rc-chip-row')) g.hidden = ![...row.children].some(b => b.style.display !== 'none');
     });
 }
 
