@@ -1046,7 +1046,7 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
-    <link rel="stylesheet" href="rc-app.css?v=20261104d">
+    <link rel="stylesheet" href="rc-app.css?v=20261104e">
 </head>
 <body class="rc-body">
     <header class="rc-appbar">
@@ -1347,17 +1347,7 @@
                 </div>
                 <div id="activeFiltersContainer" style="display: none; flex-wrap: wrap; gap: 6px; padding: 8px 16px 10px;"></div>
             </div>
-            <div class="rc-quick-filters" id="rcQuickFilters" aria-label="Quick filters">
-                <button class="rc-chip-btn rc-trip-only" data-tag="trail" onclick="toggleTagFilter('trail')">Trail</button>
-                <button class="rc-chip-btn" id="rcStepsChip" onclick="rcToggleStepsOnly()" aria-pressed="false" title="Only recipes with written steps"><i class="fas fa-list-ol"></i> Has steps</button>
-                <button class="rc-chip-btn" data-tag="gluten-free" onclick="toggleTagFilter('gluten-free')">Gluten-free</button>
-                <button class="rc-chip-btn" data-tag="nut-free" onclick="toggleTagFilter('nut-free')">Nut-free</button>
-                <button class="rc-chip-btn" data-tag="soy-free" onclick="toggleTagFilter('soy-free')">Soy-free</button>
-                <button class="rc-chip-btn" data-tag="15-min" onclick="toggleTagFilter('15-min')">15 min</button>
-                <button class="rc-chip-btn" data-tag="make-ahead" onclick="toggleTagFilter('make-ahead')">Make-ahead</button>
-                <button class="rc-chip-btn" data-tag="kid-friendly" onclick="toggleTagFilter('kid-friendly')">Kid-friendly</button>
-                <button class="rc-chip-btn" data-tag="main" onclick="toggleTagFilter('main')">Mains</button>
-            </div>
+            <div class="rc-quick-filters" id="rcQuickFilters" aria-label="Filters"></div>
             <!-- Legacy hidden elements kept for JS compatibility -->
             <div style="display:none">
                 <div id="tagFiltersContainer"></div>
@@ -1586,10 +1576,11 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js?v=20261104d"></script>
-    <script src="rc-plan.js?v=20261104d"></script>
-    <script src="rc-trip.js?v=20261104d"></script>
-    <script src="rc-extras.js?v=20261104d"></script>
+    <script src="recipe-consolidator.js?v=20261104e"></script>
+    <script src="rc-plan.js?v=20261104e"></script>
+    <script src="rc-trip.js?v=20261104e"></script>
+    <script src="rc-extras.js?v=20261104e"></script>
+    <script src="rc-filters.js?v=20261104e"></script>
 </body>
 </html>
 

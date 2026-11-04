@@ -3143,7 +3143,8 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3220,7 +3221,8 @@
     "servings": "1",
     "tags": [
       "sauce",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free"
     ],
     "ingredients": [
       {
@@ -3398,7 +3400,10 @@
     "tags": [
       "sauce",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3480,7 +3485,9 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3552,7 +3559,9 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3618,7 +3627,8 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -3708,7 +3718,8 @@
       "snack",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3810,7 +3821,10 @@
       "side",
       "snack",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -3887,7 +3901,8 @@
       "side",
       "snack",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -3976,7 +3991,10 @@
       "side",
       "snack",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4078,7 +4096,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4167,7 +4186,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4326,7 +4346,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free"
     ],
     "ingredients": [
       {
@@ -4411,7 +4432,9 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4486,7 +4509,8 @@
     "tags": [
       "breakfast",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4572,7 +4596,9 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4722,7 +4748,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -4817,7 +4844,8 @@
       "breakfast",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -4888,7 +4916,8 @@
     "tags": [
       "breakfast",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5036,7 +5065,9 @@
     "tags": [
       "salad",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5124,7 +5155,10 @@
     "tags": [
       "salad",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5448,7 +5482,9 @@
       "salad",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5555,7 +5591,8 @@
       "soup",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5661,7 +5698,9 @@
     "servings": "6",
     "tags": [
       "soup",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5740,7 +5779,8 @@
     "tags": [
       "soup",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -5863,7 +5903,9 @@
       "soup",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -5971,7 +6013,10 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6056,7 +6101,9 @@
       "dinner",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6182,7 +6229,9 @@
       "dinner",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6294,7 +6343,9 @@
       "dinner",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6445,7 +6496,9 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6466,7 +6519,10 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6547,7 +6603,10 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6653,7 +6712,9 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -6828,7 +6889,8 @@
     "servings": "4",
     "tags": [
       "korean",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -6941,7 +7003,8 @@
     "tags": [
       "postpartum",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7041,7 +7104,9 @@
     "tags": [
       "postpartum",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7168,7 +7233,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7248,7 +7315,8 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7353,7 +7421,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7471,7 +7541,8 @@
       "dessert",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7547,7 +7618,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7569,7 +7642,9 @@
       "dessert",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7705,7 +7780,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7832,7 +7909,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -7925,7 +8004,8 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8024,7 +8104,8 @@
       "gluten-free",
       "baking",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8133,7 +8214,10 @@
       "sauce",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8228,7 +8312,8 @@
     "servings": "2",
     "tags": [
       "sauce",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -8347,7 +8432,10 @@
       "snack",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8392,7 +8480,10 @@
       "side",
       "snack",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8484,7 +8575,9 @@
       "snack",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8555,7 +8648,10 @@
       "side",
       "snack",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8657,7 +8753,8 @@
     "tags": [
       "breakfast",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8740,7 +8837,10 @@
     "servings": "4",
     "tags": [
       "salad",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8794,7 +8894,10 @@
     "servings": "8",
     "tags": [
       "salad",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -8905,7 +9008,9 @@
     "tags": [
       "salad",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9038,7 +9143,9 @@
     "tags": [
       "salad",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9128,7 +9235,10 @@
       "salad",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9211,7 +9321,10 @@
       "salad",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9275,7 +9388,8 @@
     "name": "Korean Hangover Soup (Ppyeo-haejangguk 뼈해장국)",
     "tags": [
       "soup",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -9349,7 +9463,10 @@
     "tags": [
       "side",
       "snack",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9468,7 +9585,10 @@
     "name": "Cubed Radish Kimchi (Kkakdugi 깍두기)",
     "tags": [
       "korean",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9534,7 +9654,8 @@
     "servings": "4",
     "tags": [
       "korean",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -9684,7 +9805,8 @@
       "korean",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -9756,7 +9878,9 @@
     "servings": "6",
     "tags": [
       "soup",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -9907,7 +10031,8 @@
     "tags": [
       "soup",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -10080,7 +10205,9 @@
     "tags": [
       "soup",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10171,7 +10298,10 @@
       "soup",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10285,7 +10415,8 @@
       "dinner",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -10460,7 +10591,10 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10579,7 +10713,9 @@
       "main",
       "dinner",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10677,7 +10813,9 @@
       "dinner",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10831,7 +10969,8 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -10933,7 +11072,9 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11050,7 +11191,10 @@
     "tags": [
       "main",
       "dinner",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11157,7 +11301,8 @@
       "korean",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -11226,7 +11371,10 @@
     "tags": [
       "postpartum",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11297,7 +11445,9 @@
     "tags": [
       "postpartum",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11400,7 +11550,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11486,7 +11638,8 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -11565,7 +11718,8 @@
       "dessert",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11736,7 +11890,8 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11860,7 +12015,9 @@
     "tags": [
       "dessert",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -11934,7 +12091,9 @@
       "gluten-free",
       "baking",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12020,7 +12179,10 @@
       "drink",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12072,7 +12234,10 @@
     "tags": [
       "breakfast",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12182,7 +12347,10 @@
     "tags": [
       "salad",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "gluten-free",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12253,7 +12421,9 @@
     "tags": [
       "soup",
       "vegetarian",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12363,7 +12533,8 @@
     "servings": "4",
     "tags": [
       "soup",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {
@@ -12468,7 +12639,8 @@
       "soup",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "soy-free"
     ],
     "ingredients": [
       {
@@ -12566,7 +12738,8 @@
       "dessert",
       "vegetarian",
       "vegan",
-      "Ava & Charlie"
+      "Ava & Charlie",
+      "nut-free"
     ],
     "ingredients": [
       {

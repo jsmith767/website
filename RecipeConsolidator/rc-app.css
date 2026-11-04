@@ -831,3 +831,22 @@ html.rc-trip-mode {
 .rc-share-optin input { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; }
 .rc-share-optin span { display: flex; flex-direction: column; gap: 2px; font-size: 15px; }
 .rc-share-optin small { font-size: 13px; color: var(--muted); }
+
+/* Category filters (rc-filters.js): the row replaces the old tag chips and the ANY/ALL toggle */
+#activeFiltersContainer, #tagLogicToggle { display: none !important; }
+.rc-cat-btn .rc-cat-caret { font-size: 9px; margin-left: 1px; }
+.rc-chip-btn.is-on i { color: inherit; }
+.rc-cat-clear { border-style: dashed; color: var(--muted); }
+.rc-filter-opt .rc-opt-count { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.rc-filter-opt.is-on .rc-opt-count { color: rgba(255, 255, 255, 0.75); }
+.rc-filter-hint { font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+#rcPickerBody .rc-chip-row { margin-bottom: 4px; }
+@media (max-width: 480px) {
+    .rc-cat-btn > i:first-child { display: none; }
+    .rc-quick-filters .rc-chip-btn { padding: 6px 10px; }
+}
+@media (max-width: 480px) {
+    .rc-quick-filters { -webkit-mask-image: linear-gradient(to right, #000 88%, transparent); mask-image: linear-gradient(to right, #000 88%, transparent); padding-right: 24px; }
+}
+.rc-filter-empty { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 14px; }
+.rc-filter-empty p { margin: 0 0 10px; }
