@@ -1593,7 +1593,10 @@
     "servings": "16",
     "sourceTitle": "The Faux Martha",
     "sourceUrl": "https://www.thefauxmartha.com/bitchin-sauce/",
-    "about": "A copycat of Bitchin' Sauce, the creamy almond dip. This is The Faux Martha's recipe doubled, with tamari in place of liquid aminos. Full steps are on the original page."
+    "about": "A copycat of Bitchin' Sauce, the creamy almond dip. This is The Faux Martha's recipe doubled, with tamari in place of liquid aminos. Steps written in our own words, adapted from The Faux Martha; tap Original to see theirs.",
+    "instructions": "1. Put everything in a high-powered blender.\n2. Blend slowly for about a minute, then on high for 1–2 minutes until completely smooth.\n3. Keep in the fridge. If it separates, just stir.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "House hummus",
@@ -3213,10 +3216,13 @@
         "ingredient": "Kosher salt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Bon Appétit; tap Original to see theirs.",
     "sourceUrl": "https://www.bonappetit.com/recipe/muhammara-2",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bon Appétit"
+    "sourceTitle": "Bon Appétit",
+    "instructions": "1. Toast the walnuts on a baking sheet at 350°F for 8–10 minutes, until golden. Set a few aside, chopped, for the top.\n2. Char the peppers under the broiler (or over a gas flame), turning, for 12–15 minutes until blackened and soft.\n3. Cover them in a bowl for 10 minutes to steam, then peel and remove the seeds and ribs.\n4. Blend the peppers and walnuts in a food processor with the breadcrumbs, chile flakes, olive oil, pomegranate molasses, tahini, lemon juice and paprika until mostly smooth. Salt to taste.\n5. Serve topped with a drizzle of pomegranate molasses and the chopped walnuts.\n\nKeeps 4 days in the fridge and gets better after a few hours.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Thai Peanut Dressing",
@@ -3282,10 +3288,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from The Modern Proper; tap Original to see theirs.",
     "sourceUrl": "https://themodernproper.com/thai-salad-dressing",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Modern Proper"
+    "sourceTitle": "The Modern Proper",
+    "instructions": "1. Whisk or blend everything together for a couple of minutes, until smooth and the sugar has dissolved.\n2. Keep in a sealed jar in the fridge for up to a week.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Ginger Garlic Miso Tahini Sauce",
@@ -3395,10 +3404,13 @@
         "notes": "(or peanuts), roughly chopped, chopped, roughly"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Minimalist Baker; tap Original to see theirs.",
     "sourceUrl": "https://minimalistbaker.com/quick-ginger-garlic-miso-tahini-dressing/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Minimalist Baker"
+    "sourceTitle": "Minimalist Baker",
+    "instructions": "1. Whisk the tahini, ginger, garlic, miso, coconut aminos, rice vinegar, sesame oil and maple syrup in a bowl.\n2. Whisk in water a little at a time until it's creamy and pourable.\n3. Taste and adjust: more vinegar for tang, maple for sweetness, miso or aminos for salt, garlic or ginger for bite.\n\nKeeps about 5 days in the fridge, or a month frozen.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Green Goddess",
@@ -3481,10 +3493,13 @@
         "notes": "Freshly ground black"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Love and Lemons; tap Original to see theirs.",
     "sourceUrl": "https://www.loveandlemons.com/green-goddess-dressing/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Love and Lemons"
+    "sourceTitle": "Love and Lemons",
+    "instructions": "1. Pulse everything in a food processor until well mixed, then season to taste.\n2. Use as a dip or toss through greens. Keeps 5 days in the fridge.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sundried Tomato and Almond Pesto",
@@ -3557,10 +3572,13 @@
         "notes": "ground black, ground"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/vegan-red-pesto-60",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Toast the almonds in a dry pan over medium-high for 4–5 minutes, stirring.\n2. Blend them with everything else in a food processor.\n3. Use as a spread on sandwiches or with crackers.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Jalapeño Cashew Cream Sauce",
@@ -3627,10 +3645,13 @@
         "ingredient": "Freshly ground back pepper"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Ambitious Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://www.ambitiouskitchen.com/jalapeno-cashew-cream-sauce/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Ambitious Kitchen"
+    "sourceTitle": "Ambitious Kitchen",
+    "instructions": "1. Soak the cashews in warm water for 2+ hours. In a hurry? Bring them to a boil in water, turn off the heat and leave 30 minutes. Drain.\n2. Blend the cashews with fresh water, the jalapeño, garlic, lemon juice, salt, onion powder and pepper on high until smooth.\n3. Add 1–2 tablespoons more water for a thinner sauce. Makes about a cup.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Pumpkin Seed Dressing",
@@ -3719,10 +3740,13 @@
         "notes": "to taste"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Cooking for Peanuts; tap Original to see theirs.",
     "sourceUrl": "https://cookingforpeanuts.com/pumpkin-seed-dressing/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Cooking for Peanuts"
+    "sourceTitle": "Cooking for Peanuts",
+    "instructions": "1. Soak the pumpkin seeds for 15 minutes in hot water (or 4+ hours in cool water), then drain.\n2. Blend the seeds with everything else until completely smooth (a high-speed blender or an immersion blender in a jar both work).\n3. Taste for lemon, salt and pepper, and add water if you want it thinner.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Crunchy Almond and Mango Granola",
@@ -3825,10 +3849,13 @@
         "ingredient": "hemp seeds"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/crunchy-almond-mango-granola-58",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Heat the oven to 325°F and line a baking tray.\n2. Stir the dry ingredients together in a large bowl.\n3. Whisk the wet ingredients into a smooth, syrupy sauce, pour over the dry mix and stir to coat.\n4. Spread on the tray and bake about 30 minutes, stirring once, until lightly golden.\n5. Let cool (it crisps as it cools), then toss in the mango and hemp seeds. Store once fully cool.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Tachin/Tahdig Iranian Crispy Saffron Rice",
@@ -3907,10 +3934,13 @@
         "notes": "grapeseed or vegetable, plus more for dish"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Bon Appétit; tap Original to see theirs.",
     "sourceUrl": "https://www.bonappetit.com/recipe/crunchy-baked-saffron-rice-with-barberries",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bon Appétit"
+    "sourceTitle": "Bon Appétit",
+    "instructions": "1. Rinse the rice until the water runs clear. Boil it in well-salted water for 6–8 minutes, until tender with a little bite, then drain and rinse with cold water.\n2. Warm the barberries in the butter over medium-low heat for about 2 minutes; take off the heat and add the rose water if using.\n3. Heat the oven to 400°F. Steep the saffron in 2 tablespoons hot water for 10 minutes, then mix in the egg yolks, yogurt, ½ cup oil and 2 teaspoons salt. Fold the rice through until every grain is coated.\n4. Oil a 10-inch glass pie dish. Pack in half the rice, scatter half the barberries, add the rest of the rice and press down firmly.\n5. Cover tightly with foil and bake 65–80 minutes, until the bottom and edges are deep golden (check through the glass).\n6. Rest 10 minutes, run a knife around the edge and flip onto a plate. Top with the remaining barberries.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Korean Drug “Mayak” Eggs",
@@ -3999,10 +4029,13 @@
         "ingredient": "toasted sesame seeds"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Cookerru; tap Original to see theirs.",
     "sourceUrl": "https://www.cookerru.com/mayak-eggs/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Cookerru"
+    "sourceTitle": "Cookerru",
+    "instructions": "1. Stir the marinade ingredients together in a container until the honey dissolves.\n2. Lower the eggs into simmering water with a splash of vinegar and pinch of salt. Cook 6 minutes for jammy yolks (10 for hard).\n3. Move them straight into ice water for 5–10 minutes, then peel.\n4. Put the eggs in the marinade, cover and refrigerate at least 6 hours, ideally overnight.\n5. Serve over rice or noodles with green onion, seaweed flakes or a little sesame oil.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Red Potato Salad",
@@ -4106,10 +4139,13 @@
         "notes": "chopped, fresh"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Love and Lemons; tap Original to see theirs.",
     "sourceUrl": "https://www.loveandlemons.com/red-potato-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Love and Lemons"
+    "sourceTitle": "Love and Lemons",
+    "instructions": "1. Cover the potatoes with cold water by an inch, add 2 tablespoons salt and bring to a boil. Simmer 5–10 minutes until a fork slides in, then drain and cool a little.\n2. Whisk the olive oil, mustard, lemon juice, mayo, vinegar, garlic, salt and pepper.\n3. Toss the warm potatoes with the dressing, then stir in the celery, scallions, chives and dill.\n4. Chill at least an hour. Check the seasoning (maybe more lemon) and top with extra chives.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Orange Oat Chocolate Bars",
@@ -4198,10 +4234,13 @@
         "ingredient": "flaky sea salt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/orange-high-energy-oat-bars-75",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Toast the pecans in a pan over medium-high for 3–5 minutes, stirring.\n2. Heat the oven to 350°F and line a 10×7-inch dish with parchment.\n3. Pulse the apricots and pecans into small pieces, then mix in a bowl with the oats, almond flour, cinnamon, most of the orange zest and salt.\n4. Stir in the peanut butter, maple syrup and vanilla, then press firmly and evenly into the dish.\n5. Bake 25–30 minutes until lightly golden. Cool a few minutes, lift out and cool completely.\n6. Drizzle with melted chocolate, sprinkle with sea salt and the last of the zest, and cut into 8–10 bars.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sweet Potato Quinoa Oat Bars",
@@ -4360,10 +4399,13 @@
         "notes": "if desired"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Abbey's Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://www.abbeyskitchen.com/breakfast-bars/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Abbey's Kitchen"
+    "sourceTitle": "Abbey's Kitchen",
+    "instructions": "1. Heat the oven to 350°F and line two 9×5 loaf pans with parchment.\n2. Stir the flax into the water and leave 20 minutes to thicken.\n3. In a large bowl, combine the oats, quinoa, baking powder, salt, cinnamon and nutmeg.\n4. Mash in the sweet potato, almond butter, maple syrup, flax mixture and vanilla until smooth, then fold in the cherries and coconut.\n5. Spread into the pans and bake about 25 minutes, until the edges brown. Cool completely in the pans, then cut into squares.\n6. Melt the chocolate chips with the coconut oil in short bursts, stir in the almond butter and drizzle over the bars.\n\nKeeps 3–4 days in a sealed container.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Buckwheat Pancakes",
@@ -4448,10 +4490,13 @@
         "ingredient": "almond butter"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/fabulously-healthy-buckwheat-pancakes-185",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Mash the bananas in a large bowl, then stir in everything else. If it's runny, let it sit 5 minutes.\n2. Heat a lightly oiled non-stick pan over medium. Spoon in about 2 tablespoons of batter per pancake and spread into rounds.\n3. Flip when golden underneath and cook the other side.\n4. Serve with your favourite toppings.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Quinoa Rice Pudding",
@@ -4529,10 +4574,13 @@
         "ingredient": "almond extract"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Darn Good Veggies; tap Original to see theirs.",
     "sourceUrl": "https://www.darngoodveggies.com/breakfast-quinoa-rice-pudding/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Darn Good Veggies"
+    "sourceTitle": "Darn Good Veggies",
+    "instructions": "1. Bring the banana, almond milk, coconut milk, maple syrup and salt to a simmer in a large saucepan.\n2. Add the cooked rice and quinoa and simmer, stirring often, 10–12 minutes until thick and creamy.\n3. Off the heat, stir in the cinnamon, vanilla and almond extract. Serve with toppings.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Oat and Cranberry Breakfast Bars",
@@ -4616,10 +4664,13 @@
         "notes": "dried, finely chopped (select brand with low FODMAP ingredients), chopped, finely"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Kate Scarlata; tap Original to see theirs.",
     "sourceUrl": "https://blog.katescarlata.com/2019/07/11/low-fodmap-oat-cranberry-breakfast-bars/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Kate Scarlata"
+    "sourceTitle": "Kate Scarlata",
+    "instructions": "1. Heat the oven to 350°F and line an 8×8 pan with parchment.\n2. Mix the oil, brown sugar, eggs and extract in a bowl.\n3. Stir in the oats and oat flour, then fold in the pepitas, coconut, sunflower seeds and cranberries.\n4. Press firmly into the pan with the back of a spoon.\n5. Bake 20 minutes, cool, and cut into 12 bars.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Savory Chickpea Pancake",
@@ -4712,10 +4763,13 @@
         "notes": "avocado, hummus, cashew cream (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Oh She Glows; tap Original to see theirs.",
     "sourceUrl": "https://ohsheglows.com/2013/09/15/jumbo-chickpea-pancake-a-high-protein-filling-vegan-breakfast-or-lunch/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Oh She Glows"
+    "sourceTitle": "Oh She Glows",
+    "instructions": "1. Chop the vegetables and heat a 10-inch skillet over medium.\n2. Whisk the chickpea flour, garlic powder, salt, pepper, baking powder and chile flakes, then whisk in the water for about 15 seconds until smooth and bubbly. Stir in the vegetables.\n3. Oil the hot pan well, pour in all the batter and spread it out.\n4. Cook 5–6 minutes, until it's firm enough to slide a spatula under, then flip and cook about 5 minutes more. It needs longer than a regular pancake.\n5. Serve with salsa, avocado, hummus or cashew cream. Reheat leftovers in a pan.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Frozen Yogurt Oat Breakfast Bars",
@@ -4773,10 +4827,13 @@
         "ingredient": "unsweetened soy yogurt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/frozen-yogurt-breakfast-bars-150",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Warm the frozen berries in a saucepan over medium until they're juicy and heated through.\n2. Blend the dates smooth in a food processor, then add the oats, almond butter, flax and cinnamon and blend again.\n3. Press very firmly into a lined 11×7-inch dish.\n4. Spread the yogurt on top, dot with the berries and swirl with a knife.\n5. Freeze 1–2 hours until firm enough to cut. Slice and let thaw 3–5 minutes before eating.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Tempeh, Sausage, and Potato Hash",
@@ -4870,10 +4927,13 @@
         "ingredient": "salsa verde for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Nikki Vegan; tap Original to see theirs.",
     "sourceUrl": "https://nikkivegan.com/everything-bagel-breakfast-burrito-boats/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Nikki Vegan"
+    "sourceTitle": "Nikki Vegan",
+    "instructions": "1. Heat the oil in a large lidded pan over medium-high. Add the scallions and cauliflower, crumble in the tempeh, salt lightly and cook 2–3 minutes.\n2. Stir in the taco seasoning, nutritional yeast, turmeric, salt and pepper (go easy on salt if the seasoning is salted).\n3. Add the potatoes and water, cover, turn to medium and cook about 15 minutes, until the potatoes are tender and the water is gone.\n4. Stir in the cilantro and season boldly. Serve with salsa verde, in tortillas, or over a simple arugula salad.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Blueberry Breakfast Crumble",
@@ -4945,10 +5005,13 @@
         "ingredient": "flour"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Nikki Vegan; tap Original to see theirs.",
     "sourceUrl": "https://nikkivegan.com/blueberry-breakfast-crumble-with-oil-free-cinnamon-oat-topping/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Nikki Vegan"
+    "sourceTitle": "Nikki Vegan",
+    "instructions": "1. Heat the oven to 375°F.\n2. Mix the oats, cinnamon and salt. Mash in the banana with the almond butter and maple syrup, then stir in the pecans.\n3. Toss the berries with the flour and spread them in a baking dish. Cover with the oat mixture.\n4. Bake the full 45 minutes, until golden, a bit crisp on top and bubbling at the edges (it looks done earlier than it is).\n5. Serve with yogurt, a drizzle of almond butter or fresh fruit, or with ice cream as a dessert.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Baked Oats Tiramisu",
@@ -5096,10 +5159,13 @@
         "notes": "for dusting"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Glow Diaries; tap Original to see theirs.",
     "sourceUrl": "https://glow-diaries.com/tiramisu-baked-oats/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Glow Diaries"
+    "sourceTitle": "Glow Diaries",
+    "instructions": "1. Heat the oven to 350°F and grease an 8- or 9-inch square dish.\n2. Mash the bananas, then whisk in the milk, espresso, maple syrup, nut butter, vanilla and vinegar.\n3. In a large bowl, combine the oats, cocoa, protein powder (if using), baking powder, baking soda and salt. Stir in the wet mix.\n4. Spread in the dish and bake 35–40 minutes, until set in the middle. Let it cool completely.\n5. For the top: soften the nut butter for a few seconds in the microwave, stir in the vanilla, then a spoonful of yogurt until smooth, then the rest of the yogurt, salt and protein powder if using. Sweeten with maple if you like.\n6. Spread over the cooled oats and dust with cocoa just before serving.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Garlicky Kale Lentil Salad",
@@ -5189,10 +5255,13 @@
         "ingredient": "Castelvetrano olives"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Bon Appétit; tap Original to see theirs.",
     "sourceUrl": "https://www.bonappetit.com/recipe/make-ahead-lentil-salad",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bon Appétit"
+    "sourceTitle": "Bon Appétit",
+    "instructions": "1. Strip the kale from its stems and slice it into thin ribbons. Salt it and massage for 1–2 minutes until soft and dark.\n2. Cook the lentils in plenty of salted boiling water, like pasta, for 20–25 minutes until just tender. Drain well.\n3. Meanwhile, put the sliced scallion whites (keep the greens), smashed garlic, three strips of lemon peel and the olive oil in a small skillet. Cook over medium about 3 minutes, until the garlic colours. Add the chopped almonds and cook 3 minutes more, then take off the heat and stir in the cumin seeds and chile flakes.\n4. Strain, keeping the oil. Spread the almond mix on a paper towel and salt it; it crisps as it cools.\n5. Add the crumbled feta, torn pitted olives, most of the sliced scallion greens, the juice of the lemon and ½ teaspoon salt to the kale.\n6. Add the lentils, the flavoured oil and half the almond mix and toss. Top with the rest of the almonds and scallions.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Roasted Vegetable White Bean Salad",
@@ -5327,10 +5396,13 @@
         "notes": "Freshly ground black"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from TODAY; tap Original to see theirs.",
     "sourceUrl": "https://www.today.com/recipes/roasted-vegetable-white-bean-salad-recipe-t144350",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "TODAY"
+    "sourceTitle": "TODAY",
+    "instructions": "1. Vinaigrette: soak the shallot in the vinegar for 15 minutes, then stir in the oil, salt and pepper.\n2. Heat the oven to 425°F. Toss the halved sprouts and the carrots with oil and salt and spread them on separate baking sheets. Cut the cauliflower and romanesco into ¾-inch slabs and lay them on an oiled third sheet without crowding.\n3. Roast 26–30 minutes, swapping and turning the pans about halfway, until browned and tender.\n4. Drain the beans (keep a little liquid). Dress with 3 tablespoons vinaigrette, salt, za'atar and a splash of the bean liquid.\n5. Arrange the vegetables on a platter, drizzle with vinaigrette and za'atar, spoon over the beans and add the feta.\n6. Toss the herbs with a little vinaigrette and salt, pile on top and serve.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Thai Chicken Zoodle Salad",
@@ -5437,10 +5509,13 @@
         "notes": "chopped"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Dinner, then Dessert; tap Original to see theirs.",
     "sourceUrl": "https://dinnerthendessert.com/healthy-thai-peanut-chicken-zucchini-noodles/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Dinner, then Dessert"
+    "sourceTitle": "Dinner, then Dessert",
+    "instructions": "1. Stir the garlic, ginger, peanut butter, lime juice and zest, soy sauce and chile flakes together.\n2. Heat the oil in a large pan over high. Cook the zucchini noodles, carrots and peppers 3–4 minutes, until just wilted.\n3. Add the chicken, sauce, cilantro and green onions and toss until hot.\n4. Top with peanuts and lime wedges.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Spicy Broccoli Salad",
@@ -5520,10 +5595,13 @@
         "ingredient": "maple syrup"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from PlantYou; tap Original to see theirs.",
     "sourceUrl": "https://plantyou.com/vegan-broccoli-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "PlantYou"
+    "sourceTitle": "PlantYou",
+    "instructions": "1. Cook the tempeh bacon.\n2. Whisk the dressing ingredients in a jar, thinning with water as needed.\n3. Combine the salad ingredients, pour over the dressing and toss.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Red Kuri Fall Salad",
@@ -5631,10 +5709,13 @@
         "ingredient": "hot water"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Heartbeet Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://heartbeetkitchen.com/roasted-red-kuri-squash-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Heartbeet Kitchen"
+    "sourceTitle": "Heartbeet Kitchen",
+    "instructions": "1. Heat the oven to 375°F. Cut the squash into ½-inch wedges, toss with oil and ¾ teaspoon salt, and roast 30–35 minutes, turning once, until tender.\n2. Meanwhile, massage the kale for about 5 minutes with 1 tablespoon oil, ¼ teaspoon salt, the cumin, harissa and ½ tablespoon lemon juice.\n3. Whisk the sauce ingredients together.\n4. Toss the squash, kale and nuts with the sauce and finish with flaky salt.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "African Peanut Stew",
@@ -5742,10 +5823,13 @@
         "notes": "fresh, cooked rice, lime juice and crushed roasted peanuts for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Making Thyme for Health; tap Original to see theirs.",
     "sourceUrl": "https://www.makingthymeforhealth.com/one-pot-african-peanut-stew/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Making Thyme for Health"
+    "sourceTitle": "Making Thyme for Health",
+    "instructions": "1. Soften the onion in the oil with a pinch of salt over medium heat, about 3 minutes. Add the garlic, jalapeño, ginger, cumin and cayenne and cook 3 minutes more.\n2. Stir in the tomato paste, then the sweet potato, peanut butter, broth and water. Bring to a gentle boil, cover and simmer 15 minutes.\n3. Add the collards, cover and cook another 15 minutes until the greens are soft and the sweet potato is tender.\n4. Mash some of the sweet potato against the pot to thicken it and simmer uncovered 5 minutes.\n5. Serve over rice with cilantro, chopped peanuts and a squeeze of lime.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Tom Yum Soup",
@@ -5824,10 +5908,13 @@
         "ingredient": "Tbsp lime juice"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Monash FODMAP; tap Original to see theirs.",
     "sourceUrl": "https://www.monashfodmap.com/recipe/thai-tom-yum-soup/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Monash FODMAP"
+    "sourceTitle": "Monash FODMAP",
+    "instructions": "1. Put the galangal, lemongrass, chilli, tomato paste, coriander stems and roots and lime leaves in a pot with the water or stock. Bring to a boil, then simmer uncovered for 20 minutes.\n2. Strain out the solids and bring the broth back to a simmer.\n3. Season to taste with the sugar, fish sauce and lime juice.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Hungarian Mushroom Soup",
@@ -5949,10 +6036,13 @@
         "notes": "Freshly cracked black, for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from The Modern Proper; tap Original to see theirs.",
     "sourceUrl": "https://themodernproper.com/hungarian-mushroom-soup",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Modern Proper"
+    "sourceTitle": "The Modern Proper",
+    "instructions": "1. Melt the butter in a large pot over medium heat and cook the onion and mushrooms about 8 minutes, until soft and the mushrooms have given up their liquid.\n2. Add the stock, wine, dill, thyme, paprika, Worcestershire and salt. Boil, then simmer about 10 minutes until reduced by a third.\n3. Whisk the flour into the milk until smooth and stir it slowly into the soup. Simmer about 10 minutes more, until thickened.\n4. Off the heat, stir in the sour cream and lemon juice.\n5. Serve with a little more sour cream, parsley and black pepper.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegan Creamy Corn Chowder",
@@ -6062,10 +6152,13 @@
         "notes": "chopped"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Sweet Potato Soul; tap Original to see theirs.",
     "sourceUrl": "https://sweetpotatosoul.com/vegan-creamy-corn-chowder-video/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Sweet Potato Soul"
+    "sourceTitle": "Sweet Potato Soul",
+    "instructions": "1. Sauté the onion, garlic and celery in the coconut oil over medium-high for 4–5 minutes.\n2. Add the carrots, potatoes, corn, coconut milk, water, thyme and bouillon. Boil, then simmer with the lid ajar about 20 minutes until the potatoes are tender.\n3. Blend about a third of the soup (an immersion blender is easiest; if using a regular blender, vent the lid and cover with a towel) and stir it back in.\n4. Add the chili flakes and pepper, season to taste and serve with cilantro.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Slow Cooker Pulled Pork",
@@ -6150,10 +6243,13 @@
         "notes": "cut in half"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from 100 Days of Real Food; tap Original to see theirs.",
     "sourceUrl": "https://www.100daysofrealfood.com/recipe-best-pulled-pork-crock-pot/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "100 Days of Real Food"
+    "sourceTitle": "100 Days of Real Food",
+    "instructions": "1. Mix the spices in a bowl, then stir in the honey, vinegar and olive oil to make a paste.\n2. Lay the onion in the slow cooker, set the pork on top and spread the paste over it (some will run off; that's fine).\n3. Cook on low 7–8 hours, until it pulls apart easily with a fork.\n4. Shred and serve warm with coleslaw, cornbread or hot sauce. Leftovers refrigerate or freeze well.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sun-Dried Tomato and Roasted Vegetable Tart",
@@ -6280,10 +6376,13 @@
         "notes": "medium"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/sun-dried-tomato-roasted-vegetable-tart-309",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Cook the onion and garlic in oil over high heat for 2–3 minutes. Add the peas, sun-dried tomatoes, herbs, salt and pepper and cook 2–3 minutes more, until fairly dry.\n2. Blend this with the hummus and some of the breadcrumbs until smooth.\n3. Line a greased 9½-inch tart pan with the puff pastry, pressing it about an inch up the sides. Prick the base and scatter the remaining breadcrumbs over it, then spread in the filling.\n4. Heat the oven to 400°F. Peel the zucchini and carrots into long ribbons and press them into the filling in a spiral. Fold the overhanging pastry in to make a rim.\n5. Brush with oil and bake 40–45 minutes until golden. Rest at least 10 minutes before slicing (it firms as it cools).",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Chickpea and Dill Salad Sandwich",
@@ -6396,10 +6495,13 @@
         "ingredient": "pickled red onions"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/mashed-chickpea-dill-sandwich-134",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Mash the chickpeas with a fork or masher until flaky.\n2. Mix in the rest of the filling ingredients.\n3. Pile into sandwiches, or serve with crackers, vegetables or over salad.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Texan-Style Vegan Chili",
@@ -6553,10 +6655,13 @@
         "notes": "optional as a thickener"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Brand New Vegan; tap Original to see theirs.",
     "sourceUrl": "https://www.brandnewvegan.com/recipes/soups/best-damn-vegan-chili-ever",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Brand New Vegan"
+    "sourceTitle": "Brand New Vegan",
+    "instructions": "1. Soften the chopped onions and peppers in a splash of broth in a big pot. Add the garlic for 30 seconds.\n2. Stir in the meat substitute or dry bulgur for a few minutes.\n3. Add the tomatoes, tomato sauce, the rest of the broth and the spices, then the beans and jalapeños.\n4. If it needs thickening, sprinkle in up to 1–2 tablespoons masa (it adds a gentle tortilla flavour).\n5. Bring to a slow boil, then cover and simmer 15–30 minutes.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Lemon-Parsley Panko Crusted Salmon",
@@ -6578,10 +6683,13 @@
         "notes": "panko (Japanese dried bread flakes) 2 tablespoons minced fresh parsley 1 teaspoon grated lemon zest Kosher and freshly ground black pepper 2 tablespoons good olive oil 4 (6- to 8-ounce) salmon fillets, skin on 2 tablespoons Dijon mustard 2 tablespoons vegetable oil Lemon wedges, for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Barefoot Contessa; tap Original to see theirs.",
     "sourceUrl": "https://barefootcontessa.com/recipes/panko-crusted-salmon",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Barefoot Contessa"
+    "sourceTitle": "Barefoot Contessa",
+    "instructions": "1. Heat the oven to 425°F. Mix the panko, parsley, lemon zest, ½ teaspoon each salt and pepper, and the olive oil.\n2. Brush the top of each fillet with mustard, season, and press the crumbs on thickly.\n3. Heat the vegetable oil in an ovenproof skillet over medium-high until very hot. Sear the salmon skin side down for 3–4 minutes without moving it.\n4. Move the pan to the oven for 5–7 minutes, until the crumbs are golden and the fish is nearly done.\n5. Cover loosely with foil and rest 5–10 minutes. Serve with lemon wedges.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Roast Chicken with Tomatoes",
@@ -6664,10 +6772,13 @@
         "notes": "large, sliced into ½\"-thick rounds and/or wedges"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Bon Appétit; tap Original to see theirs.",
     "sourceUrl": "https://www.bonappetit.com/recipe/roast-chicken-with-tomatoes",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bon Appétit"
+    "sourceTitle": "Bon Appétit",
+    "instructions": "1. Heat the oven to 450°F. Slice half the lemon into thin rounds; keep the other half.\n2. Whisk the garlic, 2 teaspoons chopped oregano and ⅓ cup oil in a big bowl. Add the dried chicken, the onions and lemon slices, season and toss.\n3. In a hot oiled cast-iron pan, brown the chicken skin side down for 5–7 minutes, then set aside (it's not cooked through yet).\n4. Cook the onions and lemon slices in the same pan about 5 minutes, until coloured.\n5. Put the chicken back skin side up and roast 16–20 minutes, until cooked through.\n6. Meanwhile, stir the yogurt, feta, 2 tablespoons oil, the reserved lemon's juice and 2 tablespoons water; salt to taste.\n7. Lay the salted tomatoes on a platter, pile the chicken, onions and lemon on top with the pan juices and oregano leaves, and serve the feta sauce alongside.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Thai Tuna Laab",
@@ -6775,10 +6886,13 @@
         "ingredient": "Cucumbers"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Feed the Pudge; tap Original to see theirs.",
     "sourceUrl": "https://feedthepudge.com/canned-tuna-laab/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Feed the Pudge"
+    "sourceTitle": "Feed the Pudge",
+    "instructions": "1. Slice the red onion thinly (soak 5 minutes in cold water if you want it milder). Pick the mint and chop the green onions and cilantro.\n2. Toast 2 tablespoons sticky rice with 2–3 lime leaves in a dry pan over medium heat, stirring, 5–7 minutes until golden. Discard the leaves and grind the rice coarsely.\n3. Stir together 1 tablespoon fish sauce, the juice of 2 limes, 1 teaspoon sugar and 1 tablespoon dried chili until the sugar dissolves.\n4. Toss the drained tuna with the onions and herbs, pour over the dressing, then fold in the rice powder.\n5. Serve at room temperature with lettuce or cabbage leaves, cucumber and sticky rice.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sheet Pan Chicken Shawarma with Garlic Sauce",
@@ -6955,10 +7069,13 @@
         "notes": "fresh"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Number 2 Pencil; tap Original to see theirs.",
     "sourceUrl": "https://www.number-2-pencil.com/sheet-pan-chicken-shawarma-with-garlic-sauce/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Number 2 Pencil"
+    "sourceTitle": "Number 2 Pencil",
+    "instructions": "1. Mix the lemon juice, oil, garlic, salt, pepper, cumin, smoked paprika, turmeric, chile flakes and a pinch of cinnamon. Coat the chicken and marinate at least an hour (or overnight).\n2. Garlic sauce: whisk the mayo, yogurt, garlic, salt, pepper and lemon juice; chill.\n3. Heat the oven to 425°F. Spread the chicken and onions on a large sheet pan and spoon the leftover marinade over the onions.\n4. Roast 30–45 minutes, until the chicken reaches 170°F inside.\n5. Rest 5 minutes, slice across the grain and toss the slices back in the pan juices. Sprinkle with parsley and serve with the sauce.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Korean Beef Short Ribs",
@@ -7070,10 +7187,13 @@
         "notes": "(white and light green part only, thinly sliced diagonally, for garnish, optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Steps written in our own words, adapted from From a Chef's Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://www.fromachefskitchen.com/korean-braised-beef-short-ribs/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "From a Chef's Kitchen"
+    "sourceTitle": "From a Chef's Kitchen",
+    "instructions": "1. Stir the sauce ingredients together in the slow cooker and switch it to high to warm up.\n2. Season the ribs well and brown them in batches in 2 tablespoons oil over medium heat, 2–3 minutes per side.\n3. Put them in the slow cooker meat side down. Cook on high 4–6 hours or low 8–10, until very tender.\n4. Stir the cornstarch with about 4 tablespoons of the cooking liquid until smooth, stir it in and cook uncovered on high about 20 minutes.\n5. Turn off and rest 10 minutes (the sauce thickens more). Serve with sesame seeds and sliced scallions.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Lactation Cookies #1",
@@ -7174,10 +7294,13 @@
         "notes": "(255 grams)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Steps written in our own words, adapted from Bunsen Burner Bakery; tap Original to see theirs.",
     "sourceUrl": "https://www.bunsenburnerbakery.com/lactation-cookies-oatmeal-chocolate-chip/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bunsen Burner Bakery"
+    "sourceTitle": "Bunsen Burner Bakery",
+    "instructions": "1. Heat the oven to 350°F and line two baking sheets.\n2. Beat the butter and both sugars about 5 minutes until fluffy. Beat in the eggs one by one, then the vanilla.\n3. Whisk the flour, salt, baking powder, flaxseed and brewer's yeast, and mix in just until combined.\n4. Mix in the almond butter (if using) and oats, then the chocolate chips.\n5. Scoop 1½-tablespoon balls onto the sheets and bake 10–12 minutes, until golden underneath. Press flatter with a spatula if you like.\n6. Cool 10 minutes on the sheet, then on a rack. Keeps a week sealed, or 3 months frozen.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Lactation Cookies #3",
@@ -7304,10 +7427,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Steps written in our own words, adapted from Flavorful Life; tap Original to see theirs.",
     "sourceUrl": "https://flavorfulife.com/my-favorite-lactation-cookies/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Flavorful Life"
+    "sourceTitle": "Flavorful Life",
+    "instructions": "1. Blitz the oats into a fine flour in a food processor (or leave them whole).\n2. Mix the oats with the flour, baking soda, baking powder, salt, brewer's yeast, flax and cinnamon.\n3. Cream the butter and coconut oil about 2 minutes, add both sugars and beat 4–5 minutes until very fluffy. Beat in the eggs one at a time, then the vanilla and lemon juice.\n4. Mix in the dry ingredients just until combined (it's a big batch), then stir in the chocolate.\n5. Scoop 2–3 tablespoon balls onto a lined tray and freeze 1–2 hours. (Bag them to keep frozen for up to 6 months.)\n6. To bake: 350°F, 2 inches apart, 11–13 minutes until barely golden. Don't overbake. Sprinkle with flaky salt if you like.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Grain-Free Chocolate Chip Cookies",
@@ -7388,10 +7514,13 @@
         "notes": "(or chopped paleo chocolate chunks, divided)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Texanerin Baking; tap Original to see theirs.",
     "sourceUrl": "https://www.texanerin.com/perfect-paleo-chocolate-chip-cookies/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Texanerin Baking"
+    "sourceTitle": "Texanerin Baking",
+    "instructions": "1. Mix the almond flour, coconut flour, baking soda and salt.\n2. Beat the fat, sugar, almond butter and vanilla about a minute (use your hands to bring it together if coconut oil is stubborn). Beat in the egg, then stir in the dry mix and about 1 cup of the chocolate chips.\n3. If you used coconut sugar, chill the dough about an hour until firm.\n4. Heat the oven to 350°F and line a baking sheet. Roll into 8 large balls (or 16 small), press the remaining chips onto them, space 4 inches apart and flatten slightly.\n5. Bake 11–14 minutes with coconut sugar, or 14–17 with brown sugar, until the centres no longer look wet (a little less for small cookies).\n6. Cool completely on the sheet; they firm up as they sit.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Frozen Lime Meringue Pie",
@@ -7401,7 +7530,7 @@
       "vegetarian",
       "Ava & Charlie",
       "soy-free",
-      "ckbk"
+      "The Baking Bible"
     ],
     "ingredients": [
       {
@@ -7499,7 +7628,7 @@
     "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
     "sourceUrl": "https://app.ckbk.com/recipe/baki38612c02s001ss008r021/frozen-lime-meringue-pie",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "ckbk"
+    "sourceTitle": "The Baking Bible"
   },
   {
     "name": "Red Wine Velvet Cake with Mascarpone Frosting",
@@ -7617,10 +7746,13 @@
         "ingredient": "sp vanilla extract"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from House & Garden; tap Original to see theirs.",
     "sourceUrl": "https://www.houseandgarden.co.uk/recipe/red-wine-velvet-cake-smitten-kitchen",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "House & Garden"
+    "sourceTitle": "House & Garden",
+    "instructions": "1. Heat the oven to 320°F (160°C). Line three 9-inch round tins with parchment and grease them.\n2. Beat the butter until smooth, add the sugars and beat about 3 minutes until fluffy. Beat in the eggs, then the wine and vanilla (it may look uneven).\n3. Sift the flour, cocoa, baking soda, baking powder, cinnamon and salt over the top. Mix most of the way, then finish folding by hand.\n4. Divide between the tins and bake about 25 minutes, until a tester comes out clean. Cool 10 minutes in the tins, then turn out onto a rack.\n5. Trim any domes so the layers stack flat.\n6. Beat the mascarpone with the powdered sugar, salt and vanilla 1–2 minutes until fluffy.\n7. Stack the layers with a third of the filling on each. Chill until serving.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Almond Brownie Cookies",
@@ -7697,10 +7829,13 @@
         "ingredient": "salt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Pick Up Limes; tap Original to see theirs.",
     "sourceUrl": "https://www.pickuplimes.com/recipe/almond-brownie-cookies-44",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Pick Up Limes"
+    "sourceTitle": "Pick Up Limes",
+    "instructions": "1. Stir the flax and water together and set aside.\n2. Melt the chocolate and coconut oil in a bowl over simmering water. Stir in the brown sugar, then take the bowl off the heat.\n3. Mix in the flax, almonds and vanilla, then sift in the flour, baking powder and salt and stir just to combine. Rest the dough 15 minutes.\n4. Heat the oven to 350°F and line a tray. Roll 1½-tablespoon balls, flatten them to about ½ inch (they barely spread), and space them 2 inches apart. Press on extra chocolate and almonds if you like.\n5. Bake 10–11 minutes. Sprinkle with flaky salt, cool a few minutes on the tray, then on a rack.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Ina Garten’s Tiramisu",
@@ -7722,10 +7857,13 @@
         "notes": "at room temperature 1/4 cup sugar 1/2 cup good dark rum, divided 1 1/2 cups brewed espresso, divided 16 to 17 ounces mascarpone cheese 30 Italian ladyfingers, or savoiardi Bittersweet chocolate, shaved or grated Confectioners’ sugar (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Barefoot Contessa; tap Original to see theirs.",
     "sourceUrl": "https://barefootcontessa.com/recipes/tiramisu",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Barefoot Contessa"
+    "sourceTitle": "Barefoot Contessa",
+    "instructions": "1. Whisk the yolks and sugar on high for 5 minutes until thick and pale. On medium, whisk in ¼ cup rum, ¼ cup espresso and the mascarpone until smooth.\n2. Mix the remaining ¼ cup rum and 1¼ cups espresso in a shallow dish.\n3. Dip one side of each ladyfinger and lay a single layer in a 9×12 dish. Spread with half the cream.\n4. Repeat with a second layer of dipped ladyfingers and the rest of the cream. Smooth, cover and refrigerate overnight.\n5. Top with shaved chocolate and a dusting of powdered sugar before serving.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "No-Bake Marbled Pumpkin Pie",
@@ -7863,10 +8001,13 @@
         "ingredient": "whipped coconut cream )"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from The Bojon Gourmet; tap Original to see theirs.",
     "sourceUrl": "https://bojongourmet.com/kinda-raw-marbled-pumpkin-tart-grain/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Bojon Gourmet"
+    "sourceTitle": "The Bojon Gourmet",
+    "instructions": "1. Crust: pulse the pecans, almonds, ginger, cinnamon and salt until finely ground (stop before it turns to butter). Add the maple syrup and coconut oil and pulse until it clumps. Press into a 9-inch tart pan with a removable bottom and freeze.\n2. Filling: blend the soaked cashews with the maple syrup and salt, then the water and vanilla, about 3 minutes until silky. Blend in the coconut oil. Set aside ¼ cup of this cream.\n3. Add the squash, carrot juice, ginger, cinnamon, nutmeg and cloves to the blender and blend on low just to combine.\n4. Pour into the crust, drop spoonfuls of the reserved cream on top and swirl lightly with a toothpick.\n5. Chill at least 4 hours until set (a short spell in the freezer helps if it's soft). Slice with a clean, sharp knife.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Cherry Chocolate Cheesecake",
@@ -7994,10 +8135,13 @@
         "notes": "chopped"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Panacea's Pantry; tap Original to see theirs.",
     "sourceUrl": "https://panaceaspantryblog.com/cherry-chocolate-mousse-cake-grain-free/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Panacea's Pantry"
+    "sourceTitle": "Panacea's Pantry",
+    "instructions": "1. Line a 7-inch springform tin. Soak the cashews about 4 hours ahead (and start the labneh then, if making it).\n2. Cherry layer: soften the cherries with a splash of water over low-medium heat, about 5 minutes. Mash, stir in the chia and sugar, and leave to cool and thicken.\n3. Base: blend the pecans, salt, coconut flour, sugar and cacao until fine, add the melted butter and pulse to a damp crumble. Press into the tin.\n4. Spread the cooled cherry jam over the base, leaving a small border, and chill.\n5. Filling: blend the drained cashews, labneh or cream cheese, milk, cacao and coconut sugar until smooth. Melt the butter and chocolate over barely simmering water and fold it in.\n6. Pour over the base, smooth, and chill at least 4 hours or overnight. Cut with a hot knife and let slices warm slightly before serving.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Veggie Crinkle Cake",
@@ -8091,10 +8235,13 @@
         "notes": "finely, chopped"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Carolina Gelen; tap Original to see theirs.",
     "sourceUrl": "https://carolinagelen.com/breakfast-veggie-crinkle-cake/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Carolina Gelen"
+    "sourceTitle": "Carolina Gelen",
+    "instructions": "1. Heat the oven to 375°F and oil a 12-inch cast-iron skillet or round baking dish.\n2. Two sheets at a time, scrunch the phyllo and arrange it in a spiral until the pan is full. Tuck the sliced vegetables in between the folds.\n3. Drizzle with ¼ cup olive oil, salt the top and bake 35–40 minutes until golden and crisp.\n4. Lower the oven to 350°F. Whisk the yolks, milk, fennel, paprika, garlic, pepper and a good pinch of salt, and pour it over.\n5. Bake 25–30 minutes more.\n6. Brush straight away with garlic and parsley mixed into 2 tablespoons olive oil. Cut into wedges and serve warm.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Banana Nut Muffins",
@@ -8192,10 +8339,13 @@
         "ingredient": "whole rolled oats"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Love and Lemons; tap Original to see theirs.",
     "sourceUrl": "https://www.loveandlemons.com/healthy-banana-muffins/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Love and Lemons"
+    "sourceTitle": "Love and Lemons",
+    "instructions": "1. Heat the oven to 350°F and line or grease a 12-cup muffin tin.\n2. Whisk the banana, maple syrup, coconut oil, eggs and vanilla in a large bowl.\n3. Whisk both flours, baking soda, cinnamon, salt and nutmeg in another bowl.\n4. Stir the dry into the wet just until combined, then fold in the walnuts.\n5. Fill the cups (a generous ⅓ cup each), sprinkle with oats and bake 20–25 minutes, until the tops spring back.\n6. Cool 10 minutes in the tin, then on a rack.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Cranberry-Lime Pie",
@@ -8305,10 +8455,13 @@
         "notes": "for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Steps written in our own words, adapted from Bon Appétit; tap Original to see theirs.",
     "sourceUrl": "https://www.bonappetit.com/recipe/cranberry-lime-pie",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Bon Appétit"
+    "sourceTitle": "Bon Appétit",
+    "instructions": "1. Crust: heat the oven to 350°F. Grind the cookies finely, then the pecans, and pulse in the butter and brown sugar. Press into a deep 9-inch pie dish and bake 10–15 minutes until firm. Cool.\n2. Simmer 12 oz cranberries with 1 cup sugar and ¼ cup water for 12–15 minutes, until they burst and the liquid mostly cooks off. Cool, then blend very smooth.\n3. In a bowl over simmering water, stir the purée with the eggs, yolks, lemon zest, lime juice, salt, ½ cup sugar and 1 teaspoon lime zest for 8–10 minutes, until it coats the spatula. Cool until just warm.\n4. Beat in the butter piece by piece on medium-high, about 5 minutes, until lighter. Pour into the crust and chill about 2 hours.\n5. Topping: dissolve ½ cup sugar in ½ cup water, add the remaining 4 oz cranberries for a minute, then drain them on a rack and chill 20–30 minutes. Toss in the remaining sugar mixed with lime zest.\n6. Top the pie with the sugared cranberries and serve with whipped cream.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Hummus",
@@ -8406,10 +8559,13 @@
         "notes": "parsley, chopped kalamata olives, for garnish"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from The Edgy Veg; tap Original to see theirs.",
     "sourceUrl": "https://www.theedgyveg.com/2020/02/11/israel-hummus-abu-hassan-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Edgy Veg"
+    "sourceTitle": "The Edgy Veg",
+    "instructions": "1. The night before, soak the dried chickpeas in the fridge in 4 cups water with 1 tablespoon salt and 1 teaspoon baking soda.\n2. Rinse and pick them over. Pressure-cook on high for 10 minutes, covered by 2 inches of water with 1 teaspoon each salt and baking soda, the bay leaf, one garlic clove and half an onion. Let the pressure release naturally for 15 minutes.\n3. Meanwhile, blend the rest of the garlic with the lemon juice and salt and let it sit.\n4. Drain the chickpeas, keeping the cooking liquid, and discard the onion and bay leaf.\n5. Add the tahini to the lemon-garlic and blend, adding cooking liquid a spoonful at a time until smooth.\n6. Add the chickpeas, the cooked garlic clove and the cumin, then blend 5–8 minutes, adding liquid as needed until very smooth and light. Salt to taste.\n7. Serve with olive oil and parsley, sliced onion and pita.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Pad Kee Mao Sauce",
@@ -8526,10 +8682,13 @@
         "ingredient": "fish sauce"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Dips + Sauces). Steps written in our own words, adapted from Hot Thai Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://hot-thai-kitchen.com/pad-kee-mao-2/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Hot Thai Kitchen"
+    "sourceTitle": "Hot Thai Kitchen",
+    "instructions": "1. Stir the sauce ingredients together.\n2. Loosen the rice noodles: if cold and stuck, warm them in small bundles in the microwave at 70% power, moving them each minute, then pull apart. Cook one portion at a time for the best char.\n3. Pound the Thai chilies fine, then add the garlic and spur chilies to make a rough paste.\n4. Sear the protein in about 2 tablespoons oil in a very hot wok until cooked, and set aside.\n5. With the heat off, add the chili-garlic paste (and a little oil), then cook on medium just until the garlic turns golden.\n6. On high, stir-fry the firm vegetables for 30 seconds. Add the noodles, about 2 tablespoons sauce and 1¼ teaspoons sugar per portion, and toss until absorbed (a dash of dark soy for colour).\n7. Return the protein, then let the noodles sit 15–20 seconds to char, flip and repeat once or twice.\n8. Off the heat, toss in the basil and greens until just wilted.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Roasted Eggplant",
@@ -8577,10 +8736,13 @@
         "ingredient": "paprika"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from The Edgy Veg; tap Original to see theirs.",
     "sourceUrl": "https://www.theedgyveg.com/2020/06/14/oven-roasted-eggplant-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Edgy Veg"
+    "sourceTitle": "The Edgy Veg",
+    "instructions": "1. Lay the eggplant slices on a rack over a baking sheet, salt them generously and leave 30–60 minutes to draw out the bitter liquid.\n2. Heat the oven to 400°F. Press the slices dry with a towel.\n3. Halve each slice, brush all over with olive oil and lay on a lined sheet. Season with salt, garlic powder and paprika, and get them in the oven quickly (they soak up oil).\n4. Roast 40–60 minutes until golden and crisp outside, soft inside.\n5. Serve with tahini sauce and parsley, on bread, in pasta or in a sandwich.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Frizzled Chickpeas with Feta and Scallions",
@@ -8672,10 +8834,13 @@
         "notes": "small, finely chopped, chopped, finely"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Lemon and Salt; tap Original to see theirs.",
     "sourceUrl": "https://www.lemonandsaltblog.com/home/2021/1/11/frizzled-chick-peas-with-feta-and-scallions",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Lemon and Salt"
+    "sourceTitle": "Lemon and Salt",
+    "instructions": "1. Heat the olive oil in a large (ideally non-stick) pan over medium-high. Add the chickpeas and leave them alone a few minutes while you slice the shallots, leek and garlic.\n2. Once they start to brown, add the shallots, leek and garlic with salt, pepper and chile flakes. Keep a lively sizzle so the onions fry rather than burn.\n3. When the onions are golden and the chickpeas crisp, take off the heat and toss in the feta and scallion.\n4. Optional: fry an egg over easy in the same pan and set it on top. Finish with chives, more chile flakes and a drizzle of olive oil.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Dukkah",
@@ -8748,10 +8913,13 @@
         "ingredient": "kosher salt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from The Mediterranean Dish; tap Original to see theirs.",
     "sourceUrl": "https://www.themediterraneandish.com/dukkah-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Mediterranean Dish"
+    "sourceTitle": "The Mediterranean Dish",
+    "instructions": "1. Toast the hazelnuts and almonds in a dry skillet over medium-high, tossing, until golden. Set aside.\n2. Toast the sesame seeds in the same pan over medium until golden (it's quick; watch them).\n3. Pulse the nuts, sesame, pistachios, fennel seeds, spices and a good pinch of salt in a small food processor just until coarse. Don't grind it fine.\n4. Serve with olive oil and bread for dipping, or sprinkle on salads, soups and roasted vegetables. Keeps 2 weeks in a sealed jar.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Mediterranean Marinated Chickpeas with Basil and Feta",
@@ -8856,10 +9024,13 @@
         "ingredient": "red pepper flakes"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Cookie and Kate; tap Original to see theirs.",
     "sourceUrl": "https://cookieandkate.com/marinated-chickpeas-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Cookie and Kate"
+    "sourceTitle": "Cookie and Kate",
+    "instructions": "1. Combine the chickpeas, red peppers, feta and basil in a bowl.\n2. Whisk the olive oil, vinegar, honey, garlic, oregano, salt, pepper and chile flakes.\n3. Pour over, stir, and chill at least 30 minutes. Keeps up to 5 days.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sweet Potato Waffles",
@@ -8943,10 +9114,13 @@
         "notes": "for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from Feel Good Foodie; tap Original to see theirs.",
     "sourceUrl": "https://feelgoodfoodie.net/recipe/sweet-potato-waffles/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Feel Good Foodie"
+    "sourceTitle": "Feel Good Foodie",
+    "instructions": "1. Heat the waffle iron.\n2. Whisk the flour, baking powder, cinnamon and salt in one bowl.\n3. In a larger bowl, whisk the mashed sweet potato, milk, sugar, oil and eggs.\n4. Stir the dry into the wet just until combined.\n5. Grease the iron, add about ⅓ cup batter and cook 6–8 minutes until golden. Serve warm with maple syrup.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Savory Sardine Salad",
@@ -9002,10 +9176,13 @@
         "notes": "freshly ground black"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from All Ways Delicious; tap Original to see theirs.",
     "sourceUrl": "https://allwaysdelicious.com/sardine-salad-parsley-lemon/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "All Ways Delicious"
+    "sourceTitle": "All Ways Delicious",
+    "instructions": "1. Debone the sardines if needed and chop them.\n2. Mix with their oil, the lemon juice, onion, parsley, salt and pepper.\n3. Taste and adjust the salt, pepper and lemon.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Italian Pasta Salad with Prosciutto",
@@ -9117,10 +9294,13 @@
         "notes": "to taste"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Fun Without FODMAPs; tap Original to see theirs.",
     "sourceUrl": "https://funwithoutfodmaps.com/low-fodmap-italian-pasta-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Fun Without FODMAPs"
+    "sourceTitle": "Fun Without FODMAPs",
+    "instructions": "1. Cook the pasta, then rinse under cold water until cool.\n2. Toss with the cucumber, tomatoes, olives, chives and any extras (prosciutto, feta).\n3. Blend the vinaigrette ingredients, then salt to taste.\n4. Pour over the salad and stir. Serve now or chill.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Moroccan Lentil Salad",
@@ -9255,10 +9435,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Feasting at Home; tap Original to see theirs.",
     "sourceUrl": "https://www.feastingathome.com/moroccan-lentil-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Feasting at Home"
+    "sourceTitle": "Feasting at Home",
+    "instructions": "1. Cook the lentils (this can be done ahead).\n2. If raw onion is too sharp for you, soak the chopped onion in cold salted water for a few minutes, then drain.\n3. Combine the lentils, celery, apricots, almonds, onion, herbs and orange zest.\n4. Mix the dressing (separately if using honey) and toss it through.\n5. Taste for salt, chili flakes and orange juice; it often wants a little more salt after sitting.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Zucchini, Pea & Goat Cheese Orzo Salad",
@@ -9347,10 +9530,13 @@
         "ingredient": "thyme"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from All Types of Bowls; tap Original to see theirs.",
     "sourceUrl": "https://alltypesofbowls.com/recipes/zucchini-pea-and-goat-cheese-orzo-salad",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "All Types of Bowls"
+    "sourceTitle": "All Types of Bowls",
+    "instructions": "1. Heat the oven to 350°F. Toss the zucchini and shallots with 2 tablespoons oil, salt and pepper, scatter the unpeeled garlic cloves around, and roast 25–30 minutes, stirring halfway.\n2. Cook the orzo, adding the frozen peas for the last 5 minutes. Drain into a large bowl.\n3. Add the roasted vegetables, then squeeze the garlic from its skins, chop it and add it.\n4. Stir in the rest of the oil, the lemon juice and zest, thyme, salt, pepper and goat cheese.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Low FODMAP Orzo Salad",
@@ -9435,10 +9621,13 @@
         "notes": "Freshly ground black"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from FODMAP Everyday; tap Original to see theirs.",
     "sourceUrl": "https://www.fodmapeveryday.com/recipes/low-fodmap-orzo-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "FODMAP Everyday"
+    "sourceTitle": "FODMAP Everyday",
+    "instructions": "1. Cook the orzo in salted water until al dente, drain, and toss with just enough dressing to coat while warm.\n2. Once it's at room temperature, add the thinly sliced cucumber, halved tomatoes, dill, parsley, scallion greens and lemon zest.\n3. Add more dressing to coat and season well. Let it sit 15 minutes before serving.\n4. Best fresh. If chilled, bring back to room temperature and refresh with a little more dressing.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegan Chickpea “Tuna” Salad",
@@ -9507,10 +9696,13 @@
         "notes": "to taste"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from Sarah's Vegan Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://sarahsvegankitchen.com/recipes/classic-chickpea-salad/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Sarah's Vegan Kitchen"
+    "sourceTitle": "Sarah's Vegan Kitchen",
+    "instructions": "1. Drain the chickpeas well and mash them with a fork or masher, leaving some texture.\n2. Stir in the rest of the ingredients, adding more mayo for a creamier mix. Season to taste.\n3. Eat on sandwiches or as a melt. Keeps 5 days in the fridge.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Korean Hangover Soup (Ppyeo-haejangguk 뼈해장국)",
@@ -9583,10 +9775,13 @@
         "notes": "(gochugaru), optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Maangchi; tap Original to see theirs.",
     "sourceUrl": "https://www.maangchi.com/recipe/ppyeo-haejangguk",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Maangchi"
+    "sourceTitle": "Maangchi",
+    "instructions": "1. Broth: rinse the ox bones and soak them in cold water to draw out the blood. Drain and add them to 6 quarts of vigorously boiling water.\n2. Cover and boil on medium about 4 hours, topping up with cold water so you keep at least 6 cups, until the broth is milky.\n3. Strain. When the bones are cool enough, pick off any meat and tendon and keep it.\n4. Chill the broth (several hours, or over an ice bath) and lift off the solid fat. (A pressure cooker shortens all of this.)\n5. Blanch the cabbage 5 minutes, rinse, drain and chop.\n6. Mix the cabbage with the doenjang, garlic, chili and fish sauce.\n7. Simmer it with 6 cups of the broth and the reserved meat, covered, 20 minutes on medium-high, then 10 minutes on low.\n8. Serve topped with green onion, with rice, kimchi and hot pepper flakes.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Kimchi",
@@ -9708,10 +9903,13 @@
         "notes": "gochugaru"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Sides + Snax). Steps written in our own words, adapted from Maangchi; tap Original to see theirs.",
     "sourceUrl": "https://www.maangchi.com/recipe/tongbaechu-kimchi",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Maangchi"
+    "sourceTitle": "Maangchi",
+    "instructions": "1. Split the cabbage in half by cutting a short slit in the base and pulling it apart, then cut a slit through each core about 2 inches up so the leaves loosen but stay attached.\n2. Wet the halves, then salt between every leaf, more near the thick stems. Leave 2 hours, turning every 30 minutes.\n3. Rinse well several times in cold water, splitting into quarters as you go. Trim the cores and drain in a colander.\n4. Cook the water and sweet rice flour over medium about 10 minutes until bubbling, add the sugar for a minute, then cool completely.\n5. Mix the cooled porridge with the garlic, ginger, onion, fish sauce, salted shrimp and pepper flakes into a thin paste. Stir in the radish, carrot, green onion, chives and water dropwort.\n6. Spread paste on every leaf, fold each quarter into a bundle and pack into a jar or container.\n7. Eat fresh, or leave a few days to ferment.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Cubed Radish Kimchi (Kkakdugi 깍두기)",
@@ -9778,10 +9976,13 @@
         "notes": "minced"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Steps written in our own words, adapted from Maangchi; tap Original to see theirs.",
     "sourceUrl": "https://www.maangchi.com/recipe/kkakdugi",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Maangchi"
+    "sourceTitle": "Maangchi",
+    "instructions": "1. Peel, rinse and dry the radish and cut it into ¾–1-inch cubes.\n2. Toss with the salt and sugar and leave 30 minutes. Drain, saving the liquid.\n3. Mix in the garlic, ginger, green onions, fish sauce, pepper flakes and ⅓ cup of the saved liquid until every cube is coated.\n4. Pack firmly into a jar to push out air.\n5. Eat now, or leave at room temperature 1–2 days until bubbly and pleasantly sour, then refrigerate.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Japchae (Stir-fried Noodles and Vegetables 잡채)",
@@ -9929,10 +10130,13 @@
         "ingredient": "toasted sesame oil"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Steps written in our own words, adapted from Maangchi; tap Original to see theirs.",
     "sourceUrl": "https://www.maangchi.com/recipe/easy-japchae",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Maangchi"
+    "sourceTitle": "Maangchi",
+    "instructions": "1. If using meat, mix it with soy sauce, sugar and sesame oil, rest 5 minutes, then cook in a skillet 4–5 minutes. Set aside.\n2. Optional egg garnish: whisk eggs with salt, strain, and cook as a thin sheet in a lightly oiled non-stick pan over low heat, about a minute; flip, take off the heat and let it finish. Cool and slice into thin strips.\n3. Stir the sauce: soy sauce, sugar, black pepper and garlic.\n4. In a large pot, toss the trimmed wood ear mushrooms, king oyster mushrooms, carrot and onion with ¼ cup oil and ¼ cup water. Lay the spinach on top, then the soaked noodles cut into 5–6-inch lengths. Pour the sauce over.\n5. Cover and cook 10 minutes over medium-high.\n6. Uncover and toss 1–2 minutes until the liquid is gone and the noodles are glossy. Add the meat, 1 tablespoon sesame oil and 1 tablespoon sesame seeds.\n7. Serve on a platter topped with the egg strips.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Spicy Cucumber Side Dish (Oi-muchim 오이무침)",
@@ -10006,10 +10210,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Steps written in our own words, adapted from Maangchi; tap Original to see theirs.",
     "sourceUrl": "https://www.maangchi.com/recipe/oi-muchim",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Maangchi"
+    "sourceTitle": "Maangchi",
+    "instructions": "1. Halve the cucumber lengthwise and slice thinly on an angle.\n2. Toss in a bowl with the onion, green onion, garlic, soy sauce, pepper flakes, sesame oil, sesame seeds and sugar until the sugar dissolves.\n3. Serve alongside rice, noodles or grilled meat.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Chicken Pho",
@@ -10161,10 +10368,13 @@
         "notes": "cut into wedges"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Damn Delicious; tap Original to see theirs.",
     "sourceUrl": "https://damndelicious.net/2018/05/30/instant-pot-pho/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Damn Delicious"
+    "sourceTitle": "Damn Delicious",
+    "instructions": "1. On the Instant Pot's high sauté setting, brown the onion, ginger and garlic in the oil for 4–5 minutes.\n2. Add the cloves, star anise, cinnamon, cardamom, coriander and peppercorns for about a minute.\n3. Add the chicken, stock, fish sauce, brown sugar, ½ teaspoon salt and 2 cups water. Pressure-cook on high 15 minutes, then quick-release.\n4. Shred the chicken. Strain the broth, skim off the fat and season.\n5. Cook the noodles and drain.\n6. Fill bowls with noodles and chicken, ladle over the broth and top with bean sprouts, basil, mint, chili and lime.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegetarian Italian Wedding Soup",
@@ -10336,10 +10546,13 @@
         "notes": "Grated, for garnish (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Radish Rose; tap Original to see theirs.",
     "sourceUrl": "http://radishrose.net/2015/01/03/healthy-vegetarian-italian-wedding-soup/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Radish Rose"
+    "sourceTitle": "Radish Rose",
+    "instructions": "1. Bean balls: heat the oven to 400°F and oil a baking sheet. Mash the beans to a paste, then mix in ¼ cup of the onion, breadcrumbs, garlic, nutritional yeast (or flour), oil, soy sauce, seasoning, herbs, lemon zest and egg if using. Roll into golf balls, spray the tops and bake 30–35 minutes until golden.\n2. Soup: meanwhile, cook the rest of the onion with the carrots, celery and a pinch of salt in 1 tablespoon oil over medium for 5–7 minutes, until starting to brown.\n3. Add the garlic and pasta for a minute, then the broth. Simmer 10–15 minutes until the pasta is tender.\n4. Stir in the lemon juice, greens, salt, pepper and basil.\n5. Put 3–4 bean balls in each bowl, ladle the soup over and top with Parmesan if you like.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Carrot Turmeric Ginger Soup",
@@ -10431,10 +10644,13 @@
         "notes": "Fresh"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Real Balanced; tap Original to see theirs.",
     "sourceUrl": "https://realbalanced.com/recipe/low-fodmap-anti-bloat-anti-inflammatory-healing-carrot-turmeric-ginger-soup/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Real Balanced"
+    "sourceTitle": "Real Balanced",
+    "instructions": "1. Heat the oven to 400°F. Halve the peeled carrots (lengthwise and across if thick), drizzle with olive oil and roast about 20 minutes until tender.\n2. Blend the roasted carrots with everything else on high until smooth.\n3. Garnish and serve right away.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Lemon Coriander Soup",
@@ -10548,10 +10764,13 @@
         "ingredient": "lemon juice"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from Hebbar's Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://hebbarskitchen.com/lemon-coriander-soup-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Hebbar's Kitchen"
+    "sourceTitle": "Hebbar's Kitchen",
+    "instructions": "1. Heat 2 teaspoons oil in a large pan and sauté the garlic and ginger, then the onion and coriander stems for a minute.\n2. Add the carrot, cabbage, beans and corn and stir-fry a minute (keep them crisp).\n3. Add 3 cups water, ½ teaspoon salt and ½ teaspoon pepper and boil 5 minutes.\n4. Optional, for a thicker soup: whisk 1 tablespoon cornflour into ¼ cup water, stir it in and boil 2 minutes.\n5. Off the heat, stir in 3 tablespoons chopped coriander and 2 tablespoons lemon juice. Serve with more coriander.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegan Lentil Shepherd’s Pie",
@@ -10728,10 +10947,13 @@
         "notes": "Chopped"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Rainbow Plant Life; tap Original to see theirs.",
     "sourceUrl": "https://rainbowplantlife.com/healthy-vegan-lentil-shepherds-pie/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Rainbow Plant Life"
+    "sourceTitle": "Rainbow Plant Life",
+    "instructions": "1. Filling: in an ovenproof 12-inch pan, brown the onions in hot oil with a little salt for 10–15 minutes. Add the garlic, thyme and rosemary for 2 minutes, then the tomato paste for 2–3 minutes until it darkens.\n2. Pour in the wine and scrape up the bottom, cooking 3–4 minutes until mostly gone.\n3. Add the broth, lentils, bay leaves and paprika. Boil, then keep at a lively simmer about 30 minutes, until the lentils are just tender and most liquid is absorbed.\n4. On low, stir in the tahini, tamari, balsamic and Worcestershire. Season well (about 1 teaspoon salt).\n5. Topping: boil the peeled, chopped potatoes and the cauliflower in salted water with a rosemary sprig about 15 minutes, until very soft. Drain well, pat the potatoes dry and squeeze the water out of the cauliflower. Mash with the butter, milk, nutritional yeast, salt and pepper.\n6. Heat the oven to 375°F. Spread the filling in the pan (or a 3-quart dish), cover with the mash, drizzle with olive oil and season.\n7. Bake 20 minutes until bubbling, then broil a few minutes until golden.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Mediterranean Chicken Tray Bake with Potatoes, Peppers, and Olives",
@@ -10852,10 +11074,13 @@
         "ingredient": "pitted kalamata olives"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Allrecipes; tap Original to see theirs.",
     "sourceUrl": "https://www.allrecipes.com/recipe/268999/mediterranean-chicken-sheet-pan-dinner/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Allrecipes"
+    "sourceTitle": "Allrecipes",
+    "instructions": "1. Heat the oven to 425°F and line a large rimmed baking sheet with foil.\n2. Whisk the oil, juice of a lemon, vinegar, tarragon, oregano, paprika, salt and pepper in a big bowl. Toss in the chicken, onion, peppers and potatoes.\n3. Spread on the sheet and scatter lemon slices over the vegetables (keep the chicken skin uncovered so it browns).\n4. Bake about 40 minutes. Top with feta, parsley and olives.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Saffron Asparagus Kitchari",
@@ -10952,10 +11177,13 @@
         "notes": "ground"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Banyan Botanicals; tap Original to see theirs.",
     "sourceUrl": "https://www.banyanbotanicals.com/info/blog-the-banyan-insight/details/saffron-asparagus-kitchari/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Banyan Botanicals"
+    "sourceTitle": "Banyan Botanicals",
+    "instructions": "1. Toast the saffron in a dry heavy pot, then add the ghee, cumin seeds and fenugreek and warm over low heat until the cumin browns.\n2. Stir in the curry leaves, onion and asafoetida and cook gently a minute or two until the onion softens.\n3. Rinse the dal and rice until the water runs clear, drain and add. Add the water and salt and cook until tender, about an hour.\n4. Meanwhile, cut the asparagus into 1-inch pieces. About 15 minutes before serving, steam it and stir it into the kitchari with the ground cumin. (Or sauté it in a little extra ghee.)",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Falafel",
@@ -11112,10 +11340,13 @@
         "ingredient": "Pickles"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from The Mediterranean Dish; tap Original to see theirs.",
     "sourceUrl": "https://www.themediterraneandish.com/how-to-make-falafel/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "The Mediterranean Dish"
+    "sourceTitle": "The Mediterranean Dish",
+    "instructions": "1. A day ahead, soak the dried chickpeas with the baking soda in plenty of water for about 18 hours. Drain and pat dry. (Don't use canned; they're too wet.)\n2. Process the chickpeas with the herbs, onion, garlic and spices in 40-second bursts until evenly combined.\n3. Cover and chill at least an hour, or overnight.\n4. Just before cooking, stir in the baking powder and sesame seeds. With wet hands, shape tablespoons into ½-inch patties.\n5. Heat 3 inches of oil in a saucepan over medium-high until it bubbles gently. Fry in batches 3–5 minutes until crisp and brown, then drain on paper towels.\n6. Serve hot, or in pita with tahini or hummus, greens, tomato and cucumber.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Sicilian Pasta con le Sarde",
@@ -11217,10 +11448,13 @@
         "ingredient": "bucatini or spaghetti"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Serious Eats; tap Original to see theirs.",
     "sourceUrl": "https://www.seriouseats.com/pasta-pasta-con-le-sarde-sicilian-pasta-with-sardines",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Serious Eats"
+    "sourceTitle": "Serious Eats",
+    "instructions": "1. Warm the wine and soak the raisins and saffron in it.\n2. Toast the ground fennel in 1½ tablespoons oil for 20 seconds, add the breadcrumbs and toss until lightly golden. Season and set aside.\n3. Put the pasta water on. Mince half the fennel fronds.\n4. In a large pan, cook the diced onion and fennel bulb in 3 tablespoons oil over medium about 8 minutes until soft. Stir in the anchovies until they melt.\n5. Add the wine mixture and cook until nearly evaporated, scraping the pan. Add the pine nuts and sardines and cook about 2 minutes, just until done.\n6. Cook the pasta al dente, keeping a cup of the water. Toss it in the pan with ¼ cup pasta water over medium-high until coated and glossy, adding more water if dry.\n7. Finish with a generous drizzle of olive oil, the minced fronds, salt and a little of the breadcrumbs. Serve topped with more breadcrumbs and whole fronds.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Chicken Paprikash",
@@ -11339,10 +11573,13 @@
         "notes": "large (dumplings), large"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Carolina Gelen; tap Original to see theirs.",
     "sourceUrl": "https://carolinagelen.com/chicken-paprikash/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Carolina Gelen"
+    "sourceTitle": "Carolina Gelen",
+    "instructions": "1. Toss the bite-size chicken with salt, pepper and a little oil and leave 10 minutes.\n2. Sear in oil in a braiser over medium, 2–3 minutes a side, until golden but not cooked through. Set aside.\n3. In the same pan, soften the onion 3–4 minutes, add the peppers for 5–7, then keep cooking on medium-low 4–6 minutes more until jammy.\n4. Stir in the tomato paste for 2–3 minutes until darker, then the garlic for 2, then the paprika and cayenne for a minute or two.\n5. Add the coconut milk, then the stock (or cube and water), a good pinch of salt and the chicken. Simmer 15–20 minutes.\n6. Stir in the cornstarch mixed with a tablespoon of water and simmer 3–5 minutes until thick. Season.\n7. Dumplings: mix the flour, eggs and a pinch of salt into a thick batter. Scrape small bits off a spoon into boiling salted water; when they float, scoop them out. Serve with the stew.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Orange Roast Chicken with Shallots and Fennel",
@@ -11449,10 +11686,13 @@
         "ingredient": "orange juice"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Mains). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Mains). Steps written in our own words, adapted from Carolina Gelen; tap Original to see theirs.",
     "sourceUrl": "https://carolinagelen.substack.com/p/orange-chicken-roast-with-fennel",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Carolina Gelen"
+    "sourceTitle": "Carolina Gelen",
+    "instructions": "1. Crush the fennel and coriander seeds. Rub the sugar, salt and orange zest together until fragrant, then mix in the spices, sage, tarragon, mustard and oil into a paste.\n2. Pat the chicken dry. Cut out the backbone with shears, flip it and press down on the breast to flatten.\n3. Spread the paste over the skin and leave it on a rack to marinate (at room temperature while you prep, or uncovered in the fridge overnight).\n4. Heat the oven to 425°F. Slice the oranges ½ inch thick, cut the fennel bulbs into wedges through the root (save some fronds) and thinly slice the shallots.\n5. In a 9×13 pan, pour in the oil (¼–⅓ cup, less for a bigger bird), lay the oranges, then the fennel and shallots, add the orange juice and salt.\n6. Set the chicken on top breast side up, prick the skin all over and tuck the wings under.\n7. Roast loosely covered with foil for 20 minutes, then uncovered 30–40 minutes more until cooked through. Rest, carve and serve with the pan oranges, fennel and juices, topped with fennel fronds.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Korean Braised Potatoes",
@@ -11523,10 +11763,13 @@
         "ingredient": "sesame seeds"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Korean Feast). Steps written in our own words, adapted from CJ Eats; tap Original to see theirs.",
     "sourceUrl": "https://cjeatsrecipes.com/korean-braised-potatoes/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "CJ Eats"
+    "sourceTitle": "CJ Eats",
+    "instructions": "1. Peel the potatoes (waxy ones hold their shape best) and cut into 1-inch pieces. Stir the soy sauce, mirin, garlic, sugar and water together.\n2. Sauté the potatoes in 1 tablespoon oil in a non-stick pan over medium-high for 4–5 minutes, until starting to colour.\n3. Pour in the sauce and simmer 5–6 minutes, until the potatoes are tender and glazed. Turn up the heat to reduce if it's still watery, or add a splash of water if it dries out too soon.\n4. Finish with sesame oil and sesame seeds. Good warm or cold; keeps 3–4 days.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Ginger Lemon Switchel (Laborade)",
@@ -11598,10 +11841,13 @@
         "ingredient": "mineral sea salt"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Steps written in our own words, adapted from Mother Bees; tap Original to see theirs.",
     "sourceUrl": "https://motherbees.com/blogs/motherbees-blogs/recipe-ginger-lemon-switchel",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Mother Bees"
+    "sourceTitle": "Mother Bees",
+    "instructions": "1. Dissolve the honey in the hot water in a mug.\n2. Pour it into a 1-quart jar and add the cool water, vinegar, lemon juice, ginger, mineral drops, Rescue Remedy if using, and salt.\n3. Stir, taste and adjust the sweetness, tang or salt.\n4. Keeps a week in the fridge; shake before pouring.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Lactation Cookies #2",
@@ -11705,10 +11951,13 @@
         "ingredient": "dark chocolate chips"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Postpartum). Steps written in our own words, adapted from How Sweet Eats; tap Original to see theirs.",
     "sourceUrl": "https://www.howsweeteats.com/2015/02/lactation-cookies/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "How Sweet Eats"
+    "sourceTitle": "How Sweet Eats",
+    "instructions": "1. Heat the oven to 350°F.\n2. Whisk the oats, flour, brewer's yeast, flax, baking powder, baking soda, cinnamon and salt.\n3. Beat the butter and coconut oil until creamy, then the sugar for 4–5 minutes until fluffy. Beat in the egg and yolk for 2–3 minutes, then the vanilla.\n4. Mix in the dry ingredients on low just until combined, then fold in the chocolate chips.\n5. Scoop 1-inch balls 2 inches apart and bake 10–14 minutes, until just golden underneath. Cool completely before storing.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Blueberry Lemon Yogurt Cake",
@@ -11796,10 +12045,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Smitten Kitchen; tap Original to see theirs.",
     "sourceUrl": "https://smittenkitchen.com/2008/04/lemon-yogurt-anything-cake/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Smitten Kitchen"
+    "sourceTitle": "Smitten Kitchen",
+    "instructions": "1. Heat the oven to 350°F and grease (or parchment-line) a loaf pan.\n2. Whisk the oil and 1 cup sugar with the zest of all the lemons, then whisk in the eggs, vanilla and yogurt.\n3. Sprinkle the baking powder and salt over the batter and whisk in well, then stir in the flour and blueberries just until combined.\n4. Bake 60–75 minutes, until a toothpick comes out clean.\n5. Meanwhile, warm ⅓ cup of the lemon juice with the last tablespoon of sugar until dissolved.\n6. Brush the hot cake with the syrup (poke holes with a skewer if it isn't soaking in). Cool in the pan, then turn out and dust with powdered sugar.\n\nKeeps 3 days at room temperature, a week in the fridge, and freezes well.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Roasted Strawberry Miso Ice Cream",
@@ -11876,10 +12128,13 @@
         "ingredient": "vanilla extract"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from David Lebovitz; tap Original to see theirs.",
     "sourceUrl": "https://www.davidlebovitz.com/roasted-strawberry-miso-ice-cream-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "David Lebovitz"
+    "sourceTitle": "David Lebovitz",
+    "instructions": "1. Heat the oven to 375°F. Quarter the hulled strawberries and toss them in a wide baking dish with the golden syrup, balsamic and black pepper, in one spaced-out layer.\n2. Roast 30–40 minutes, stirring once or twice, until the juices are thick. Scrape into a bowl, cool, and snip the berries smaller with scissors. (Can be made 3 days ahead.)\n3. Custard: warm the milk and sugar. Set a bowl over ice water with a strainer on top and pour the cream into it.\n4. Whisk the yolks with the miso, slowly whisk in some warm milk, then pour it all back into the pan. Stir over low heat until it coats the spatula.\n5. Strain into the cream, stir over the ice until cool, add the vanilla and chill well, ideally overnight.\n6. Mix in the strawberries and churn in an ice cream maker.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Raw Superfood Cheesecake",
@@ -12051,10 +12306,13 @@
         "notes": "melted (strawberry layer)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from This Rawsome Vegan Life; tap Original to see theirs.",
     "sourceUrl": "https://www.thisrawsomeveganlife.com/2016/09/magical-superfood-cheesecake.html",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "This Rawsome Vegan Life"
+    "sourceTitle": "This Rawsome Vegan Life",
+    "instructions": "1. Crust: grind the almonds and oats into flour in a food processor, add the raisins and process to a sticky dough. Press into a lined 6-inch springform pan and chill.\n2. Blend each cream layer separately until smooth and thick: vanilla (white), mint (green) and strawberry (pink). If the blender struggles, add a little more syrup, melted coconut oil or citrus juice (water works but makes it less creamy).\n3. Spread the layers into the pan one after another.\n4. Freeze overnight to set, then decorate with berries. Let it soften a little before slicing.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegan (or Not) Brown Butter Peach Cobbler",
@@ -12179,10 +12437,13 @@
         "notes": "to serve (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Rainbow Plant Life; tap Original to see theirs.",
     "sourceUrl": "https://rainbowplantlife.com/vegan-brown-butter-peach-cobbler/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Rainbow Plant Life"
+    "sourceTitle": "Rainbow Plant Life",
+    "instructions": "1. Heat the oven to 375°F. Slice the pitted peaches ¼–½ inch thick and toss with the blueberries, brown sugar and spices. Leave 30 minutes.\n2. Melt the butter in a 12-inch cast-iron skillet over medium, spreading it up the sides. Once foaming, cook about 2 minutes more, stirring, until nutty, then take off the heat.\n3. Whisk the flour, oats, sugar, salt and baking powder, then fold in the oat milk and extracts.\n4. Ladle the batter over the butter in several spots (so the butter swirls through), then lay the fruit on top with its juices.\n5. Bake 45–50 minutes, turning the pan halfway, until deep golden and bubbling.\n6. Cool 10–20 minutes and serve warm, with ice cream if you like.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Strawberry and Matcha Tiramisu",
@@ -12255,10 +12516,13 @@
         "ingredient": "heavy whipping cream"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from Life by Mike G; tap Original to see theirs.",
     "sourceUrl": "https://lifebymikeg.com/blogs/all/matcha-lovers-rejoice-for-a-twist-on-a-classic-italian-dessert",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Life by Mike G"
+    "sourceTitle": "Life by Mike G",
+    "instructions": "1. Slice the strawberries thinly and roast at 400°F for 15 minutes until soft. Cool.\n2. Matcha cream: whisk the yolks and sugar in a bowl set over hot water until pale and light. Off the heat, whisk in the mascarpone. Whisk the matcha with 2 tablespoons water until smooth and stir it in. Whip the cream to soft peaks and fold it through.\n3. Dip each ladyfinger in the milk for about two seconds and lay a single layer in a square or rectangular dish.\n4. Spread with about 1 cup of the cream and scatter over the strawberries. Repeat the ladyfinger layer and finish with the rest of the cream.\n5. Dust with strawberry powder through a sieve and chill 3–4 hours.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Gluten-Free Sandwich Bread",
@@ -12345,10 +12609,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Gluten-Free Baking). Steps written in our own words, adapted from Gluten Free on a Shoestring; tap Original to see theirs.",
     "sourceUrl": "https://glutenfreeonashoestring.com/gluten-free-bread-recipe/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Gluten Free on a Shoestring"
+    "sourceTitle": "Gluten Free on a Shoestring",
+    "instructions": "1. Grease or line a 9×5-inch loaf pan (or a 1-pound Pullman pan).\n2. In a stand mixer bowl, whisk the flour blend, xanthan gum, yeast, cream of tartar and sugar, then the salt.\n3. Add the milk, butter, vinegar and egg whites and mix on low with the paddle, scraping the bowl, then on medium-high about 3 minutes. The dough will be thick, wet and a bit fluffy.\n4. Scrape into the pan and smooth the top with a wet spatula. Cover with oiled plastic and let rise somewhere warm 30–45 minutes, until about 1½ times its size (it won't double).\n5. Heat the oven to 375°F near the end of the rise. Slash the top if you like, brush with butter and add seeds.\n6. Bake 45–60 minutes (lid off a Pullman pan after about 40), until the inside reaches about 205°F and it sounds hollow when tapped. Cool before slicing.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Horchata",
@@ -12403,10 +12670,13 @@
         "ingredient": "vanilla extract"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Drinks). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Drinks). Steps written in our own words, adapted from Plant Based on a Budget; tap Original to see theirs.",
     "sourceUrl": "https://plantbasedonabudget.com/horchata/",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "Plant Based on a Budget"
+    "sourceTitle": "Plant Based on a Budget",
+    "instructions": "1. Blend the rice, water and cinnamon until the rice breaks up and the water turns milky. Refrigerate overnight.\n2. Strain through cheesecloth or a fine sieve into a pitcher.\n3. Stir in the plant milk, sugar and vanilla and serve over ice.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Shakshuka",
@@ -12518,10 +12788,13 @@
         "notes": "for serving"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Brekky). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1014721-shakshuka-with-feta",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Heat the oven to 375°F. Cook the onion and pepper slowly in the oil over medium-low for about 20 minutes, until very soft.\n2. Add the garlic for a minute or two, then the cumin, paprika and cayenne for a minute.\n3. Add the tomatoes, ¾ teaspoon salt and ¼ teaspoon pepper and simmer about 10 minutes until thick. Season and stir in the feta.\n4. Crack the eggs over the sauce, season them, and bake 7–10 minutes until just set.\n5. Finish with cilantro and serve with hot sauce.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Cucumber, Watermelon, and Feta Salad",
@@ -12594,10 +12867,13 @@
         "ingredient": "Salt and pepper"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Salads). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Salads). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1014895-greek-style-watermelon-salad",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Combine the watermelon, chopped tomatoes, peeled and seeded cucumber, sliced red onion, olives, feta and herbs in a large bowl.\n2. Dress with olive oil and red-wine vinegar, season with salt and pepper, toss and serve right away.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Spiced Chickpea Stew with Coconut and Turmeric (“The Stew”)",
@@ -12709,10 +12985,13 @@
         "notes": "lavash or other flatbread, for serving (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1019772-spiced-chickpea-stew-with-coconut-and-turmeric",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Warm ¼ cup oil in a large pot over medium. Cook the garlic, onion and ginger with salt and pepper 3–5 minutes, until the onion starts to brown at the edges.\n2. Add the turmeric, chile flakes and chickpeas and fry, stirring, 8–10 minutes until they crisp and break down a little. Scoop out about a cup for the top.\n3. Crush the rest of the chickpeas slightly with a spoon to thicken the stew. Add the coconut milk and stock, season, and scrape up the bottom.\n4. Simmer 30–35 minutes, until thick (longer if you want it thicker; taste the chickpeas, not just the broth).\n5. Stir in the greens and cook 3–7 minutes until wilted. Season again.\n6. Serve topped with mint, the crispy chickpeas, chile flakes and olive oil, with yogurt and toasted pita if you like.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Coconut Miso Salmon Curry",
@@ -12815,10 +13094,13 @@
         "notes": "chopped, fresh"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1020045-coconut-miso-salmon-curry",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Soften the onion, ginger and garlic in 2 tablespoons oil over medium, with salt and pepper, about 3 minutes. Add the miso and cook 2 minutes until it starts to caramelize.\n2. Add the coconut milk and 3 cups water, bring to a boil and cook about 5 minutes to reduce slightly.\n3. Add the salmon, lower the heat and simmer gently about 5 minutes until just cooked.\n4. Off the heat, stir in the spinach and lime juice.\n5. Serve over rice with basil, cilantro and lime wedges.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Spicy Coconut Corn Chowder",
@@ -12916,10 +13198,13 @@
         "notes": "toasted coconut flakes, chopped roasted peanuts, crispy fried shallots, lime wedges and more sliced Serrano chiles, to serve (optional)"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Soups). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Soups). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1019451-spicy-corn-and-coconut-soup",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Cut the corn off the cobs and scrape the cobs with the back of a knife to catch all the juice (skip this with frozen corn).\n2. Sauté the shallots, garlic, ginger and chile in the oil over medium, 3–5 minutes. Add the corn and its juice for 3 minutes, then the potatoes for 1–2.\n3. Add the broth and coconut milk, bring to a boil, then cover and simmer 8–10 minutes until the potatoes are tender.\n4. Blend roughly with an immersion blender (or blend half), leaving some texture.\n5. Season with lime juice and salt and serve with your toppings.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Vegan Chocolate Cupcakes",
@@ -13021,10 +13306,13 @@
         "notes": "optional"
       }
     ],
-    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Full steps are on the original page.",
+    "about": "From Ava and Charlie's Digital Cookbook (Desserts). Steps written in our own words, adapted from NYT Cooking; tap Original to see theirs.",
     "sourceUrl": "https://cooking.nytimes.com/recipes/1012423-vegan-chocolate-cupcakes",
     "contributor": "Ava & Charlie",
-    "sourceTitle": "NYT Cooking"
+    "sourceTitle": "NYT Cooking",
+    "instructions": "1. Heat the oven to 350°F and line 12 muffin cups.\n2. Stir the soy or rice milk, vinegar, sugar, oil and vanilla in a large bowl.\n3. In another bowl mix the flour, cocoa, baking soda, baking powder and salt, then sift it into the wet mix in a few additions, stirring until no big lumps remain.\n4. Fill the liners about two-thirds full and bake about 20 minutes, until a toothpick comes out clean. Cool on a rack.\n5. Whisk the glaze until smooth, spread on the cooled cupcakes and add sprinkles if you like.",
+    "openSteps": true,
+    "stepsVersion": 1
   },
   {
     "name": "Crisped Chickpea and Cauliflower Traybake with Lemon-Garlic Yogurt",

@@ -36,7 +36,7 @@ function rcOpenAbout() {
             </ul>
 
             <h3>Credits</h3>
-            <p>Many recipes come from <strong>Ava and Charlie's Digital Cookbook</strong> (tap their chip to see them). Recipes from websites and books link to the original for the full steps. Made by <a href="../index.html">Julian Smith</a>.</p>
+            <p>Many recipes come from <strong>Ava and Charlie's Digital Cookbook</strong> (tap their chip to see them). Recipes from websites and books have steps written in our own words, with a link to the original. Made by <a href="../index.html">Julian Smith</a>.</p>
         </div>
         <div class="rc-sheet-actions">
             <button class="btn" onclick="rcClosePicker()">Got it</button>

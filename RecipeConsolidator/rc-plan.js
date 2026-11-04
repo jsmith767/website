@@ -809,7 +809,12 @@ async function rcUpdateSavedStarterRecipes() {
             const before = tags.size;
             (starter.tags || []).forEach(t => tags.add(t));
             if (tags.size !== before) { recipe.tags = Array.from(tags); changed = true; }
-            if (starter.sourceTitle && !recipe.sourceTitle) { recipe.sourceTitle = starter.sourceTitle; changed = true; }
+            if (starter.sourceTitle && recipe.sourceTitle !== starter.sourceTitle && (!recipe.sourceTitle || recipe.contributor)) {
+                // A corrected source name replaces the old one (and its tag) on saved copies
+                if (recipe.sourceTitle) recipe.tags = (recipe.tags || []).filter(t => t !== recipe.sourceTitle);
+                recipe.sourceTitle = starter.sourceTitle;
+                changed = true;
+            }
             if (starter.sourceUrl && !recipe.sourceUrl) { recipe.sourceUrl = starter.sourceUrl; changed = true; }
             if (starter.about && !recipe.about) { recipe.about = starter.about; changed = true; }
             if (!recipe.servings && starter.servings) { recipe.servings = starter.servings; changed = true; }

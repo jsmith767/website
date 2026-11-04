@@ -655,8 +655,10 @@ updateRecipeList = function () {
             link.rel = 'noopener noreferrer';
             let host = '';
             try { host = new URL(r.sourceUrl).hostname.replace(/^www\./, ''); } catch (e) {}
-            link.title = host ? `Full steps on ${host}` : 'Full steps';
-            link.innerHTML = '<i class="fas fa-external-link-alt"></i> Full steps';
+            // With steps of our own, the link is to the original; without, it's where the steps are
+            const label = (r.instructions || '').trim() ? 'Original' : 'Full steps';
+            link.title = host ? `${label} on ${host}` : label;
+            link.innerHTML = `<i class="fas fa-external-link-alt"></i> ${label}`;
             actions.insertBefore(link, actions.querySelector('.rc-share-btn, .danger') || null);
         }
     });
