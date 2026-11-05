@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cairn: how it works</title>
+<style>
+  :root {
+    --bg: #faf6f0; --card: #ffffff; --ink: #2a2420; --muted: #75695f;
+    --line: #e6ddd2; --accent: #b4452f; --chip: #f2ebe2; --draft: #fff6dc; --draft-line: #e8c96a;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #17130f; --card: #221c17; --ink: #f1e9df; --muted: #a8998a;
+            --line: #3a3029; --accent: #e07a5f; --chip: #2e2620; --draft: #2d2614; --draft-line: #7a6424; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 40px 16px 72px; }
+  h1 { font-size: 2.1rem; margin: 0 0 4px; letter-spacing: -0.02em; }
+  h2 { font-size: 1.25rem; margin: 40px 0 10px; letter-spacing: -0.01em; }
+  .sub { color: var(--muted); margin: 0 0 8px; }
+  .status { display: inline-block; font-size: .85rem; background: var(--chip); border: 1px solid var(--line);
+            border-radius: 999px; padding: 3px 12px; margin: 6px 0 0; }
+  a { color: var(--accent); }
+  ul { padding-left: 1.2em; }
+  li { margin: 4px 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 4px 18px; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 8px; border-bottom: 1px solid var(--line); }
+  th { font-size: .78rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; }
+  tr:last-child td { border-bottom: 0; }
+  .ex { color: var(--muted); font-size: .92rem; }
+  .draft { background: var(--draft); border: 1px dashed var(--draft-line); border-radius: 12px; padding: 4px 18px; }
+  .draft-label { font-size: .78rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); margin: 12px 0 0; }
+  footer { margin-top: 48px; color: var(--muted); font-size: .9rem; }
+  @media (max-width: 560px) {
+    table, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tr { border-bottom: 1px solid var(--line); padding: 8px 0; }
+    td { border: 0; padding: 2px 0; }
+    td:first-child { font-weight: 600; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Cairn</h1>
+  <p class="sub">A WhatsApp helper for the Sahale community: what it does, what it keeps, and where your words go.</p>
+  <span class="status">Testing with a few people by direct message. Not in the main group.</span>
+
+  <h2>What Cairn is</h2>
+  <p>Cairn is a bot with its own WhatsApp number. You message it the way you'd message a housemate, and it keeps track of the practical stuff of living together, so nobody has to scroll back through the group chat or open another app. It's meant to become a chat front door to the Sahale Almanac.</p>
+  <p>Cairn is an AI. It can misunderstand or get a detail wrong, so it always tells you exactly what it saved, and it's worth a glance.</p>
+
+  <h2>What you can ask it</h2>
+  <div class="card">
+    <ul>
+      <li><b>Comings and goings:</b> who's on the land, trips, guests. <span class="ex">"I'm away Fri to Sun." "Who's here this weekend?"</span></li>
+      <li><b>Calendar and dinner:</b> events, and who's in for community dinner.</li>
+      <li><b>Shopping list:</b> <span class="ex">"Add oat milk." "Got the lemons."</span></li>
+      <li><b>Tasks:</b> shared chores, plus private to-dos only you can see.</li>
+      <li><b>House knowledge:</b> <span class="ex">"Where's the spare propane kept?"</span></li>
+      <li><b>A diary and check-ins:</b> private by default; share an entry with certain people, or with everyone as a check-in.</li>
+      <li><b>Alerts you ask for:</b> <span class="ex">"Let me know if anyone adds to the shopping list."</span></li>
+      <li><b>A few quick general questions a day:</b> short answers, not a replacement for a full AI chat.</li>
+      <li><b>Voice notes</b> work for all of it.</li>
+    </ul>
+  </div>
+
+  <h2>What Cairn keeps, and for how long</h2>
+  <p>Everything Cairn keeps lives in one database on a computer at Sahale (for now, Julian's Mac).</p>
+  <table>
+    <thead><tr><th>What</th><th>Kept?</th></tr></thead>
+    <tbody>
+      <tr><td>Your messages to Cairn</td><td>Not saved. The last few exchanges are held in memory for up to 6 hours so follow-ups make sense ("and Sky too"), then they're gone.</td></tr>
+      <tr><td>Things you ask it to record</td><td>Kept: trips, guests, events, dinner answers, the shopping list, tasks, house facts, diary entries, alert requests.</td></tr>
+      <tr><td>Voice notes</td><td>Turned into text on Sahale's computer, then the audio is deleted. A voice check-in you share with others is kept for 24 hours so they can hear it, then only the text stays.</td></tr>
+      <tr><td>Who changed what</td><td>A log of changes (for example "Julian added eggs to the list"), so mistakes can be traced. Diary text and private to-dos are left out of it.</td></tr>
+      <tr><td>General questions</td><td>Only counted, so Cairn knows when you've used today's few. The questions aren't saved.</td></tr>
+      <tr><td>Cost</td><td>A daily total of what Cairn's AI costs, split by person.</td></tr>
+    </tbody>
+  </table>
+  <p>Private diary entries and private to-dos are hidden from everyone else in Cairn, and never shown in a group chat. To be plain about it: they aren't encrypted on the computer, so whoever runs that computer could open the database. Right now that's Julian.</p>
+
+  <h2>Where your words go</h2>
+  <ul>
+    <li><b>WhatsApp:</b> messages between you and Cairn are end-to-end encrypted on the way, like any WhatsApp chat. They're unlocked on Sahale's computer, where Cairn reads them.</li>
+    <li><b>Anthropic:</b> to understand a message and reply, Cairn sends it to Claude, an AI run by the company Anthropic, along with the records it needs to answer (say, the shopping list) and the last few exchanges. Under Anthropic's terms for this kind of use, they don't train their AI on it. Their <a href="https://www.anthropic.com/legal/privacy">privacy policy</a> has the details, including how long they hold it.</li>
+    <li><b>Never sent anywhere:</b> your voice recordings. They're transcribed on Sahale's computer.</li>
+    <li><b>Web searches:</b> for current-events questions, Cairn may run a web search through Anthropic.</li>
+  </ul>
+
+  <h2>What Cairn won't do</h2>
+  <div class="card">
+    <ul>
+      <li>Read group chats. It only sees messages sent to it directly, plus test groups people opted into, and there only when you start with "Cairn" or @mention it.</li>
+      <li>Message you out of the blue. The only messages it starts are alerts you asked for, which end after a few days, come bundled, and stay quiet overnight.</li>
+      <li>Keep passwords, door codes, Wi-Fi keys or other secrets, even if asked.</li>
+      <li>Show your private diary entries or to-dos to anyone else.</li>
+      <li>Write to the Almanac. That waits until the Almanac's keepers say yes.</li>
+    </ul>
+  </div>
+
+  <h2>Honest risks</h2>
+  <ul>
+    <li><b>WhatsApp's rules:</b> Cairn connects to WhatsApp the way WhatsApp Web does, which WhatsApp doesn't officially allow for bots. The worst case is that Cairn's number gets banned. Your data would be fine, since it's kept at Sahale, not in WhatsApp.</li>
+    <li><b>Mistakes:</b> AI can misread a date or mishear a name in a voice note. Cairn repeats back what it saved so you can catch it.</li>
+    <li><b>Cost:</b> each message costs a cent or a few. A daily spending cap stops the extras, and then Cairn itself, if something runs away.</li>
+  </ul>
+
+  <h2>Where it's heading</h2>
+  <ul>
+    <li><b>A Sahale server running its own AI,</b> so messages don't go to Anthropic at all, with Claude only as a backup for hard cases.</li>
+    <li><b>The Almanac:</b> calendar events made in Cairn showing up there, once its keepers agree.</li>
+    <li><b>Maybe our own chat system</b> (Matrix) someday, where Cairn would be a normal, allowed member and everything stays on Sahale's own computer.</li>
+  </ul>
+
+  <h2>Why</h2>
+  <p>A lot of our group chat is logistics: who's around, who has a guest coming, what we need from the store. The chat can be for each other, with a helper holding the details.</p>
+  <p>AI listening in on a community deserves care. So Cairn starts small. It only hears what you send it, keeps as little as it can, and this page says where everything goes. If it ever joins the main group, that's something we decide together.</p>
+  <p>Longer term, the tools we lean on could live here on the land, on our own computer, under our own rules. Cairn is a first step.</p>
+
+  <h2>Questions, or opting out</h2>
+  <p>Talk to Julian. You can ask Cairn to delete any of your diary entries, and Julian can remove everything Cairn holds about you. Nobody needs to use Cairn; everything it does can still happen the old way.</p>
+
+  <footer>Last updated November 2026.</footer>
+</main>
+</body>
+</html>
