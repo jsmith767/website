@@ -255,3 +255,41 @@ updateRecipeList = function () {
         chip.setAttribute('aria-pressed', rcStepsOnly ? 'true' : 'false');
     }
 };
+
+// ----------------------------
+// Sahale: send this shopping list to the shared Sahale shopping list
+// (shopping.julian-smith.org, part of Cairn). The button only shows for Sahale
+// people: anyone who has opened the Consolidator through Cairn's link, which
+// ends in ?sahale=1 (?sahale=0 hides it again). The list page shows a checklist
+// first, so nothing is added until they confirm there.
+// ----------------------------
+
+const RC_SAHALE_KEY = 'recipeConsolidator_sahale';
+const RC_SAHALE_LIST = 'https://shopping.julian-smith.org/';
+
+(function rcSahaleButton() {
+    try {
+        const flag = new URLSearchParams(location.search).get('sahale');
+        if (flag === '1') localStorage.setItem(RC_SAHALE_KEY, '1');
+        if (flag === '0') localStorage.removeItem(RC_SAHALE_KEY);
+        const button = document.getElementById('rcSahaleSend');
+        if (button && localStorage.getItem(RC_SAHALE_KEY) === '1') button.style.display = '';
+    } catch (e) { /* private mode: no button */ }
+})();
+
+function rcSendToSahale() {
+    // What's on screen, minus anything already ticked off here
+    const items = [...document.querySelectorAll('#shoppingList .rc-shop-item:not(.is-checked)')]
+        .map(row => [
+            (row.querySelector('.shopping-item-name')?.textContent || '').trim(),
+            (row.querySelector('.shopping-item-quantity')?.textContent || '').trim(),
+        ])
+        .filter(([name]) => name)
+        .slice(0, 100);
+    if (!items.length) {
+        showMessage('Nothing to send: the list is empty or everything is ticked off', 'error');
+        return;
+    }
+    const url = RC_SAHALE_LIST + '?add=' + encodeURIComponent(JSON.stringify({ from: 'Recipe Consolidator', items }));
+    window.open(url, '_blank', 'noopener');
+}
