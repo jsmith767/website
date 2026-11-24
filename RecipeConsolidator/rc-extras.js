@@ -168,18 +168,54 @@ document.addEventListener('DOMContentLoaded', () => {
 const rcBaseConfirmReview = confirmIngredientReview;
 confirmIngredientReview = function () {
     const box = document.getElementById('rcShareOnSave');
-    const wantsShare = !!(box && box.checked);
+    const sahaleBox = document.getElementById('rcSahaleShareOnSave');
+    const signedIn = typeof rcSahale !== 'undefined' && rcSahale.state === 'in';
+    // Read now: saving an edit resets the form (and this box) before we get it back
+    const shareWanted = !!(sahaleBox && sahaleBox.checked);
+    const wantsShare = !signedIn && !!(box && box.checked);
     const pending = pendingRecipeForReview;
     const editId = pending && pending.id;
     const countBefore = recipes.length;
     const result = rcBaseConfirmReview.apply(this, arguments);
+    const saved = editId ? rcRecipeById(editId) : (recipes.length > countBefore ? recipes[recipes.length - 1] : null);
+    // Signed in to Sahale: shared with Sahale unless they unticked it
+    if (signedIn && saved && sahaleBox) {
+        const want = shareWanted ? 'share' : 'private';
+        if (saved.sahale !== want) {
+            saved.sahale = want;
+            saveRecipes();
+        }
+        if (want === 'share') showMessage('Shared with Sahale: it joins the Sahale recipes once someone else OKs it', 'success');
+        sahaleBox.checked = true; // the next new recipe starts shared again
+    }
     if (wantsShare) {
-        const saved = editId ? rcRecipeById(editId) : (recipes.length > countBefore ? recipes[recipes.length - 1] : null);
         if (saved) setTimeout(() => rcOpenShare(String(saved.id)), 350);
         box.checked = false;
     }
     return result;
 };
+
+// Editing a recipe: the Sahale box shows whether it's shared now
+// (recipes from before sharing, the starter ones and Sahale's own start unticked)
+if (typeof editRecipe === 'function') {
+    const rcBaseEditRecipe = editRecipe;
+    editRecipe = function (recipeId) {
+        const result = rcBaseEditRecipe.apply(this, arguments);
+        const r = recipes.find(x => x.id === recipeId);
+        const sahaleBox = document.getElementById('rcSahaleShareOnSave');
+        if (sahaleBox && r) sahaleBox.checked = r.sahale === 'share';
+        return result;
+    };
+}
+if (typeof cancelRecipeEdit === 'function') {
+    const rcBaseCancelEdit = cancelRecipeEdit;
+    cancelRecipeEdit = function () {
+        const result = rcBaseCancelEdit.apply(this, arguments);
+        const sahaleBox = document.getElementById('rcSahaleShareOnSave');
+        if (sahaleBox) sahaleBox.checked = true;
+        return result;
+    };
+}
 
 // ----------------------------
 // Ingredient lines: tidy two common patterns before parsing
@@ -462,8 +498,16 @@ function rcRenderSahaleChip() {
         chip.hidden = false;
         chip.innerHTML = `<i class="fas ${rcSahale.error ? 'fa-exclamation-circle' : 'fa-cloud'}"></i><span class="rc-hide-narrow"> ${rcEscape(rcSahale.name || 'Sahale')}</span>`;
         chip.title = rcSahale.error ? 'Not saved to Sahale yet: ' + rcSahale.error : 'Signed in to Sahale; recipes saved there';
+        if (rcSahale.toOk) {
+            chip.innerHTML += ` <span class="rc-sahale-badge" title="Recipes waiting for your OK">${rcSahale.toOk}</span>`;
+            chip.title += ` · ${rcSahale.toOk} recipe${rcSahale.toOk === 1 ? '' : 's'} waiting for your OK`;
+        }
         const button = document.getElementById('rcSahaleSend');
         if (button) button.style.display = '';
+        const shareRow = document.getElementById('rcSahaleShareRow');
+        const julianRow = document.getElementById('rcJulianShareRow');
+        if (shareRow) shareRow.hidden = false;
+        if (julianRow) julianRow.hidden = true;
     } else if (rcSahale.state === 'out' && sahalePerson) {
         chip.hidden = false;
         chip.innerHTML = '<i class="fas fa-sign-in-alt"></i><span class="rc-hide-narrow"> Sahale sign in</span>';
@@ -492,7 +536,8 @@ function rcSahaleChipClick() {
         ? `<p>You're signed in, but your email isn't on Sahale's list yet. Ask Julian to add it.</p>`
         : `<p>Signed in as <strong>${rcEscape(rcSahale.name || '')}</strong>. Your recipes are saved to Sahale, so they're on any device where you sign in.</p>
            <p class="rc-muted">${rcSahale.error ? 'Not saved yet (' + rcEscape(rcSahale.error) + '); it will try again.' : when ? 'Last saved ' + rcEscape(when) + '.' : 'Saving…'}</p>
-           <p class="rc-muted">The <strong>Sahale list</strong> button on Shop sends your shopping list to the shared Sahale list.</p>`;
+           <p class="rc-muted">The <strong>Sahale list</strong> button on Shop sends your shopping list to the shared Sahale list.</p>
+           <p><button class="btn" onclick="rcOpenSahaleRecipes()"><i class="fas fa-book-open"></i> Sahale recipes${rcSahale.toOk ? ` (${rcSahale.toOk} to OK)` : ''}</button></p>`;
     rcOpenPicker('Sahale', body + `
         <div class="rc-sheet-actions">
             ${rcSahale.state === 'in' ? '<button class="btn btn-quiet" onclick="rcSyncNow(); rcClosePicker()">Save now</button>' : ''}
@@ -515,8 +560,96 @@ function rcSahaleChipClick() {
         rcSahale.state = e.signedOut ? 'out' : 'unknown'; // offline: say nothing
     }
     rcRenderSahaleChip();
-    if (rcSahale.state === 'in') rcSyncNow();
+    if (rcSahale.state === 'in') {
+        rcSyncNow();
+        rcLoadSahaleRecipes().catch(() => {});
+    }
 })();
+
+// ----------------------------
+// Sahale recipes: what people shared. A new recipe is shared unless they
+// untick "Share with Sahale"; someone else OKs it, then anyone can add it.
+// ----------------------------
+
+let rcSahaleRecipes = { ok: [], waiting: [] };
+
+async function rcLoadSahaleRecipes() {
+    const res = await rcSahaleFetch('/api/rc/shared');
+    if (!res.ok) throw new Error('could not load Sahale recipes: ' + res.status);
+    rcSahaleRecipes = await res.json();
+    rcSahale.toOk = rcSahaleRecipes.waiting.filter(w => !w.mine).length;
+    rcRenderSahaleChip();
+    return rcSahaleRecipes;
+}
+
+const rcNameKey = (n) => String(n || '').trim().toLowerCase();
+
+function rcSahaleRecipeLine(r) {
+    const ing = (r.recipe.ingredients || []).map(i => i.ingredient || i.name || '').filter(Boolean);
+    return `<small class="rc-muted">${rcEscape(ing.slice(0, 8).join(', '))}${ing.length > 8 ? '…' : ''}</small>`;
+}
+
+async function rcOpenSahaleRecipes() {
+    rcOpenPicker('Sahale recipes', '<p class="rc-muted">Loading…</p>');
+    try { await rcLoadSahaleRecipes(); } catch (e) {
+        rcOpenPicker('Sahale recipes', `<p>Couldn't load them (${rcEscape(e.message)}). Try again in a moment.</p><div class="rc-sheet-actions"><button class="btn" onclick="rcClosePicker()">Close</button></div>`);
+        return;
+    }
+    const have = new Set(recipes.map(r => rcNameKey(r.name)));
+    const toOk = rcSahaleRecipes.waiting.filter(w => !w.mine);
+    const mineWaiting = rcSahaleRecipes.waiting.filter(w => w.mine);
+    const fresh = rcSahaleRecipes.ok.filter(r => !have.has(rcNameKey(r.recipe.name)));
+    const row = (inner) => `<li class="rc-sahale-row">${inner}</li>`;
+    let html = '';
+    if (toOk.length) {
+        html += `<h4>Waiting for an OK</h4><p class="rc-muted">Shared by others. If it looks right for Sahale, OK it and it joins the Sahale recipes.</p><ul class="rc-sahale-list">` +
+            toOk.map(w => row(`<div><strong>${rcEscape(w.recipe.name)}</strong> <span class="rc-muted">from ${rcEscape(w.by)}</span><br>${rcSahaleRecipeLine(w)}</div>
+                <button class="btn" onclick="rcOkSahaleRecipe(${Number(w.id)})">OK</button>`)).join('') + '</ul>';
+    }
+    if (mineWaiting.length) {
+        html += `<h4>Yours, waiting for someone else's OK</h4><ul class="rc-sahale-list">` +
+            mineWaiting.map(w => row(`<div><strong>${rcEscape(w.recipe.name)}</strong></div>`)).join('') + '</ul>';
+    }
+    html += `<h4>Sahale recipes (${rcSahaleRecipes.ok.length})</h4>`;
+    if (!rcSahaleRecipes.ok.length) html += `<p class="rc-muted">None yet. Recipes you add are shared unless you untick "Share with Sahale"; once someone else OKs one, it shows here for everyone.</p>`;
+    else if (!fresh.length) html += `<p class="rc-muted">You have all of them already.</p>`;
+    else html += `<ul class="rc-sahale-list">` + fresh.map(r => row(`<div><strong>${rcEscape(r.recipe.name)}</strong> <span class="rc-muted">from ${rcEscape(r.by)}</span><br>${rcSahaleRecipeLine(r)}</div>
+            <button class="btn btn-quiet" onclick="rcAddSahaleRecipes([${Number(r.id)}])">Add</button>`)).join('') + '</ul>' +
+        (fresh.length > 1 ? `<p><button class="btn" onclick="rcAddSahaleRecipes(${JSON.stringify(fresh.map(r => Number(r.id)))})">Add all ${fresh.length}</button></p>` : '');
+    rcOpenPicker('Sahale recipes', html + `<div class="rc-sheet-actions"><button class="btn" onclick="rcClosePicker()">Done</button></div>`);
+}
+
+async function rcOkSahaleRecipe(id) {
+    try {
+        const res = await rcSahaleFetch(`/api/rc/shared/${id}/ok`, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: '{}' });
+        const out = await res.json();
+        if (!res.ok) throw new Error(out.error || res.status);
+        showMessage('OK\'d: it\'s in the Sahale recipes now', 'success');
+    } catch (e) {
+        showMessage("Couldn't OK it: " + e.message, 'error');
+    }
+    rcOpenSahaleRecipes();
+}
+
+// Copies Sahale recipes into this library (marked as from Sahale, so they aren't shared back)
+function rcAddSahaleRecipes(ids) {
+    const have = new Set(recipes.map(r => rcNameKey(r.name)));
+    let added = 0;
+    for (const s of rcSahaleRecipes.ok.filter(r => ids.includes(Number(r.id)))) {
+        if (have.has(rcNameKey(s.recipe.name))) continue;
+        recipes.push({ ...s.recipe, id: Date.now() + Math.random(), sahale: 'from-sahale' });
+        have.add(rcNameKey(s.recipe.name));
+        added++;
+    }
+    if (added) {
+        saveRecipes();
+        for (const f of ['consolidateIngredients', 'updateRecipeList', 'updateTagFilters', 'updateTabBadges']) {
+            try { if (typeof window[f] === 'function') window[f](); } catch (e) { console.error(f, e); }
+        }
+        showMessage(`Added ${added} Sahale recipe${added === 1 ? '' : 's'}`, 'success');
+    }
+    rcOpenSahaleRecipes();
+}
 
 // Coming back to the tab: pick up changes made on another device
 document.addEventListener('visibilitychange', () => {

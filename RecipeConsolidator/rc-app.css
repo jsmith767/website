@@ -866,3 +866,9 @@ html.rc-trip-mode {
 .rc-sahale-chip:hover { color: var(--ink); border-color: var(--line-strong); }
 .rc-sahale-chip[hidden] { display: none; }
 .rc-muted { color: var(--muted); font-size: 14px; }
+
+/* Sahale recipes */
+.rc-sahale-badge { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent, #2f6f4f); color: #fff; font-size: 12px; line-height: 18px; text-align: center; }
+.rc-sahale-list { list-style: none; padding: 0; margin: 6px 0 14px; }
+.rc-sahale-row { display: flex; gap: 10px; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.rc-sahale-row > div { min-width: 0; }

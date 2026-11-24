@@ -1046,7 +1046,7 @@
             .rc-workflow-tabs .container { padding: 0 5%; }
         }
     </style>
-    <link rel="stylesheet" href="rc-app.css?v=20261124a">
+    <link rel="stylesheet" href="rc-app.css?v=20261124b">
 </head>
 <body class="rc-body">
     <header class="rc-appbar">
@@ -1253,7 +1253,12 @@
                 <small class="rc-hint">Got the steps from a website or book? Paste the link here (or name the book in a note) instead of copying their steps. Ingredients are always fine to share.</small>
             </label>
 
-            <label class="rc-share-optin">
+            <label class="rc-share-optin" id="rcSahaleShareRow" hidden>
+                <input type="checkbox" id="rcSahaleShareOnSave" checked>
+                <span><strong>Share with Sahale</strong><small>Once someone else at Sahale OKs it, it's in the Sahale recipes everyone can add. Untick to keep it to yourself.</small></span>
+            </label>
+
+            <label class="rc-share-optin" id="rcJulianShareRow">
                 <input type="checkbox" id="rcShareOnSave">
                 <span><strong>Also share this recipe with Julian</strong><small>It may be added to the recipes everyone starts with. You'll see what's sent before it goes.</small></span>
             </label>
@@ -1578,11 +1583,11 @@
         </div>
     </div>
 
-    <script src="recipe-consolidator.js?v=20261124a"></script>
-    <script src="rc-plan.js?v=20261124a"></script>
-    <script src="rc-trip.js?v=20261124a"></script>
-    <script src="rc-extras.js?v=20261124a"></script>
-    <script src="rc-filters.js?v=20261124a"></script>
+    <script src="recipe-consolidator.js?v=20261124b"></script>
+    <script src="rc-plan.js?v=20261124b"></script>
+    <script src="rc-trip.js?v=20261124b"></script>
+    <script src="rc-extras.js?v=20261124b"></script>
+    <script src="rc-filters.js?v=20261124b"></script>
 </body>
 </html>
 
