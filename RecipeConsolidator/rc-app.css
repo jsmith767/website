@@ -852,3 +852,17 @@ html.rc-trip-mode {
 .rc-filter-empty p { margin: 0 0 10px; }
 .rc-cat-clear { border-style: solid; border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
 .rc-cat-clear i { color: inherit; }
+
+/* Sahale sign-in chip (rc-extras.js) */
+.rc-sahale-chip {
+    flex: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    height: 32px; padding: 0 10px;
+    border: 1px solid var(--line); border-radius: 999px;
+    background: transparent; color: var(--muted);
+    font: inherit; font-size: 13px; cursor: pointer;
+    white-space: nowrap;
+}
+.rc-sahale-chip:hover { color: var(--ink); border-color: var(--line-strong); }
+.rc-sahale-chip[hidden] { display: none; }
+.rc-muted { color: var(--muted); font-size: 14px; }

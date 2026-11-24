@@ -24,7 +24,7 @@ function rcOpenAbout() {
             </ol>
 
             <h3>Your data</h3>
-            <p>Your recipes, plans and lists are saved in this browser on this device. Nothing is uploaded unless you press Share. Use <strong>⋯ → Export</strong> to keep a copy or move it to another device.</p>
+            <p>Your recipes, plans and lists are saved in this browser on this device. Nothing is uploaded unless you press Share, or you're part of Sahale and sign in (the <strong>Sahale</strong> button at the top): then your recipes are also saved on Sahale's own server, so they follow you to any device where you sign in. Use <strong>⋯ → Export</strong> to keep a copy or move it to another device.</p>
 
             <h3>Coming next</h3>
             <ul class="rc-about-list">
@@ -276,6 +276,252 @@ const RC_SAHALE_LIST = 'https://shopping.julian-smith.org/';
         if (button && localStorage.getItem(RC_SAHALE_KEY) === '1') button.style.display = '';
     } catch (e) { /* private mode: no button */ }
 })();
+
+// ----------------------------
+// Sahale sign-in: Sahale people sign in with the same login as the shopping
+// list (Cloudflare Access on shopping.julian-smith.org; same site, so its
+// cookie comes along). Signed in, the "Sahale list" button shows and their
+// recipes are saved on Sahale's server, so they follow them to any device.
+//
+// Sync: the server keeps the whole library with a revision number. A save
+// names the revision it started from; if another device saved since, the
+// server says so and the two are merged (by recipe, this device's copy
+// winning) before saving again. Nothing is uploaded for people who never sign in.
+// ----------------------------
+
+// (A test copy of the server can be named in localStorage 'rc_sahale_api'.)
+const RC_SAHALE_API = (() => { try { return localStorage.getItem('rc_sahale_api'); } catch (e) { return null; } })() || 'https://shopping.julian-smith.org';
+const RC_SYNC_KEY = 'recipeConsolidator_sahaleSync'; // { who, rev, dirty, device, at }
+const rcSahale = { state: 'unknown', name: null, saving: null, timer: null };
+
+function rcSyncState() {
+    try { return JSON.parse(localStorage.getItem(RC_SYNC_KEY)) || {}; } catch (e) { return {}; }
+}
+function rcSetSyncState(patch) {
+    const next = { ...rcSyncState(), ...patch };
+    try { localStorage.setItem(RC_SYNC_KEY, JSON.stringify(next)); } catch (e) {}
+    return next;
+}
+
+// A fetch to the shopping server with the person's login. Signed out, Access
+// answers with a redirect to its login page, which we stop and report.
+async function rcSahaleFetch(path, opts = {}) {
+    const res = await fetch(RC_SAHALE_API + path, { credentials: 'include', redirect: 'manual', cache: 'no-store', ...opts });
+    if (res.type === 'opaqueredirect' || res.status === 0) {
+        const err = new Error('signed out');
+        err.signedOut = true;
+        throw err;
+    }
+    return res;
+}
+
+// Both libraries in one: by recipe id, then by name; `mine` wins on a clash
+function rcMergeLibraries(mine, theirs) {
+    const out = [...mine];
+    const ids = new Set(mine.map(r => String(r.id)));
+    const names = new Set(mine.map(r => String(r.name || '').trim().toLowerCase()));
+    for (const r of theirs) {
+        if (ids.has(String(r.id)) || names.has(String(r.name || '').trim().toLowerCase())) continue;
+        out.push(r);
+    }
+    return out;
+}
+
+// Where this device's copy of a recipe gives way to the saved copy (same name,
+// another id), point the plan, notes, active set and servings at the saved id
+function rcRemapIds(mine, saved) {
+    const byName = new Map(saved.map(r => [String(r.name || '').trim().toLowerCase(), r.id]));
+    const savedIds = new Set(saved.map(r => String(r.id)));
+    const map = new Map();
+    for (const r of mine) {
+        const to = byName.get(String(r.name || '').trim().toLowerCase());
+        if (to !== undefined && !savedIds.has(String(r.id)) && String(to) !== String(r.id)) map.set(String(r.id), to);
+    }
+    if (!map.size) return;
+    const swap = (id) => (map.has(String(id)) ? map.get(String(id)) : id);
+    for (const day of Object.values(mealPlan || {})) {
+        for (const meal of Object.keys(day || {})) if (Array.isArray(day[meal])) day[meal] = day[meal].map(swap);
+    }
+    for (const day of Object.values(mealPlanNotes || {})) {
+        for (const notes of Object.values(day || {})) {
+            for (const key of Object.keys(notes || {})) {
+                const parts = key.split('_'); // date_meal_id_index
+                if (parts.length >= 4 && map.has(parts[2])) {
+                    parts[2] = String(map.get(parts[2]));
+                    notes[parts.join('_')] = notes[key];
+                    delete notes[key];
+                }
+            }
+        }
+    }
+    activeRecipeIds = new Set([...activeRecipeIds].map(swap));
+    for (const [from, to] of map) {
+        if (recipeMultipliers[from] !== undefined) {
+            recipeMultipliers[to] = recipeMultipliers[from];
+            delete recipeMultipliers[from];
+        }
+    }
+    for (const f of ['saveMealPlan', 'saveActiveRecipes', 'saveRecipeMultipliers']) {
+        try { if (typeof window[f] === 'function') window[f](); } catch (e) { console.error(f, e); }
+    }
+}
+
+// Replace this browser's library with `list` and redraw, without saving it back
+function rcUseLibrary(list) {
+    recipes = list;
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(recipes)); } catch (e) {}
+    const ids = new Set(recipes.map(r => r.id));
+    activeRecipeIds = new Set([...activeRecipeIds].filter(id => ids.has(id)));
+    for (const f of ['saveActiveRecipes', 'consolidateIngredients', 'updateRecipeList', 'updateShoppingList', 'updateTagFilters', 'updateDayPlanner', 'updateTabBadges']) {
+        try { if (typeof window[f] === 'function') window[f](); } catch (e) { console.error(f, e); }
+    }
+}
+
+const rcSameLibrary = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+async function rcPush(baseRev, list, tries = 2) {
+    const st = rcSyncState();
+    const res = await rcSahaleFetch('/api/rc/library', {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, // no preflight (Access would block it)
+        body: JSON.stringify({ baseRev, recipes: list, device: st.device }),
+    });
+    if (res.status === 409 && tries > 0) {
+        // Saved from another device meanwhile: fold theirs in and try again
+        const { current } = await res.json();
+        const merged = rcMergeLibraries(list, current.recipes);
+        if (!rcSameLibrary(merged, recipes)) rcUseLibrary(merged);
+        return rcPush(current.rev, merged, tries - 1);
+    }
+    if (!res.ok) throw new Error('save failed: ' + res.status);
+    const { rev } = await res.json();
+    rcSetSyncState({ rev, dirty: false, at: new Date().toISOString() });
+    return rev;
+}
+
+async function rcSyncNow() {
+    if (rcSahale.state !== 'in') return;
+    if (rcSahale.saving) return rcSahale.saving;
+    rcSahale.saving = (async () => {
+        try {
+            const st = rcSyncState();
+            const server = await (await rcSahaleFetch('/api/rc/library')).json();
+            if (st.who && st.who !== rcSahale.name) {
+                // Someone else signed in on this browser: show their library, don't mix
+                rcUseLibrary(server.recipes);
+                rcSetSyncState({ who: rcSahale.name, rev: server.rev, dirty: false });
+            } else if (!st.who || !st.rev) {
+                // First time on this device: what's saved plus what's only here. The
+                // saved copy wins where both have a recipe (the starter recipes get
+                // different ids on each device), and this device's plan follows it.
+                const merged = server.rev ? rcMergeLibraries(server.recipes, recipes) : recipes;
+                if (server.rev) rcRemapIds(recipes, server.recipes);
+                if (!rcSameLibrary(merged, recipes)) rcUseLibrary(merged);
+                rcSetSyncState({ who: rcSahale.name });
+                if (!server.rev || !rcSameLibrary(merged, server.recipes)) await rcPush(server.rev, merged);
+                else rcSetSyncState({ rev: server.rev, dirty: false });
+            } else if (server.rev === st.rev) {
+                if (st.dirty) await rcPush(server.rev, recipes);
+            } else if (!st.dirty) {
+                rcUseLibrary(server.recipes); // changed on another device
+                rcSetSyncState({ rev: server.rev });
+            } else {
+                await rcPush(server.rev, rcMergeLibraries(recipes, server.recipes));
+            }
+            rcSahale.error = null;
+        } catch (e) {
+            if (e.signedOut) rcSahale.state = 'out';
+            rcSahale.error = e.message;
+            console.warn('Sahale sync:', e.message);
+        } finally {
+            rcSahale.saving = null;
+            rcRenderSahaleChip();
+        }
+    })();
+    return rcSahale.saving;
+}
+
+// Every save of the library also goes to Sahale (a moment later, batched)
+if (typeof saveRecipes === 'function') {
+    const rcSaveLocally = saveRecipes;
+    saveRecipes = function () {
+        rcSaveLocally.apply(this, arguments);
+        if (!rcSyncState().who) return; // never signed in here: nothing to sync
+        rcSetSyncState({ dirty: true });
+        clearTimeout(rcSahale.timer);
+        rcSahale.timer = setTimeout(rcSyncNow, 1500);
+    };
+}
+
+function rcRenderSahaleChip() {
+    const chip = document.getElementById('rcSahaleChip');
+    if (!chip) return;
+    let sahalePerson = false;
+    try { sahalePerson = localStorage.getItem(RC_SAHALE_KEY) === '1' || !!rcSyncState().who; } catch (e) {}
+    if (rcSahale.state === 'in') {
+        chip.hidden = false;
+        chip.innerHTML = `<i class="fas ${rcSahale.error ? 'fa-exclamation-circle' : 'fa-cloud'}"></i><span class="rc-hide-narrow"> ${rcEscape(rcSahale.name || 'Sahale')}</span>`;
+        chip.title = rcSahale.error ? 'Not saved to Sahale yet: ' + rcSahale.error : 'Signed in to Sahale; recipes saved there';
+        const button = document.getElementById('rcSahaleSend');
+        if (button) button.style.display = '';
+    } else if (rcSahale.state === 'out' && sahalePerson) {
+        chip.hidden = false;
+        chip.innerHTML = '<i class="fas fa-sign-in-alt"></i><span class="rc-hide-narrow"> Sahale sign in</span>';
+        chip.title = 'Sign in with your Sahale email';
+    } else if (rcSahale.state === 'not-listed') {
+        chip.hidden = false;
+        chip.innerHTML = '<i class="fas fa-user-slash"></i>';
+        chip.title = "Signed in, but this email isn't on Sahale's list yet";
+    } else {
+        chip.hidden = true;
+    }
+}
+
+function rcEscape(s) {
+    return String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+function rcSahaleChipClick() {
+    if (rcSahale.state === 'out') {
+        location.href = RC_SAHALE_API + '/signin?to=' + encodeURIComponent(location.href);
+        return;
+    }
+    const st = rcSyncState();
+    const when = st.at ? new Date(st.at).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) : null;
+    const body = rcSahale.state === 'not-listed'
+        ? `<p>You're signed in, but your email isn't on Sahale's list yet. Ask Julian to add it.</p>`
+        : `<p>Signed in as <strong>${rcEscape(rcSahale.name || '')}</strong>. Your recipes are saved to Sahale, so they're on any device where you sign in.</p>
+           <p class="rc-muted">${rcSahale.error ? 'Not saved yet (' + rcEscape(rcSahale.error) + '); it will try again.' : when ? 'Last saved ' + rcEscape(when) + '.' : 'Saving…'}</p>
+           <p class="rc-muted">The <strong>Sahale list</strong> button on Shop sends your shopping list to the shared Sahale list.</p>`;
+    rcOpenPicker('Sahale', body + `
+        <div class="rc-sheet-actions">
+            ${rcSahale.state === 'in' ? '<button class="btn btn-quiet" onclick="rcSyncNow(); rcClosePicker()">Save now</button>' : ''}
+            <a class="btn btn-quiet" href="${RC_SAHALE_LIST}" target="_blank" rel="noopener">Shopping list</a>
+            <button class="btn" onclick="rcClosePicker()">Done</button>
+        </div>`);
+}
+
+(async function rcSahaleStart() {
+    if (!rcSyncState().device) rcSetSyncState({ device: Math.random().toString(36).slice(2, 10) });
+    try {
+        const res = await rcSahaleFetch('/api/rc/me');
+        if (res.status === 403) rcSahale.state = 'not-listed';
+        else if (res.ok) {
+            rcSahale.state = 'in';
+            rcSahale.name = (await res.json()).name;
+            try { localStorage.setItem(RC_SAHALE_KEY, '1'); } catch (e) {}
+        } else rcSahale.state = 'out';
+    } catch (e) {
+        rcSahale.state = e.signedOut ? 'out' : 'unknown'; // offline: say nothing
+    }
+    rcRenderSahaleChip();
+    if (rcSahale.state === 'in') rcSyncNow();
+})();
+
+// Coming back to the tab: pick up changes made on another device
+document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && rcSahale.state === 'in') rcSyncNow();
+});
 
 function rcSendToSahale() {
     // What's on screen, minus anything already ticked off here
